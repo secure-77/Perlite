@@ -20,7 +20,7 @@ Just put your hole Obsidian vault the root directory from your web server. The P
 
 - web server
 - php server (tested with php 7.4)
-- php module mb_strings for the parsedown (apt install mb_strings)
+- php module mb_strings for the parsedown (apt install php-mbstring)
 
 
 ### dependencies
