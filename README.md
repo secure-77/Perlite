@@ -9,10 +9,11 @@ Just put your hole Obsidian vault the root directory from your web server. The P
 - build navigation based on folder structure
 - in-place markdown render
 - Fullscreen mode
+- full responsive
 - Image src replacement
 - exclude hidden files and folders, starting with a "." (dot)
 - Bootstrap 5 for the design
-- hightlight.js for code highlighting 
+- hightlight.js for code highlighting
 
 
 
@@ -50,7 +51,6 @@ Thats it.
 
 ## Planned
 
-- responsive improvements
 - search through files
 - toogle sidebar
 - toogle between light- and dark-mode

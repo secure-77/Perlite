@@ -4,6 +4,9 @@
 
 .markdown {
   padding: 50px;
+  height: auto;
+  overflow: auto;
+  
 }
 
 
@@ -11,15 +14,11 @@
     max-width: 600px;
 }
 
+.nav-selector {
+  min-width: 300px;
+  overflow: hidden; 
+}  
 
-body {
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-}
-
-html {
-  height: -webkit-fill-available;
-}
 
 .list-unstyled li a {
   display: inline-flex;
@@ -31,15 +30,13 @@ html {
 
 main {
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
+  flex-wrap: nowrap;  
 	}
 
 .divider {
   flex-shrink: 0;
   width: 1.5rem;
-  min-height: 100vh;
+  min-height: 88vh; 
   border: solid rgba(0, 0, 0, .15);
   border-width: 1px 0;
   box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
@@ -48,7 +45,6 @@ main {
 
 .btn-toggle {
   display: inline-flex;
-  align-items: center;
   padding: .25rem .5rem;
   font-weight: 600;
   color: #357dc5;
@@ -95,60 +91,60 @@ main {
 }
 
 
-.container-my {
+.header-my {
   width: 100%;
   padding-right: var(--bs-gutter-x, 0.75rem);
   padding-left: var(--bs-gutter-x, 0.75rem);
   margin-right: auto;
   margin-left: auto;
+  overflow: hidden;
+  /* position: fixed;
+  height: 100px; */
 }
 
 @media screen and (max-width: 990px) {
-    .container-mobile, .divider, .search-my {
-      visibility: hidden;
+    .container-mobile, .divider, .search-my, .no-mobile {
       clear: both;
       float: left;
       margin: 10px auto 5px 20px;
       width: 100%;
       display: none;
     }
+
     .bd-aside {
-      width: 100%;
-      text-align: center;
+      width: 100%; 
+      text-align: center; 
     }
 
-    .list-unstyled {
-      list-style: none;
-      padding-left: 0px;
-    }
-
-    .nav-selector {
-      width: 990px;
-     }
-     .btn  {
-      font-size: 50pt;
-     }
-
-     .btn-toggle-nav, .container-my {
-      font-size: 40pt;
-     }
-
-     .mdTitle  {
-       margin-right: 30px;
-     }
-
-     .me-3 {
-       width: 300px;
-     }
-
-     .bi-fullscreen {
+    .bi-fullscreen {
        width: 50;
        height: 50;
      }
+
+    .list-unstyled li a{
+      list-style: none;
+      margin-left: 0px;
+    }
+
+    .list-unstyled{
+      list-style: none;
+      margin-left: 0px;
+      padding-left: 0px;
+    }
+
+    .btn-toggle {
+      margin-right: 16px;
+    }
+
+    .headline {
+      padding-top: 0px !important;
+      margin-bottom: 0px !important;
+    }
+
+    .nav {
+      width: auto;
+    }
+
 }
 
-.nav-selector {
 
-  min-width: 300px;
-
-}  

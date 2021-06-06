@@ -1,40 +1,39 @@
 <html>
 <head>
-<link rel="stylesheet" href=".styles/bootstrap.css">
-<link rel="stylesheet" href=".styles/a11y-dark.css">
-<link rel="stylesheet" href=".styles/style.css">
+  <link rel="stylesheet" href=".styles/bootstrap.css">
+  <link rel="stylesheet" href=".styles/a11y-dark.css">
+  <link rel="stylesheet" href=".styles/style.css">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src=".js/highlight.pack.js"></script>
-<script src=".js/bootstrap.bundle.min.js"></script>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src=".js/highlight.pack.js"></script>
+  <script src=".js/bootstrap.bundle.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <header class="p-3 bg-dark text-white">
-    <div class="container-my">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-	  <img src="logo.svg" width="100" class="me-3" alt="Secure77"> 
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 text-white">Blog</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
-        </ul>
-		<div class="mdTitle me-lg-5"></div> 
-        <form id="f1" class="search-my col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-          <input type="search" name="t1" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-        </form>
-
-        <div class="text-end">
-		<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#contentModal">
-	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fullscreen" viewBox="0 0 16 16">
-<path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"></path>
-</svg>
-	<span class="visually-hidden">Button</span>
-  </button>
-
+  <div class="no-mobile"></div>    
+  <div class="header-my">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <img src="logo.svg" width="100" class="me-3" alt="Secure77"> 
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="https://secure77.de" class="nav-link px-2 text-white">Blog</a></li>
+              <li><a href="#" class="nav-link px-2 text-white" data-bs-toggle="modal" data-bs-target="#aboutModal">About</a></li>
+            </ul>
+            <div class="no-mobile mdTitle me-lg-5"></div> 
+            <form id="f1" class="search-my col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+              <input type="search" name="t1" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+            </form>
+            <div class="text-end">
+              <button type="button" class="no-mobile btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#contentModal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fullscreen" viewBox="0 0 16 16">
+                  <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"></path>
+                </svg>
+                <span class="visually-hidden">Button</span>
+              </button>
+          </div>
         </div>
-      </div>
-    </div>
-  </header>
+  </div>
+</header>
 
 
 
@@ -54,7 +53,7 @@ echo '
 <main>
 <div class="divider"></div>
 <aside class="bd-aside sticky-xl-top text-muted align-self-start mb-3 mb-xl-5 px-2">
-	<h2 class="h6 pt-4 pb-3 mb-4 border-bottom">Notes</h2>
+	<h4 class="headline pt-4 pb-3 mb-4 border-bottom">Notes</h4>
 		<div class="flex-shrink-0 nav-selector p-3 bg-black">
 			<ul class="list-unstyled ps-0">	
 				'.$menu.'	
@@ -67,41 +66,75 @@ echo '
 </div>
 </main>
 
-<!-- Modal -->
-<div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modals -->
+<div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModal" aria-hidden="true">
   <div class="modal-dialog modal-fullscreen">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <h5 class="modal-title mdModalTitle"></h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body"></div>
+      <div class="modal-body mdModalBody"></div>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title">PERLITE</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <script>
 
 
   function getContent(str) {
-	if (str.length == 0) {
-	  document.getElementById("mdContent").innerHTML = "";
-	  document.getElementsByClassName("modal-body")[0].innerHTML = "";
-	  return;
-	} else {
-  
-	  $.ajax({url: "content.php?file=" + str, success: function(result){
-		  $("#mdContent").html(result);
-		  $("div.modal-body").html(result);		 
-		}});
+    if (str.length == 0) {
+      document.getElementById("mdContent").innerHTML = "";
+      document.getElementsByClassName("modal-body")[0].innerHTML = "";
+      return;
+    } else {
+    
+      $.ajax({url: "content.php?file=" + str, success: function(result){
+        $("#mdContent").html(result);
+        $("div.mdModalBody").html(result);		
+        isMobile();        
+        hljs.highlightAll();
+        var title = $("div.mdTitleHide").first().text();
+        $("div.mdTitle").html(title);
+        $("h5.mdModalTitle").html(title);
+      }});
 
-	$(document).ajaxComplete(function () {
-			hljs.highlightAll();
-			var title = $("div.mdTitleHide").first().text();
-			$("div.mdTitle").html(title);
-			$("h5.modal-title").html(title);
-	  }); 
-	}
-  }
+      $(document).ajaxComplete(function () {
+        // dont need this
+        }); 
+    }
+  };
+
+  function isMobile() {      
+    var is_mobile = false;
+   
+    if( $("div.no-mobile").css("display")=="none") {
+        is_mobile = true;   
+    }
+
+    
+    if (is_mobile == true) {
+      $("#contentModal").modal("show");
+    }
+ };
+
 
 
   function findString(str) {
