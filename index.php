@@ -27,6 +27,7 @@
               <li><a href="#" class="nav-link px-2 text-white" id="about">About</a></li>
             </ul>
             <div class="no-mobile mdTitle me-lg-5"></div> 
+            <div class="me-lg-2" id="showLastSearch"></div>
             <form id="f1" class="search-my col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
               <input type="search" name="t1" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
             </form>
@@ -40,7 +41,7 @@
               </button>
           </div>
         </div>
-        <div id="showLastSearch"></div>
+     
   </div>
 
 
