@@ -1,7 +1,7 @@
 # Perlite
  A web based markdown viewer optimized for Obsidian
 
-Just put your hole Obsidian vault the root directory from your web server. The Page will built up by it self. 
+Just put your hole Obsidian vault in the root directory from your web server. The Page will built up by it self. 
 
 
 ## Demo
@@ -16,7 +16,7 @@ http://perlite.secure77.de
 - Fullscreen mode
 - full responsive
 - search
-- Image src replacement
+- Obsidian image src replacement
 - exclude hidden files and folders, starting with a "." (dot)
 - Bootstrap 5 for the design
 - hightlight.js for code highlighting
@@ -57,5 +57,7 @@ Thats it.
 
 ## Planned
 
+- activate search for mobile
 - toogle sidebar
 - toogle between light- and dark-mode
+
