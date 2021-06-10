@@ -71,7 +71,7 @@ function doSearch($dir, $searchfor) {
 	
 	return
 	'<div class="searchTitle" style="display: none">Search for: ' . $cleanSearch . '</div>
-	<div class="lastSearch" style="display: none"><a href="#">open last search</a></div>
+	<div class="lastSearch" style="display: none"><a href="#">open recent search</a></div>
 	<br><br>'.$content;
 
 }
