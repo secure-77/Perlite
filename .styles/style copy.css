@@ -3,32 +3,23 @@
 }
 
 .markdown {
-  height: auto;
-  overflow: auto;
-  
-}
-.sticky-nav {
-
-  position: sticky;
-  top: 100px;
-  z-index: 1020;
+  padding: 50px;
 }
 
-#showLastSearch {
-
-  float: right;
-  padding-right: 10px;
-}
 
 .images {
     max-width: 600px;
 }
 
-.nav-selector {
-  min-width: 300px;
-  overflow: hidden; 
-}  
 
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+html {
+  height: -webkit-fill-available;
+}
 
 .list-unstyled li a {
   display: inline-flex;
@@ -38,18 +29,17 @@
   text-decoration: none;
 }
 
-
 main {
   display: flex;
   flex-wrap: nowrap;
-  padding-top: 60px; 
+  overflow-x: auto;
+  overflow-y: hidden;
 	}
-
 
 .divider {
   flex-shrink: 0;
   width: 1.5rem;
-  min-height: 88vh; 
+  min-height: 100vh;
   border: solid rgba(0, 0, 0, .15);
   border-width: 1px 0;
   box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
@@ -104,13 +94,12 @@ main {
 }
 
 
-.header-my {
+.container-my {
   width: 100%;
-  padding-right: var(--bs-gutter-x, 2.0rem);
-  padding-left: var(--bs-gutter-x, 2.0rem);
+  padding-right: var(--bs-gutter-x, 0.75rem);
+  padding-left: var(--bs-gutter-x, 0.75rem);
   margin-right: auto;
   margin-left: auto;
-  overflow: hidden;
 }
 
 @media screen and (max-width: 990px) {
@@ -121,41 +110,45 @@ main {
       width: 100%;
       display: none;
     }
-
     .bd-aside {
-      width: 100%; 
-      text-align: center; 
+      width: 100%;
+      text-align: center;
     }
 
-    .bi-fullscreen {
+     .btn  {
+      font-size: 5vw;
+     }
+
+     .container-my, .list-unstyled  {
+      font-size: 4vw;
+     }
+
+     .mdContent {
+      font-size: 5vw;
+     }
+
+     .mdTitle  {
+       margin-right: 3vw;
+     }
+
+     .me-3 {
+       width: 300px;
+     }
+
+     .bi-fullscreen {
        width: 50;
        height: 50;
      }
 
-    .list-unstyled li a{
-      list-style: none;
-      margin-left: 0px;
+     .btn-toggle::before {
+      content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%28200,200,200,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
     }
 
-    .list-unstyled{
-      list-style: none;
-      margin-left: 0px;
-      padding-left: 0px;
-    }
-
-    .btn-toggle {
-      margin-right: 16px;
-    }
-
-    .headline {
-      padding-top: 0px !important;
-      margin-bottom: 0px !important;
-    }
-
-    .nav {
-      width: auto;
-    }
 
 }
 
+.nav-selector {
 
+  min-width: 300px;
+
+}  

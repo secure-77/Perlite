@@ -1,26 +1,53 @@
 <?php
 
-
-include('Parsedown.php');
 include('helper.php');
 
-$Parsedown = new Parsedown();
-$Parsedown->setSafeMode(true);
 
-$requestFile = $_GET['file'];
-$cleanFile = '';
+if (isset($_GET['file'])) {
 
-menu(getcwd());
+	$requestFile = $_GET['file'];
+	parseContent($requestFile);
 
-$path = '';
+}
 
-// get and parse the content
-$content = getContent($requestFile);
-$content = $Parsedown->text($content);
-$content = str_replace('![[','<img class="images" src="' . $path .'/',$content);
-$content = str_replace(']]','"/>',$content);
-$content = '<div class="mdTitleHide" style="display: none";>'.$cleanFile.'</div>' . $content;
+if (isset($_GET['about'])) {
 
+	parseContent('README');
+
+}
+
+
+if (isset($_GET['search'])) {
+
+	$searchString = $_GET['search'];
+	echo doSearch(getcwd(),$searchString);
+
+}
+
+
+function parseContent($requestFile) {
+
+	global $path;
+	global $cleanFile;
+	$Parsedown = new Parsedown();
+	$Parsedown->setSafeMode(true);
+
+	$cleanFile = '';
+
+	menu(getcwd());
+
+	$path = '';
+
+	// get and parse the content
+	$content = getContent($requestFile);
+	$content = $Parsedown->text($content);
+	$content = str_replace('![[','<img class="images" alt="image not in same folder" src="' . $path .'/',$content);
+	$content = str_replace(']]','"/>',$content);
+	$content = '<div class="mdTitleHide" style="display: none";>'.$cleanFile.'</div>' . $content;
+	echo $content;
+
+
+}
 
 function getContent($requestFile) {
 	global $avFiles;
@@ -37,5 +64,6 @@ function getContent($requestFile) {
 	}
 	return $content;
 }
-echo $content;
+
+
 ?>

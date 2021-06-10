@@ -4,12 +4,18 @@
 Just put your hole Obsidian vault the root directory from your web server. The Page will built up by it self. 
 
 
+## Demo
+
+http://perlite.secure77.de
+
+
 ## Features
 
 - build navigation based on folder structure
 - in-place markdown render
 - Fullscreen mode
 - full responsive
+- search
 - Image src replacement
 - exclude hidden files and folders, starting with a "." (dot)
 - Bootstrap 5 for the design
@@ -31,10 +37,10 @@ Just put your hole Obsidian vault the root directory from your web server. The P
 - hightlight.js (included in this repo)
 
 
-### Images and Header
+### Images and Links
 
 - the images should resident in the same folder of your .md file, if you use a global folder for all of your images, you can change the path / replacement statement in the content.php file.
-- The logo and links in the Header (Blog, About) are static at the moment, you can change this in the index.php
+- unfortunately Obsidian links to other files will not work
 
 
 ### Security
@@ -51,6 +57,5 @@ Thats it.
 
 ## Planned
 
-- search through files
 - toogle sidebar
 - toogle between light- and dark-mode
