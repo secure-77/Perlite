@@ -6,7 +6,7 @@ Just put your hole Obsidian vault in the root directory from your web server. Th
 
 ## Demo
 
-http://perlite.secure77.de
+https://perlite.secure77.de
 
 
 ## Features
