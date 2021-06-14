@@ -9,6 +9,8 @@ Open 192.168.178.73:21
 Open 192.168.178.73:65111
 ```
 
+test crontab
+
 # nmap
 
 ```bash
