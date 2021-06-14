@@ -6,21 +6,31 @@ include('helper.php');
 if (isset($_GET['file'])) {
 
 	$requestFile = $_GET['file'];
-	parseContent($requestFile);
-
+	if (is_string($requestFile)) {
+		if (!empty($requestFile)) {
+			parseContent($requestFile);
+		}
+	}
+	
 }
 
 if (isset($_GET['about'])) {
-
-	parseContent('README');
-
+	
+	if (is_string($_GET['about'])) {
+		parseContent('README');
+	}	
 }
 
 
 if (isset($_GET['search'])) {
 
 	$searchString = $_GET['search'];
-	echo doSearch(getcwd(),$searchString);
+	if (is_string($searchString)) {
+		if (!empty($searchString)) {
+			echo doSearch(getcwd(),$searchString);
+		}
+	}
+	
 
 }
 
