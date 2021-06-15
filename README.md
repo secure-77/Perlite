@@ -1,7 +1,7 @@
 # Perlite
- A web based markdown viewer optimized for Obsidian
+A web based markdown viewer optimized for Obsidian
 
-Just put your hole Obsidian vault in the root directory from your web server. The Page will built up by it self. 
+Just put your hole Obsidian vault or markdown folder/file structure in the root directory from your web server. The Page will built up by it self. 
 
 
 ## Demo
@@ -46,11 +46,12 @@ https://perlite.secure77.de
 ### Security
 
 - The Safemode (https://github.com/erusev/parsedown#security) from Parsedown is active, but i would not recommend to allow user input.
+- You should prevent that the .md files are direct accessible via the browser (only the php engine need access to it) or at least make sure that the md files will be downloaded and not be renderd by browser
 
 
 ## How it works
 
-On visiting the index.php the site will crawl recursive for all markdown (.md) files in the current directory and subfolders. Based on the folder and files structure, the sidebar (left menu) will build up. By clicking a file, a request with the path of the file will be sent to content.php, this checks if this file is in the current folder structure, get the content and call the parsedown.php to convert the markdown to the html. Obsidian image tags will be replaced by html img and highlight.js will be called for the code highlighting.
+On visiting the index.php, the site will crawl recursive for all markdown (.md) files in the current directory and subfolders. Based on the folder and files structure, the sidebar (left menu) will build up. By clicking a file, a request with the path of the file will be sent to content.php, this checks if this file is in the current folder structure, get the content and call the parsedown.php to convert the markdown to the html. Obsidian image tags will be replaced by html img and highlight.js will be called for the code highlighting.
 
 Thats it.
 
@@ -60,4 +61,6 @@ Thats it.
 - activate search for mobile
 - toogle sidebar
 - toogle between light- and dark-mode
+- image viewer
+- docker image
 
