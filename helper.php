@@ -26,7 +26,7 @@ function menu($dir, $folder = ''){
 				$folderClean = getFolderInfos($file)[1];
 				$folderName = getFolderInfos($file)[2];
 				
-				$html .= '<button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#'.$folderClean.'-collapse" aria-expanded="false">'.$folderName .'</button>';
+				$html .= '<button class="btn btn-toggle btn-hover-dark d-inline-flex text-info fw-bold align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#'.$folderClean.'-collapse" aria-expanded="false">'.$folderName .'</button>';
 				$html .= '<div class="collapse" id="'.$folderClean.'-collapse">
 							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1">';				
 				$html .= menu($file,$folder.'/');
@@ -49,7 +49,7 @@ function menu($dir, $folder = ''){
                 $pathClean = rawurlencode($pathClean);
 
                 $html .= '		<li>
-                                    <a href="#" onclick=getContent("'. $pathClean .'"); class="link-light rounded">'. $mdFile .'</a>
+                                    <a href="#" onclick=getContent("'. $pathClean .'"); id="theme-link" class="link-light rounded">'. $mdFile .'</a>
                                 </li>';
 			} 			
 		}

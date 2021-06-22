@@ -19,6 +19,8 @@ https://perlite.secure77.de
 - Obsidian image src replacement
 - exclude hidden files and folders, starting with a "." (dot)
 - Bootstrap 5 for the design
+- Supports Bootswatch Themes (Darkly and Flatly)
+- Toogle between light mode and dark mode
 - hightlight.js for code highlighting
 
 
@@ -45,7 +47,7 @@ https://perlite.secure77.de
 
 ### Security
 
-- The Safemode (https://github.com/erusev/parsedown#security) from Parsedown is active, but i would not recommend to allow user input.
+- The Safemode (https://github.com/erusev/parsedown#security) from Parsedown is active, but i would not recommend to allow untrusted user input.
 - You should prevent that the .md files are direct accessible via the browser (only the php engine need access to it) or at least make sure that the md files will be downloaded and not be renderd by browser
 
 
@@ -60,7 +62,6 @@ Thats it.
 
 - activate search for mobile
 - toogle sidebar
-- toogle between light- and dark-mode
 - image viewer
 - docker image
 

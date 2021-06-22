@@ -1,7 +1,7 @@
 <html>
 <head>
-  <link rel="stylesheet" href=".styles/bootstrap.css">
-  <link rel="stylesheet" href=".styles/a11y-dark.css">
+  <link id="bootswatch-theme" rel="stylesheet" href=".styles/darkly.css">
+  <link id="highlight-js" rel="stylesheet" href=".styles/a11y-dark.css">
   <link rel="stylesheet" href=".styles/style.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -12,26 +12,30 @@
 
 
 
-<body class="bg-dark">
+<body>
 
-<header class="p-3 bg-dark text-white">
+<header class="p-3">
   <div class="no-mobile"></div>    
-  <nav class="navbar pt-3 fixed-top navbar-dark bg-dark">
+  <nav class="navbar navbar-expand fixed-top navbar-dark">
 
 
   <div class="header-my">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="."><img src="logo.svg" height="65" class="me-3" alt="Secure77"></a>
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li><a href="https://secure77.de" target="_blank" class="nav-link px-2 text-white">Blog</a></li>
-              <li><a href="#" class="nav-link px-2 text-white" id="about">About</a></li>
+            <svg class= "me-3" height="65" id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 802.43 494.67">          
+            <path class="logo-light" d="M223.58,535.81s0,27.2-31.16,27.2H98.57V530.22h30.8v5.95a86.29,86.29,0,0,0,31.16,5.58c8.65,0,35.13-2.52,35.13-11.89,0-20.53-97.09-67.91-97.09-67.91s0-24.68,29.9-24.68h95.11v33H192.42v-5.95s-9-5.4-24.5-5.4a79.7,79.7,0,0,0-27.74,5.4C148.1,466.81,223.58,499.06,223.58,535.81Z" transform="translate(-98.57 -252.71)"/><path class="logo-light" d="M278.55,462.85v24.32h62v22.34h-62v26.66h63.77V530.4h30.62c0,32.07-29.36,32.61-32.42,32.61H247.21V437.27h93.31c2.16,0,32.42,0,32.42,31.34H342.32v-5.76Z" transform="translate(-98.57 -252.71)"/><path class="logo-light" d="M522.48,525.36v6.48c0,.18,0,31.17-28.82,31.17H427.37s-31.16,0-31.16-31.17V468.07s.18-31,31.16-31H491s31.52,0,31.52,31v5.77h-30.8v-6.49h-62V531.3h62v-5.94Z" transform="translate(-98.57 -252.71)"/><path class="logo-light" d="M703.13,430.92s57.42,0,57.42,57.42H612.26s90.87,100.36,90.87,259h-53.8c0-159.13-114.38-259-114.38-259V430.92Z" transform="translate(-98.57 -252.71)"/><path class="logo-light" d="M732.82,569.18s-57.41,0-57.41-57.42H823.69s-90.87-100.36-90.87-259h53.8c0,159.14,114.38,259,114.38,259v57.42Z" transform="translate(-98.57 -252.71)"/></svg>
+            <ul class="navbar-nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li class="nav-item px-2"><a class="nav-link" href="https://secure77.de" target="_blank">Blog</a></li>
+              <li class="nav-item px-2"><a class="nav-link" id="about" href="#">About</a></li>
             </ul>
-            <div class="no-mobile mdTitle me-lg-5"></div> 
+            <div class="no-mobile text-info mdTitle me-lg-5"></div> 
             <div class="me-lg-2" id="showLastSearch"></div>
             <form id="f1" class="search-my col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
               <input type="search" name="t1" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
             </form>
-            
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="toggleTheme">
+                <label class="form-check-label" for="toggleTheme"></label>
+              </div>
             <div class="text-end">
               <button type="button" class="no-mobile btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#contentModal">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fullscreen" viewBox="0 0 16 16">
@@ -39,6 +43,7 @@
                 </svg>
                 <span class="visually-hidden">Button</span>
               </button>
+
           </div>
         </div>
      
@@ -74,7 +79,7 @@ echo '
 		</div>
 </aside>
 <div class="divider"></div>
-<div class="markdown container-lg container-mobile bg-dark text-white" id="mdContent">
+<div class="markdown container-lg container-mobile" id="mdContent">
 </div>
 </div>
 </main>
@@ -82,10 +87,10 @@ echo '
 <!-- Modals -->
 <div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModal" aria-hidden="true">
   <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content bg-dark text-white">
+    <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title mdModalTitle"></h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title text-break mdModalTitle"></h5>
+        <button id="theme-close-btn" type="button" class="btn-close btn-close-light" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body mdModalBody"></div>
     </div>
@@ -94,10 +99,10 @@ echo '
 
 <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModal" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content bg-dark text-white">
+    <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title aboutModalTitle"></h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button id="theme-close-btn" type="button" class="btn-close btn-close-light" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body aboutModalBody">     
       </div>
@@ -107,10 +112,10 @@ echo '
 
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModal" aria-hidden="true">
   <div class="modal-dialog modal-xl">
-    <div class="modal-content bg-dark text-white">
+    <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title searchModalTitle">Search</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button id="theme-close-btn" type="button" class="btn-close btn-close-light" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body searchModalBody">     
       </div>
@@ -177,7 +182,54 @@ function search(str) {
 };
 
 
-document.getElementById("f1").onsubmit = function() {
+
+  $("#toggleTheme").change(function() {
+    if ($(this).prop("checked")) {
+      toggleTheme("light");
+    } else {
+      toggleTheme("dark");
+    }
+ });
+
+
+function toggleTheme(mode) {
+
+  if (mode == "light") {
+
+    document.getElementById("highlight-js").setAttribute("href", ".styles/a11y-light.css");
+    document.getElementById("bootswatch-theme").setAttribute("href", ".styles/flatly.css");
+
+    replaceClass("link-light", "link-dark");
+    replaceClass("btn-close-light", "btn-close-dark");
+    replaceClass("navbar-dark", "navbar-light");
+    replaceClass("logo-light", "logo-dark");
+    replaceClass("btn-hover-dark", "btn-hover-light");
+
+  } else {
+
+    document.getElementById("highlight-js").setAttribute("href", ".styles/a11y-dark.css");
+    document.getElementById("bootswatch-theme").setAttribute("href", ".styles/darkly.css");
+
+    replaceClass("link-dark", "link-light");
+    replaceClass("btn-close-dark", "btn-close-light");
+    replaceClass("navbar-light", "navbar-dark");
+    replaceClass("logo-dark", "logo-light");
+    replaceClass("btn-hover-light", "btn-hover-dark");
+
+  }
+
+}
+
+
+function replaceClass(oldClass, newClass) {
+  var elem = $("."+oldClass);
+  console.log(elem);
+  elem.removeClass(oldClass);
+  elem.addClass(newClass);
+}
+
+$(document).ready(function() {
+  document.getElementById("f1").onsubmit = function() {
     
     search(this.t1.value);
     return false;
@@ -196,6 +248,11 @@ document.getElementById("about").onclick = function () {
     $("#aboutModal").modal("show");		
   }}); 
 };
+
+
+
+
+});
 
 
 </script>
