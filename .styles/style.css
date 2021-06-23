@@ -14,6 +14,11 @@
 .btn-hover-dark:hover, .btn-hover-dark:focus {background-color: var(--bs-dark);}
 
 
+#imgContainer {
+  text-align: center;
+  background-color: transparent;
+}
+
 .markdown {
   height: auto;
   overflow: auto;

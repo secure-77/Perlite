@@ -51,8 +51,8 @@ function parseContent($requestFile) {
 	// get and parse the content
 	$content = getContent($requestFile);
 	$content = $Parsedown->text($content);
-	$content = str_replace('![[','<img class="images" alt="image not in same folder" src="' . $path .'/',$content);
-	$content = str_replace(']]','"/>',$content);
+	$content = str_replace('![[','<a href="#" class="pop"><img class="images" alt="image not in same folder" src="' . $path .'/',$content);
+	$content = str_replace(']]','"/></a>',$content);
 	$content = '<div class="mdTitleHide" style="display: none";>'.$cleanFile.'</div>' . $content;
 	echo $content;
 
