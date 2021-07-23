@@ -14,6 +14,7 @@
         $("#mdContent").html(result);
         $("div.mdModalBody").html(result);		      
         var title = $("div.mdTitleHide").first().html();
+        title = '<a href="' + window.location.origin  +'?' + encodeURIComponent(title) + '">' + title + '<a/>'
         $("div.mdTitle").html(title);
         $("h5.mdModalTitle").html(title);
         
@@ -112,7 +113,6 @@ function toggleTheme(mode) {
 
 function replaceClass(oldClass, newClass) {
   var elem = $("."+oldClass);
-  console.log(elem);
   elem.removeClass(oldClass);
   elem.addClass(newClass);
 }
@@ -120,16 +120,39 @@ function replaceClass(oldClass, newClass) {
 
 // general stuff
 $(document).ready(function() {
+
+  // direct links
+  var target = window.location.search.substring(1);
+  if (target != "") {
+    getContent(target);
+
+    // open nav menu to target
+    var navId = decodeURIComponent(target);
+    navId = navId.replace(/[^a-zA-Z0-9\-]/g,'_');
+    var next = $('#'+navId).parent().closest('.collapse');
+    do  {
+        next.collapse('show'); 
+        next = next.parent().closest('.collapse');
+
+      }
+    while (next.length != 0);
+      
+  }
+
+
+  // on search submit
   document.getElementById("f1").onsubmit = function() {
     
     search(this.t1.value);
     return false;
   };
 
+  // show last search
   document.getElementById("showLastSearch").onclick = function () {
     $("#searchModal").modal("show");
   };
 
+  // about modal
   document.getElementById("about").onclick = function () {
     $.ajax({url: "content.php?about", success: function(result){
       $("div.aboutModalBody").html(result);		

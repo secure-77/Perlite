@@ -1,9 +1,42 @@
 <?php
 
 
-$avFiles = array();
 
 include('Parsedown.php');
+
+
+$avFiles = array();
+//$rootDir = 'notes/WriteUps';
+$rootDir = getenv('NOTES_PATH');
+$hideFolders = getenv('HIDE_FOLDERS');
+$about = 'README';
+
+
+
+// hide folders
+if (strcmp($hideFolders,'')) {
+
+	$hideFolders = explode(',', $hideFolders);
+
+} else {
+	$hideFolders = array();
+}
+
+
+// path management
+if (!strcmp($rootDir,"")) {
+
+	$rootDir = getcwd();
+	$base = "Notes";
+	$startDir = "";
+
+} else {
+
+	$base = basename($rootDir);
+	$startDir = $rootDir;
+		
+}
+
 
 
 function menu($dir, $folder = ''){
@@ -38,18 +71,21 @@ function menu($dir, $folder = ''){
 			// check if file is a md file 
 			if (isMDFile($file)) {
 				
-				//split the path and filename
-				$pathClean = getFileInfos($file)[0];
-                $mdFile = getFileInfos($file)[1];
 
+				$path = getFileInfos($file)[0];
+                $mdFile = getFileInfos($file)[1];
+						
+				$path = '/'.$path;
 				// push the the path to the array
-				array_push($avFiles, $pathClean);
+				array_push($avFiles, $path);
 
 				// URL Encode the Path for the JS call
-                $pathClean = rawurlencode($pathClean);
+                $pathClean = rawurlencode($path);
+				$pathID = str_replace(' ', '_', $path);
+				$pathID = preg_replace('/[^A-Za-z0-9\-]/', '_', $path);
 
                 $html .= '		<li>
-                                    <a href="#" onclick=getContent("'. $pathClean .'"); id="theme-link" class="link-light rounded">'. $mdFile .'</a>
+                                    <a href="#" onclick=getContent("'. $pathClean .'"); id="'. $pathID .'" class="link-light rounded">'. $mdFile .'</a>
                                 </li>';
 			} 			
 		}
@@ -110,7 +146,7 @@ function search($dir, $searchfor, $folder = '') {
 				$pattern = "/^.*$pattern.*\$/m";
 				// search, and store all matching occurences in $matches
 				if(preg_match_all($pattern, $contents, $matches)){
-					$result .= '### <a href="#" onclick="getContent(\''.$urlPathClean.'\');">' . $pathClean ."</a>\n";
+					$result .= '### <a href="#" onclick="getContent(\'/'.$urlPathClean.'\');">' . $pathClean ."</a>\n";
 					$result .= "```plaintext \n";				
 					$result .= implode("\n", $matches[0]);					
 					$result .= "\n```\n";
@@ -141,8 +177,10 @@ function isMDFile($file) {
 
 function getFileInfos($file) {
 
+	global $rootDir;
 	$mdFile = basename($file, '.md');
-	$folderClean = str_replace(getcwd(),'',pathinfo($file)["dirname"]);
+	$folderClean = str_replace('$' . $rootDir,'','$' . pathinfo($file)["dirname"]);
+		
 	$folderClean = substr($folderClean,1);
 	if (!strcmp($folderClean,'')) {					
 		$pathClean = $mdFile;
@@ -155,7 +193,8 @@ function getFileInfos($file) {
 
 function getFolderInfos($file) {
 	
-	$folder = str_replace(getcwd(). '/','',$file);
+	global $rootDir;
+	$folder = str_replace($rootDir. '/','',$file);
 	$folderClean = str_replace('/','-',$folder);
 	$folderClean = str_replace(' ','-',$folderClean);
 	$folderName = basename($file);
@@ -166,7 +205,14 @@ function getFolderInfos($file) {
 
 function isValidFolder($file) {
 
+	global $hideFolders;
 	$folderName = basename($file);
+
+	// check if folder is in array
+	if (in_array($folderName,$hideFolders, true)) {
+		return false;
+	}
+
 	if (strcmp(substr($folderName,0,1),'.') !== 0 ) {
 		return true;
 	}

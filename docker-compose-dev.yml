@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+
+  perlite:
+    build:
+        context: ./perlite
+        dockerfile: Dockerfile.dev
+          
+    environment:
+      - NOTES_PATH=Demo
+      - HIDE_FOLDERS=docs,private,trash
+
+    volumes:
+      - ./perlite:/var/www/perlite
+      - ./Demo:/var/www/perlite/Demo:ro
+
+  web:
+    build:
+        context: ./web      
+    ports:
+      - 80:80 
+    volumes:
+      - ./perlite:/var/www/perlite
+      - ./Demo:/var/www/perlite/Demo:ro   
+    depends_on:
+      - perlite
+
