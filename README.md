@@ -16,7 +16,7 @@ Its an open source alternative to obisidian publish.
 [Perlite Demo](https://perlite.secure77.de)
 
 
-<img src="https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/screenshot.png" alt="Demo Screenshot" style="width:100%;"/>
+![Demo Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/screenshot.png "Demo Screenshot")
 
 ## Features
 

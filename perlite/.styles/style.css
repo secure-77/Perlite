@@ -36,6 +36,10 @@
   padding-right: 10px;
 }
 
+img {
+  width: 100%;
+}
+
 .images {
     max-width: 600px;
 }
