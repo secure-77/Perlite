@@ -16,7 +16,7 @@ Its an open source alternative to obisidian publish.
 [Perlite Demo](https://perlite.secure77.de)
 
 
-![alt text](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/screenshot.png "Demo Screenshot")
+<img src="https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/screenshot.png" alt="Demo Screenshot" style="width:100%;"/>
 
 ## Features
 
@@ -26,7 +26,7 @@ Its an open source alternative to obisidian publish.
 - Search
 - Obsidian image optimized
 - Dark and light mode
-- Support [![coverage](https://img.shields.io/badge/Bootswath-Themes-blue)](https://bootswatch.com) (Darkly and Flatly)
+- [![coverage](https://img.shields.io/badge/Bootswath-Themes-blue)](https://bootswatch.com) (Darkly and Flatly)
 
 
 
