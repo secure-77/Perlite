@@ -36,8 +36,8 @@
   padding-right: 10px;
 }
 
-img {
-  max-width: 700px;
+.aboutModalBody > p > img {
+  max-width: 100%;
 }
 
 .images {
