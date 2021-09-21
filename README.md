@@ -38,7 +38,7 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 ## Install
 Just put the content of the perlite directory in your web root directory, your notes should resident as a subfolder of perlite
 
-for Docker just check the [DOCKER](https://raw.githubusercontent.com/secure-77/Perlite/main/Docker.md) readme.
+for Docker just check the [DOCKER](https://github.com/secure-77/Perlite/blob/main/Docker.md) readme.
 
 ### requirements
 - web server, tested with ![coverage](https://img.shields.io/badge/NGINX-1.18.0-blue)
