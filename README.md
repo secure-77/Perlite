@@ -32,7 +32,7 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 - [![coverage](https://img.shields.io/badge/Bootswath-Themes-blue)](https://bootswatch.com) (Darkly and Flatly)
 
 ## Changelog
-[Changelog](https://raw.githubusercontent.com/secure-77/Perlite/main/Changelog.md)
+[Changelog](https://github.com/secure-77/Perlite/blob/main/Changelog.md)
 
 
 ## Install
