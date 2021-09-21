@@ -3,9 +3,9 @@
 include('helper.php');
 
 
-if (isset($_GET['file'])) {
-
-	$requestFile = $_GET['file'];
+if (isset($_GET['mdfile'])) {
+	$requestFile = $_GET['mdfile'];
+	
 	if (is_string($requestFile)) {
 		if (!empty($requestFile)) {
 			parseContent($requestFile);
@@ -52,21 +52,53 @@ function parseContent($requestFile) {
 	// get and parse the content
 	$content = getContent($requestFile);
 	
-	// // image path management
-	// if (strcmp($startDir,"") == 0) {
-	// 	//$startPoint = explode('/', $path);
-	// 	//$path = $startPoint [1];
-	// } else {
 
-	// 	$path = $startDir;
-	// }
-
+	// define pathes for links
+	$mdpath = $path;
 	$path = $startDir . $path;
 
 
 	$content = $Parsedown->text($content);
-	$content = str_replace('![[','<a href="#" class="pop"><img class="images" alt="image not in same folder" src="'. $path .'/',$content);
-	$content = str_replace(']]','"/></a>',$content);
+
+
+	// pdf links
+	$replaces = '<a target="_blank" href="'.$path .'/'.'\\2">\\2</a>';
+	$pattern = array('/(\!\[\[)(.*.pdf)(\]\])/');
+	$content = preg_replace($pattern, $replaces ,$content);
+	
+	// img links
+	$replaces = '<a href="#" class="pop"><img class="images" alt="image not in same folder" src="'. $path .'/\\2\\3'.'"/></a>';
+	$pattern = array('/(\!\[\[)(.*)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)(\]\])/');
+	$content = preg_replace($pattern, $replaces ,$content);
+
+	// site links
+	$pathSplit = explode("/",$path);
+
+		$pattern = array('/(\[\[)(\.\.\/)+(.*)(\]\])/');
+		$content = preg_replace_callback($pattern, 
+		function($matches) use ($pathSplit) {
+
+			$countDirs = count(explode("../",$matches[0]));
+			$countDirs = $countDirs -1;
+			$newPath = array_splice($pathSplit, 1, -$countDirs);			
+			$newAbPath = implode('/', $newPath);
+			$urlPath = $newAbPath. '/'. $matches[3];
+			if (substr($urlPath,0,1) != '/') {
+				$urlPath = '/' . $urlPath;
+			}
+			$urlPath = rawurlencode($urlPath);
+			return '<a href="?link='.$urlPath.'">'. $matches[3].'</a>';
+		}
+		,$content);
+	
+	
+	// root site links
+	$urlPath = rawurlencode($mdpath);
+	$replaces = '<a href="?link='.$urlPath.'%2F'.'\\2">\\2</a>';
+	$pattern = array('/(\[\[)(.*)(\]\])/');
+	$content = preg_replace($pattern, $replaces ,$content);
+
+	// hide title
 	$content = '<div class="mdTitleHide" style="display: none";>'.$cleanFile.'</div>' . $content;
 	echo $content;
 
@@ -85,9 +117,8 @@ function getContent($requestFile) {
 		$n = strrpos($requestFile,"/");
 		$path = substr($requestFile,0,$n);
 		$content .= file_get_contents($rootDir.$requestFile . '.md', true);
-	} else {
-		$content .= "not allowed";
 	}
+	
 	return $content;
 }
 

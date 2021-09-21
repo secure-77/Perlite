@@ -9,7 +9,12 @@ $avFiles = array();
 //$rootDir = 'notes/WriteUps';
 $rootDir = getenv('NOTES_PATH');
 $hideFolders = getenv('HIDE_FOLDERS');
-$about = 'README';
+$about = '.about';
+
+// add about to allowed files
+$path = getFileInfos($rootDir .'/' . $about)[0];
+$path = '/'.$path;
+array_push($avFiles, $path);
 
 
 

@@ -1,6 +1,10 @@
 An h1 header
 ============
 
+Link to other Markdown file: [[markdown-sample2]]
+
+Link to PDF: ![[pdf-test.pdf]]
+
 Paragraphs are separated by a blank line.
 
 2nd paragraph. *Italic*, **bold**, and `monospace`. Itemized lists

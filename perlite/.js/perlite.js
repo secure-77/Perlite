@@ -1,5 +1,3 @@
-
-
 // get markdown content
   function getContent(str) {
     if (str.length == 0) {
@@ -8,13 +6,13 @@
       return;
     } else {
     
-      $.ajax({url: "content.php?file=" + str, success: function(result){
+      $.ajax({url: "content.php?mdfile=" + str, success: function(result){
         
         // set content + fullscreen modal
         $("#mdContent").html(result);
         $("div.mdModalBody").html(result);		      
         var title = $("div.mdTitleHide").first().html();
-        title = '<a href="' + window.location.origin  +'?' + encodeURIComponent(title) + '">' + title + '<a/>'
+        title = '<a href="' + window.location.origin  +'?link=' + encodeURIComponent(title) + '">' + title + '<a/>'
         $("div.mdTitle").html(title);
         $("h5.mdModalTitle").html(title);
         
@@ -72,16 +70,9 @@ function search(str) {
 };
 
 
-// theme toggle
-  $("#toggleTheme").change(function() {
-    if ($(this).prop("checked")) {
-      toggleTheme("light");
-    } else {
-      toggleTheme("dark");
-    }
- });
 
 
+// toggle theme
 function toggleTheme(mode) {
 
   if (mode == "light") {
@@ -95,6 +86,8 @@ function toggleTheme(mode) {
     replaceClass("logo-light", "logo-dark");
     replaceClass("btn-hover-dark", "btn-hover-light");
 
+    document.cookie = 'theme=light; path=/';
+
   } else {
 
     document.getElementById("highlight-js").setAttribute("href", ".styles/a11y-dark.css");
@@ -106,10 +99,18 @@ function toggleTheme(mode) {
     replaceClass("logo-dark", "logo-light");
     replaceClass("btn-hover-light", "btn-hover-dark");
 
+    document.cookie = 'theme=dark; path=/';
+
   }
 
 }
 
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
 function replaceClass(oldClass, newClass) {
   var elem = $("."+oldClass);
@@ -121,8 +122,32 @@ function replaceClass(oldClass, newClass) {
 // general stuff
 $(document).ready(function() {
 
+  // set theme
+  if (getCookie("theme")) {
+    if (getCookie("theme") == "light") {
+      $("#toggleTheme").prop("checked","true");
+      toggleTheme("light");
+    }
+  }
+
+  // theme toggle
+  $("#toggleTheme").change(function() {
+    if ($(this).prop("checked")) {
+      toggleTheme("light");
+    } else {
+      toggleTheme("dark");
+    }
+ });
+
   // direct links
-  var target = window.location.search.substring(1);
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  
+  var target = "";
+  if (urlParams.has('link')) {
+    var target = urlParams.get('link');
+  }
+  
   if (target != "") {
     getContent(target);
 

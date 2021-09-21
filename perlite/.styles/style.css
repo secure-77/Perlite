@@ -107,7 +107,7 @@ main {
 }
 
 @media screen and (max-width: 990px) {
-    .container-mobile, .divider, .search-my, .no-mobile {
+    .container-mobile, .divider,  .no-mobile {
       clear: both;
       float: left;
       margin: 10px auto 5px 20px;
@@ -142,7 +142,7 @@ main {
 
     .headline {
       padding-top: 0px !important;
-      margin-bottom: 0px !important;
+      margin-bottom:90px !important;
     }
 
     main {
