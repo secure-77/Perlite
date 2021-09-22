@@ -18,7 +18,8 @@ docker-compose --file docker-compose-dev.yml up -d
 
 in the docker-compose.yml 
 - define the starting point (root path/folder) of you notes via the environment variable NOTES_PATH
-- define the path form your host to the container via the VOLUME
+- define the exluded folders via the environment variable HIDE_FOLDERS
+- define the path from your host to the container via the VOLUME
 
 for example use this to mount you local folder `/home/user/myNotes` to your container and set the root folder 
 
@@ -35,7 +36,6 @@ if you dont specify any NOTES_PATH, Perlite will take `/var/www/perlite` (in the
 Example
 ```yml
 environment:
-    - NOTES_PATH=
     - HIDE_FOLDERS=docs,private,trash
 volumes:
      - /home/user/myNotes:/var/www/perlite/Notes:ro
