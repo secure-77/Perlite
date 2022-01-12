@@ -6,7 +6,7 @@
 	
 A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 
-Just put your hole Obsidian vault or markdown folder/file structure in your web directory. The Page will built up by it self. 
+Just put your whole Obsidian vault or markdown folder/file structure in your web directory. The Page will built up by it self. 
 
 Its an open source alternative to  [obisidian publish](https://obsidian.md/publish).
 
