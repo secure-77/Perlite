@@ -11,7 +11,6 @@
     - highlight current navbar entry
     - set focus on current navbar entry if called by a link
     - other small layout changes
-
 - added separated scrollbars for navbar and content
 - added rel="noopener noreferrer" attributes for external links
 - added icon for external links
