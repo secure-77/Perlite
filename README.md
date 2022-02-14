@@ -16,7 +16,7 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 
 ## Demo
 
-[Perlite Demo](https://perlite.secure77.de)
+[Perlite Demo](https://perlite.secure77.de/?link=%2FWriteUps%2FHackTheBox%2FDeveloper%2FWriteUp)
 
 
 ![Demo Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/screenshot.png "Demo Screenshot")
