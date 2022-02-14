@@ -16,7 +16,7 @@ function getContent(str) {
         $("div.mdModalBody").html(result);
         var title = $("div.mdTitleHide").first().html();
         if (title) {
-          title = '<a href="' + window.location.origin + '?link=' + encodeURIComponent(title) + '">' + title + '</a>'
+          title = '<a href=?link=' + encodeURIComponent(title) + '>' + title + '</a>'
           $("li.mdTitle").html(title);
           $("h5.mdModalTitle").html(title);
         }
@@ -257,7 +257,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
 
       if (!properties.nodes.length) return;
       var node = nodes.get(properties.nodes[0]);
-      var glink = window.location.origin + '?link=' + encodeURIComponent('/' + node.title);
+      var glink = '?link=' + encodeURIComponent('/' + node.title);
       window.open(glink, "_self");
     });
   }
