@@ -44,7 +44,7 @@ Just put the content of the perlite directory in your web root directory, your n
 for Docker just check the [DOCKER](https://github.com/secure-77/Perlite/blob/main/Docker.md) readme.
 
 ### requirements
-- web server, tested with ![coverage](https://img.shields.io/badge/NGINX-1.21-6-blue)
+- web server, tested with ![coverage](https://img.shields.io/badge/NGINX-1.21.6-blue)
 - php-fpm, tested with ![coverage](https://img.shields.io/badge/PHP-7.4-green)
 - php module mb_strings for the parsedown (apt install php-mbstring)
 
