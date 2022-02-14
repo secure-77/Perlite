@@ -1,54 +1,151 @@
 
+/* Theme Changes 
+.navbar-dark {background-color: #222;}
+.navbar-light {background-color: #fff;}
+.btn-hover-light:hover, .btn-hover-light:focus {background-color: var(--bs-light);}
+.btn-hover-dark:hover, .btn-hover-dark:focus {background-color: var(--bs-dark);}
+.logo-light{fill:#fff;}
+.logo-dark{fill:#222;}
+*/
+
+.perlite-link {
+  color: var(--bs-body-color);
+}
+
+.perlite-link:focus, .perlite-link-active {
+  color: var(--bs-info);
+}
+
+
+/* --------------- */
+/* Global */
+
+@font-face {
+  font-family: 'NerdFonts'; /*a name to be used later*/
+  src: url('3270-Medium Nerd Font Complete.ttf'); /*URL to font*/
+}
+
+
 * {
   box-sizing: border-box;
+  font-family: "NerdFonts", sans-serif;
+  scrollbar-color: #333333db;
+  scrollbar-width: thin;
 }
 
 
 
-/* Theme Changes */
-.navbar-dark {background-color: #222;}
-.navbar-light {background-color: #fff;}
-.logo-light{fill:#fff;}
-.logo-dark{fill:#222;}
-.btn-hover-light:hover, .btn-hover-light:focus {background-color: var(--bs-light);}
-.btn-hover-dark:hover, .btn-hover-dark:focus {background-color: var(--bs-dark);}
 
+.external-link {
+  background-position: center right;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(transparent, transparent), url(../external-link.svg);  
+  background-size: 13px;
+  padding-right: 16px;
+  background-position-y: 4px;
+}
+
+
+main {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  padding-top: 100px;
+  width: 100%;
+  height: 100%;
+
+	}
+
+.markdown {
+  height: auto;
+  overflow: auto;
+}
+
+.divider-top {
+  width: 100%;
+  position: absolute;
+  top: 60px;
+  border: solid rgba(0, 0, 0, .15);
+  border-bottom: 0.5em;
+}
+
+.divider {
+  height: 100%;
+  border: solid rgba(0, 0, 0, .15);
+  border-top: 0px;
+  border-right: 0px;
+  border-bottom: 0px;
+  padding-left: 30px;
+}
+
+
+.perlite-bread {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.header-my {
+  width: 100%;
+  padding-right: var(--bs-gutter-x, 2.0rem);
+  padding-left: var(--bs-gutter-x, 2.0rem);
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+
+}
+
+
+
+
+/* --------------- */
+/* Images */
 
 #imgContainer {
   text-align: center;
   background-color: transparent;
 }
 
-.markdown {
-  height: auto;
-  overflow: auto;
-  
-}
-
-.sticky-nav {
-  position: sticky;
-  top: 100px;
-  z-index: 1020;
-}
-
-#showLastSearch {
-  float: right;
-  padding-right: 10px;
+.images {
+  max-width: 600px;
 }
 
 .aboutModalBody > p > img {
   max-width: 100%;
 }
 
-.images {
-    max-width: 600px;
+
+
+/* --------------- */
+/* Side-Navbar */
+
+.sticky-nav {
+  position: relative;
+  display: flex;
+  height: 100%;
+  z-index: 1020;
 }
 
-.nav-selector {
-  min-width: 300px;
-  overflow: hidden; 
+.perlite-navigator {
+  overflow: auto;
+  height: 100%;
+  margin-left: -15px;
+}
+
+.nav-left {
+  min-width: 400px;
+}
+
+.nav-right {
+  width: 500px;
 }  
 
+
+.list-unstyled {
+	list-style: none;
+	padding-left: 10px;
+}
 
 .list-unstyled li a {
   display: inline-flex;
@@ -58,24 +155,6 @@
   text-decoration: none;
 }
 
-
-main {
-  display: flex;
-  flex-wrap: nowrap;
-  padding-top: 60px; 
-	}
-
-
-.divider {
-  flex-shrink: 0;
-  width: 1.5rem;
-  min-height: 88vh; 
-  border: solid rgba(0, 0, 0, .15);
-  border-width: 1px 0;
-  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-}
-
-
 .btn-toggle::before {
   width: 1.25em;
   line-height: 0;
@@ -84,35 +163,55 @@ main {
   transform-origin: .5em 50%;
 }
 
-
 .btn-toggle[aria-expanded="true"]::before {
   transform: rotate(90deg);
 }
 
-
-
-.list-unstyled {
-	list-style: none;
-	padding-left: 10px;
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 
-.header-my {
-  width: 100%;
-  padding-right: var(--bs-gutter-x, 2.0rem);
-  padding-left: var(--bs-gutter-x, 2.0rem);
-  margin-right: auto;
-  margin-left: auto;
-  overflow: hidden;
+
+
+
+/* --------------- */
+/* Search */
+
+.searchFooter {
+  padding-right: 10px;
+  padding-top: 20px;
+  display: flex;
+  justify-content: flex-end;
 }
+
+.perlite-form:hover, .perlite-form:focus {
+
+  color: var(--bs-white);
+  background-color: var(--bs-gray-800);
+  border-color: var(--bs-info);
+}
+
+.perlite-form {
+
+  color: var(--bs-white);
+  background-color: var(--bs-gray-800);
+  border: 1px solid var(--bs-gray-700);
+}
+
+
+/* --------------- */
+/* Mobile / Responive Settings */
 
 @media screen and (max-width: 990px) {
-    .container-mobile, .divider,  .no-mobile {
-      clear: both;
-      float: left;
-      margin: 10px auto 5px 20px;
-      width: 100%;
+    .container-mobile, .no-mobile {
       display: none;
+    }
+
+    .nav-left {
+      width: 100%;
+      min-width: 0px;
     }
 
     .bd-aside {
@@ -141,14 +240,82 @@ main {
     }
 
     .headline {
-      padding-top: 0px !important;
-      margin-bottom:90px !important;
+      padding-top: 15px;
     }
 
     main {
-      padding-top: 70px; 
+      padding-top: 40px; 
       }
+
+    .searchFooter {
+      padding-top: 10px;
+    }
+
+    .header-my {
+      padding-left: var(--bs-gutter-x, 0.5rem);
+    }
+
+    .searchFooter {
+      position: fixed;
+      top: 90px;
+      right: 5px;
+    }
+
+    .perlite-navigator {
+      margin-left: 0px;
+    }
 
 }
 
+/* --------------- */
+/* Chrome Scroll bars */
+@media screen and (min-width: 990px) {
+::-webkit-scrollbar {
+  width: 10px;
+  background-color:transparent;
+}
+::-webkit-scrollbar-track {
+  background-color:transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-clip: padding-box;
+  border:3px solid transparent;
+  background-color:#333333db;
+  border-width:3px 4px 3px 3px;
+  min-height:45px;
+}
+}
 
+
+/* --------------- */
+/* Graph Styles */
+
+#mynetwork {
+  display: flex; 
+  justify-content: flex-start; 
+  width: 100%; 
+  height: 500px;  
+}
+
+#mynetwork_modal {
+  width: 100%; 
+  height: 100%;  
+}
+
+#graphContainer {
+ 
+  background-color: #000000a3;
+}
+
+/* .graphModalBody {
+  width: 100%; 
+  height: 100%;  
+} */
+
+.btn-close-light {
+  background-color: var(--bs-white);
+}
+
+.hide {
+  display: none;
+}

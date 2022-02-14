@@ -64,7 +64,7 @@ function menu($dir, $folder = ''){
 				$folderClean = getFolderInfos($file)[1];
 				$folderName = getFolderInfos($file)[2];
 				
-				$html .= '<button class="btn btn-toggle btn-hover-dark d-inline-flex text-info fw-bold align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#'.$folderClean.'-collapse" aria-expanded="false">'.$folderName .'</button>';
+				$html .= '<button class="btn btn-toggle pb-1 pt-1 nav-link border-0 d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#'.$folderClean.'-collapse" aria-expanded="false">'.$folderName .'</button>';
 				$html .= '<div class="collapse" id="'.$folderClean.'-collapse">
 							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1">';				
 				$html .= menu($file,$folder.'/');
@@ -90,7 +90,7 @@ function menu($dir, $folder = ''){
 				$pathID = preg_replace('/[^A-Za-z0-9\-]/', '_', $path);
 
                 $html .= '		<li>
-                                    <a href="#" onclick=getContent("'. $pathClean .'"); id="'. $pathID .'" class="link-light rounded">'. $mdFile .'</a>
+                                    <a href="#" onclick=getContent("'. $pathClean .'"); id="'. $pathID .'" class="perlite-link">'. $mdFile .'</a>
                                 </li>';
 			} 			
 		}
@@ -111,7 +111,7 @@ function doSearch($dir, $searchfor) {
 	$content = $Parsedown->text($result);
 	
 	return
-	'<div class="searchTitle" style="display: none">Search for: ' . $cleanSearch . '</div>
+	'<div class="searchTitle" style="display: none">Search results for: ' . $cleanSearch . '</div>
 	<div class="lastSearch" style="display: none"><a href="#">open recent search</a></div>
 	<br><br>'.$content;
 
@@ -135,8 +135,7 @@ function search($dir, $searchfor, $folder = '') {
 			}
 			
 		} else {
-
-			$fileinfo = pathinfo($file);
+			
 			if (isMDFile($file)) {
 
 				$pathClean = getFileInfos($file)[0];
@@ -144,19 +143,23 @@ function search($dir, $searchfor, $folder = '') {
 							
 				// get the file contents, assuming the file to be readable (and exist)
 				$contents = file_get_contents($file);
+
+				$contents = $contents . $pathClean;
 				// escape special characters in the query
 				$pattern = preg_quote($searchfor, '/');
 				
 				// finalise the regular expression, matching the whole line
-				$pattern = "/^.*$pattern.*\$/m";
+				$pattern = "/^.*$pattern.*\$/mi";
 				// search, and store all matching occurences in $matches
 				if(preg_match_all($pattern, $contents, $matches)){
-					$result .= '### <a href="#" onclick="getContent(\'/'.$urlPathClean.'\');">' . $pathClean ."</a>\n";
+					$result .= '<a href="#" onclick="getContent(\'/'.$urlPathClean.'\');">' . $pathClean ."</a>\n";
 					$result .= "```plaintext \n";				
 					$result .= implode("\n", $matches[0]);					
 					$result .= "\n```\n";
 					$result .= "\n&nbsp;\n";
 				}
+				//echo $pathClean;
+
 
 			}
 
@@ -173,9 +176,10 @@ function isMDFile($file) {
 
 	$fileinfo = pathinfo($file);
 	
-	if ($fileinfo["extension"] == "md") {
+			
+	if( isset($fileinfo['extension']) AND strtolower($fileinfo['extension']) == 'md'){
 		return true;
-	} 
+	}
 
 	return false;
 }
@@ -225,4 +229,217 @@ function isValidFolder($file) {
 	return false;
 }
 
-?>
+// graph stuff ---> dont need this function anymore, we just provide the hole graph as json and do the filtering with js
+
+// function getGraph($graphForFile) {
+// 	global $rootDir;
+
+// 	// make sure path starts with /
+// 	if (substr($graphForFile,0,1) !== '/') {
+// 		$graphForFile = '/' . $graphForFile;
+// 	}
+	
+// 	$jsonData = file_get_contents($rootDir.'/metadata.json');
+// 	if ($jsonData === false) {
+// 		return;
+// 	}
+
+// 	$json_obj = json_decode($jsonData, true);
+// 	if ($json_obj === null) {
+// 		return;
+// 	}
+
+// 	$graphNodes = array();
+// 	$graphEdges = array();
+
+// 	foreach ($json_obj as $jsonElement => $node) {
+// 		$jsonRelPath = '/'.$node['relativePath'];
+		
+// 		//get to correct element from json file (actual md file)
+// 		if (strcmp($jsonRelPath,$graphForFile) == 0) {
+					
+			
+// 			$startCounter = 0;
+// 			// add me to the graph
+// 			array_push($graphNodes, ['id'=>$startCounter, 'label'=>$node['fileName'], 'title'=>removeExtension($node['relativePath']),'shape'=>'ellipse', 'size'=>23]);
+
+// 			$linkCounter = $startCounter+ 1;
+// 			// check if element has links
+// 			if (isset($node['links'])) {
+// 				$nodeLinks = $node['links'];
+				
+// 				// get all links and add these as nodes
+// 				foreach ($nodeLinks as $nodeid => $linkElement) {
+
+// 					// skipp the first (self) id
+// 					$nodeid = $nodeid + $linkCounter;
+					
+// 					// add the links as notes
+// 					array_push($graphNodes, ['id'=>$nodeid, 'label'=>$linkElement['link'], 'title'=>$linkElement['relativePath']]);
+
+// 					// add the edges for th links
+// 					array_push($graphEdges, ['from'=>$startCounter, 'to'=>$nodeid]);
+
+// 					// set link counter
+// 					$linkCounter = $nodeid;
+// 				}
+// 			}
+// 			// check if element has backlinks
+// 			if (isset($node['backlinks'])) {
+// 				$nodeLinks = $node['backlinks'];
+				
+// 				// get all backlinks and add these as nodes
+// 				foreach ($nodeLinks as $nodeid => $linkElement) {
+					
+
+// 					// only add note if it does not already exist as node					
+// 					$existAlready = false;
+// 					$existwithId = 0;
+
+// 					foreach ($graphNodes as $i => $gnode) {		
+// 						if (strcmp($gnode['title'],$linkElement['relativePath']) === 0) {
+// 							$existAlready = true;
+// 							$existwithId = 	$gnode['id'];
+// 						}
+// 					}
+
+// 					if ($existAlready == false) {
+// 						// skipp the first (self) id
+// 						$newId = $linkCounter + 1;
+
+// 						// add the links as new node
+// 						array_push($graphNodes, ['id'=>$newId, 'label'=>$linkElement['fileName'], 'title'=>$linkElement['relativePath']]);
+						
+// 						// add the edges for th links
+// 						array_push($graphEdges, ['from'=>$newId, 'to'=>$startCounter]);
+// 						$linkCounter = $linkCounter + 1;
+							
+// 					} else {
+// 						// add the edges for the links
+// 						array_push($graphEdges, ['from'=>$existwithId, 'to'=>$startCounter]);
+// 					}
+					
+// 				}
+// 			}	
+
+// 			break;
+// 		}
+
+// 	}
+
+// 	// create the json out of the arrays
+// 	$myGraphNodes = json_encode($graphNodes,JSON_UNESCAPED_SLASHES);
+// 	$myGraphEdges = json_encode($graphEdges,JSON_UNESCAPED_SLASHES);
+
+// 	return '<div id="graphNodes" class="hide">'.$myGraphNodes.'</div><div id="graphEdges" class="hide">'.$myGraphEdges.'</div>';
+
+// }
+
+function getfullGraph($rootDir) {
+	
+
+	$jsonMetadaFile = $rootDir.'/metadata.json';
+	
+	if (!is_file($jsonMetadaFile)) {
+		return;
+	} 
+
+	$jsonData = file_get_contents($jsonMetadaFile);
+
+	if ($jsonData === false) {
+		return;
+	}
+
+	$json_obj = json_decode($jsonData, true);
+	if ($json_obj === null) {
+		return;
+	}
+
+	$graphNodes = array();
+	$graphEdges = array();
+
+	$currentNode = -1;
+
+
+	$nodeID = 0;
+	// create nodes
+	foreach ($json_obj as $id => $node) {
+							
+		$nodePath = removeExtension($node['relativePath']);
+		
+		// check if node from the  json file really exists
+		if (checkArray($nodePath)) {
+			// add node to the graph
+			array_push($graphNodes, ['id'=>$nodeID, 'label'=>$node['fileName'], 'title'=>$nodePath]);
+			$nodeID += 1;
+		}
+				
+	}
+	$targetId = -1;
+	$sourceId = -1;
+
+	foreach ($json_obj as $index => $node) {
+								
+		// create the linking between the nodes
+		if (isset($node['links'])) {
+			foreach ($node['links'] as $i => $links) {
+
+				$source = "";
+				$target = "";
+				if (isset($node['relativePath'])) {
+					$source = removeExtension($node['relativePath']);
+				}
+
+				if (isset($links['relativePath'])) {
+					$target = removeExtension($links['relativePath']);
+				}
+
+				if ($source !== '' && $target !== '') {
+					foreach ($graphNodes as $index => $element) {
+						$elementTitle = $element['title'];
+	
+						if(strcmp($elementTitle,$target) == 0){
+							$targetId = $element['id'];
+						}
+						if(strcmp($elementTitle,$source) == 0){
+							$sourceId = $element['id'];
+						}					
+						if($targetId !== -1 && $sourceId !== -1) {
+							array_push($graphEdges, ['from'=>$sourceId, 'to' => $targetId]);
+							$targetId = -1;
+							$sourceId = -1;
+						}		
+					}		
+
+				}
+				
+						
+			}
+		}			
+	}
+	
+	$myGraphNodes = json_encode($graphNodes,JSON_UNESCAPED_SLASHES);
+	$myGraphEdges = json_encode($graphEdges,JSON_UNESCAPED_SLASHES);
+
+	return '<div id="allGraphNodes" class="hide">'.$myGraphNodes.'</div><div id="allGraphEdges" class="hide">'.$myGraphEdges.'</div>';
+
+}
+
+function removeExtension($path) {
+
+	return substr($path,0,-3);
+}
+
+// check if node is in array
+function checkArray($requestNode)
+{
+	global $avFiles;
+	$requestNode = '/' . $requestNode;
+
+	if (in_array($requestNode, $avFiles, true)) {
+
+		return true;
+	}
+
+	return false;
+}

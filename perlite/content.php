@@ -2,7 +2,7 @@
 
 include('helper.php');
 
-
+// check get params
 if (isset($_GET['mdfile'])) {
 	$requestFile = $_GET['mdfile'];
 	
@@ -13,7 +13,7 @@ if (isset($_GET['mdfile'])) {
 	}	
 }
 
-
+// parse content for about modal
 if (isset($_GET['about'])) {
 	
 	if (is_string($_GET['about'])) {
@@ -21,7 +21,7 @@ if (isset($_GET['about'])) {
 	}	
 }
 
-
+// search request
 if (isset($_GET['search'])) {
 
 	$searchString = $_GET['search'];
@@ -33,7 +33,7 @@ if (isset($_GET['search'])) {
 }
 
 
-
+// parse the md to html
 function parseContent($requestFile) {
 
 	global $path;
@@ -42,27 +42,28 @@ function parseContent($requestFile) {
 	global $startDir;
 	$Parsedown = new Parsedown();
 	$Parsedown->setSafeMode(true);
-
 	$cleanFile = '';
 
+	// call menu again to refresh the array
 	menu($rootDir);
-
 	$path = '';
 
-	// get and parse the content
+	// get and parse the content, return if no content is there
 	$content = getContent($requestFile);
-	
+	if($content === '') {
+		return;
+	}
 
+	
 	// define pathes for links
 	$mdpath = $path;
 	$path = $startDir . $path;
 
-
+	// parse the content
 	$content = $Parsedown->text($content);
 
-
 	// pdf links
-	$replaces = '<a target="_blank" href="'.$path .'/'.'\\2">\\2</a>';
+	$replaces = '<a target="_blank" rel="noopener noreferrer" href="'.$path .'/'.'\\2">\\2</a>';
 	$pattern = array('/(\!\[\[)(.*.pdf)(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 	
@@ -71,7 +72,7 @@ function parseContent($requestFile) {
 	$pattern = array('/(\!\[\[)(.*)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 
-	// site links
+	// handle internal site links
 	$pathSplit = explode("/",$path);
 
 		$pattern = array('/(\[\[)(\.\.\/)+(.*)(\]\])/');
@@ -100,10 +101,13 @@ function parseContent($requestFile) {
 
 	// hide title
 	$content = '<div class="mdTitleHide" style="display: none";>'.$cleanFile.'</div>' . $content;
+	
 	echo $content;
+	return;
 
 }
 
+// read content from file
 function getContent($requestFile) {
 	global $avFiles;
 	global $path;
