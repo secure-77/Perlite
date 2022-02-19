@@ -446,12 +446,8 @@ $(document).ready(function () {
     return false;
   };
 
-  // show last search modal
-  // document.getElementById("showLastSearch").onclick = function () {
-  //   $("#searchModal").modal("show");
-  // };
 
-  // show graph modal
+ // show graph modal
   document.getElementById("expandGraph").onclick = function () {
     $("#graphModal").modal("show");
   };

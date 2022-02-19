@@ -1,3 +1,10 @@
+## 1.4.1
+- some code cleanup
+- fixed direct links when Perlite is in a subfolder of the root direcotry
+- added seperate perlite.svg for the about header
+- changed nginx docker config
+
+
 ## 1.4
 - updated highlight.js to 11.4.0
 - updated Bootstrap JS files to 5.1.3
