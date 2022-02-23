@@ -1,6 +1,5 @@
-## 1.4.1
+## 1.4.1 (planned)
 - some code cleanup
-- fixed direct links when Perlite is in a subfolder of the root direcotry
 - added seperate perlite.svg for the about header
 - changed nginx docker config
 
@@ -9,6 +8,7 @@
 - updated highlight.js to 11.4.0
 - updated Bootstrap JS files to 5.1.3
 - changed default (dark) theme from darkly to Bootswatch theme "slate"
+- fixed direct links when Perlite is in a subfolder of the root direcotry
 - removed the flatly theme, a11y-light theme and disabled the "light mode"
 - many layout redesigns like
     - changed the header size
