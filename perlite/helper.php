@@ -37,7 +37,7 @@ if (!strcmp($rootDir,"")) {
 
 } else {
 
-	$base = basename($rootDir);
+	$base = mb_basename($rootDir);
 	$startDir = $rootDir;
 		
 }
@@ -79,7 +79,7 @@ function menu($dir, $folder = ''){
 
 				$path = getFileInfos($file)[0];
                 $mdFile = getFileInfos($file)[1];
-						
+				
 				$path = '/'.$path;
 				// push the the path to the array
 				array_push($avFiles, $path);
@@ -158,8 +158,6 @@ function search($dir, $searchfor, $folder = '') {
 					$result .= "\n```\n";
 					$result .= "\n&nbsp;\n";
 				}
-				//echo $pathClean;
-
 
 			}
 
@@ -187,7 +185,8 @@ function isMDFile($file) {
 function getFileInfos($file) {
 
 	global $rootDir;
-	$mdFile = basename($file, '.md');
+	$mdFile = mb_basename($file);
+	$mdFile = substr($mdFile,0, -3);
 	$folderClean = str_replace('$' . $rootDir,'','$' . pathinfo($file)["dirname"]);
 		
 	$folderClean = substr($folderClean,1);
@@ -200,13 +199,23 @@ function getFileInfos($file) {
 	return [$pathClean,$mdFile];
 }
 
+function mb_basename($path) {
+    if (preg_match('@^.*[\\\\/]([^\\\\/]+)$@s', $path, $matches)) {
+        return $matches[1];
+    } else if (preg_match('@^([^\\\\/]+)$@s', $path, $matches)) {
+        return $matches[1];
+    }
+    return '';
+}
+
+
 function getFolderInfos($file) {
 	
 	global $rootDir;
 	$folder = str_replace($rootDir. '/','',$file);
 	$folderClean = str_replace('/','-',$folder);
 	$folderClean = str_replace(' ','-',$folderClean);
-	$folderName = basename($file);
+	$folderName = mb_basename($file);
 
 	return [$folder, $folderClean, $folderName];
 
@@ -215,7 +224,7 @@ function getFolderInfos($file) {
 function isValidFolder($file) {
 
 	global $hideFolders;
-	$folderName = basename($file);
+	$folderName = mb_basename($file);
 
 	// check if folder is in array
 	if (in_array($folderName,$hideFolders, true)) {
@@ -229,111 +238,6 @@ function isValidFolder($file) {
 	return false;
 }
 
-// graph stuff ---> dont need this function anymore, we just provide the hole graph as json and do the filtering with js
-
-// function getGraph($graphForFile) {
-// 	global $rootDir;
-
-// 	// make sure path starts with /
-// 	if (substr($graphForFile,0,1) !== '/') {
-// 		$graphForFile = '/' . $graphForFile;
-// 	}
-	
-// 	$jsonData = file_get_contents($rootDir.'/metadata.json');
-// 	if ($jsonData === false) {
-// 		return;
-// 	}
-
-// 	$json_obj = json_decode($jsonData, true);
-// 	if ($json_obj === null) {
-// 		return;
-// 	}
-
-// 	$graphNodes = array();
-// 	$graphEdges = array();
-
-// 	foreach ($json_obj as $jsonElement => $node) {
-// 		$jsonRelPath = '/'.$node['relativePath'];
-		
-// 		//get to correct element from json file (actual md file)
-// 		if (strcmp($jsonRelPath,$graphForFile) == 0) {
-					
-			
-// 			$startCounter = 0;
-// 			// add me to the graph
-// 			array_push($graphNodes, ['id'=>$startCounter, 'label'=>$node['fileName'], 'title'=>removeExtension($node['relativePath']),'shape'=>'ellipse', 'size'=>23]);
-
-// 			$linkCounter = $startCounter+ 1;
-// 			// check if element has links
-// 			if (isset($node['links'])) {
-// 				$nodeLinks = $node['links'];
-				
-// 				// get all links and add these as nodes
-// 				foreach ($nodeLinks as $nodeid => $linkElement) {
-
-// 					// skipp the first (self) id
-// 					$nodeid = $nodeid + $linkCounter;
-					
-// 					// add the links as notes
-// 					array_push($graphNodes, ['id'=>$nodeid, 'label'=>$linkElement['link'], 'title'=>$linkElement['relativePath']]);
-
-// 					// add the edges for th links
-// 					array_push($graphEdges, ['from'=>$startCounter, 'to'=>$nodeid]);
-
-// 					// set link counter
-// 					$linkCounter = $nodeid;
-// 				}
-// 			}
-// 			// check if element has backlinks
-// 			if (isset($node['backlinks'])) {
-// 				$nodeLinks = $node['backlinks'];
-				
-// 				// get all backlinks and add these as nodes
-// 				foreach ($nodeLinks as $nodeid => $linkElement) {
-					
-
-// 					// only add note if it does not already exist as node					
-// 					$existAlready = false;
-// 					$existwithId = 0;
-
-// 					foreach ($graphNodes as $i => $gnode) {		
-// 						if (strcmp($gnode['title'],$linkElement['relativePath']) === 0) {
-// 							$existAlready = true;
-// 							$existwithId = 	$gnode['id'];
-// 						}
-// 					}
-
-// 					if ($existAlready == false) {
-// 						// skipp the first (self) id
-// 						$newId = $linkCounter + 1;
-
-// 						// add the links as new node
-// 						array_push($graphNodes, ['id'=>$newId, 'label'=>$linkElement['fileName'], 'title'=>$linkElement['relativePath']]);
-						
-// 						// add the edges for th links
-// 						array_push($graphEdges, ['from'=>$newId, 'to'=>$startCounter]);
-// 						$linkCounter = $linkCounter + 1;
-							
-// 					} else {
-// 						// add the edges for the links
-// 						array_push($graphEdges, ['from'=>$existwithId, 'to'=>$startCounter]);
-// 					}
-					
-// 				}
-// 			}	
-
-// 			break;
-// 		}
-
-// 	}
-
-// 	// create the json out of the arrays
-// 	$myGraphNodes = json_encode($graphNodes,JSON_UNESCAPED_SLASHES);
-// 	$myGraphEdges = json_encode($graphEdges,JSON_UNESCAPED_SLASHES);
-
-// 	return '<div id="graphNodes" class="hide">'.$myGraphNodes.'</div><div id="graphEdges" class="hide">'.$myGraphEdges.'</div>';
-
-// }
 
 function getfullGraph($rootDir) {
 	

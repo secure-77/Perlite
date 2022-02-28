@@ -2,6 +2,7 @@
 - some code cleanup
 - added seperate perlite.svg for the about header
 - changed nginx docker config
+- fixed multibyte utf basename to support chinese characters in filename and path
 
 
 ## 1.4
