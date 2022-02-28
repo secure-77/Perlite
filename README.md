@@ -32,7 +32,7 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 - Full interactive Graph
 - Search
 - Support Obisdian links and images
-- [![coverage](https://img.shields.io/badge/Bootswath-Themes-blue)](https://bootswatch.com) (Slate)
+- [![coverage](https://img.shields.io/badge/Bootswatch-Themes-blue)](https://bootswatch.com) (Slate)
 
 ## Changelog
 [Changelog](https://github.com/secure-77/Perlite/blob/main/Changelog.md)
