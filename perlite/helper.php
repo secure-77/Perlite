@@ -186,7 +186,10 @@ function getFileInfos($file) {
 
 	global $rootDir;
 	$mdFile = mb_basename($file);
-	$mdFile = substr($mdFile,0, -3);
+	if (strcmp(substr($mdFile,-3), ".md") === 0) {
+		$mdFile = substr($mdFile,0, -3);
+	}
+	
 	$folderClean = str_replace('$' . $rootDir,'','$' . pathinfo($file)["dirname"]);
 		
 	$folderClean = substr($folderClean,1);

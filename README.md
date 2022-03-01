@@ -88,7 +88,7 @@ you can adjust them via the index.php
 - [![coverage](https://img.shields.io/badge/jQuery-3.6.0-lightblue)](https://jquery.com/)
 - [![coverage](https://img.shields.io/badge/Bootstrap-5-blue)](https://getbootstrap.com/)
 - [![coverage](https://img.shields.io/badge/Highlight.js-11.4.0-green)](https://highlightjs.org/)
-- [![coverage](https://img.shields.io/badge/vis.js-9.1.0-yellow)](https://https://visjs.org//)
+- [![coverage](https://img.shields.io/badge/vis.js-9.1.0-yellow)](https://visjs.org//)
 
 
 
