@@ -1,9 +1,9 @@
 ## 1.4.1
 - some code cleanup
-- added seperate perlite.svg for the about header
+- added separate perlite.svg for the about header
 - changed nginx docker config
 - fixed multibyte utf basename to support chinese characters in filename and path
-- fixed menu collapse problem when foldername contains dots or begins with a number
+- fixed menu collapse problem when folder name contains dots or begins with a number
 - fixed image size in mobile view
 - fixed image line break issue
 - fixed full graph view when current node has no links and no-link filter is enabled
