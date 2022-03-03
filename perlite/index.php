@@ -1,17 +1,32 @@
+<!DOCTYPE html>
 <html>
+<!-- 
+/*!
+  * Perlite v1.4.1 (https://github.com/secure-77/Perlite)
+  * Author: sec77 (https://secure77.de)
+  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
+*/
+-->
+
+
 <head>
     <link id="bootswatch-theme" rel="stylesheet" href=".styles/slate.css">
     <link id="highlight-js" rel="stylesheet" href=".styles/a11y-dark.min.css">
     <link rel="stylesheet" href=".styles/vis.min.css" />
     <link rel="stylesheet" href=".styles/style.css">
+    <link rel="stylesheet" href=".styles/katex.min.css">
 
     <script src=".js/jquery-3.6.0.min.js"></script>
     <script src=".js/highlight.min.js"></script>
     <script src=".js/bootstrap.bundle.min.js"></script>
     <script src=".js/vis-network.min.js"></script>
+    <script src=".js/katex.min.js"></script>
+    <script src=".js/auto-render.min.js"></script>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
     <header>
         <div class="no-mobile"></div>
@@ -28,10 +43,6 @@
                     <div class="no-mobile me-lg-5">
                         <li class="blockquote-footer perlite-bread text-info mdTitle">/</li>
                     </div>
-                    <!-- <div class="form-check form-switch p-2">
-                        <input class="form-check-input" type="checkbox" id="toggleTheme">
-                        <label class="form-check-label" for="toggleTheme"></label>
-                    </div> -->
                     <div class="text-end">
                         <button type="button" class="no-mobile btn btn-outline-secondary" data-bs-toggle="modal"
                             data-bs-target="#contentModal">

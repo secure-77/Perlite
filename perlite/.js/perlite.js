@@ -1,3 +1,10 @@
+/*!
+  * Perlite v1.4.1 (https://github.com/secure-77/Perlite)
+  * Author: sec77 (https://secure77.de)
+  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
+*/
+
+
 // get markdown content
 function getContent(str) {
 
@@ -26,6 +33,18 @@ function getContent(str) {
 
         // run mobile settings
         isMobile();
+
+        // render LaTeX
+        renderMathInElement(document.getElementById("mdContent"), 
+        {
+          delimiters: [
+              {left: "$$", right: "$$", display: true},
+              {left: "\\[", right: "\\]", display: true},
+              {left: "$", right: "$", display: false},
+              {left: "\\(", right: "\\)", display: false}
+          ]
+      }      
+        );
 
         // Hide Search
         $("#searchModal").modal("hide");
@@ -64,6 +83,7 @@ function getContent(str) {
 function renderGraph(modal, path = "", filter_emptyNodes = false) {
 
 
+  
   var visNodes = document.getElementById('allGraphNodes').innerHTML;
   var visEdges = document.getElementById('allGraphEdges').innerHTML;
 
@@ -73,6 +93,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
   var currId = 0;
   path = decodeURIComponent(path);
 
+
   // get current node
   for (const x in jsonNodes) {
     if (path == ('/' + jsonNodes[x]['title'])) {
@@ -80,7 +101,6 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
       break;
     }
   }
-
 
   //container = document.getElementById('mdContent');
 
@@ -119,7 +139,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
         },
         hover: {
           border: '#5bc0de',
-          background: '#3a3f44',
+          background: '#6d8e98',
         },
       },
     }
@@ -144,6 +164,9 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
         filter: function (node) {
           connEdges = edgeView.get({
             filter: function (edge) {
+              if(node.id == currId) {
+                return true;
+              };
               return (
                 (edge.to == node.id) || (edge.from == node.id));
             }
@@ -161,13 +184,17 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
     };
 
     network = new vis.Network(container_modal, data, options);
-    network.selectNodes([currId]);
+    //network.selectNodes([currId]);
     var node = network.body.nodes[currId];
-    node.setOptions({
-      font: {
-        size: 25,
-      }
-    });
+      node.setOptions({
+        font: {
+          size: 20
+        },
+          color: {
+            background: '#ffbf00',
+          },
+      });   
+    
 
 
     // filter the graph to the desired nodes and edges
@@ -182,8 +209,12 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
     for (const x in jsonNodes) {
       if (path == ('/' + jsonNodes[x]['title'])) {
         myNodes.push(jsonNodes[x])
-        myNodes[0]['shape'] = 'ellipse';
-        myNodes[0]['size'] = '23';
+        curNode = myNodes[0]
+        curNode.size = '20';
+        curNode.color = {
+          background: '#ffbf00',
+        };
+        
         break;
       }
     }
@@ -301,38 +332,7 @@ function search(str) {
   }
 };
 
-// toggle theme
-// function toggleTheme(mode) {
 
-//   if (mode == "light") {
-
-//     document.getElementById("highlight-js").setAttribute("href", ".styles/a11y-light.min.css");
-//     document.getElementById("bootswatch-theme").setAttribute("href", ".styles/flatly.css");
-
-//     replaceClass("link-light", "link-dark");
-//     replaceClass("btn-close-light", "btn-close-dark");
-//     replaceClass("navbar-dark", "navbar-light");
-//     replaceClass("logo-light", "logo-dark");
-//     replaceClass("btn-hover-dark", "btn-hover-light");
-
-//     document.cookie = 'theme=light; path=/';
-
-//   } else {
-
-//     document.getElementById("highlight-js").setAttribute("href", ".styles/a11y-dark.min.css");
-//     document.getElementById("bootswatch-theme").setAttribute("href", ".styles/slate.css");
-
-//     replaceClass("link-dark", "link-light");
-//     replaceClass("btn-close-dark", "btn-close-light");
-//     replaceClass("navbar-light", "navbar-dark");
-//     replaceClass("logo-dark", "logo-light");
-//     replaceClass("btn-hover-light", "btn-hover-dark");
-
-//     document.cookie = 'theme=dark; path=/';
-
-//   }
-
-// }
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -349,25 +349,6 @@ function replaceClass(oldClass, newClass) {
 
 // general stuff
 $(document).ready(function () {
-
-  // set theme
-  // if (getCookie("theme")) {
-  //   if (getCookie("theme") == "light") {
-  //     $("#toggleTheme").prop("checked", "false");
-  //     toggleTheme("light");
-  //   } else {
-  //     $("#toggleTheme").prop("checked", "true");
-  //   }
-  // }
-
-  // theme toggle
-  // $("#toggleTheme").change(function () {
-  //   if ($(this).prop("checked")) {
-  //     toggleTheme("dark");
-  //   } else {
-  //     toggleTheme("light");
-  //   }
-  // });
 
 
   // set filter option

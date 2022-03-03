@@ -1,8 +1,18 @@
-## 1.4.1 (planned)
+## 1.4.1
 - some code cleanup
 - added seperate perlite.svg for the about header
 - changed nginx docker config
 - fixed multibyte utf basename to support chinese characters in filename and path
+- fixed menu collapse problem when foldername contains dots or begins with a number
+- fixed image size in mobile view
+- fixed image line break issue
+- fixed full graph view when current node has no links and no-link filter is enabled
+- changed color of current node in the graph view
+- LaTeX support 
+    - added katex.min.js
+    - added katex.min.css
+    - added fonts
+    - added auto-render.min.js
 
 
 ## 1.4
@@ -50,16 +60,19 @@
 - added cookie for theme settings
 - adjust mobile margins
 
+
 ## 1.2
 - added Docker  
 - added direct Links  
 - changed base dir logic  
 - update Readme
 
+
 ## 1.1
 - added mobile responsive
 - added search
 - added theme support and darkmode 
+
 
 ## 1.0
 - First prod. ready release

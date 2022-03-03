@@ -1,10 +1,7 @@
-/* Theme Changes 
-.navbar-dark {background-color: #222;}
-.navbar-light {background-color: #fff;}
-.btn-hover-light:hover, .btn-hover-light:focus {background-color: var(--bs-light);}
-.btn-hover-dark:hover, .btn-hover-dark:focus {background-color: var(--bs-dark);}
-.logo-light{fill:#fff;}
-.logo-dark{fill:#222;}
+/*!
+  * Perlite v1.4.1 (https://github.com/secure-77/Perlite)
+  * Author: sec77 (https://secure77.de)
+  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
 
@@ -13,7 +10,7 @@
 
 @font-face {
   font-family: 'NerdFonts';
-  src: url('3270-Medium Nerd Font Complete.ttf');
+  src: url('fonts/3270-Medium Nerd Font Complete.ttf');
 }
 
 * {
@@ -30,7 +27,7 @@
   background-image: linear-gradient(transparent, transparent), url(../external-link.svg);
   background-size: 13px;
   padding-right: 16px;
-  background-position-y: 4px;
+  background-position-y: 2px;
 }
 
 
@@ -41,6 +38,7 @@ main {
   padding-top: 100px;
   width: 100%;
   height: 100%;
+  position: fixed;
 
 }
 
@@ -93,7 +91,7 @@ main {
 }
 
 .images {
-  max-width: 600px;
+  max-width: 800px;
 }
 
 .aboutModalBody>p>img {
@@ -255,6 +253,14 @@ main {
 
   .perlite-navigator {
     margin-left: 0px;
+  }
+
+  .images, img {
+    width: 100%;
+  }
+
+  .imagepreview {
+  width: 200%;
   }
 
 }

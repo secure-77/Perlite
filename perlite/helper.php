@@ -1,5 +1,10 @@
 <?php
 
+/*!
+  * Perlite v1.4.1 (https://github.com/secure-77/Perlite)
+  * Author: sec77 (https://secure77.de)
+  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
+*/
 
 
 include('Parsedown.php');
@@ -63,9 +68,12 @@ function menu($dir, $folder = ''){
 				$folder = getFolderInfos($file)[0];
 				$folderClean = getFolderInfos($file)[1];
 				$folderName = getFolderInfos($file)[2];
+				$folderId = str_replace(' ', '_', $folderClean);
+				$folderId = preg_replace('/[^A-Za-z\-]/', '_', $folderId);
+				$folderId = '_' . $folderId;
 				
-				$html .= '<button class="btn btn-toggle pb-1 pt-1 nav-link border-0 d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#'.$folderClean.'-collapse" aria-expanded="false">'.$folderName .'</button>';
-				$html .= '<div class="collapse" id="'.$folderClean.'-collapse">
+				$html .= '<button class="btn btn-toggle pb-1 pt-1 nav-link border-0 d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#'.$folderId.'-collapse" aria-expanded="false">'.$folderName .'</button>';
+				$html .= '<div class="collapse" id="'.$folderId.'-collapse">
 							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1">';				
 				$html .= menu($file,$folder.'/');
 				$html .= '</ul></div></li>';

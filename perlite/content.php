@@ -1,5 +1,12 @@
 <?php
 
+/*!
+  * Perlite v1.4.1 (https://github.com/secure-77/Perlite)
+  * Author: sec77 (https://secure77.de)
+  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
+*/
+
+
 include('helper.php');
 
 // check get params
@@ -68,7 +75,7 @@ function parseContent($requestFile) {
 	$content = preg_replace($pattern, $replaces ,$content);
 	
 	// img links
-	$replaces = '<a href="#" class="pop"><img class="images" alt="image not in same folder" src="'. $path .'/\\2\\3'.'"/></a>';
+	$replaces = '<p><a href="#" class="pop"><img class="images" alt="image not found" src="'. $path .'/\\2\\3'.'"/></a></p>';
 	$pattern = array('/(\!\[\[)(.*)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 

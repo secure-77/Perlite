@@ -30,6 +30,7 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 - Full responsive
 - No manual parsing or converting necessary
 - Full interactive Graph
+- LaTeX support
 - Search
 - Support Obisdian links and images
 - [![coverage](https://img.shields.io/badge/Bootswatch-Themes-blue)](https://bootswatch.com) (Slate)
@@ -76,7 +77,10 @@ you can adjust them via the index.php
 - The Logo, Blog and so on are nested in the index.php (line 28 e.g. for the link to the Blog)
 
 #### Graph
-- The Graph is implemented with vis.js, so there are many options you can play on with, you can adjust them via the `options` object in the perlite.js
+The Graph is implemented with vis.js, so there are many options you can play on with, you can adjust them via the `options` object in the perlite.js
+
+#### Root Dir
+if you want to change or specify the root directory of you vault you can do this by changing the variable `$rootDir` in the helper.php
 
 #### Python Parser
 - there is a pythonParser.py to genereate the vis.js JSON structure out of the metadata.json. This script is not beeing used anymore but i will let it here.
@@ -86,9 +90,10 @@ you can adjust them via the index.php
 
 - [![coverage](https://img.shields.io/badge/Parsedown-1.7.4-lightgrey)](https://github.com/erusev/parsedown)
 - [![coverage](https://img.shields.io/badge/jQuery-3.6.0-lightblue)](https://jquery.com/)
-- [![coverage](https://img.shields.io/badge/Bootstrap-5-blue)](https://getbootstrap.com/)
+- [![coverage](https://img.shields.io/badge/Bootstrap-5.1.3-blue)](https://getbootstrap.com/)
 - [![coverage](https://img.shields.io/badge/Highlight.js-11.4.0-green)](https://highlightjs.org/)
-- [![coverage](https://img.shields.io/badge/vis.js-9.1.0-yellow)](https://visjs.org//)
+- [![coverage](https://img.shields.io/badge/vis.js-9.1.0-yellow)](https://visjs.org/)
+- [![coverage](https://img.shields.io/badge/KaTeX.js-0.15.2-red)](https://katex.org/)
 
 
 
