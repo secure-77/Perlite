@@ -114,6 +114,7 @@ main {
   overflow: auto;
   height: 100%;
   margin-left: -15px;
+  max-width: 440px;
 }
 
 .nav-left {
