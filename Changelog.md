@@ -1,5 +1,6 @@
 ## 1.4.2 (planned)
 - enabled simple line break in parsedown
+- fixed sidebar height
 
 
 ## 1.4.1
