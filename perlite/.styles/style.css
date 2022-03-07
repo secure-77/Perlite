@@ -43,7 +43,7 @@ main {
 }
 
 .markdown {
-  height: auto;
+  height: 98%;
   overflow: auto;
 }
 
@@ -112,7 +112,7 @@ main {
 
 .perlite-navigator {
   overflow: auto;
-  height: 100%;
+  height: 88%;
   margin-left: -15px;
   max-width: 440px;
 }
