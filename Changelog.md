@@ -1,3 +1,7 @@
+## 1.4.2 (planned)
+- enabled simple line break in parsedown
+
+
 ## 1.4.1
 - some code cleanup
 - added separate perlite.svg for the about header

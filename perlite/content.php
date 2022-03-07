@@ -49,6 +49,7 @@ function parseContent($requestFile) {
 	global $startDir;
 	$Parsedown = new Parsedown();
 	$Parsedown->setSafeMode(true);
+	$Parsedown->setBreaksEnabled(true);
 	$cleanFile = '';
 
 	// call menu again to refresh the array
