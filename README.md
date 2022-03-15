@@ -12,7 +12,7 @@ Its an open source alternative to  [obisidian publish](https://obsidian.md/publi
 
 Read more about Perlite and staging tips on my blog post: [Perlite on Secure77](https://secure77.de/perlite).
 
-If you want to discuss about Perlite you can join the thread in the [Obsidian Forum](https://forum.obsidian.md/t/perlite-publish-your-notes-to-your-own-web-server/21712).
+If you want to discuss about Perlite you can join the thread in the [Obsidian Forum](https://forum.obsidian.md/t/perlite-publish-your-notes-to-your-own-web-server/21712) or join the [Perlite Discord Server](https://discord.gg/pkJ347ssWT)
 
 ## Demo
 

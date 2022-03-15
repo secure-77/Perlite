@@ -6,12 +6,12 @@
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
-
 include('Parsedown.php');
+//include('ParsedownExtra.php');
 
 
 $avFiles = array();
-//$rootDir = 'notes/WriteUps';
+//$rootDir = 'Demo';
 $rootDir = getenv('NOTES_PATH');
 $hideFolders = getenv('HIDE_FOLDERS');
 $about = '.about';

@@ -1,6 +1,9 @@
-## 1.4.2 (planned)
+## 1.4.2 RC (pushed but not released yet) 
 - enabled simple line break in parsedown
 - fixed sidebar height
+- fixed max img width
+- removed # from title
+- added Perlite Discord Server
 
 
 ## 1.4.1

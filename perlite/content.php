@@ -1,7 +1,7 @@
 <?php
 
 /*!
-  * Perlite v1.4.1 (https://github.com/secure-77/Perlite)
+  * Perlite v1.4.2 RC (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
@@ -47,6 +47,7 @@ function parseContent($requestFile) {
 	global $cleanFile;
 	global $rootDir;
 	global $startDir;
+	//$Parsedown = new ParsedownExtra();
 	$Parsedown = new Parsedown();
 	$Parsedown->setSafeMode(true);
 	$Parsedown->setBreaksEnabled(true);
