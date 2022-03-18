@@ -1,5 +1,9 @@
 # Reverse Tabnabbing
 
+see box: [[../../WriteUps/HackTheBox/Developer/WriteUp]]
+see box: [[../../WriteUps/HackTheBox/Developer/WriteUp|Custom Link]]
+
+
 Background Infos:  https://html.spec.whatwg.org/multipage/browsers.html#determining-the-origin
 
 HTB Example: https://blog.0xprashant.in/posts/htb-bug/

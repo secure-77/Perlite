@@ -82,32 +82,17 @@ function parseContent($requestFile) {
 	$content = preg_replace($pattern, $replaces ,$content);
 
 	// handle internal site links
-	$pathSplit = explode("/",$path);
-
-		$pattern = array('/(\[\[)(\.\.\/)+(.*)(\]\])/');
-		$content = preg_replace_callback($pattern, 
-		function($matches) use ($pathSplit) {
-
-			$countDirs = count(explode("../",$matches[0]));
-			$countDirs = $countDirs -1;
-			$newPath = array_splice($pathSplit, 1, -$countDirs);			
-			$newAbPath = implode('/', $newPath);
-			$urlPath = $newAbPath. '/'. $matches[3];
-			if (substr($urlPath,0,1) != '/') {
-				$urlPath = '/' . $urlPath;
-			}
-			$urlPath = rawurlencode($urlPath);
-			return '<a href="?link='.$urlPath.'">'. $matches[3].'</a>';
-		}
-		,$content);
 	
-	
-	// root site links
-	$urlPath = rawurlencode($mdpath);
-	$replaces = '<a href="?link='.$urlPath.'%2F'.'\\2">\\2</a>';
+
+	// search for links ousite of the current folder
+	$pattern = array('/(\[\[)(?:\.\.\/)+(.*)(\]\])/');
+	$content = translateLink($pattern, $content, $path, false);
+
+	// search for links in the same folder
 	$pattern = array('/(\[\[)(.*)(\]\])/');
-	$content = preg_replace($pattern, $replaces ,$content);
-
+	$content = translateLink($pattern, $content, $mdpath, true);
+	
+	
 	// hide title
 	$content = '<div class="mdTitleHide" style="display: none";>'.$cleanFile.'</div>' . $content;
 	
@@ -115,6 +100,45 @@ function parseContent($requestFile) {
 	return;
 
 }
+
+//internal links
+function translateLink($pattern, $content, $path, $sameFolder) {
+	
+	return preg_replace_callback($pattern, 
+	function($matches) use ($path, $sameFolder) {
+		
+		$newAbPath = $path;
+		$pathSplit = explode("/",$path);
+		$linkName = $matches[2];
+		$linkFile = $matches[2];
+
+		# handle custom internal obsidian links
+		$splitLink = explode("|", $matches[2]);
+		if (count($splitLink) > 1) {
+			
+			$linkFile = $splitLink[0];
+			$linkName = $splitLink[1];
+		}
+		
+		// do extra stuff to get the absolute path
+		if ($sameFolder == false) {
+			$countDirs = count(explode("../",$matches[0]));
+			$countDirs = $countDirs -1;
+			$newPath = array_splice($pathSplit, 1, -$countDirs);			
+			$newAbPath = implode('/', $newPath);
+		}
+
+		
+		$urlPath = $newAbPath. '/'. $linkFile;
+		if (substr($urlPath,0,1) != '/') {
+			$urlPath = '/' . $urlPath;
+		}
+		$urlPath = rawurlencode($urlPath);
+		return '<a href="?link='.$urlPath.'">'. $linkName .'</a>';
+	}
+,$content);
+}
+
 
 // read content from file
 function getContent($requestFile) {

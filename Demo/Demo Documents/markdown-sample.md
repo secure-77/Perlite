@@ -1,6 +1,7 @@
 An h1 header
 ============
 
+Link to other Markdown file: [[markdown-sample2|Custom Link Name]]
 Link to other Markdown file: [[markdown-sample2]]
 
 Link to PDF: ![[pdf-test.pdf]]

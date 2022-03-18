@@ -4,6 +4,7 @@
 - fixed max img width
 - removed # from title
 - added Perlite Discord Server
+- added support for custom internal Obsidian link names
 
 
 ## 1.4.1
