@@ -44,27 +44,27 @@ Just put the content of the perlite directory in your web root directory, your n
 
 for Docker just check the [DOCKER](https://github.com/secure-77/Perlite/blob/main/Docker.md) readme.
 
-### requirements
+### Requirements
 - web server, tested with ![coverage](https://img.shields.io/badge/NGINX-1.21.6-blue)
 - php-fpm, tested with ![coverage](https://img.shields.io/badge/PHP-7.4-green)
 - php module mb_strings for the parsedown (apt install php-mbstring)
 
 
-### required opsidian options
+### Required Obsidian Options
 - in the options `Files & Links` you need to set the `New link format` to `Relative path to file`
 ![Link Options](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/link.png "Link Options")
 
 #### Graph
-- for the Graph you need to install the plugin [Metadata Extractor](https://github.com/kometenstaub/metadata-extractor), you can do this via the build in Community Plugin Browser
+- for the Graph you need to install the plugin [Metadata Extractor](https://github.com/kometenstaub/metadata-extractor), you can also do this via the build in Community Plugin Browser
 - make sure to turn on the plugin
-- in the settings set the path of the metadata.json to your local vault root folder (like `C:\Users\John\MyNotes\metadata.json`, when your vault is MyNotes). if you transfer your vault later to a webserver, make sure the metadata.json will be transferred too.
-- also dont forget set a timer how often the file should be written or just enable `Write JSON files automatically when Obsidian launches`
+- in the settings, set the path of the metadata.json to your local vault root folder (like `C:\Users\John\MyNotes\metadata.json`, when your vault is MyNotes). if you transfer your vault later to a webserver, make sure the metadata.json will be transferred too.
+- also dont forget to set a timer how often the file should be written or just enable `Write JSON files automatically when Obsidian launches`
 
 ![Plugin Options](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/plugin_options.png "Plugin Options")
 
 ### Hide Folders and Files
 
-- if you want to exclude specific folders, e.g. your attachment folder you can set the `HIDE_FOLDERS` variable
+- if you want to exclude specific folders, e.g. your attachment folder you can set the `HIDE_FOLDERS` variable or replace `$hideFolders = getenv('HIDE_FOLDERS');` in the helper.php with something like this `$hideFolders = 'attachments';`
 - folders and files starting with a "." (dot) are exclude by default
 ![Folders Options](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/folders.png "Folders Options")
 
@@ -83,10 +83,10 @@ The Graph is implemented with vis.js, so there are many options you can play on 
 if you want to change or specify the root directory of you vault you can do this by changing the variable `$rootDir` in the helper.php
 
 #### Python Parser
-- there is a pythonParser.py to genereate the vis.js JSON structure out of the metadata.json. This script is not beeing used anymore but i will let it here.
+- there is a pythonParser.py to genereate the vis.js JSON structure out of the metadata.json. This script is not beeing used anymore but I will let it here.
 
 
-### dependencies (all included)
+### Dependencies (all included)
 
 - [![coverage](https://img.shields.io/badge/Parsedown-1.7.4-lightgrey)](https://github.com/erusev/parsedown)
 - [![coverage](https://img.shields.io/badge/jQuery-3.6.0-lightblue)](https://jquery.com/)
@@ -98,7 +98,7 @@ if you want to change or specify the root directory of you vault you can do this
 
 
 ## Security
-- The [Safemode](https://github.com/erusev/parsedown#security) from Parsedown is active, but i would not recommend to allow untrusted user input.
+- The [Safemode](https://github.com/erusev/parsedown#security) from Parsedown is active, but I would not recommend to allow untrusted user input.
 - You should prevent that the .md files are direct accessible via the browser (only the php engine need access to it) or at least make sure that the md files will be downloaded and not be rendered by browser
 - You should prevent that the metadata.json file is direct accessible via the browser (only the php engine need access to it). The extracted metadata.json contains the whole obsidian structure, so this file could be sensitive if you plan to exclude some files or folders from Perlite. However, the parsing is done by the php engine and it checks for every path if the file really exists in the provided vault, so files you excluded from the vault will also not be visible in the graph, but they are still present in the metadata.json. This is why you should prevent access to it.
 

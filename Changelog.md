@@ -1,10 +1,15 @@
-## 1.4.2 RC (pushed but not released yet) 
+## 1.4.3 RC (pushed but not released yet) 
+
+
+## 1.4.2
 - enabled simple line break in parsedown
 - fixed sidebar height
-- fixed max img width
+- fixed max img width & height
 - removed # from title
 - added Perlite Discord Server
 - added support for custom internal Obsidian link names
+- improved style of tables
+- url update in browser
 
 
 ## 1.4.1

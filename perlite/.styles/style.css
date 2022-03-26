@@ -1,5 +1,5 @@
 /*!
-  * Perlite v1.4.2 RC (https://github.com/secure-77/Perlite)
+  * Perlite (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
@@ -30,6 +30,11 @@
   background-position-y: 2px;
 }
 
+
+td, th {
+  border-width: 0.1px;
+  padding: 5px;
+}
 
 main {
   display: flex;
@@ -92,6 +97,7 @@ main {
 
 .images {
   max-width: 800px;
+  max-height: 800px;
 }
 
 img {
