@@ -11,8 +11,10 @@ include('Parsedown.php');
 
 
 $avFiles = array();
-//$rootDir = 'Demo';
+
 $rootDir = getenv('NOTES_PATH');
+//$rootDir = 'Demo';
+
 $hideFolders = getenv('HIDE_FOLDERS');
 $about = '.about';
 

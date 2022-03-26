@@ -80,7 +80,9 @@ you can adjust them via the index.php
 The Graph is implemented with vis.js, so there are many options you can play on with, you can adjust them via the `options` object in the perlite.js
 
 #### Root Dir
-if you want to change or specify the root directory of you vault you can do this by changing the variable `$rootDir` in the helper.php
+- Without setting a `NOTES_PATH` enviroment variable, Perlite takes the `perlite` directory as root folder, this means, you need to copy your content of the vault folder into the `perlite` directory (including metadata.json if you want a graph).
+- If you want to change or specify the root directory of your vault, you can do this by changing the variable `$rootDir` in the helper.php or by setting the `NOTES_PATH` as php variable.
+- You can see an example of this in the Release, just uncomment the `//$rootDir = 'Demo';` in the helper.php and see how the build changes, also notice the two metadata.json, one in the perlite folder and one in the Demo folder, depending on your rootDir either the one in perlite or the one in Demo will be used.
 
 #### Python Parser
 - there is a pythonParser.py to genereate the vis.js JSON structure out of the metadata.json. This script is not beeing used anymore but I will let it here.
