@@ -40,32 +40,32 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 
 
 ## Install
-Just put the content of the perlite directory in your web root directory, your notes should resident as a subfolder of perlite
+Just put the content of the perlite directory in your web root directory, your notes should resident as a subfolder of perlite.
 
-for Docker just check the [DOCKER](https://github.com/secure-77/Perlite/blob/main/Docker.md) readme.
+For Docker just check the [DOCKER](https://github.com/secure-77/Perlite/blob/main/Docker.md) readme.
 
 ### Requirements
-- web server, tested with ![coverage](https://img.shields.io/badge/NGINX-1.21.6-blue)
-- php-fpm, tested with ![coverage](https://img.shields.io/badge/PHP-7.4-green)
-- php module mb_strings for the parsedown (apt install php-mbstring)
+- Web server, tested with ![coverage](https://img.shields.io/badge/NGINX-1.21.6-blue)
+- Php-fpm, tested with ![coverage](https://img.shields.io/badge/PHP-7.4-green)
+- Php module mb_strings for the parsedown (apt install php-mbstring)
 
 
 ### Required Obsidian Options
-- in the options `Files & Links` you need to set the `New link format` to `Relative path to file`
+- In the options `Files & Links` you need to set the `New link format` to `Relative path to file`
 ![Link Options](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/link.png "Link Options")
 
 #### Graph
-- for the Graph you need to install the plugin [Metadata Extractor](https://github.com/kometenstaub/metadata-extractor), you can also do this via the build in Community Plugin Browser
-- make sure to turn on the plugin
-- in the settings, set the path of the metadata.json to your local vault root folder (like `C:\Users\John\MyNotes\metadata.json`, when your vault is MyNotes). if you transfer your vault later to a webserver, make sure the metadata.json will be transferred too.
-- also dont forget to set a timer how often the file should be written or just enable `Write JSON files automatically when Obsidian launches`
+- For the Graph you need to install the plugin [Metadata Extractor](https://github.com/kometenstaub/metadata-extractor), you can also do this via the build in Community Plugin Browser
+- Make sure to turn on the plugin
+- In the settings, set the path of the metadata.json to your local vault root folder (like `C:\Users\John\MyNotes\metadata.json`, when your vault is MyNotes). if you transfer your vault later to a webserver, make sure the metadata.json will be transferred too.
+- Also dont forget to set a timer how often the file should be written or just enable `Write JSON files automatically when Obsidian launches`
 
 ![Plugin Options](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/plugin_options.png "Plugin Options")
 
 ### Hide Folders and Files
 
-- if you want to exclude specific folders, e.g. your attachment folder you can set the `HIDE_FOLDERS` variable or replace `$hideFolders = getenv('HIDE_FOLDERS');` in the helper.php with something like this `$hideFolders = 'attachments';`
-- folders and files starting with a "." (dot) are exclude by default
+- If you want to exclude specific folders, e.g. your attachment folder you can set the `HIDE_FOLDERS` variable or replace `$hideFolders = getenv('HIDE_FOLDERS');` in the helper.php with something like this `$hideFolders = 'attachments';`
+- Folders and files starting with a "." (dot) are exclude by default
 ![Folders Options](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/folders.png "Folders Options")
 
 ### Advanced Options and Infos
@@ -85,7 +85,7 @@ The Graph is implemented with vis.js, so there are many options you can play on 
 - You can see an example of this in the Release, just uncomment the `//$rootDir = 'Demo';` in the helper.php and see how the build changes, also notice the two metadata.json, one in the perlite folder and one in the Demo folder, depending on your rootDir either the one in perlite or the one in Demo will be used.
 
 #### Python Parser
-- there is a pythonParser.py to genereate the vis.js JSON structure out of the metadata.json. This script is not beeing used anymore but I will let it here.
+- There is a pythonParser.py to genereate the vis.js JSON structure out of the metadata.json. This script is not beeing used anymore but I will let it here.
 
 
 ### Dependencies (all included)
