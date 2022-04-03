@@ -1,0 +1,61 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - '*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - id: read-docker-image-identifiers
+      name: Read Docker Image Identifiers
+      run: echo "IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+    - id: docker-tag
+      uses: yuya-takeyama/docker-tag-from-github-ref-action@v1
+
+    - name: Build & Push - Perlite
+      uses: docker/build-push-action@v2
+      with:
+        context: ./perlite
+        file: ./perlite/Dockerfile
+        push: true
+        tags: ghcr.io/${{ env.IMAGE_REPOSITORY }}:perlite-${{ steps.docker-tag.outputs.tag }}
+
+    - name: Build & Push - Perlite-dev
+      uses: docker/build-push-action@v2
+      with:
+        context: ./perlite
+        file: ./perlite/Dockerfile.dev
+        push: true
+        tags: ghcr.io/${{ env.IMAGE_REPOSITORY }}:perlite-dev-${{ steps.docker-tag.outputs.tag }}
+
+    - name: Build & Push - web
+      uses: docker/build-push-action@v2
+      with:
+        context: ./web
+        file: ./web/Dockerfile
+        push: true
+        tags: ghcr.io/${{ env.IMAGE_REPOSITORY }}:web-${{ steps.docker-tag.outputs.tag }}
+
+
+    - name: Delete untagged docker image
+      uses: camargo/delete-untagged-action@v1
+      with:
+        personal-account: true
+        github-token: ${{ secrets.DELETE }}
