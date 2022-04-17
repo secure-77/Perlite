@@ -3,7 +3,7 @@
 
 <?php
 /*!
-  * Version v1.4.2 (https://github.com/secure-77/Perlite)
+  * Version v1.4.3 RC (https://github.com/secure-77/Perlite)
 */
 ?>
 
@@ -29,6 +29,7 @@
     <script src=".js/vis-network.min.js"></script>
     <script src=".js/katex.min.js"></script>
     <script src=".js/auto-render.min.js"></script>
+    <script src=".js/mermaid.min.js"></script>
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -184,13 +185,8 @@ $jsonGraphData = getfullGraph($rootDir);
             </div>
         </div>
     </div>
-
     </div>
-
-
-
     <script src=".js/perlite.js"></script>
-
 </body>
 
 </html>

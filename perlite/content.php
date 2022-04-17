@@ -1,7 +1,7 @@
 <?php
 
 /*!
-  * Perlite v1.4.2 (https://github.com/secure-77/Perlite)
+  * Perlite v1.4.3 RC (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
@@ -81,9 +81,12 @@ function parseContent($requestFile) {
 	$pattern = array('/(\!\[\[)(.*)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 
-	// handle internal site links
-	
+	// support marmaid
+	// $replaces = '<div class="mermaid">';
+	// $pattern = array('/<code class="language-mermaid">/');
+	// $content = preg_replace($pattern, $replaces ,$content);
 
+	// handle internal site links
 	// search for links ousite of the current folder
 	$pattern = array('/(\[\[)(?:\.\.\/)+(.*)(\]\])/');
 	$content = translateLink($pattern, $content, $path, false);

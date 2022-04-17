@@ -46,6 +46,18 @@ function getContent(str) {
       }      
         );
 
+        //render mermaid
+        //mermaid.init(undefined,document.querySelectorAll(".language-mermaid"));
+
+        mermaid.init(undefined,document.querySelectorAll(".language-mermaid"));
+
+      //   mermaid.init({
+      //     'securityLevel': 'loose', 'theme': 'base'
+      // });
+
+
+
+
         // Hide Search
         $("#searchModal").modal("hide");
 
@@ -70,6 +82,8 @@ function getContent(str) {
 
         // trigger graph render
         renderGraph(false, str);
+
+
 
 
         // update the url
@@ -480,6 +494,8 @@ $(document).ready(function () {
     $(this).addClass('perlite-link-active');
   });
 
+  // init mermaid
+  mermaid.initialize({ startOnLoad: false, 'securityLevel': 'Strict', 'theme': 'dark' });
 
 });
 

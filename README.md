@@ -31,6 +31,7 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 - No manual parsing or converting necessary
 - Full interactive Graph
 - LaTeX support
+- Mermaid support
 - Search
 - Support Obisdian links and images
 - [![coverage](https://img.shields.io/badge/Bootswatch-Themes-blue)](https://bootswatch.com) (Slate)

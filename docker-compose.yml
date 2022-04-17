@@ -3,8 +3,8 @@ version: "3.9"
 services:
 
   perlite:
-    build:
-        context: ./perlite
+    image: sec77/perlite:latest
+    container_name: perlite
    
     environment:
       - NOTES_PATH=Demo
@@ -15,7 +15,8 @@ services:
 
   web:
     build:
-        context: ./web    
+        context: ./web 
+    container_name: web   
     ports:
       - 80:80
     volumes_from: 

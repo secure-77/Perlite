@@ -1,7 +1,7 @@
 <?php
 
 /*!
-  * Perlite v1.4.2 (https://github.com/secure-77/Perlite)
+  * Perlite v1.4.3 RC (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
@@ -49,6 +49,12 @@ if (!strcmp($rootDir,"")) {
 		
 }
 
+// custom sort function to prefer underscore
+function cmp($a, $b) {
+	$aTemp = str_replace('_', '0', $a);
+	$bTemp = str_replace('_', '0', $b);     
+	return strcmp($aTemp,$bTemp);
+  }
 
 
 function menu($dir, $folder = ''){
@@ -57,6 +63,9 @@ function menu($dir, $folder = ''){
     $html = '';
 	// get all files from current dir
 	$files = glob($dir.'/*');
+	
+	// sort array
+	usort($files, "cmp");
 
 	foreach($files as $file){
 		
