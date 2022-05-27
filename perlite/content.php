@@ -88,11 +88,11 @@ function parseContent($requestFile) {
 
 	// handle internal site links
 	// search for links ousite of the current folder
-	$pattern = array('/(\[\[)(?:\.\.\/)+(.*)(\]\])/');
+	$pattern = array('/(\[\[)(?:\.\.\/)+([^\[\]]*)(\]\])/');
 	$content = translateLink($pattern, $content, $path, false);
 
 	// search for links in the same folder
-	$pattern = array('/(\[\[)(.*)(\]\])/');
+	$pattern = array('/(\[\[)([^\[\]]*)(\]\])/');
 	$content = translateLink($pattern, $content, $mdpath, true);
 	
 	
