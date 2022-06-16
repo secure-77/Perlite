@@ -1,10 +1,16 @@
 An h1 header
 ============
 
-Link to other Markdown file: [[markdown-sample2|Custom Link Name]]
+Link to other Markdown file: [[markdown-sample2|Custom Link Name]] and Link to other Markdown file: [[markdown-sample2|Custom Link Name]]
 Link to other Markdown file: [[markdown-sample2]]
 
-Link to PDF: ![[pdf-test.pdf]]
+Link to PDF: ![[pdf-test.pdf]] Link to PDF: ![[pdf-test.pdf]]
+
+
+```mermaid
+flowchart LR
+    id1[[This is the text in the box1]]
+```
 
 
 

@@ -46,17 +46,31 @@ function getContent(str) {
       }      
         );
 
-        //render mermaid
-        //mermaid.init(undefined,document.querySelectorAll(".language-mermaid"));
+        // replace internal links in mermaids
+        var mermaids = document.getElementsByClassName("language-mermaid");
 
+        for (var i = 0; i < mermaids.length; i++) {
+
+          var mermaidLinks = mermaids[i].getElementsByTagName('a');
+
+            for (f = 0; f < mermaidLinks.length;) {
+
+              var linkElement = mermaidLinks[f]
+
+              if (linkElement.getAttribute("href").startsWith("?link")) {
+
+                var textonly = '[[' + linkElement.innerHTML + ']]';
+                linkElement.replaceWith(textonly)          
+              }
+
+            }   
+
+        }
+
+           //render mermaid
         mermaid.init(undefined,document.querySelectorAll(".language-mermaid"));
-
-      //   mermaid.init({
-      //     'securityLevel': 'loose', 'theme': 'base'
-      // });
-
-
-
+        
+          
 
         // Hide Search
         $("#searchModal").modal("hide");
@@ -90,8 +104,6 @@ function getContent(str) {
         window.history.pushState({},"", "/?link="+str);
       }
     });
-
-
 
 
   }

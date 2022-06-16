@@ -73,12 +73,12 @@ function parseContent($requestFile) {
 
 	// pdf links
 	$replaces = '<a target="_blank" rel="noopener noreferrer" href="'.$path .'/'.'\\2">\\2</a>';
-	$pattern = array('/(\!\[\[)(.*.pdf)(\]\])/');
+	$pattern = array('/(\!\[\[)(.*?.pdf)(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 	
 	// img links
 	$replaces = '<p><a href="#" class="pop"><img class="images" alt="image not found" src="'. $path .'/\\2\\3'.'"/></a></p>';
-	$pattern = array('/(\!\[\[)(.*)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)(\]\])/');
+	$pattern = array('/(\!\[\[)(.*?)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 
 	// support marmaid
@@ -87,12 +87,12 @@ function parseContent($requestFile) {
 	// $content = preg_replace($pattern, $replaces ,$content);
 
 	// handle internal site links
-	// search for links ousite of the current folder
-	$pattern = array('/(\[\[)(?:\.\.\/)+(.*)(\]\])/');
+	// search for links outside of the current folder
+	$pattern = array('/(\[\[)(?:\.\.\/)+(.*?)(\]\])/');
 	$content = translateLink($pattern, $content, $path, false);
 
 	// search for links in the same folder
-	$pattern = array('/(\[\[)(.*)(\]\])/');
+	$pattern = array('/(\[\[)(.*?)(\]\])/');
 	$content = translateLink($pattern, $content, $mdpath, true);
 	
 	

@@ -4,7 +4,7 @@ services:
 
   perlite:
     image: sec77/perlite:latest
-    container_name: perlite
+    container_name: perlite-dev
           
     environment:
       - NOTES_PATH=Demo
@@ -17,7 +17,7 @@ services:
   web:
     build:
         context: ./web
-    container_name: web      
+    container_name: web-dev      
     ports:
       - 80:80 
     volumes:

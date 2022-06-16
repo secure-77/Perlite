@@ -6,6 +6,8 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 WORKDIR /var/www/perlite/
 COPY ./*.php ./
+COPY ./*.svg ./
+COPY ./*.ico ./
 COPY ./.styles/ ./.styles/
 COPY ./.js/ ./.js/
 
