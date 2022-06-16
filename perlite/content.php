@@ -1,7 +1,7 @@
 <?php
 
 /*!
-  * Perlite v1.4.3 RC (https://github.com/secure-77/Perlite)
+  * Perlite v1.4.3 (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */

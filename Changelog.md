@@ -1,4 +1,4 @@
-## 1.4.3 RC (pushed but not released yet) 
+## 1.4.3
 - added mermaid 8.7.0 (mermaid.min.js)
 - changed order for folders and files with underscores (they are now on top)
 - added sec77/perlite:latest to the docker hub
