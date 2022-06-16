@@ -97,7 +97,7 @@ The Graph is implemented with vis.js, so there are many options you can play on 
 - [![coverage](https://img.shields.io/badge/Highlight.js-11.4.0-green)](https://highlightjs.org/)
 - [![coverage](https://img.shields.io/badge/vis.js-9.1.2-yellow)](https://visjs.org/)
 - [![coverage](https://img.shields.io/badge/KaTeX.js-0.15.2-red)](https://katex.org/)
-- [![coverage](https://img.shields.io/badge/KaTeX.js-8.7.0-orange)](https://mermaid-js.github.io/mermaid/)
+- [![coverage](https://img.shields.io/badge/Mermaid.js-8.7.0-orange)](https://mermaid-js.github.io/mermaid/)
 
 
 
