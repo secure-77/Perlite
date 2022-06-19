@@ -1,7 +1,7 @@
 <?php
 
 /*!
-  * Perlite v1.4.3 (https://github.com/secure-77/Perlite)
+  * Perlite v1.4.4 RC (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
@@ -17,11 +17,15 @@ $rootDir = getenv('NOTES_PATH');
 
 $hideFolders = getenv('HIDE_FOLDERS');
 $about = '.about';
+$index = 'README';
 
-// add about to allowed files
-$path = getFileInfos($rootDir .'/' . $about)[0];
-$path = '/'.$path;
-array_push($avFiles, $path);
+// add about and index to allowed files
+$aboutpath = getFileInfos($rootDir .'/' . $about)[0];
+$indexpath = getFileInfos($rootDir .'/' . $index)[0];
+$aboutpath = '/'.$aboutpath;
+$indexpath = '/'.$indexpath;
+array_push($avFiles, $aboutpath);
+array_push($avFiles, $indexpath);
 
 
 
@@ -56,6 +60,13 @@ function cmp($a, $b) {
 	return strcmp($aTemp,$bTemp);
   }
 
+
+
+function indexPage($index) {
+	$html = '';
+	$html = parseContent('/' . $index);
+	return $html;
+}
 
 function menu($dir, $folder = ''){
 	

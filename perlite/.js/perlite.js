@@ -6,7 +6,7 @@
 
 
 // get markdown content
-function getContent(str) {
+function getContent(str, home = false) {
 
   // reset content if request is empty
   if (str.length == 0) {
@@ -15,8 +15,14 @@ function getContent(str) {
     return;
   } else {
 
+    requestPath = "content.php?mdfile=" + str;
+
+    if (home) {
+      requestPath = "content.php?home";
+    }
+
     $.ajax({
-      url: "content.php?mdfile=" + str, success: function (result) {
+      url: requestPath, success: function (result) {
 
         // set content + fullscreen modal
         $("#mdContent").html(result);
@@ -28,49 +34,48 @@ function getContent(str) {
           $("h5.mdModalTitle").html(title);
         }
 
-        // highlight code
+        // highlight code     
         hljs.highlightAll();
 
         // run mobile settings
         isMobile();
 
         // render LaTeX
-        renderMathInElement(document.getElementById("mdContent"), 
-        {
-          delimiters: [
-              {left: "$$", right: "$$", display: true},
-              {left: "\\[", right: "\\]", display: true},
-              {left: "$", right: "$", display: false},
-              {left: "\\(", right: "\\)", display: false}
-          ]
-      }      
+        renderMathInElement(document.getElementById("mdContent"),
+          {
+            delimiters: [
+              { left: "$$", right: "$$", display: true },
+              { left: "\\[", right: "\\]", display: true },
+              { left: "$", right: "$", display: false },
+              { left: "\\(", right: "\\)", display: false }
+            ]
+          }
         );
 
-        // replace internal links in mermaids
+        // clean internal links in mermaid elements
         var mermaids = document.getElementsByClassName("language-mermaid");
 
         for (var i = 0; i < mermaids.length; i++) {
 
           var mermaidLinks = mermaids[i].getElementsByTagName('a');
 
-            for (f = 0; f < mermaidLinks.length;) {
+          for (f = 0; f < mermaidLinks.length;) {
 
-              var linkElement = mermaidLinks[f]
+            var linkElement = mermaidLinks[f]
 
-              if (linkElement.getAttribute("href").startsWith("?link")) {
+            if (linkElement.getAttribute("href").startsWith("?link")) {
 
-                var textonly = '[[' + linkElement.innerHTML + ']]';
-                linkElement.replaceWith(textonly)          
-              }
+              var textonly = '[[' + linkElement.innerHTML + ']]';
+              linkElement.replaceWith(textonly)
+            }
 
-            }   
+          }
 
         }
 
-           //render mermaid
-        mermaid.init(undefined,document.querySelectorAll(".language-mermaid"));
-        
-          
+        //render mermaid
+        mermaid.init(undefined, document.querySelectorAll(".language-mermaid"));
+
 
         // Hide Search
         $("#searchModal").modal("hide");
@@ -94,18 +99,16 @@ function getContent(str) {
           }
         }
 
-        // trigger graph render
+        // trigger graph render on side bar
         renderGraph(false, str);
 
 
-
-
         // update the url
-        window.history.pushState({},"", "/?link="+str);
+        if (home == false) {
+          window.history.pushState({}, "", "/?link=" + str);
+        }
       }
     });
-
-
   }
 };
 
@@ -113,7 +116,6 @@ function getContent(str) {
 function renderGraph(modal, path = "", filter_emptyNodes = false) {
 
 
-  
   var visNodes = document.getElementById('allGraphNodes').innerHTML;
   var visEdges = document.getElementById('allGraphEdges').innerHTML;
 
@@ -130,7 +132,16 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
       currId = jsonNodes[x]['id'];
       break;
     }
+    else if (modal == false) {
+      currId = -1;
+    }
   }
+
+  // cancel graph display if no node was found
+  if (currId == -1) {
+  return;
+  }
+
 
   //container = document.getElementById('mdContent');
 
@@ -145,15 +156,19 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
     //   showButton: true
     // } ,
     edges: {
-      length: 200, // Longer edges between nodes.
+      length: 400, // Longer edges between nodes.
+      width: 0.5,
+      color: '#ecba55',
       // smooth: {
-      //   type: "cubicBezier"
+      //   //type: "cubicBezier"
+      //   //enabled: true,
+      //   //type: "dynamic"
       // }
     },
 
     nodes: {
       shape: 'dot',
-      size: 15,
+      size: 12,
       font: {
         size: 16,
         color: '#ffffff',
@@ -162,14 +177,15 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
       borderWidth: 1,
       color: {
         background: '#3a3f44',
-        border: '#6d8e98',
+        //border: '#6d8e98',
+        border: '#ecba55',
         highlight: {
-          border: '#5bc0de',
+          border: '#ffffff',
           background: '#3a3f44',
         },
         hover: {
-          border: '#5bc0de',
-          background: '#6d8e98',
+          border: '#ecba55',
+          background: '#ecba55',
         },
       },
     }
@@ -194,7 +210,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
         filter: function (node) {
           connEdges = edgeView.get({
             filter: function (edge) {
-              if(node.id == currId) {
+              if (node.id == currId) {
                 return true;
               };
               return (
@@ -216,15 +232,15 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
     network = new vis.Network(container_modal, data, options);
     //network.selectNodes([currId]);
     var node = network.body.nodes[currId];
-      node.setOptions({
-        font: {
-          size: 20
-        },
-          color: {
-            background: '#ffbf00',
-          },
-      });   
-    
+    node.setOptions({
+      font: {
+        size: 20
+      },
+      color: {
+        background: '#ffbf00',
+      },
+    });
+
 
 
     // filter the graph to the desired nodes and edges
@@ -244,7 +260,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
         curNode.color = {
           background: '#ffbf00',
         };
-        
+
         break;
       }
     }
@@ -397,13 +413,13 @@ $(document).ready(function () {
       document.cookie = 'filterNodes=noLink; path=/';
       renderGraph(true, str, true);
     } else {
-      document.cookie = 'filterNodes=none; path=/'; 
+      document.cookie = 'filterNodes=none; path=/';
       renderGraph(true, str, false);
     }
   });
 
   // check for graph and hide open grap link if none exists
-  if (!document.getElementById("allGraphNodes") || document.getElementById("allGraphNodes").innerHTML == '[]' ) {
+  if (!document.getElementById("allGraphNodes") || document.getElementById("allGraphNodes").innerHTML == '[]') {
     document.getElementById('expandGraph').classList.add('hide');
   }
 
@@ -447,6 +463,10 @@ $(document).ready(function () {
         break;
       }
     }
+  } else {
+
+    // load index page
+    getContent("home", true);
   }
 
 
@@ -458,7 +478,7 @@ $(document).ready(function () {
   };
 
 
- // show graph modal
+  // show graph modal
   document.getElementById("expandGraph").onclick = function () {
     $("#graphModal").modal("show");
   };
@@ -476,11 +496,11 @@ $(document).ready(function () {
     } else {
       str = "";
     }
-    if ($("#toggleEmptyNodes").prop('checked')){
-        renderGraph(true, str, true);
-        return;    
-      }
-    
+    if ($("#toggleEmptyNodes").prop('checked')) {
+      renderGraph(true, str, true);
+      return;
+    }
+
     renderGraph(true, str, false);
   });
 

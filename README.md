@@ -71,11 +71,12 @@ For Docker just check the [DOCKER](https://github.com/secure-77/Perlite/blob/mai
 
 ### Advanced Options and Infos
 
-#### Header and Logo
+#### Header, Logo and Start Page
 you can adjust them via the index.php
 
-- The About opens a .md file in a modal window (.about.md per default), you can change this in the helper.php `$about`
-- The Logo, Blog and so on are nested in the index.php (line 28 e.g. for the link to the Blog)
+- The About opens a .md file in a modal window (.about.md per default), you can change this in the helper.php `$about` variable
+- The Logo, Blog and so on are nested in the index.php (line 47 e.g. for the link to the Blog)
+- The Startpage is set to README.md, you can change this in the helper.php `$index` variable
 
 #### Graph
 The Graph is implemented with vis.js, so there are many options you can play on with, you can adjust them via the `options` object in the perlite.js
@@ -97,7 +98,7 @@ The Graph is implemented with vis.js, so there are many options you can play on 
 - [![coverage](https://img.shields.io/badge/Highlight.js-11.4.0-green)](https://highlightjs.org/)
 - [![coverage](https://img.shields.io/badge/vis.js-9.1.2-yellow)](https://visjs.org/)
 - [![coverage](https://img.shields.io/badge/KaTeX.js-0.15.2-red)](https://katex.org/)
-- [![coverage](https://img.shields.io/badge/Mermaid.js-8.7.0-orange)](https://mermaid-js.github.io/mermaid/)
+- [![coverage](https://img.shields.io/badge/Mermaid.js-9.1.2-orange)](https://mermaid-js.github.io/mermaid/)
 
 
 

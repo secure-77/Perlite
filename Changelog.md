@@ -1,3 +1,12 @@
+## 1.4.4 RC (commited but not released)
+- some code cleanup
+- replaced mermaid js with the correct one (9.1.2)
+- implemented start page (.home.md)
+- hide graph display, when node has no graph
+- some visual graph updates
+
+
+
 ## 1.4.3
 - added mermaid 8.7.0 (mermaid.min.js)
 - changed order for folders and files with underscores (they are now on top)
