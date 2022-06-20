@@ -20,7 +20,9 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 
 [[Demo Documents/markdown-sample2]]
 
+## Documentation on Github
 
+[Perlite on Github](https://github.com/secure-77/Perlite/)
 
 ## Features
 

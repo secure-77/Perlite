@@ -131,9 +131,6 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
     path = '/' + homeFile;
   }
 
-  console.log(path);
-
-
   // get current node
   for (const x in jsonNodes) {
     if (path == ('/' + jsonNodes[x]['title'])) {
