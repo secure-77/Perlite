@@ -1,10 +1,10 @@
 ## 1.4.4 RC (commited but not released)
 - some code cleanup
 - replaced mermaid js with the correct one (9.1.2)
-- implemented start page (.home.md)
+- implemented start page (README.md)
 - hide graph display, when node has no graph
 - some visual graph updates
-
+- changed order: folders are now always on top
 
 
 ## 1.4.3

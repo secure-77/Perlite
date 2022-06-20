@@ -1,18 +1,255 @@
 [
   {
+    "fileName": "XXE",
+    "relativePath": "_OWASP and Web Attacks/XXE.md",
+    "headings": [
+      {
+        "heading": "XXE",
+        "level": 1
+      },
+      {
+        "heading": "Out of Band Exploitation",
+        "level": 1
+      },
+      {
+        "heading": "Fixing XML External Entity Injection",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "fileName": "XSS",
+    "relativePath": "_OWASP and Web Attacks/XSS.md",
+    "headings": [
+      {
+        "heading": "Types",
+        "level": 1
+      },
+      {
+        "heading": "Tools",
+        "level": 2
+      },
+      {
+        "heading": "Payloads",
+        "level": 1
+      },
+      {
+        "heading": "Payloads",
+        "level": 1
+      },
+      {
+        "heading": "more",
+        "level": 2
+      }
+    ],
+    "backlinks": [
+      {
+        "fileName": "WriteUp",
+        "link": "XSS",
+        "relativePath": "WriteUps/HackTheBox/Developer/WriteUp.md",
+        "displayText": "../../../OWASP and Web Attacks/XSS"
+      }
+    ]
+  },
+  {
+    "fileName": "SSTI",
+    "relativePath": "_OWASP and Web Attacks/SSTI.md",
+    "headings": [
+      {
+        "heading": "Server Side Template Injection",
+        "level": 1
+      },
+      {
+        "heading": "nonjucks node js template engine",
+        "level": 1
+      }
+    ],
+    "links": [
+      {
+        "link": "WriteUp",
+        "displayText": "../../WriteUps/HackTheBox/Spider/WriteUp"
+      }
+    ]
+  },
+  {
+    "fileName": "SSRF",
+    "relativePath": "_OWASP and Web Attacks/SSRF.md",
+    "headings": [
+      {
+        "heading": "Server Side Request Forgery",
+        "level": 1
+      },
+      {
+        "heading": "Payloads",
+        "level": 1
+      },
+      {
+        "heading": "Portscan via Fuff",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "fileName": "Reverse Tabnabbing",
+    "relativePath": "_OWASP and Web Attacks/Reverse Tabnabbing.md",
+    "headings": [
+      {
+        "heading": "Reverse Tabnabbing",
+        "level": 1
+      },
+      {
+        "heading": "fixed in many browsers",
+        "level": 1
+      }
+    ],
+    "links": [
+      {
+        "link": "WriteUp",
+        "displayText": "../../WriteUps/HackTheBox/Developer/WriteUp",
+        "relativePath": "WriteUps/HackTheBox/Developer/WriteUp.md"
+      },
+      {
+        "link": "WriteUp",
+        "displayText": "Custom Link",
+        "relativePath": "WriteUps/HackTheBox/Developer/WriteUp.md"
+      },
+      {
+        "link": "WriteUp",
+        "displayText": "../../WriteUps/HackTheBox/Developer/WriteUp",
+        "relativePath": "WriteUps/HackTheBox/Developer/WriteUp.md"
+      }
+    ],
+    "backlinks": [
+      {
+        "fileName": "WriteUp",
+        "link": "Reverse Tabnabbing",
+        "relativePath": "WriteUps/HackTheBox/Developer/WriteUp.md",
+        "displayText": "../../../OWASP and Web Attacks/Reverse Tabnabbing"
+      }
+    ]
+  },
+  {
+    "fileName": "Net Desirialization",
+    "relativePath": "_OWASP and Web Attacks/Net Desirialization.md",
+    "links": [
+      {
+        "link": "Writeup",
+        "displayText": "../../WriteUps/HackTheBox/Sharp/Writeup",
+        "relativePath": "WriteUps/HackTheBox/Sharp/Writeup.md"
+      }
+    ]
+  },
+  {
+    "fileName": "Java",
+    "relativePath": "_OWASP and Web Attacks/Java.md",
+    "headings": [
+      {
+        "heading": "Java Deserialization",
+        "level": 1
+      },
+      {
+        "heading": "Log4J - RCE",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "fileName": "File Uploads",
+    "relativePath": "_OWASP and Web Attacks/File Uploads.md",
+    "headings": [
+      {
+        "heading": "File Upload Cheat Sheet",
+        "level": 1
+      },
+      {
+        "heading": "PHP File Types",
+        "level": 2
+      },
+      {
+        "heading": "Magic Bytes / Numbers",
+        "level": 2
+      },
+      {
+        "heading": "step by step attack",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "fileName": "CSRF",
+    "relativePath": "_OWASP and Web Attacks/CSRF.md",
+    "headings": [
+      {
+        "heading": "CSRF",
+        "level": 1
+      },
+      {
+        "heading": "tool",
+        "level": 2
+      }
+    ],
+    "backlinks": [
+      {
+        "fileName": "WriteUp",
+        "link": "CSRF",
+        "relativePath": "WriteUps/HackTheBox/Developer/WriteUp.md",
+        "displayText": "../../../OWASP and Web Attacks/CSRF"
+      }
+    ]
+  },
+  {
+    "fileName": "CSP",
+    "relativePath": "_OWASP and Web Attacks/CSP.md",
+    "headings": [
+      {
+        "heading": "Content Security Policy",
+        "level": 1
+      },
+      {
+        "heading": "CSP Generator",
+        "level": 2
+      },
+      {
+        "heading": "CSP Tester",
+        "level": 2
+      },
+      {
+        "heading": "Bypass CSP",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "fileName": "CORS",
+    "relativePath": "_OWASP and Web Attacks/CORS.md",
+    "headings": [
+      {
+        "heading": "Access-Control-Allow-Origin",
+        "level": 1
+      }
+    ],
+    "links": [
+      {
+        "link": "WriteUp",
+        "displayText": "../../WriteUps/HackTheBox/Developer/WriteUp",
+        "relativePath": "WriteUps/HackTheBox/Developer/WriteUp.md"
+      }
+    ]
+  },
+  {
     "fileName": "Writeup",
     "relativePath": "WriteUps/HackTheBox/Sharp/Writeup.md",
     "backlinks": [
       {
+        "fileName": "Net Desirialization",
+        "link": "Writeup",
+        "relativePath": "_OWASP and Web Attacks/Net Desirialization.md",
+        "displayText": "../../WriteUps/HackTheBox/Sharp/Writeup"
+      },
+      {
         "fileName": "main infos",
         "link": "Writeup",
         "relativePath": "WriteUps/HackTheBox/Sharp/main infos.md"
-      },
-      {
-        "fileName": "Net Desirialization",
-        "link": "Writeup",
-        "relativePath": "OWASP and Web Attacks/Net Desirialization.md",
-        "displayText": "../../WriteUps/HackTheBox/Sharp/Writeup"
       }
     ]
   },
@@ -171,17 +408,17 @@
       {
         "link": "CSRF",
         "displayText": "../../../OWASP and Web Attacks/CSRF",
-        "relativePath": "OWASP and Web Attacks/CSRF.md"
+        "relativePath": "_OWASP and Web Attacks/CSRF.md"
       },
       {
         "link": "XSS",
         "displayText": "../../../OWASP and Web Attacks/XSS",
-        "relativePath": "OWASP and Web Attacks/XSS.md"
+        "relativePath": "_OWASP and Web Attacks/XSS.md"
       },
       {
         "link": "Reverse Tabnabbing",
         "displayText": "../../../OWASP and Web Attacks/Reverse Tabnabbing",
-        "relativePath": "OWASP and Web Attacks/Reverse Tabnabbing.md"
+        "relativePath": "_OWASP and Web Attacks/Reverse Tabnabbing.md"
       },
       {
         "link": "pwndbg",
@@ -193,13 +430,25 @@
       {
         "fileName": "Reverse Tabnabbing",
         "link": "WriteUp",
-        "relativePath": "OWASP and Web Attacks/Reverse Tabnabbing.md",
+        "relativePath": "_OWASP and Web Attacks/Reverse Tabnabbing.md",
+        "displayText": "../../WriteUps/HackTheBox/Developer/WriteUp"
+      },
+      {
+        "fileName": "Reverse Tabnabbing",
+        "link": "WriteUp",
+        "relativePath": "_OWASP and Web Attacks/Reverse Tabnabbing.md",
+        "displayText": "Custom Link"
+      },
+      {
+        "fileName": "Reverse Tabnabbing",
+        "link": "WriteUp",
+        "relativePath": "_OWASP and Web Attacks/Reverse Tabnabbing.md",
         "displayText": "../../WriteUps/HackTheBox/Developer/WriteUp"
       },
       {
         "fileName": "CORS",
         "link": "WriteUp",
-        "relativePath": "OWASP and Web Attacks/CORS.md",
+        "relativePath": "_OWASP and Web Attacks/CORS.md",
         "displayText": "../../WriteUps/HackTheBox/Developer/WriteUp"
       }
     ]
@@ -352,9 +601,9 @@
     ],
     "backlinks": [
       {
-        "fileName": "Hackerdayu Course",
+        "fileName": "_Hackerdayu Course",
         "link": "Session two",
-        "relativePath": "Binary Exploitation/Static Analyses/Hackerdayu Course.md",
+        "relativePath": "Binary Exploitation/_Static Analyses/_Hackerdayu Course.md",
         "displayText": "../../WriteUps/HackerdayU Challanges/Session two"
       }
     ]
@@ -422,9 +671,9 @@
     ],
     "backlinks": [
       {
-        "fileName": "Hackerdayu Course",
+        "fileName": "_Hackerdayu Course",
         "link": "session three",
-        "relativePath": "Binary Exploitation/Static Analyses/Hackerdayu Course.md",
+        "relativePath": "Binary Exploitation/_Static Analyses/_Hackerdayu Course.md",
         "displayText": "../../WriteUps/HackerdayU Challanges/session three"
       }
     ]
@@ -452,9 +701,9 @@
     ],
     "backlinks": [
       {
-        "fileName": "Hackerdayu Course",
+        "fileName": "_Hackerdayu Course",
         "link": "Session one",
-        "relativePath": "Binary Exploitation/Static Analyses/Hackerdayu Course.md",
+        "relativePath": "Binary Exploitation/_Static Analyses/_Hackerdayu Course.md",
         "displayText": "../../WriteUps/HackerdayU Challanges/Session one"
       }
     ]
@@ -478,237 +727,96 @@
     ],
     "backlinks": [
       {
-        "fileName": "Hackerdayu Course",
+        "fileName": "_Hackerdayu Course",
         "link": "Session four",
-        "relativePath": "Binary Exploitation/Static Analyses/Hackerdayu Course.md",
+        "relativePath": "Binary Exploitation/_Static Analyses/_Hackerdayu Course.md",
         "displayText": "../../WriteUps/HackerdayU Challanges/Session four"
       }
     ]
   },
   {
-    "fileName": "XXE",
-    "relativePath": "OWASP and Web Attacks/XXE.md",
+    "fileName": "README",
+    "relativePath": "README.md",
     "headings": [
       {
-        "heading": "XXE",
+        "heading": "Perlite",
         "level": 1
       },
       {
-        "heading": "Out of Band Exploitation",
-        "level": 1
-      },
-      {
-        "heading": "Fixing XML External Entity Injection",
-        "level": 2
-      }
-    ]
-  },
-  {
-    "fileName": "XSS",
-    "relativePath": "OWASP and Web Attacks/XSS.md",
-    "headings": [
-      {
-        "heading": "Types",
-        "level": 1
-      },
-      {
-        "heading": "Tools",
+        "heading": "Demo",
         "level": 2
       },
       {
-        "heading": "Payloads",
-        "level": 1
-      },
-      {
-        "heading": "Payloads",
-        "level": 1
-      },
-      {
-        "heading": "more",
+        "heading": "Features",
         "level": 2
-      }
-    ],
-    "backlinks": [
-      {
-        "fileName": "WriteUp",
-        "link": "XSS",
-        "relativePath": "WriteUps/HackTheBox/Developer/WriteUp.md",
-        "displayText": "../../../OWASP and Web Attacks/XSS"
-      }
-    ]
-  },
-  {
-    "fileName": "SSTI",
-    "relativePath": "OWASP and Web Attacks/SSTI.md",
-    "headings": [
-      {
-        "heading": "Server Side Template Injection",
-        "level": 1
       },
       {
-        "heading": "nonjucks node js template engine",
-        "level": 1
+        "heading": "Changelog",
+        "level": 2
+      },
+      {
+        "heading": "Install",
+        "level": 2
+      },
+      {
+        "heading": "Requirements",
+        "level": 3
+      },
+      {
+        "heading": "Required Obsidian Options",
+        "level": 3
+      },
+      {
+        "heading": "Graph",
+        "level": 4
+      },
+      {
+        "heading": "Hide Folders and Files",
+        "level": 3
+      },
+      {
+        "heading": "Advanced Options and Infos",
+        "level": 3
+      },
+      {
+        "heading": "Header and Logo",
+        "level": 4
+      },
+      {
+        "heading": "Graph",
+        "level": 4
+      },
+      {
+        "heading": "Root Dir",
+        "level": 4
+      },
+      {
+        "heading": "Python Parser",
+        "level": 4
+      },
+      {
+        "heading": "Dependencies (all included)",
+        "level": 3
+      },
+      {
+        "heading": "Security",
+        "level": 2
+      },
+      {
+        "heading": "Why Perlite?",
+        "level": 2
       }
     ],
     "links": [
       {
-        "link": "WriteUp",
-        "displayText": "../../WriteUps/HackTheBox/Spider/WriteUp"
-      }
-    ]
-  },
-  {
-    "fileName": "SSRF",
-    "relativePath": "OWASP and Web Attacks/SSRF.md",
-    "headings": [
-      {
-        "heading": "Server Side Request Forgery",
-        "level": 1
+        "link": "markdown-sample",
+        "displayText": "Demo Documents/markdown-sample",
+        "relativePath": "Demo Documents/markdown-sample.md"
       },
       {
-        "heading": "Payloads",
-        "level": 1
-      },
-      {
-        "heading": "Portscan via Fuff",
-        "level": 1
-      }
-    ]
-  },
-  {
-    "fileName": "Reverse Tabnabbing",
-    "relativePath": "OWASP and Web Attacks/Reverse Tabnabbing.md",
-    "headings": [
-      {
-        "heading": "Reverse Tabnabbing",
-        "level": 1
-      },
-      {
-        "heading": "fixed in many browsers",
-        "level": 1
-      }
-    ],
-    "links": [
-      {
-        "link": "WriteUp",
-        "displayText": "../../WriteUps/HackTheBox/Developer/WriteUp",
-        "relativePath": "WriteUps/HackTheBox/Developer/WriteUp.md"
-      }
-    ],
-    "backlinks": [
-      {
-        "fileName": "WriteUp",
-        "link": "Reverse Tabnabbing",
-        "relativePath": "WriteUps/HackTheBox/Developer/WriteUp.md",
-        "displayText": "../../../OWASP and Web Attacks/Reverse Tabnabbing"
-      }
-    ]
-  },
-  {
-    "fileName": "Net Desirialization",
-    "relativePath": "OWASP and Web Attacks/Net Desirialization.md",
-    "links": [
-      {
-        "link": "Writeup",
-        "displayText": "../../WriteUps/HackTheBox/Sharp/Writeup",
-        "relativePath": "WriteUps/HackTheBox/Sharp/Writeup.md"
-      }
-    ]
-  },
-  {
-    "fileName": "Java",
-    "relativePath": "OWASP and Web Attacks/Java.md",
-    "headings": [
-      {
-        "heading": "Java Deserialization",
-        "level": 1
-      },
-      {
-        "heading": "Log4J - RCE",
-        "level": 1
-      }
-    ]
-  },
-  {
-    "fileName": "File Uploads",
-    "relativePath": "OWASP and Web Attacks/File Uploads.md",
-    "headings": [
-      {
-        "heading": "File Upload Cheat Sheet",
-        "level": 1
-      },
-      {
-        "heading": "PHP File Types",
-        "level": 2
-      },
-      {
-        "heading": "Magic Bytes / Numbers",
-        "level": 2
-      },
-      {
-        "heading": "step by step attack",
-        "level": 2
-      }
-    ]
-  },
-  {
-    "fileName": "CSRF",
-    "relativePath": "OWASP and Web Attacks/CSRF.md",
-    "headings": [
-      {
-        "heading": "CSRF",
-        "level": 1
-      },
-      {
-        "heading": "tool",
-        "level": 2
-      }
-    ],
-    "backlinks": [
-      {
-        "fileName": "WriteUp",
-        "link": "CSRF",
-        "relativePath": "WriteUps/HackTheBox/Developer/WriteUp.md",
-        "displayText": "../../../OWASP and Web Attacks/CSRF"
-      }
-    ]
-  },
-  {
-    "fileName": "CSP",
-    "relativePath": "OWASP and Web Attacks/CSP.md",
-    "headings": [
-      {
-        "heading": "Content Security Policy",
-        "level": 1
-      },
-      {
-        "heading": "CSP Generator",
-        "level": 2
-      },
-      {
-        "heading": "CSP Tester",
-        "level": 2
-      },
-      {
-        "heading": "Bypass CSP",
-        "level": 2
-      }
-    ]
-  },
-  {
-    "fileName": "CORS",
-    "relativePath": "OWASP and Web Attacks/CORS.md",
-    "headings": [
-      {
-        "heading": "Access-Control-Allow-Origin",
-        "level": 1
-      }
-    ],
-    "links": [
-      {
-        "link": "WriteUp",
-        "displayText": "../../WriteUps/HackTheBox/Developer/WriteUp",
-        "relativePath": "WriteUps/HackTheBox/Developer/WriteUp.md"
+        "link": "markdown-sample2",
+        "displayText": "Demo Documents/markdown-sample2",
+        "relativePath": "Demo Documents/markdown-sample2.md"
       }
     ]
   },
@@ -815,6 +923,24 @@
     ],
     "backlinks": [
       {
+        "fileName": "README",
+        "link": "markdown-sample2",
+        "relativePath": "README.md",
+        "displayText": "Demo Documents/markdown-sample2"
+      },
+      {
+        "fileName": "markdown-sample",
+        "link": "markdown-sample2",
+        "relativePath": "Demo Documents/markdown-sample.md",
+        "displayText": "Custom Link Name"
+      },
+      {
+        "fileName": "markdown-sample",
+        "link": "markdown-sample2",
+        "relativePath": "Demo Documents/markdown-sample.md",
+        "displayText": "Custom Link Name"
+      },
+      {
         "fileName": "markdown-sample",
         "link": "markdown-sample2",
         "relativePath": "Demo Documents/markdown-sample.md"
@@ -841,6 +967,16 @@
     "links": [
       {
         "link": "markdown-sample2",
+        "displayText": "Custom Link Name",
+        "relativePath": "Demo Documents/markdown-sample2.md"
+      },
+      {
+        "link": "markdown-sample2",
+        "displayText": "Custom Link Name",
+        "relativePath": "Demo Documents/markdown-sample2.md"
+      },
+      {
+        "link": "markdown-sample2",
         "relativePath": "Demo Documents/markdown-sample2.md"
       },
       {
@@ -853,11 +989,19 @@
         "cleanLink": "markdown-sample",
         "displayText": ""
       }
+    ],
+    "backlinks": [
+      {
+        "fileName": "README",
+        "link": "markdown-sample",
+        "relativePath": "README.md",
+        "displayText": "Demo Documents/markdown-sample"
+      }
     ]
   },
   {
-    "fileName": "Hackerdayu Course",
-    "relativePath": "Binary Exploitation/Static Analyses/Hackerdayu Course.md",
+    "fileName": "_Hackerdayu Course",
+    "relativePath": "Binary Exploitation/_Static Analyses/_Hackerdayu Course.md",
     "links": [
       {
         "link": "Session one",
@@ -883,7 +1027,7 @@
   },
   {
     "fileName": "Ghidra",
-    "relativePath": "Binary Exploitation/Static Analyses/Ghidra.md",
+    "relativePath": "Binary Exploitation/_Static Analyses/Ghidra.md",
     "headings": [
       {
         "heading": "links",
@@ -925,7 +1069,7 @@
   },
   {
     "fileName": "Assembly Basics",
-    "relativePath": "Binary Exploitation/Static Analyses/Assembly Basics.md"
+    "relativePath": "Binary Exploitation/_Static Analyses/Assembly Basics.md"
   },
   {
     "fileName": "Tracer tools",

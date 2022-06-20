@@ -20,72 +20,64 @@ $about = '.about';
 $index = 'README';
 
 // add about and index to allowed files
-$aboutpath = getFileInfos($rootDir .'/' . $about)[0];
-$indexpath = getFileInfos($rootDir .'/' . $index)[0];
-$aboutpath = '/'.$aboutpath;
-$indexpath = '/'.$indexpath;
+$aboutpath = getFileInfos($rootDir . '/' . $about)[0];
+$indexpath = getFileInfos($rootDir . '/' . $index)[0];
+$aboutpath = '/' . $aboutpath;
+$indexpath = '/' . $indexpath;
 array_push($avFiles, $aboutpath);
 array_push($avFiles, $indexpath);
 
 
 
 // hide folders
-if (strcmp($hideFolders,'')) {
+if (strcmp($hideFolders, '')) {
 
 	$hideFolders = explode(',', $hideFolders);
-
 } else {
 	$hideFolders = array();
 }
 
 
 // path management
-if (!strcmp($rootDir,"")) {
+if (!strcmp($rootDir, "")) {
 
 	$rootDir = getcwd();
 	$base = "Notes";
 	$startDir = "";
-
 } else {
 
 	$base = mb_basename($rootDir);
 	$startDir = $rootDir;
-		
 }
 
 // custom sort function to prefer underscore
-function cmp($a, $b) {
+function cmp($a, $b)
+{
 	$aTemp = str_replace('_', '0', $a);
-	$bTemp = str_replace('_', '0', $b);     
-	return strcmp($aTemp,$bTemp);
-  }
-
-
-
-function indexPage($index) {
-	$html = '';
-	$html = parseContent('/' . $index);
-	return $html;
+	$bTemp = str_replace('_', '0', $b);
+	return strcmp($aTemp, $bTemp);
 }
 
-function menu($dir, $folder = ''){
-	
+
+
+function menu($dir, $folder = '')
+{
+
 	global $avFiles;
-    $html = '';
+	$html = '';
 	// get all files from current dir
-	$files = glob($dir.'/*');
-	
+	$files = glob($dir . '/*');
+
 	// sort array
 	usort($files, "cmp");
 
-	foreach($files as $file){
-		
-		// in case of folder
-		if(is_dir($file)){
-			
+	// iterate the folders 
+	foreach ($files as $file) {
+		if (is_dir($file)) {
+
 			if (isValidFolder($file)) {
-				$html .= '<li class="mb-1">';	
-				
+				$html .= '<li class="mb-1">';
+
 				// split Folder Infos
 				$folder = getFolderInfos($file)[0];
 				$folderClean = getFolderInfos($file)[1];
@@ -93,178 +85,178 @@ function menu($dir, $folder = ''){
 				$folderId = str_replace(' ', '_', $folderClean);
 				$folderId = preg_replace('/[^A-Za-z\-]/', '_', $folderId);
 				$folderId = '_' . $folderId;
-				
-				$html .= '<button class="btn btn-toggle pb-1 pt-1 nav-link border-0 d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#'.$folderId.'-collapse" aria-expanded="false">'.$folderName .'</button>';
-				$html .= '<div class="collapse" id="'.$folderId.'-collapse">
-							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1">';				
-				$html .= menu($file,$folder.'/');
+
+				$html .= '<button class="btn btn-toggle pb-1 pt-1 nav-link border-0 d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#' . $folderId . '-collapse" aria-expanded="false">' . $folderName . '</button>';
+				$html .= '<div class="collapse" id="' . $folderId . '-collapse">
+							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1">';
+				$html .= menu($file, $folder . '/');
 				$html .= '</ul></div></li>';
 			}
-		// in case of file
-		} else {
-					
-			// check if file is a md file 
-			if (isMDFile($file)) {
-				
-
-				$path = getFileInfos($file)[0];
-                $mdFile = getFileInfos($file)[1];
-				
-				$path = '/'.$path;
-				// push the the path to the array
-				array_push($avFiles, $path);
-
-				// URL Encode the Path for the JS call
-                $pathClean = rawurlencode($path);
-				$pathID = str_replace(' ', '_', $path);
-				$pathID = preg_replace('/[^A-Za-z0-9\-]/', '_', $path);
-
-                $html .= '		<li>
-                                    <a href="#" onclick=getContent("'. $pathClean .'"); id="'. $pathID .'" class="perlite-link">'. $mdFile .'</a>
-                                </li>';
-			} 			
 		}
 	}
-	
+
+	// iterate the files 
+	foreach ($files as $file) {
+		if (isMDFile($file)) {
+
+			$path = getFileInfos($file)[0];
+			$mdFile = getFileInfos($file)[1];
+
+			$path = '/' . $path;
+			// push the the path to the array
+			array_push($avFiles, $path);
+
+			// URL Encode the Path for the JS call
+			$pathClean = rawurlencode($path);
+			$pathID = str_replace(' ', '_', $path);
+			$pathID = preg_replace('/[^A-Za-z0-9\-]/', '_', $path);
+
+			$html .= '		<li>
+                                    <a href="#" onclick=getContent("' . $pathClean . '"); id="' . $pathID . '" class="perlite-link">' . $mdFile . '</a>
+                                </li>';
+		}
+	}
+
 	return $html;
 }
 
 
-function doSearch($dir, $searchfor) {
+function doSearch($dir, $searchfor)
+{
 
 	$Parsedown = new Parsedown();
 	$Parsedown->setSafeMode(false);
 
 	$cleanSearch = htmlspecialchars($searchfor, ENT_QUOTES);
-	
+
 	$result = search($dir, $searchfor);
 	$content = $Parsedown->text($result);
-	
-	return
-	'<div class="searchTitle" style="display: none">Search results for: ' . $cleanSearch . '</div>
-	<div class="lastSearch" style="display: none"><a href="#">open recent search</a></div>
-	<br><br>'.$content;
 
+	return
+		'<div class="searchTitle" style="display: none">Search results for: ' . $cleanSearch . '</div>
+	<div class="lastSearch" style="display: none"><a href="#">open recent search</a></div>
+	<br><br>' . $content;
 }
 
 
-function search($dir, $searchfor, $folder = '') {
+function search($dir, $searchfor, $folder = '')
+{
 
-	$files = glob($dir.'/*');
+	$files = glob($dir . '/*');
 	$result = '';
 	$matches = [];
 
-	foreach($files as $file){
-		
+	foreach ($files as $file) {
+
 		// in case of folder
-		if(is_dir($file)){
-			
+		if (is_dir($file)) {
+
 			if (isValidFolder($file)) {
 				$folder = getFolderInfos($file)[0];
-				$result .= search($file, $searchfor, $folder.'/');
+				$result .= search($file, $searchfor, $folder . '/');
 			}
-			
 		} else {
-			
+
 			if (isMDFile($file)) {
 
 				$pathClean = getFileInfos($file)[0];
 				$urlPathClean = rawurlencode($pathClean);
-							
+
 				// get the file contents, assuming the file to be readable (and exist)
 				$contents = file_get_contents($file);
 
 				$contents = $contents . $pathClean;
 				// escape special characters in the query
 				$pattern = preg_quote($searchfor, '/');
-				
+
 				// finalise the regular expression, matching the whole line
 				$pattern = "/^.*$pattern.*\$/mi";
 				// search, and store all matching occurences in $matches
-				if(preg_match_all($pattern, $contents, $matches)){
-					$result .= '<a href="#" onclick="getContent(\'/'.$urlPathClean.'\');">' . $pathClean ."</a>\n";
-					$result .= "```plaintext \n";				
-					$result .= implode("\n", $matches[0]);					
+				if (preg_match_all($pattern, $contents, $matches)) {
+					$result .= '<a href="#" onclick="getContent(\'/' . $urlPathClean . '\');">' . $pathClean . "</a>\n";
+					$result .= "```plaintext \n";
+					$result .= implode("\n", $matches[0]);
 					$result .= "\n```\n";
 					$result .= "\n&nbsp;\n";
 				}
-
 			}
-
 		}
 	}
 
 
 	return $result;
-
 }
 
 // check if file is a md file
-function isMDFile($file) {
+function isMDFile($file)
+{
 
 	$fileinfo = pathinfo($file);
-	
-			
-	if( isset($fileinfo['extension']) AND strtolower($fileinfo['extension']) == 'md'){
+
+
+	if (isset($fileinfo['extension']) and strtolower($fileinfo['extension']) == 'md') {
 		return true;
 	}
 
 	return false;
 }
 
-function getFileInfos($file) {
+function getFileInfos($file)
+{
 
 	global $rootDir;
 	$mdFile = mb_basename($file);
-	if (strcmp(substr($mdFile,-3), ".md") === 0) {
-		$mdFile = substr($mdFile,0, -3);
+	if (strcmp(substr($mdFile, -3), ".md") === 0) {
+		$mdFile = substr($mdFile, 0, -3);
 	}
-	
-	$folderClean = str_replace('$' . $rootDir,'','$' . pathinfo($file)["dirname"]);
-		
-	$folderClean = substr($folderClean,1);
-	if (!strcmp($folderClean,'')) {					
+
+	$folderClean = str_replace('$' . $rootDir, '', '$' . pathinfo($file)["dirname"]);
+
+	$folderClean = substr($folderClean, 1);
+	if (!strcmp($folderClean, '')) {
 		$pathClean = $mdFile;
 	} else {
-		$pathClean = $folderClean . '/'. $mdFile; 
+		$pathClean = $folderClean . '/' . $mdFile;
 	}
 
-	return [$pathClean,$mdFile];
+	return [$pathClean, $mdFile];
 }
 
-function mb_basename($path) {
-    if (preg_match('@^.*[\\\\/]([^\\\\/]+)$@s', $path, $matches)) {
-        return $matches[1];
-    } else if (preg_match('@^([^\\\\/]+)$@s', $path, $matches)) {
-        return $matches[1];
-    }
-    return '';
+function mb_basename($path)
+{
+	if (preg_match('@^.*[\\\\/]([^\\\\/]+)$@s', $path, $matches)) {
+		return $matches[1];
+	} else if (preg_match('@^([^\\\\/]+)$@s', $path, $matches)) {
+		return $matches[1];
+	}
+	return '';
 }
 
 
-function getFolderInfos($file) {
-	
+function getFolderInfos($file)
+{
+
 	global $rootDir;
-	$folder = str_replace($rootDir. '/','',$file);
-	$folderClean = str_replace('/','-',$folder);
-	$folderClean = str_replace(' ','-',$folderClean);
+	$folder = str_replace($rootDir . '/', '', $file);
+	$folderClean = str_replace('/', '-', $folder);
+	$folderClean = str_replace(' ', '-', $folderClean);
 	$folderName = mb_basename($file);
 
 	return [$folder, $folderClean, $folderName];
-
 }
 
-function isValidFolder($file) {
+function isValidFolder($file)
+{
 
 	global $hideFolders;
 	$folderName = mb_basename($file);
 
 	// check if folder is in array
-	if (in_array($folderName,$hideFolders, true)) {
+	if (in_array($folderName, $hideFolders, true)) {
 		return false;
 	}
 
-	if (strcmp(substr($folderName,0,1),'.') !== 0 ) {
+	if (strcmp(substr($folderName, 0, 1), '.') !== 0) {
 		return true;
 	}
 
@@ -272,14 +264,15 @@ function isValidFolder($file) {
 }
 
 
-function getfullGraph($rootDir) {
-	
+function getfullGraph($rootDir)
+{
 
-	$jsonMetadaFile = $rootDir.'/metadata.json';
-	
+
+	$jsonMetadaFile = $rootDir . '/metadata.json';
+
 	if (!is_file($jsonMetadaFile)) {
 		return;
-	} 
+	}
 
 	$jsonData = file_get_contents($jsonMetadaFile);
 
@@ -301,22 +294,21 @@ function getfullGraph($rootDir) {
 	$nodeID = 0;
 	// create nodes
 	foreach ($json_obj as $id => $node) {
-							
+
 		$nodePath = removeExtension($node['relativePath']);
-		
+
 		// check if node from the  json file really exists
 		if (checkArray($nodePath)) {
 			// add node to the graph
-			array_push($graphNodes, ['id'=>$nodeID, 'label'=>$node['fileName'], 'title'=>$nodePath]);
+			array_push($graphNodes, ['id' => $nodeID, 'label' => $node['fileName'], 'title' => $nodePath]);
 			$nodeID += 1;
 		}
-				
 	}
 	$targetId = -1;
 	$sourceId = -1;
 
 	foreach ($json_obj as $index => $node) {
-								
+
 		// create the linking between the nodes
 		if (isset($node['links'])) {
 			foreach ($node['links'] as $i => $links) {
@@ -334,37 +326,34 @@ function getfullGraph($rootDir) {
 				if ($source !== '' && $target !== '') {
 					foreach ($graphNodes as $index => $element) {
 						$elementTitle = $element['title'];
-	
-						if(strcmp($elementTitle,$target) == 0){
+
+						if (strcmp($elementTitle, $target) == 0) {
 							$targetId = $element['id'];
 						}
-						if(strcmp($elementTitle,$source) == 0){
+						if (strcmp($elementTitle, $source) == 0) {
 							$sourceId = $element['id'];
-						}					
-						if($targetId !== -1 && $sourceId !== -1) {
-							array_push($graphEdges, ['from'=>$sourceId, 'to' => $targetId]);
+						}
+						if ($targetId !== -1 && $sourceId !== -1) {
+							array_push($graphEdges, ['from' => $sourceId, 'to' => $targetId]);
 							$targetId = -1;
 							$sourceId = -1;
-						}		
-					}		
-
+						}
+					}
 				}
-				
-						
 			}
-		}			
+		}
 	}
-	
-	$myGraphNodes = json_encode($graphNodes,JSON_UNESCAPED_SLASHES);
-	$myGraphEdges = json_encode($graphEdges,JSON_UNESCAPED_SLASHES);
 
-	return '<div id="allGraphNodes" class="hide">'.$myGraphNodes.'</div><div id="allGraphEdges" class="hide">'.$myGraphEdges.'</div>';
+	$myGraphNodes = json_encode($graphNodes, JSON_UNESCAPED_SLASHES);
+	$myGraphEdges = json_encode($graphEdges, JSON_UNESCAPED_SLASHES);
 
+	return '<div id="allGraphNodes" class="hide">' . $myGraphNodes . '</div><div id="allGraphEdges" class="hide">' . $myGraphEdges . '</div>';
 }
 
-function removeExtension($path) {
+function removeExtension($path)
+{
 
-	return substr($path,0,-3);
+	return substr($path, 0, -3);
 }
 
 // check if node is in array

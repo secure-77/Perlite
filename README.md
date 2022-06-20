@@ -76,7 +76,7 @@ you can adjust them via the index.php
 
 - The About opens a .md file in a modal window (.about.md per default), you can change this in the helper.php `$about` variable
 - The Logo, Blog and so on are nested in the index.php (line 47 e.g. for the link to the Blog)
-- The Startpage is set to README.md, you can change this in the helper.php `$index` variable
+- The Startpage is set to README.md, you can change this in the helper.php `$index` variable and in the perlite.js `homeFile` variable
 
 #### Graph
 The Graph is implemented with vis.js, so there are many options you can play on with, you can adjust them via the `options` object in the perlite.js

@@ -4,6 +4,9 @@
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
+// define home file
+const homeFile = "README";
+
 
 // get markdown content
 function getContent(str, home = false) {
@@ -124,6 +127,11 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
 
   var currId = 0;
   path = decodeURIComponent(path);
+  if (path == 'home') {
+    path = '/' + homeFile;
+  }
+
+  console.log(path);
 
 
   // get current node
