@@ -15,8 +15,9 @@ services:
 
   web:
     build:
-        context: ./web 
-    container_name: web   
+        context: ./web
+    image: sec77/perlite_web:stable
+    container_name: perlite_web
     ports:
       - 80:80
     volumes_from: 

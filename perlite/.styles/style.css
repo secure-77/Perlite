@@ -21,6 +21,14 @@
 }
 
 
+blockquote {
+  margin: 1rem;
+}
+
+h2 {
+  margin-top: 1rem;
+}
+
 .external-link {
   background-position: center right;
   background-repeat: no-repeat;

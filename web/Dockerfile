@@ -1,4 +1,4 @@
-FROM nginx:latest
+FROM nginx:stable
 
 MAINTAINER sec77 https://github.com/secure-77/Perlite
 

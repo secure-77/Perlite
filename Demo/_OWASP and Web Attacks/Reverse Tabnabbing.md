@@ -1,6 +1,5 @@
 # Reverse Tabnabbing
 
-see box: [[../../WriteUps/HackTheBox/Developer/WriteUp]]
 see box: [[../../WriteUps/HackTheBox/Developer/WriteUp|Custom Link]]
 
 
@@ -37,7 +36,7 @@ Malicious Site that is linked to:
 </html>
 ```
 
-see box: [[../../WriteUps/HackTheBox/Developer/WriteUp]]
+
 
 # fixed in many browsers
 

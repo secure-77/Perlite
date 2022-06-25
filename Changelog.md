@@ -5,6 +5,9 @@
 - hide graph display, when node has no graph
 - some visual graph updates
 - changed order: folders are now always on top
+- adjusted the docker image and container naming
+- updated the nginx version to 1.22 and php to 7.4.30 for docker
+- adjusted blockquote style
 
 
 ## 1.4.3
