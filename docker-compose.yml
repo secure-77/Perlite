@@ -5,6 +5,7 @@ services:
   perlite:
     image: sec77/perlite:latest
     container_name: perlite
+    restart: unless-stopped
    
     environment:
       - NOTES_PATH=Demo
@@ -18,6 +19,7 @@ services:
         context: ./web
     image: sec77/perlite_web:stable
     container_name: perlite_web
+    restart: unless-stopped
     ports:
       - 80:80
     volumes_from: 
