@@ -1,15 +1,12 @@
 version: "3.9"
 
 services:
-
   perlite:
     image: sec77/perlite:latest
     container_name: perlite-dev
-          
     environment:
       - NOTES_PATH=Demo
       - HIDE_FOLDERS=docs,private,trash
-
     volumes:
       - ./perlite:/var/www/perlite
       - ./Demo:/var/www/perlite/Demo:ro
