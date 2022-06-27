@@ -22,7 +22,11 @@
 
 
 blockquote {
-  margin: 1rem;
+  background: #212325;
+  border-left: 4px solid #3E4446;
+  padding: 0.5rem;
+  margin-inline-start: 30px;
+  margin-inline-end: 30px;
 }
 
 h2 {
