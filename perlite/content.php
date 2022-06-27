@@ -72,13 +72,23 @@ function parseContent($requestFile) {
 		return;
 	}
 
-	
+	$pattern = '/^[\s\r\n]?---[\s\r\n]?$/sm';
+	$parts = preg_split($pattern, PHP_EOL.ltrim($content));
+
+	// parse the content
+	if (count($parts) < 3) {
+		$content = $Parsedown->text($content);
+	// front-matter present
+	} else {
+		$matter = trim($parts[1]);
+		$body = implode(PHP_EOL.'---'.PHP_EOL, array_slice($parts, 2));
+
+		$content = $Parsedown->text($body ?? "");
+	}
+
 	// define pathes for links
 	$mdpath = $path;
 	$path = $startDir . $path;
-
-	// parse the content
-	$content = $Parsedown->text($content);
 
 	// pdf links
 	$replaces = '<a target="_blank" rel="noopener noreferrer" href="'.$path .'/'.'\\2">\\2</a>';
