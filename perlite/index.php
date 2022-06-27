@@ -81,17 +81,15 @@ $jsonGraphData = getfullGraph($rootDir);
     <div class="divider-top no-mobile"></div>
     <main>
         <div class="divider no-mobile"></div>
-        <aside class="bd-aside sticky-nav align-self-start mb-xl-5 px-2">
-            <div class="flex-shrink-0 nav-left p-1">
+        <aside class="bd-aside sticky-nav align-self-start mb-xl-5 px-2">    
+            <div class="nav-left p-1">
                 <h4 class="headline pb-3"><?php echo $base ?> </h4>
-                <div class="mb-4">
                     <form id="f1" class="search-my col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                         <input type="search" name="t1" class="form-control form-control-sm perlite-form"
                             placeholder="Search..." aria-label="Search">
                     </form>
                     <div class="me-lg-2 blockquote-footer searchFooter"><a href="#" id="expandGraph">open Graph</a>
                     </div>
-                </div>
                 <div class="perlite-navigator">
                     <ul class="list-unstyled ps-0">
                         <?php echo $menu ?>
@@ -112,7 +110,7 @@ $jsonGraphData = getfullGraph($rootDir);
     </main>
 
 
-
+    
     <!-- Modals -->
     <div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModal" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">

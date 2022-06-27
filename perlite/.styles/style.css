@@ -129,14 +129,16 @@ img {
 }
 
 .perlite-navigator {
-  overflow: auto;
-  height: 88%;
+  overflow-y: auto;
+  height: 100%;
   margin-left: -15px;
   max-width: 440px;
 }
 
 .nav-left {
   min-width: 400px;
+  display: grid;
+  align-content: baseline;
 }
 
 .nav-right {
