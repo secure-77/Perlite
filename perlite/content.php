@@ -72,13 +72,18 @@ function parseContent($requestFile) {
 		return;
 	}
 
-	
+	// parse the content
+	if (0 === strpos($content, "---\n")) {
+		$parts = explode("\n---\n", $content, 2);
+		$content = $Parsedown->text($parts[1] ?? "");
+	// no front-matter
+	} else {
+		$content = $Parsedown->text($content);
+	}
+
 	// define pathes for links
 	$mdpath = $path;
 	$path = $startDir . $path;
-
-	// parse the content
-	$content = $Parsedown->text($content);
 
 	// pdf links
 	$replaces = '<a target="_blank" rel="noopener noreferrer" href="'.$path .'/'.'\\2">\\2</a>';
