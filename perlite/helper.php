@@ -55,7 +55,7 @@ function cmp($a, $b)
 {
 	$aTemp = str_replace('_', '0', $a);
 	$bTemp = str_replace('_', '0', $b);
-	return strcmp($aTemp, $bTemp);
+	return strnatcasecmp($aTemp, $bTemp);
 }
 
 

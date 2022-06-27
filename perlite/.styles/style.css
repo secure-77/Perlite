@@ -274,6 +274,7 @@ img {
 
   .perlite-navigator {
     margin-left: 0px;
+    max-width: 100%;
   }
 
   .images, img {

@@ -21,7 +21,11 @@ function getContent(str, home = false) {
     requestPath = "content.php?mdfile=" + str;
 
     if (home) {
+      if ($("div.no-mobile").css("display") == "none") {
+        return
+      }
       requestPath = "content.php?home";
+      
     }
 
     $.ajax({

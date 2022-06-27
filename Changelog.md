@@ -1,13 +1,15 @@
 ## 1.4.4 RC (commited but not released)
 - some code cleanup
 - replaced mermaid js with the correct one (9.1.2)
-- implemented start page (README.md)
+- implemented start page (README.md) for non mobile view
 - hide graph display, when node has no graph
 - some visual graph updates
 - changed order: folders are now always on top
+- fixed sort order to be case insensitive
 - adjusted the docker image and container naming
 - updated the nginx version to 1.22 and php to 7.4.30 for docker
 - adjusted blockquote style
+- fixed sidebar menu height
 
 
 ## 1.4.3
