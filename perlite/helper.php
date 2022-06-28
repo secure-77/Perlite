@@ -6,7 +6,7 @@
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
-include('Parsedown.php');
+include('PerliteParsedown.php');
 //include('ParsedownExtra.php');
 
 

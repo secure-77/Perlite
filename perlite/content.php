@@ -57,7 +57,7 @@ function parseContent($requestFile) {
 	global $rootDir;
 	global $startDir;
 	//$Parsedown = new ParsedownExtra();
-	$Parsedown = new Parsedown();
+	$Parsedown = new PerliteParsedown();
 	$Parsedown->setSafeMode(true);
 	$Parsedown->setBreaksEnabled(true);
 	$cleanFile = '';
