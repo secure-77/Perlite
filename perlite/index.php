@@ -83,7 +83,7 @@ $jsonGraphData = getfullGraph($rootDir);
         <div class="divider no-mobile"></div>
         <aside class="bd-aside sticky-nav align-self-start mb-xl-5 px-2">    
             <div class="nav-left p-1">
-                <h4 class="headline pb-3"><?php echo $base ?> </h4>
+                <h4 class="headline pb-3" id="vault-name"><?php echo $base ?> </h4>
                     <form id="f1" class="search-my col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                         <input type="search" name="t1" class="form-control form-control-sm perlite-form"
                             placeholder="Search..." aria-label="Search">

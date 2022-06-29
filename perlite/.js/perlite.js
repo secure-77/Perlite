@@ -36,7 +36,9 @@ function getContent(str, home = false) {
         $("div.mdModalBody").html(result);
         var title = $("div.mdTitleHide").first().html();
         if (title) {
-          title = '<a href=?link=' + encodeURIComponent(title) + '>' + title + '</a>'
+          var vault = document.getElementById("vault-name")
+          title = '<a href=obsidian://open?vault=' + vault.textContent.trim() + '&file=' + encodeURIComponent(title) + '>' + title + '</a>'
+
           $("li.mdTitle").html(title);
           $("h5.mdModalTitle").html(title);
         }
