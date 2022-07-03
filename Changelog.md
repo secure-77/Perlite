@@ -1,4 +1,4 @@
-## 1.4.4 RC (commited but not released)
+## 1.4.4
 - some code cleanup
 - replaced mermaid.min.js with the correct one (9.1.2)
 - implemented start page (README.md) for non mobile view
