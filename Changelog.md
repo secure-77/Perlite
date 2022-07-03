@@ -11,6 +11,7 @@
 - adjusted blockquote style and added callouts support (thanks to @Tooa)
 - fixed sidebar menu height
 - fixed problem with direct links and `&` chars
+- fixed a graph linking error when some files are missing from the metadata.json
 
 
 ## 1.4.3

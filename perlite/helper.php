@@ -309,34 +309,40 @@ function getfullGraph($rootDir)
 
 	foreach ($json_obj as $index => $node) {
 
-		// create the linking between the nodes
-		if (isset($node['links'])) {
-			foreach ($node['links'] as $i => $links) {
+		$nodePath = removeExtension($node['relativePath']);
 
-				$source = "";
-				$target = "";
-				if (isset($node['relativePath'])) {
-					$source = removeExtension($node['relativePath']);
-				}
+		// check if node from the json file really exists
+		if (checkArray($nodePath)) {
 
-				if (isset($links['relativePath'])) {
-					$target = removeExtension($links['relativePath']);
-				}
+			// create the linking between the nodes
+			if (isset($node['links'])) {
+				foreach ($node['links'] as $i => $links) {
 
-				if ($source !== '' && $target !== '') {
-					foreach ($graphNodes as $index => $element) {
-						$elementTitle = $element['title'];
+					$source = "";
+					$target = "";
+					if (isset($node['relativePath'])) {
+						$source = removeExtension($node['relativePath']);
+					}
 
-						if (strcmp($elementTitle, $target) == 0) {
-							$targetId = $element['id'];
-						}
-						if (strcmp($elementTitle, $source) == 0) {
-							$sourceId = $element['id'];
-						}
-						if ($targetId !== -1 && $sourceId !== -1) {
-							array_push($graphEdges, ['from' => $sourceId, 'to' => $targetId]);
-							$targetId = -1;
-							$sourceId = -1;
+					if (isset($links['relativePath'])) {
+						$target = removeExtension($links['relativePath']);
+					}
+
+					if ($source !== '' && $target !== '') {
+						foreach ($graphNodes as $index => $element) {
+							$elementTitle = $element['title'];
+
+							if (strcmp($elementTitle, $target) == 0) {
+								$targetId = $element['id'];
+							}
+							if (strcmp($elementTitle, $source) == 0) {
+								$sourceId = $element['id'];
+							}
+							if ($targetId !== -1 && $sourceId !== -1) {
+								array_push($graphEdges, ['from' => $sourceId, 'to' => $targetId]);
+								$targetId = -1;
+								$sourceId = -1;
+							}
 						}
 					}
 				}
