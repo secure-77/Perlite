@@ -72,13 +72,18 @@ function parseContent($requestFile) {
 		return;
 	}
 
+	$pattern = '/^[\s\r\n]?---[\s\r\n]?$/sm';
+	$parts = preg_split($pattern, PHP_EOL.ltrim($content));
+
 	// parse the content
-	if (0 === strpos($content, "---\n")) {
-		$parts = explode("\n---\n", $content, 2);
-		$content = $Parsedown->text($parts[1] ?? "");
-	// no front-matter
-	} else {
+	if (count($parts) < 3) {
 		$content = $Parsedown->text($content);
+	// front-matter present
+	} else {
+		$matter = trim($parts[1]);
+		$body = implode(PHP_EOL.'---'.PHP_EOL, array_slice($parts, 2));
+
+		$content = $Parsedown->text($body ?? "");
 	}
 
 	// define pathes for links
