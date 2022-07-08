@@ -22,7 +22,88 @@
 
 
 blockquote {
-  margin: 1rem;
+  background: #212325;
+  border-left: 6px solid #3E4446;
+  padding: 0.5rem;
+  margin-inline-start: 30px;
+  margin-inline-end: 30px;
+}
+
+/*
+  Callouts
+
+  The types and colors originate from the Obsidian client. Any unrecognized type will
+  default to the "note" type.
+*/
+
+.callout {
+  --callout-color: 68, 138, 255;
+}
+
+.callout[data-callout="abstract"],
+.callout[data-callout="summary"],
+.callout[data-callout="tldr"] {
+  --callout-color: 0, 176, 255;
+}
+
+.callout[data-callout="info"],
+.callout[data-callout="todo"] {
+  --callout-color: 0, 184, 212;
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-callout="important"] {
+  --callout-color: 0, 191, 165;
+}
+
+.callout[data-callout="success"],
+.callout[data-callout="check"],
+.callout[data-callout="done"] {
+  --callout-color: 0, 200, 83;
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"] {
+  --callout-color: 100, 221, 23;
+}
+
+.callout[data-callout="warning"],
+.callout[data-callout="caution"],
+.callout[data-callout="attention"] {
+  --callout-color: 255, 145, 0;
+}
+
+.callout[data-callout="failure"],
+.callout[data-callout="fail"],
+.callout[data-callout="missing"] {
+  --callout-color: 255, 82, 82;
+}
+
+.callout[data-callout="danger"],
+.callout[data-callout="error"] {
+  --callout-color: 255, 23, 68;
+}
+
+.callout[data-callout="bug"] {
+  --callout-color: 245, 0, 87;
+}
+
+.callout[data-callout="example"] {
+  --callout-color: 124, 77, 255;
+}
+
+.callout[data-callout="quote"],
+.callout[data-callout="cite"] {
+  --callout-color: 158, 158, 158;
+}
+
+.callout {
+  border-left: 4px solid rgb(var(--callout-color));
+  border-radius: 2px;
+  margin-inline-start: unset;
+  margin-inline-end: unset;
 }
 
 h2 {

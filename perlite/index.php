@@ -3,7 +3,7 @@
 
 <?php
 /*!
-  * Version v1.4.4 RC (https://github.com/secure-77/Perlite)
+  * Version v1.4.4 (https://github.com/secure-77/Perlite)
 */
 ?>
 
