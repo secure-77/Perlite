@@ -72,13 +72,15 @@ function parseContent($requestFile) {
 		return;
 	}
 
+	// Ignore YAML front matter
 	$pattern = '/^[\s\r\n]?---[\s\r\n]?$/sm';
 	$parts = preg_split($pattern, PHP_EOL.ltrim($content));
 
-	// parse the content
+	// parse the content if no yaml found
 	if (count($parts) < 3) {
 		$content = $Parsedown->text($content);
-	// front-matter present
+	
+		// front-matter present
 	} else {
 		$matter = trim($parts[1]);
 		$body = implode(PHP_EOL.'---'.PHP_EOL, array_slice($parts, 2));
