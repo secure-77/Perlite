@@ -86,6 +86,9 @@ The Graph is implemented with vis.js, so there are many options you can play on 
 - If you want to change or specify the root directory of your vault, you can do this by changing the variable `$rootDir` in the helper.php or by setting the `NOTES_PATH` as php variable.
 - You can see an example of this in the Release, just uncomment the `//$rootDir = 'Demo';` in the helper.php and see how the build changes, also notice the two metadata.json, one in the perlite folder and one in the Demo folder, depending on your rootDir either the one in perlite or the one in Demo will be used.
 
+#### External Obsidian Links
+- Add the cookie `perlite_edit=1` to display an edit button next to your documents for your own session. The button opens the current document in your Obsidian vault. Make sure to set the `HttpOnly` attribute to false. Otherwise, client-side script access for the cookie is blocked.
+
 #### Python Parser
 - There is a pythonParser.py to genereate the vis.js JSON structure out of the metadata.json. This script is not beeing used anymore but I will let it here.
 
