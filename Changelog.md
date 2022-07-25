@@ -1,3 +1,6 @@
+## 1.4.5 RC
+- added "edit button", enable it via cookie, thx to @Tooa
+
 ## 1.4.4
 - some code cleanup
 - replaced mermaid.min.js with the correct one (9.1.2)
