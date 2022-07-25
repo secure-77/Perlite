@@ -11,7 +11,7 @@
 // define home file
 const homeFile = "README";
 // define cookie name required for external Obsidian link button
-const editCookieName = "perlite_edit";
+const editCookieName = "vaultName";
 
 
 // get markdown content
@@ -48,12 +48,14 @@ function getContent(str, home = false) {
           $("li.mdTitle").html(hrefTitle);
           $("h5.mdModalTitle").html(hrefTitle);
 
-          showEditButton = document.cookie.match(RegExp('(?:^|;\\s*)' + editCookieName + '=([^;]*)'));
+          showEditButton = getCookie(editCookieName);
+
+
           if(showEditButton) {
-            var vault = document.getElementById("vault-name")
+            var vault = showEditButton;
 
             $("#edit-btn")
-              .attr("href", "obsidian://open?vault=" + vault.textContent.trim() + "&file=" + encodeURIComponent(title))
+              .attr("href", "obsidian://open?vault=" + vault + "&file=" + encodeURIComponent(title))
               .removeClass("visually-hidden");
           }
         }
@@ -113,7 +115,14 @@ function getContent(str, home = false) {
 
         // mark external links
         function link_is_external(link_element) {
-          return (link_element.host !== window.location.host);
+          if (link_element.host == '') {
+            return false;
+          }
+
+          if (link_element.host !== window.location.host) {
+            return true;
+          }
+          return false;
         }
 
         var links = document.getElementsByTagName('a');
