@@ -6,10 +6,12 @@ services:
     container_name: perlite-dev
     environment:
       - NOTES_PATH=Demo
+      # - NOTES_PATH=_Notes
       - HIDE_FOLDERS=docs,private,trash
     volumes:
       - ./perlite:/var/www/perlite
       - ./Demo:/var/www/perlite/Demo:ro
+      # - ./_Notes:/var/www/perlite/_Notes:ro
 
   web:
     build:
@@ -21,6 +23,7 @@ services:
     volumes:
       - ./perlite:/var/www/perlite
       - ./Demo:/var/www/perlite/Demo:ro   
+      # - ./_Notes:/var/www/perlite/_Notes:ro   
     depends_on:
       - perlite
 

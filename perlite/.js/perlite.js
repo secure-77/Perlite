@@ -1,11 +1,17 @@
+/// <reference path="./jquery-3.6.0.min.js" />
+
 /*!
   * Perlite (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
+
+
 // define home file
 const homeFile = "README";
+// define cookie name required for external Obsidian link button
+const editCookieName = "perlite_edit";
 
 
 // get markdown content
@@ -25,8 +31,9 @@ function getContent(str, home = false) {
         return
       }
       requestPath = "content.php?home";
-      
+
     }
+
 
     $.ajax({
       url: requestPath, success: function (result) {
@@ -34,13 +41,21 @@ function getContent(str, home = false) {
         // set content + fullscreen modal
         $("#mdContent").html(result);
         $("div.mdModalBody").html(result);
-        var title = $("div.mdTitleHide").first().html();
-        if (title) {
-          var vault = document.getElementById("vault-name")
-          title = '<a href=obsidian://open?vault=' + vault.textContent.trim() + '&file=' + encodeURIComponent(title) + '>' + title + '</a>'
 
-          $("li.mdTitle").html(title);
-          $("h5.mdModalTitle").html(title);
+        var title = $("div.mdTitleHide").first().text();
+        if (title) {
+          hrefTitle = '<a href=?link=' + encodeURIComponent(title) + '>' + title + '</a>'
+          $("li.mdTitle").html(hrefTitle);
+          $("h5.mdModalTitle").html(hrefTitle);
+
+          showEditButton = document.cookie.match(RegExp('(?:^|;\\s*)' + editCookieName + '=([^;]*)'));
+          if(showEditButton) {
+            var vault = document.getElementById("vault-name")
+
+            $("#edit-btn")
+              .attr("href", "obsidian://open?vault=" + vault.textContent.trim() + "&file=" + encodeURIComponent(title))
+              .removeClass("visually-hidden");
+          }
         }
 
         // highlight code     
@@ -150,7 +165,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
 
   // cancel graph display if no node was found
   if (currId == -1) {
-  return;
+    return;
   }
 
 
@@ -445,6 +460,8 @@ $(document).ready(function () {
   }
 
   if (target != "") {
+
+    target = encodeURIComponent(target)
     getContent(target);
 
     // open nav menu to target
