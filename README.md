@@ -30,8 +30,8 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 - Full responsive
 - No manual parsing or converting necessary
 - Full interactive Graph
-- LaTeX support
-- Mermaid support
+- LaTeX and Mermaid support
+- Link to Obsidian Vault
 - Search
 - Support Obisdian links and images
 - [![coverage](https://img.shields.io/badge/Bootswatch-Themes-blue)](https://bootswatch.com) (Slate)
@@ -85,6 +85,9 @@ The Graph is implemented with vis.js, so there are many options you can play on 
 - Without setting a `NOTES_PATH` enviroment variable, Perlite takes the `perlite` directory as root folder, this means, you need to copy your content of the vault folder into the `perlite` directory (including metadata.json if you want a graph).
 - If you want to change or specify the root directory of your vault, you can do this by changing the variable `$rootDir` in the helper.php or by setting the `NOTES_PATH` as php variable.
 - You can see an example of this in the Release, just uncomment the `//$rootDir = 'Demo';` in the helper.php and see how the build changes, also notice the two metadata.json, one in the perlite folder and one in the Demo folder, depending on your rootDir either the one in perlite or the one in Demo will be used.
+
+#### Open File in Obsidian
+- Add the cookie `vaultName` with value of your Vault Name to display an edit button next to the fullscreen button. The button opens the current document in your Obsidian vault. Make sure to set the `HttpOnly` attribute to false. Otherwise, client-side script access for the cookie is blocked.
 
 #### Python Parser
 - There is a pythonParser.py to genereate the vis.js JSON structure out of the metadata.json. This script is not beeing used anymore but I will let it here.

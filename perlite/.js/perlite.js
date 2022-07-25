@@ -10,6 +10,8 @@
 
 // define home file
 const homeFile = "README";
+// define cookie name required for external Obsidian link button
+const editCookieName = "vaultName";
 
 
 // get markdown content
@@ -39,11 +41,23 @@ function getContent(str, home = false) {
         // set content + fullscreen modal
         $("#mdContent").html(result);
         $("div.mdModalBody").html(result);
+
         var title = $("div.mdTitleHide").first().text();
         if (title) {
-          title = '<a href=?link=' + encodeURIComponent(title) + '>' + title + '</a>'
-          $("li.mdTitle").html(title);
-          $("h5.mdModalTitle").html(title);
+          hrefTitle = '<a href=?link=' + encodeURIComponent(title) + '>' + title + '</a>'
+          $("li.mdTitle").html(hrefTitle);
+          $("h5.mdModalTitle").html(hrefTitle);
+
+          showEditButton = getCookie(editCookieName);
+
+
+          if(showEditButton) {
+            var vault = showEditButton;
+
+            $("#edit-btn")
+              .attr("href", "obsidian://open?vault=" + vault + "&file=" + encodeURIComponent(title))
+              .removeClass("visually-hidden");
+          }
         }
 
         // highlight code     
@@ -101,7 +115,14 @@ function getContent(str, home = false) {
 
         // mark external links
         function link_is_external(link_element) {
-          return (link_element.host !== window.location.host);
+          if (link_element.host == '') {
+            return false;
+          }
+
+          if (link_element.host !== window.location.host) {
+            return true;
+          }
+          return false;
         }
 
         var links = document.getElementsByTagName('a');
