@@ -1,32 +1,30 @@
-# Perlite
+# Perlite 1.5 Release
   
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/secure-77/perlite) ![GitHub](https://img.shields.io/github/license/secure-77/perlite) ![GitHub last commit](https://img.shields.io/github/last-commit/secure-77/Perlite)
 
 
-	
 A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 
-Just put your whole Obsidian vault or markdown folder/file structure in your web directory. The page builds itself. 
 
-Its an open source alternative to  [obisidian publish](https://obsidian.md/publish).
+>Important for the 1.5 release: you need the php module php-yaml for the tag search and metadata section!
 
-Read more about Perlite and staging tips on my blog post: [Perlite on Secure77](https://secure77.de/perlite).
 
-If you want to discuss about Perlite you can join the thread in the [Obsidian Forum](https://forum.obsidian.md/t/perlite-publish-your-notes-to-your-own-web-server/21712) or join the [Perlite Discord Server](https://discord.gg/pkJ347ssWT)
+> also check the new Theme section to use obsidian themes
+
+
 
 ## Demo
 
-[Perlite Demo](https://perlite.secure77.de/)
+[Perlite Demo](https://perlite.secure77.de/1.5_demo/)
 
 
-![Demo Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/screenshot.png "Demo Screenshot")
+![Demo Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/1.5_beta/Demo/screenshot.png "Demo Screenshot")
 
-![Graph Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/graph.png "Graph Screenshot")
+![Graph Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/1.5_beta/Demo/graph.png "Graph Screenshot")
 
 ## Features
 
 - Auto build up, based on your folder (vault) structure
-- Fullscreen mode
 - Full responsive
 - No manual parsing or converting necessary
 - Full interactive Graph
@@ -34,10 +32,11 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 - Link to Obsidian Vault
 - Search
 - Support Obisdian links and images
-- [![coverage](https://img.shields.io/badge/Bootswatch-Themes-blue)](https://bootswatch.com) (Slate)
+- Support Obsidian Tags
+
 
 ## Changelog
-[Changelog](https://github.com/secure-77/Perlite/blob/main/Changelog.md)
+[Changelog](https://github.com/secure-77/Perlite/blob/1.5_beta/Changelog.md)
 
 
 ## Install
@@ -49,11 +48,17 @@ For Docker just check the [DOCKER](https://github.com/secure-77/Perlite/blob/mai
 - Web server, tested with ![coverage](https://img.shields.io/badge/NGINX-1.22-blue)
 - Php-fpm, tested with ![coverage](https://img.shields.io/badge/PHP-7.4.30-green)
 - Php module mb_strings for the parsedown (apt install php-mbstring)
+- Php module yaml_parse for the metadata (apt install php-yaml)
 
 
 ### Required Obsidian Options
 - In the options `Files & Links` you need to set the `New link format` to `Relative path to file`
 ![Link Options](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/link.png "Link Options")
+
+
+#### Themes
+In your vault, there must be the `.obsidian` folder with the subfolder `themes`, perlite will load all themes presented in this folder. Perlite will also check for the file `appearance.json` in the `.obsidian` folder to get your default theme. Make sure that your webserver has access the .obsidian folder, to load the theme.css files.
+
 
 #### Graph
 - For the Graph you need to install the plugin [Metadata Extractor](https://github.com/kometenstaub/metadata-extractor), you can also do this via the build in Community Plugin Browser
@@ -96,7 +101,7 @@ The Graph is implemented with vis.js, so there are many options you can play on 
 ### Dependencies (all included)
 
 - [![coverage](https://img.shields.io/badge/Parsedown-1.7.4-lightgrey)](https://github.com/erusev/parsedown)
-- [![coverage](https://img.shields.io/badge/jQuery-3.6.0-lightblue)](https://jquery.com/)
+- [![coverage](https://img.shields.io/badge/jQuery-3.6.1-lightblue)](https://jquery.com/)
 - [![coverage](https://img.shields.io/badge/Bootstrap-5.1.3-blue)](https://getbootstrap.com/)
 - [![coverage](https://img.shields.io/badge/Highlight.js-11.4.0-green)](https://highlightjs.org/)
 - [![coverage](https://img.shields.io/badge/vis.js-9.1.2-yellow)](https://visjs.org/)

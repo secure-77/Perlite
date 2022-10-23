@@ -1,7 +1,7 @@
 <?php
 
 /*!
-  * Perlite v1.4.4 (https://github.com/secure-77/Perlite)
+  * Perlite v1.5 (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
@@ -72,28 +72,16 @@ function parseContent($requestFile) {
 		return;
 	}
 
-	// Ignore YAML front matter
-	$pattern = '/^[\s\r\n]?---[\s\r\n]?$/sm';
-	$parts = preg_split($pattern, PHP_EOL.ltrim($content));
-
-	// parse the content if no yaml found
-	if (count($parts) < 3) {
-		$content = $Parsedown->text($content);
-	
-		// front-matter present
-	} else {
-		$matter = trim($parts[1]);
-		$body = implode(PHP_EOL.'---'.PHP_EOL, array_slice($parts, 2));
-
-		$content = $Parsedown->text($body ?? "");
-	}
+	$wordCount = str_word_count($content);
+	$charCount = strlen($content);
+	$content = $Parsedown->text($content);
 
 	// define pathes for links
 	$mdpath = $path;
 	$path = $startDir . $path;
 
 	// pdf links
-	$replaces = '<a target="_blank" rel="noopener noreferrer" href="'.$path .'/'.'\\2">\\2</a>';
+	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="'.$path .'/'.'\\2">\\2</a>';
 	$pattern = array('/(\!\[\[)(.*?.pdf)(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 	
@@ -117,8 +105,13 @@ function parseContent($requestFile) {
 	$content = translateLink($pattern, $content, $mdpath, true);
 	
 	
-	// hide title
-	$content = '<div class="mdTitleHide" style="display: none";>'.$cleanFile.'</div>' . $content;
+	// add some meta data
+	$content = '
+	<div style="display: none">
+		<div class="mdTitleHide">'.$cleanFile.'</div>
+		<div class="wordCount">'.$wordCount.'</div>
+		<div class="charCount">'.$charCount.'</div>
+	</div>' . $content;
 	
 	echo $content;
 	return;
@@ -158,7 +151,7 @@ function translateLink($pattern, $content, $path, $sameFolder) {
 			$urlPath = '/' . $urlPath;
 		}
 		$urlPath = rawurlencode($urlPath);
-		return '<a href="?link='.$urlPath.'">'. $linkName .'</a>';
+		return '<a class="internal-link" href="?link='.$urlPath.'">'. $linkName .'</a>';
 	}
 ,$content);
 }

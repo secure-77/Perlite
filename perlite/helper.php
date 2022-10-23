@@ -1,13 +1,12 @@
 <?php
 
 /*!
-  * Perlite v1.4.4 (https://github.com/secure-77/Perlite)
+  * Perlite v1.5 (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
 include('PerliteParsedown.php');
-//include('ParsedownExtra.php');
 
 
 $avFiles = array();
@@ -37,7 +36,6 @@ if (strcmp($hideFolders, '')) {
 	$hideFolders = array();
 }
 
-
 // path management
 if (!strcmp($rootDir, "")) {
 
@@ -58,8 +56,6 @@ function cmp($a, $b)
 	return strnatcasecmp($aTemp, $bTemp);
 }
 
-
-
 function menu($dir, $folder = '')
 {
 
@@ -76,7 +72,6 @@ function menu($dir, $folder = '')
 		if (is_dir($file)) {
 
 			if (isValidFolder($file)) {
-				$html .= '<li class="mb-1">';
 
 				// split Folder Infos
 				$folder = getFolderInfos($file)[0];
@@ -86,11 +81,21 @@ function menu($dir, $folder = '')
 				$folderId = preg_replace('/[^A-Za-z\-]/', '_', $folderId);
 				$folderId = '_' . $folderId;
 
-				$html .= '<button class="btn btn-toggle pb-1 pt-1 nav-link border-0 d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#' . $folderId . '-collapse" aria-expanded="false">' . $folderName . '</button>';
-				$html .= '<div class="collapse" id="' . $folderId . '-collapse">
-							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1">';
+
+				$html .= '
+				<div class="nav-folder is-collapsed">
+					<div class="nav-folder-title" data-bs-toggle="collapse" data-bs-target="#' . $folderId . '-collapse" aria-expanded="false" onClick="toggleNavFolder(event);">
+						<div class="nav-folder-collapse-indicator collapse-icon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle">
+								<path d="M3 8L12 17L21 8"></path>
+							</svg>
+						</div>
+						<div class="nav-folder-title-content">' . $folderName . '</div>
+					</div>
+					<div class="nav-folder-children collapse" id="' . $folderId . '-collapse" style="">
+						<div style="width: 591px; height: 0.1px; margin-bottom: 0px;"></div>';
 				$html .= menu($file, $folder . '/');
-				$html .= '</ul></div></li>';
+				$html .= '</div></div>';
 			}
 		}
 	}
@@ -111,33 +116,38 @@ function menu($dir, $folder = '')
 			$pathID = str_replace(' ', '_', $path);
 			$pathID = preg_replace('/[^A-Za-z0-9\-]/', '_', $path);
 
-			$html .= '		<li>
-                                    <a href="#" onclick=getContent("' . $pathClean . '"); id="' . $pathID . '" class="perlite-link">' . $mdFile . '</a>
-                                </li>';
+
+			$html .= '
+			<div class="nav-file">
+				<div class="nav-file-title perlite-link" onclick=getContent("' . $pathClean . '"); id="' . $pathID . '"">
+					<div class="nav-file-title-content">' . $mdFile . '</div>
+				</div>
+			</div>
+			';
 		}
 	}
 
 	return $html;
 }
 
-
 function doSearch($dir, $searchfor)
 {
 
-	$Parsedown = new Parsedown();
-	$Parsedown->setSafeMode(false);
+	// $Parsedown = new Parsedown();
+	// $Parsedown->setSafeMode(false);
 
-	$cleanSearch = htmlspecialchars($searchfor, ENT_QUOTES);
+	//$cleanSearch = htmlspecialchars($searchfor, ENT_QUOTES);
 
 	$result = search($dir, $searchfor);
-	$content = $Parsedown->text($result);
+	$content = $result;
+	//$content = $Parsedown->text($result);
 
-	return
-		'<div class="searchTitle" style="display: none">Search results for: ' . $cleanSearch . '</div>
-	<div class="lastSearch" style="display: none"><a href="#">open recent search</a></div>
-	<br><br>' . $content;
+	if ($content === '') {
+		$content = '<div class="search-empty-state">No matches found.</div>';
+	}
+
+	return $content;
 }
-
 
 function search($dir, $searchfor, $folder = '')
 {
@@ -147,6 +157,7 @@ function search($dir, $searchfor, $folder = '')
 	$matches = [];
 
 	foreach ($files as $file) {
+
 
 		// in case of folder
 		if (is_dir($file)) {
@@ -169,15 +180,43 @@ function search($dir, $searchfor, $folder = '')
 				// escape special characters in the query
 				$pattern = preg_quote($searchfor, '/');
 
+				// check if we search for an tag, if yes first parse the document to get the front matter tags
+				if (substr($searchfor, 0, 1) === '#') {
+					$Parsedown = new PerliteParsedown();
+					$Parsedown->setSafeMode(true);
+					$contents = $Parsedown->text($contents);
+					$contents = strip_tags($contents);
+				}
+
 				// finalise the regular expression, matching the whole line
 				$pattern = "/^.*$pattern.*\$/mi";
 				// search, and store all matching occurences in $matches
 				if (preg_match_all($pattern, $contents, $matches)) {
-					$result .= '<a href="#" onclick="getContent(\'/' . $urlPathClean . '\');">' . $pathClean . "</a>\n";
-					$result .= "```plaintext \n";
-					$result .= implode("\n", $matches[0]);
-					$result .= "\n```\n";
-					$result .= "\n&nbsp;\n";
+
+					$result .= '
+					<br>
+					<div class="tree-item search-result is-collapsed">
+						<div class="tree-item-self search-result-file-title is-clickable">
+							<div class="tree-item-icon collapse-icon" onclick="toggleSearchEntry(event);" style="">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle">
+									<path d="M3 8L12 17L21 8"></path>
+								</svg>
+							</div>
+							<div class="tree-item-inner" onclick="getContent(\'/' . $urlPathClean . '\');">' . str_replace('/', ' / ', $pathClean) . '</div>
+							<div class="tree-item-flair-outer"><span class="tree-item-flair">' . count($matches[0]) . '</span></div>
+						</div>
+					<div class="search-result-file-matches" style="display: none">
+					<div style="width: 1px; height: 0.1px; margin-bottom: 0px;"></div><div class="search-result-file-match"><span>';
+
+					// escape found string + highlight text
+					$cleaned = array_map("htmlspecialchars", $matches[0]);
+					//$cleaned =
+					$out = str_ireplace($searchfor, '<span class="search-result-file-matched-text">' . $searchfor . '</span>',  $cleaned);
+					$text = implode('</span></div><div class="search-result-file-match"><span>', $out);
+					$result .= $text . '</span></div>
+
+					</div>
+				</div>';
 				}
 			}
 		}
@@ -232,7 +271,6 @@ function mb_basename($path)
 	return '';
 }
 
-
 function getFolderInfos($file)
 {
 
@@ -262,7 +300,6 @@ function isValidFolder($file)
 
 	return false;
 }
-
 
 function getfullGraph($rootDir)
 {
@@ -353,7 +390,7 @@ function getfullGraph($rootDir)
 	$myGraphNodes = json_encode($graphNodes, JSON_UNESCAPED_SLASHES);
 	$myGraphEdges = json_encode($graphEdges, JSON_UNESCAPED_SLASHES);
 
-	return '<div id="allGraphNodes" class="hide">' . $myGraphNodes . '</div><div id="allGraphEdges" class="hide">' . $myGraphEdges . '</div>';
+	return '<div id="allGraphNodes" style="display: none">' . $myGraphNodes . '</div><div id="allGraphEdges" style="display: none">' . $myGraphEdges . '</div>';
 }
 
 function removeExtension($path)
@@ -374,4 +411,54 @@ function checkArray($requestNode)
 	}
 
 	return false;
+}
+
+
+function loadThemes($rootDir)
+{
+
+	// get themes
+
+	$themes = "";
+	$folders = glob($rootDir . '/.obsidian/themes/*');
+	$appearanceFile = $rootDir . '/.obsidian/appearance.json';
+	$defaultTheme = "";
+
+
+
+	if (is_file($appearanceFile)) {
+		$jsonData = file_get_contents($appearanceFile);
+		if ($jsonData) {
+			$json_obj = json_decode($jsonData, true);
+			if ($json_obj) {
+
+				// if theme is set, set it as default
+				if (array_key_exists('cssTheme', $json_obj)) {
+					$defaultTheme = $json_obj["cssTheme"];
+				}
+			}
+		}
+	}
+
+
+
+	// iterate the folders 
+	foreach ($folders as $folder) {
+		if (is_dir($folder)) {
+
+			$folderName = getFolderInfos($folder)[2];
+			$folderClean = str_replace(' ', '_', $folderName);
+			$themePath = $rootDir . '/.obsidian/themes/' . $folderName . '/theme.css';
+
+			if ($defaultTheme === $folderName) {
+
+				$themes .= '<link data-themename="'.$folderName.'" class="theme" id="'.$folderClean.'" href="' . $themePath . '" type="text/css" rel="stylesheet">';
+			} else {
+
+				$themes .= '<link data-themename="'.$folderName.'" class="theme" id="'.$folderClean.'" href="' . $themePath . '" type="text/css" rel="stylesheet" disabled="disabled">';
+			}
+		}
+	}
+
+	return $themes;
 }
