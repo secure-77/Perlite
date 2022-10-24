@@ -15,6 +15,14 @@ $rootDir = getenv('NOTES_PATH');
 //$rootDir = 'Demo';
 
 $hideFolders = getenv('HIDE_FOLDERS');
+$lineBreaks = getenv('LINE_BREAKS');
+
+if ($lineBreaks === '') {
+	$lineBreaks == true;
+} else {
+	$lineBreaks = filter_var($lineBreaks, FILTER_VALIDATE_BOOLEAN);
+}
+
 $about = '.about';
 $index = 'README';
 

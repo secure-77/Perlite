@@ -56,10 +56,13 @@ function parseContent($requestFile) {
 	global $cleanFile;
 	global $rootDir;
 	global $startDir;
+	global $lineBreaks;
+
+
 	//$Parsedown = new ParsedownExtra();
 	$Parsedown = new PerliteParsedown();
 	$Parsedown->setSafeMode(true);
-	$Parsedown->setBreaksEnabled(true);
+	$Parsedown->setBreaksEnabled($lineBreaks);
 	$cleanFile = '';
 
 	// call menu again to refresh the array
