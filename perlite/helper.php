@@ -7,7 +7,6 @@
 */
 
 include('PerliteParsedown.php');
-//include('ParsedownExtra.php');
 
 
 $avFiles = array();
