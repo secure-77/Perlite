@@ -78,7 +78,7 @@ $jsonGraphData = getfullGraph($rootDir);
             <div class="workspace is-left-sidedock-open">
                 <div class="workspace-ribbon side-dock-ribbon mod-left">
                 
-                <a href="."><img src="logo.svg" height="30" class="logo" alt="Perlite Logo"></a>    
+                <a href="."><img src="logo.svg" height="25" class="logo" alt="Perlite Logo"></a>    
                 <div class="sidebar-toggle-button mod-left" aria-label="" aria-label-position="right">
                         
                     
@@ -247,7 +247,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                     
                                         <div class="view-header-title-container mod-at-start">     
                                         <div class="view-header-title-parent"></div>
-                                            <div class="view-header-title" tabindex="-1">README</div>
+                                            <div class="view-header-title" tabindex="-1"></div>
                                         </div>
 
                                         <div class="view-actions">
