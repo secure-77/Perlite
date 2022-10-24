@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   perlite:
-    image: sec77/perlite:latest
+    image: sec77/perlite:1.4.4
     container_name: perlite
     restart: unless-stopped
     environment:
