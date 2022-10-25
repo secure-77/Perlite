@@ -14,6 +14,10 @@
   display: none;
 }
 
+.workspace-split.mod-vertical.mod-root {
+  min-width: 400px;
+}
+
 /* fix graph canvas height */
 #mynetwork, #graph_all{
   height: 100%;
@@ -45,7 +49,10 @@ img {
   } 
   .workspace-split.mod-horizontal.mod-left-split {
     width: 90vw !important;
+    max-width: 300px !important;
   }
+
+  
 
   .sidebar-toggle-button.mod-right {
     display: none;
@@ -55,4 +62,3 @@ img {
   }
   
 }
-

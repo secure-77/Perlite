@@ -60,9 +60,9 @@ function getContent(str, home = false) {
           $(".inline-title").text(title);
           $("title").text(title + ' - ' + $("p.vault").text() + ' - ' + $("p.perliteTitle").text());
 
-          // set edit button url
+          // set edit button url       
           $('.clickable-icon.view-action[aria-label="Click to edit"]')
-            .attr("href", "obsidian://open?vault=" + $("p.vault").text() + "&file=" + encodeURIComponent(title))
+            .attr("href", "obsidian://open?vault=" + encodeURIComponent($("p.vault").text()) + "&file=" + encodeURIComponent(title))
 
         }
 
@@ -228,25 +228,12 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
   }
 
   // Graph Defaults
-  var nodeSize = 12
-  if ($('#nodeSizeVal').text() !== '') {
-    nodeSize = parseInt($('#nodeSizeVal').text())
-  }
 
-  varLinkDistance = 150
-  if ($('#linkDistanceVal').text() !== '') {
-    varLinkDistance = parseInt($('#linkDistanceVal').text())
-  }
+  nodeSize = parseInt($('.slider.nodeSize').val())
+  varLinkDistance = parseInt($('.slider.linkDistance').val())
+  varLinkThickness = parseFloat($('.slider.linkThickness').val())
+  varGraphStyle = $('#graphStyleDropdown').val()
 
-  varLinkThickness = 1
-  if ($('#linkThicknessVal').text() !== '') {
-    varLinkThickness = parseFloat($('#linkThicknessVal').text())
-  }
-
-  varGraphStyle = 'dynamic'
-  if ($("#graphStyleDropdown").val() !== '') {
-    varGraphStyle = $("#graphStyleDropdown").val()
-  }
 
   // container = document.getElementsByClassName('nav-files-container')[0];
 
@@ -455,6 +442,7 @@ function isMobile() {
   if ($(window).width() < 990) {
 
     hideLeftMobile();
+
   }
 
 };
@@ -464,6 +452,7 @@ function hideLeftMobile() {
   $('.mod-left-split').addClass('is-sidedock-collapse');
   $('.mod-left').addClass('is-collapsed');
   $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'none');
+  $('.mobile-display').css('display', 'unset');
 
 };
 
@@ -591,7 +580,11 @@ $(document).ready(function () {
   // ----------------------------------------
 
   // text size
-  $('body').css('--font-text-size', localStorage.getItem('Font_size') + 'px')
+  if (localStorage.getItem('Font_size')) {
+    $('body').css('--font-text-size', localStorage.getItem('Font_size') + 'px');
+  }
+
+  $('.slider.font-size').val(parseInt($('body').css('--font-text-size')));
 
   // inline title
   if (localStorage.getItem('InlineTitle') === 'hide') {
@@ -605,11 +598,31 @@ $(document).ready(function () {
     $('.frontmatter-container').addClass('is-collapsed');
   };
 
-  // graph settings
-  $('#graphStyleDropdown').val(localStorage.getItem('Graph_Style'))
-  $('#nodeSizeVal').text(localStorage.getItem('Graph_NodeSize'))
-  $('#linkDistanceVal').text(localStorage.getItem('Graph_LinkDistance'))
-  $('#linkThicknessVal').text(localStorage.getItem('Graph_LinkThickness'))
+  // graph settings & defaults
+
+  if (localStorage.getItem('Graph_Style')) {
+    $('#graphStyleDropdown').val(localStorage.getItem('Graph_Style'))
+  } else {
+    $('#graphStyleDropdown').val('dynamic')
+  }
+
+  if (localStorage.getItem('Graph_NodeSize')) {
+    $('.slider.nodeSize').val(localStorage.getItem('Graph_NodeSize'))
+  } else {
+    $('.slider.nodeSize').val(12)
+  }
+
+  if (localStorage.getItem('Graph_LinkDistance')) {
+    $('.slider.linkDistance').val(localStorage.getItem('Graph_LinkDistance'))
+  } else {
+    $('.slider.linkDistance').val(150)
+  }
+
+  if (localStorage.getItem('Graph_LinkThickness')) {
+    $('.slider.linkThickness').val(localStorage.getItem('Graph_LinkThickness'))
+  } else {
+    $('.slider.linkThickness').val(1)
+  }
 
   if (localStorage.getItem('Graph_Orphans') === 'hide') {
     $('.graphNoLinkOption').removeClass('is-enabled')
@@ -686,6 +699,7 @@ $(document).ready(function () {
 
       if ($(window).width() < 990) {
         $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'flex');
+
       }
 
     } else {
@@ -697,6 +711,7 @@ $(document).ready(function () {
 
       if ($(window).width() < 990) {
         $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'none');
+        $('.mobile-display').css('display', 'unset');
       }
 
     }
@@ -916,6 +931,8 @@ $(document).ready(function () {
     $('body').css('--font-text-size', target.val() + 'px')
     localStorage.setItem('Font_size', target.val());
 
+    $('.slider.font-size').val(parseInt($('body').css('--font-text-size')));
+
   });
 
   // Textsize Restore Defaults Button
@@ -924,6 +941,7 @@ $(document).ready(function () {
 
     $('body').css('--font-text-size', '15px')
     localStorage.removeItem('Font_size')
+    $('.slider.font-size').val(parseInt($('body').css('--font-text-size')));
 
   });
 
@@ -991,22 +1009,31 @@ $(document).ready(function () {
     var showNoLinks = !$(".graphNoLinkOption").hasClass('is-enabled')
     renderGraph(true, str, showNoLinks);
 
-    // show graph and close button
-    $('.view-header-nav-buttons[data-section="close"]').css('display', 'flex');
-    $('#graph_content').css('display', 'unset');
-    $('.markdown-reading-view').css('display', 'none');
+    if ($('.view-header-nav-buttons[data-section="close"]').is(':hidden')) {
+      // show graph and close button
+      $('.view-header-nav-buttons[data-section="close"]').css('display', 'flex');
+      $('#graph_content').css('display', 'unset');
+      $('.markdown-reading-view').css('display', 'none');
 
-    // hide right side-dock
-    $('.workspace').removeClass('is-right-sidedock-open');
-    $('.mod-right-split').addClass('is-sidedock-collapse');
-    $('.mod-right').addClass('is-collapsed');
+      // hide right side-dock
+      $('.workspace').removeClass('is-right-sidedock-open');
+      $('.mod-right-split').addClass('is-sidedock-collapse');
+      $('.mod-right').addClass('is-collapsed');
+
+    } else {
+
+      $('.view-header-nav-buttons[data-section="close"]').click();
+
+    }
+
+
   });
 
   // close Graph
   $('.view-header-nav-buttons[data-section="close"]').click(function (e) {
     e.preventDefault();
 
-    // show graph and close button
+    // hide graph and close button
     $('.view-header-nav-buttons[data-section="close"]').css('display', 'none');
     $('#graph_content').css('display', 'none');
     $('.markdown-reading-view').css('display', 'flex');
@@ -1144,10 +1171,10 @@ $(document).ready(function () {
       $('.graphAutoReloadOption').addClass('is-enabled')
     }
 
-    $('#graphStyleDropdown').val('')
-    $('#nodeSizeVal').text('')
-    $('#linkDistanceVal').text('')
-    $('#linkThicknessVal').text('')
+    $('.slider.linkThickness').val(1)
+    $('.slider.linkDistance').val(150)
+    $('.slider.nodeSize').val(12)
+    $('#graphStyleDropdown').val('dynamic')
 
     localStorage.removeItem('Graph_Orphans');
     localStorage.removeItem('Graph_Autoreload');

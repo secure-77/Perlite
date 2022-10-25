@@ -175,7 +175,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                         <div class="nav-folder mod-root">
                                             <div class="nav-folder-title" data-path="/">
                                                 <div class="nav-folder-collapse-indicator collapse-icon"></div>
-                                                <div class="nav-folder-title-content">_Notes</div>
+                                                <div class="nav-folder-title-content"><?php echo $vaultName ?></div>
                                             </div>
                                             <div class="nav-folder-children">
                                                 <div style="width: 612px; height: 0.1px; margin-bottom: 0px;"></div>
@@ -320,7 +320,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                                             </div>
                                                             <div class="setting-item-control">
                                                                 <select id="graphStyleDropdown" class="dropdown">
-                                                                    <option value="">Dynamic (Default)</option>
+                                                                    <option value="dynamic">Dynamic (Default)</option>
                                                                     <option value="continuous">Continuous</option>
                                                                     <option value="discrete">Discrete</option>
                                                                     <option value="diagonalCross">DiagonalCross</option>
@@ -348,7 +348,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                                                 <div class="setting-item-description"></div>
                                                             </div>
                                                             <div class="setting-item-control"><input class="slider nodeSize" type="range" min="5" max="40" step="2"></div>
-                                                            <div id="nodeSizeVal" style="display: none"></div>
+                                                            
                                                         </div>
                                                         <div class="setting-item mod-slider">
                                                             <div class="setting-item-info">
@@ -357,7 +357,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                                                 
                                                             </div>
                                                             <div class="setting-item-control"><input class="slider linkThickness" type="range" min="0.1" max="5" step="any"></div>
-                                                            <div id="linkThicknessVal" style="display: none"></div>
+                                                            
                                                         </div>
                                                         <div class="setting-item mod-slider">
                                                             <div class="setting-item-info">
@@ -365,7 +365,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                                                 <div class="setting-item-description"></div>
                                                             </div>
                                                             <div class="setting-item-control"><input class="slider linkDistance" type="range" min="30" max="1000" step="10"></div>
-                                                            <div id="linkDistanceVal" style="display: none"></div>
+                                                            
                                                         </div>
 
                                                         <div class="setting-item">
@@ -496,7 +496,7 @@ $jsonGraphData = getfullGraph($rootDir);
         <p class="graph-view color-fill-highlight"></p>
         <p class="graph-view color-fill-focused"></p>
         <p class="graph-view color-line-hightlight"></p>
-        <p class="vault"><?php echo $rootDir ?></p>
+        <p class="vault"><?php echo $vaultName ?></p>
         <p class="perliteTitle"><?php echo $title ?></p>
     </div>
     <div class="tooltip" style="top: 83.9531px; left: 1032.51px; width: 180.984px; height: 25px; display: none">

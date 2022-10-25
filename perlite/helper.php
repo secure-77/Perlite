@@ -12,7 +12,9 @@ include('PerliteParsedown.php');
 $avFiles = array();
 
 $rootDir = getenv('NOTES_PATH');
-//$rootDir = 'Demo';
+$rootDir = 'Demo';
+
+$vaultName = $rootDir;
 
 $hideFolders = getenv('HIDE_FOLDERS');
 $lineBreaks = getenv('LINE_BREAKS');
@@ -48,12 +50,10 @@ if (strcmp($hideFolders, '')) {
 if (!strcmp($rootDir, "")) {
 
 	$rootDir = getcwd();
-	$base = "Notes";
+	$vaultName = mb_basename($rootDir);
 	$startDir = "";
 } else {
-
-	$base = mb_basename($rootDir);
-	$startDir = $rootDir;
+	$startDir = $rootDir;	
 }
 
 // custom sort function to prefer underscore
