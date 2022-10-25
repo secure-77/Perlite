@@ -179,6 +179,58 @@ function getContent(str, home = false) {
         if (home == false) {
           window.history.pushState({}, "", location.protocol + '//' + location.host + location.pathname + "?link=" + str);
         }
+
+
+
+        // Outlines
+        var toc = "";
+        var level = 0;
+    
+        document.getElementById("mdContent").innerHTML =
+            document.getElementById("mdContent").innerHTML.replace(
+                /<h([\d])>([^<]+)<\/h([\d])>/gi,
+                function (str, openLevel, titleText, closeLevel) {
+                    if (openLevel != closeLevel) {
+                        return str;
+                    }
+    
+                    if (openLevel > level) {
+                        toc += (new Array(openLevel - level + 1)).join("<ul>");
+                    } else if (openLevel < level) {
+                        toc += (new Array(level - openLevel + 1)).join("</ul>");
+                    }
+    
+                    level = parseInt(openLevel);
+    
+                    var anchor = titleText.replace(/ /g, "_");
+                    toc += "<li><a href=\"#" + anchor + "\">" + titleText
+                        + "</a></li>";
+    
+                    return "<h" + openLevel + "><a name='" + anchor + "' >"
+                        + "" + "</a>"+ titleText +"</h" + closeLevel + ">";
+                }
+            );
+    
+        if (level) {
+            toc += (new Array(level + 1)).join("</ul>");
+        }
+    
+        document.getElementById("toc").innerHTML = toc;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       }
     });
   }
@@ -635,8 +687,13 @@ $(document).ready(function () {
 
   //check for graph and hide local graph if none exists
   if ($("#allGraphNodes").length == 0 || $("#allGraphNodes").text == '[]') {
-    $('.workspace-split.mod-horizontal.mod-right-split').addClass('is-sidedock-collapse');
+
     $('.clickable-icon.side-dock-ribbon-action[aria-label="Open graph view"]').css('display', 'none')
+    $('.clickable-icon.view-action[aria-label="Open outline"]').css('display','none')
+    $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display','none')
+    $('#mynetwork').css('display','none')
+    $('#outline').css('display','unset')
+
   }
 
 
@@ -1223,6 +1280,27 @@ $(document).ready(function () {
     $("#settings").css("display", "none");
     $("#about").css("display", "none");
   });
+
+  // local Graph & Outline Swith
+  $('.clickable-icon.view-action[aria-label="Open outline"]').click(function (e) {
+
+    $('.clickable-icon.view-action[aria-label="Open outline"]').css('display','none')
+    $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display','unset')
+    
+    $('#mynetwork').css('display','none')
+    $('#outline').css('display','unset')
+  });
+
+  $('.clickable-icon.view-action[aria-label="Open localGraph"]').click(function (e) {
+
+    $('.clickable-icon.view-action[aria-label="Open outline"]').css('display','unset')
+    $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display','none')
+    
+    $('#mynetwork').css('display','unset')
+    $('#outline').css('display','none')
+  });
+
+
 
 
   // init mermaid

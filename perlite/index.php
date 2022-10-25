@@ -50,7 +50,7 @@ $jsonGraphData = getfullGraph($rootDir);
 
 <body class="theme-dark mod-windows is-frameless is-hidden-frameless obsidian-app show-inline-title show-view-header is-maximized" style="--zoom-factor:1; --font-text-size:15px;">
     <title><?php echo $title ?></title>
- 
+
     <div class="titlebar">
         <div class="titlebar-inner">
             <div class="titlebar-button-container mod-left">
@@ -77,12 +77,12 @@ $jsonGraphData = getfullGraph($rootDir);
         <div class="horizontal-main-container">
             <div class="workspace is-left-sidedock-open">
                 <div class="workspace-ribbon side-dock-ribbon mod-left">
-                
-                <a href="."><img src="logo.svg" height="25" class="logo" alt="Perlite Logo"></a>    
-                <div class="sidebar-toggle-button mod-left" aria-label="" aria-label-position="right">
-                        
-                    
-                    <div class="clickable-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon sidebar-left">
+
+                    <a href="."><img src="logo.svg" height="25" class="logo" alt="Perlite Logo"></a>
+                    <div class="sidebar-toggle-button mod-left" aria-label="" aria-label-position="right">
+
+
+                        <div class="clickable-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon sidebar-left">
                                 <path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path>
                                 <path d="M10 4V20"></path>
                                 <path d="M4 7H7"></path>
@@ -201,7 +201,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                                 </svg></div>
                                         </div>
                                     </div>
-                                    <div class="search-input-container"><input enterkeyhint="search" type="search"  placeholder="Type to start search...">
+                                    <div class="search-input-container"><input enterkeyhint="search" type="search" placeholder="Type to start search...">
                                         <div class="search-input-clear-button" aria-label="Clear search" style="display: none;"></div>
                                     </div>
                                     <div class="search-info-container" style="display: none;"></div>
@@ -237,16 +237,16 @@ $jsonGraphData = getfullGraph($rootDir);
                                                     </svg></div>
                                             </div>
                                         </div>
-                                     
+
                                         <div class="view-header-nav-buttons" data-section="close" style="display: none">
                                             <div class="clickable-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-x">
                                                     <line x1="18" y1="6" x2="6" y2="18"></line>
                                                     <line x1="6" y1="6" x2="18" y2="18"></line>
                                                 </svg></div>
                                         </div>
-                                    
-                                        <div class="view-header-title-container mod-at-start">     
-                                        <div class="view-header-title-parent"></div>
+
+                                        <div class="view-header-title-container mod-at-start">
+                                            <div class="view-header-title-parent"></div>
                                             <div class="view-header-title" tabindex="-1"></div>
                                         </div>
 
@@ -348,16 +348,16 @@ $jsonGraphData = getfullGraph($rootDir);
                                                                 <div class="setting-item-description"></div>
                                                             </div>
                                                             <div class="setting-item-control"><input class="slider nodeSize" type="range" min="5" max="40" step="2"></div>
-                                                            
+
                                                         </div>
                                                         <div class="setting-item mod-slider">
                                                             <div class="setting-item-info">
                                                                 <div class="setting-item-name">Link thickness</div>
                                                                 <div class="setting-item-description"></div>
-                                                                
+
                                                             </div>
                                                             <div class="setting-item-control"><input class="slider linkThickness" type="range" min="0.1" max="5" step="any"></div>
-                                                            
+
                                                         </div>
                                                         <div class="setting-item mod-slider">
                                                             <div class="setting-item-info">
@@ -365,7 +365,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                                                 <div class="setting-item-description"></div>
                                                             </div>
                                                             <div class="setting-item-control"><input class="slider linkDistance" type="range" min="30" max="1000" step="10"></div>
-                                                            
+
                                                         </div>
 
                                                         <div class="setting-item">
@@ -459,9 +459,30 @@ $jsonGraphData = getfullGraph($rootDir);
                                     <!-- Grap Viewer -->
                                     <div class="view-content">
 
-                                        <div class="nav-header"></div>
+                                        <div class="nav-header">
+                                            <div class="view-header-nav-buttons">
+                                                <a class="clickable-icon view-action" aria-label="Open localGraph" style="display: none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-git-fork">
+                                                        <circle cx="12" cy="18" r="3"></circle>
+                                                        <circle cx="6" cy="6" r="3"></circle>
+                                                        <circle cx="18" cy="6" r="3"></circle>
+                                                        <path d="M18 9v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"></path>
+                                                        <path d="M12 12v3"></path>
+                                                    </svg></a>
+                                                <a class="clickable-icon view-action" aria-label="Open outline"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-book-open">
+                                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                                    </svg></a>
+                                            </div>
+
+
+
+                                        </div>
 
                                         <div class="backlink-pane node-insert-event" style="position: relative;">
+                                            <div id="outline" style="display: none">
+                                                <h3>Outline</h3>
+                                                <div id="toc"></div>
+                                            </div>
                                             <div class="tree-item-self" aria-label-position="left"><span class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle">
                                                         <path d="M3 8L12 17L21 8"></path>
                                                     </svg></span>
@@ -470,6 +491,7 @@ $jsonGraphData = getfullGraph($rootDir);
 
                                             </div>
                                             <div id="mynetwork"></div>
+
                                         </div>
                                     </div>
                                 </div>
