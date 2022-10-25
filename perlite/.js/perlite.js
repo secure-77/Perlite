@@ -754,7 +754,7 @@ $(document).ready(function () {
       $('.mod-left-split').removeClass('is-sidedock-collapse');
       $('.mod-left').removeClass('is-collapsed');
 
-      if ($(window).width() < 990) {
+      if ($(window).width() > 990) {
         $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'flex');
 
       }
