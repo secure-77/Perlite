@@ -52,13 +52,16 @@ img {
     max-width: 300px !important;
   }
 
-  
+  .markdown-preview-view {
+    padding: 10px !important;
+
+  }
 
   .sidebar-toggle-button.mod-right {
     display: none;
   }
   .mobile-display {
-    display: unset !important;
+    display: flex !important;
   }
   
 }

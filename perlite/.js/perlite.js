@@ -335,7 +335,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
 
   var network;
 
-  // show the hole graph
+  // show the whole graph
   if (modal) {
 
 
@@ -504,7 +504,6 @@ function hideLeftMobile() {
   $('.mod-left-split').addClass('is-sidedock-collapse');
   $('.mod-left').addClass('is-collapsed');
   $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'none');
-  $('.mobile-display').css('display', 'unset');
 
 };
 
@@ -744,20 +743,20 @@ $(document).ready(function () {
 
 
   // toggle left sidedock
-  $('.sidebar-toggle-button.mod-left').click(function (e) {
+  $('.sidebar-toggle-button.mod-left.sidebar').click(function (e) {
 
     e.preventDefault();
 
 
-    if ($('.sidebar-toggle-button.mod-left').hasClass('is-collapsed')) {
+    if ($('.sidebar-toggle-button.mod-left.sidebar').hasClass('is-collapsed')) {
       $('.workspace').addClass('is-left-sidedock-open');
       $('.mod-left-split').removeClass('is-sidedock-collapse');
       $('.mod-left').removeClass('is-collapsed');
 
-      if ($(window).width() > 990) {
-        $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'flex');
+      // if ($(window).width() > 990) {
+      //   $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'flex');
 
-      }
+      // }
 
     } else {
 
@@ -766,14 +765,36 @@ $(document).ready(function () {
       $('.mod-left').addClass('is-collapsed');
 
 
-      if ($(window).width() < 990) {
-        $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'none');
-        $('.mobile-display').css('display', 'unset');
-      }
+      // if ($(window).width() < 990) {
+      //   $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'none');
+      //   $('.mobile-display').css('display', 'unset');
+      // }
 
     }
 
   });
+
+
+  $('.sidebar-toggle-button.mod-left.mobile-display').click(function (e) {
+
+    if ($('.workspace-ribbon.side-dock-ribbon.mod-left').is(':hidden')) {
+      $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display','flex')
+    } else {
+      $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display','none')
+    }
+
+  })
+
+
+
+   // responsive show/hide ribbon
+  //  $(window).resize(function () {
+  //   if ($(window).width() < 990) {
+  //     $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'none');
+  //   } else {
+  //     $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'flex');
+  //   }
+  // });
 
 
   // toggle right sidedock
