@@ -138,28 +138,6 @@ function getContent(str, home = false) {
 
         });
 
-        // on Tag click -> start search
-        $('.tag').click(function (e) {
-
-          e.preventDefault();
-
-          target = $(e.target);
-          $('.workspace-tab-header[data-type="search"]').click();
-          $('*[type="search"]').val(this.text);
-          search(this.text);
-
-          // on mobile go to search
-          if ($(window).width() < 990) {
-
-            $('.workspace').addClass('is-left-sidedock-open');
-            $('.mod-left-split').removeClass('is-sidedock-collapse');
-            $('.mod-left').removeClass('is-collapsed');
-            $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'flex');
-
-          };
-
-
-        });
 
         //check setting if metadata is collapsed or not
         if ($('.metadataOption').hasClass('is-enabled')) {
@@ -218,16 +196,28 @@ function getContent(str, home = false) {
         document.getElementById("toc").innerHTML = toc;
 
 
+        // on Tag click -> start search
+        $('.tag').click(function (e) {
+
+          e.preventDefault();
+
+          target = $(e.target);
+          $('.workspace-tab-header[data-type="search"]').click();
+          $('*[type="search"]').val(this.text);
+          search(this.text);
+
+          // on mobile go to search
+          if ($(window).width() < 990) {
+
+            $('.workspace').addClass('is-left-sidedock-open');
+            $('.mod-left-split').removeClass('is-sidedock-collapse');
+            $('.mod-left').removeClass('is-collapsed');
+            $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'flex');
+
+          };
 
 
-
-
-
-
-
-
-
-
+        });
 
 
 
@@ -753,23 +743,11 @@ $(document).ready(function () {
       $('.mod-left-split').removeClass('is-sidedock-collapse');
       $('.mod-left').removeClass('is-collapsed');
 
-      // if ($(window).width() > 990) {
-      //   $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'flex');
-
-      // }
-
     } else {
 
       $('.workspace').removeClass('is-left-sidedock-open');
       $('.mod-left-split').addClass('is-sidedock-collapse');
       $('.mod-left').addClass('is-collapsed');
-
-
-      // if ($(window).width() < 990) {
-      //   $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'none');
-      //   $('.mobile-display').css('display', 'unset');
-      // }
-
     }
 
   });
@@ -784,7 +762,6 @@ $(document).ready(function () {
     }
 
   })
-
 
 
    // responsive show/hide ribbon
