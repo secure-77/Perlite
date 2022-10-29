@@ -9,7 +9,7 @@ A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 
 ## Demo
 
-[Perlite Demo](https://perlite.secure77.de/1.5_demo/)
+[Perlite Demo](https://perlite.secure77.de/)
 
 
 ![Demo Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/screenshot.png "Demo Screenshot")
