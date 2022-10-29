@@ -109,57 +109,6 @@ function getContent(str, home = false) {
         mermaid.init(undefined, document.querySelectorAll(".language-mermaid"));
 
 
-        // add Image Click popup
-        $(".pop").on("click", function () {
-
-          var path = $(this).find("img").attr("src");
-          result = '<div class="modal-body imgModalBody"><img src="' + path + '" class="imagepreview"></div>';
-          $("div.modal-content").html(result);
-          $(".modal").css("width", "unset");
-          $(".modal").css("height", "unset");
-          $(".modal").css("max-width", "100%");
-          $(".modal").css("max-height", "100%");
-          $(".modal-title").text("Image preview");
-          $(".modal-container.mod-dim").css("display", "flex");
-
-        });
-
-
-        // Toogle Front Matter Meta Container
-        $('.frontmatter-container-header').click(function (e) {
-
-          e.preventDefault();
-
-          if ($('.frontmatter-container').hasClass('is-collapsed')) {
-            $('.frontmatter-container').removeClass('is-collapsed');
-          } else {
-            $('.frontmatter-container').addClass('is-collapsed');
-          }
-
-        });
-
-
-        //check setting if metadata is collapsed or not
-        if ($('.metadataOption').hasClass('is-enabled')) {
-          $('.frontmatter-container-header').trigger('click')
-        }
-
-        // trigger graph render on side bar
-        renderGraph(false, str);
-
-        //resize graph on windows rezise
-        $(window).resize(function () {
-          renderGraph(false, str, false);
-        });
-
-
-        // update the url
-        if (home == false) {
-          window.history.pushState({}, "", location.protocol + '//' + location.host + location.pathname + "?link=" + str);
-        }
-
-
-
         // Outlines
         var toc = "";
         var level = 0;
@@ -199,6 +148,37 @@ function getContent(str, home = false) {
         document.getElementById("toc").innerHTML = toc;
 
 
+        // add Image Click popup
+        $(".pop").on("click", function () {
+
+          var path = $(this).find("img").attr("src");
+          result = '<div class="modal-body imgModalBody"><img src="' + path + '" class="imagepreview"></div>';
+          $("div.modal-content").html(result);
+          $(".modal").css("width", "unset");
+          $(".modal").css("height", "unset");
+          $(".modal").css("max-width", "100%");
+          $(".modal").css("max-height", "100%");
+          $(".modal-title").text("Image preview");
+          $(".modal-container.mod-dim").css("display", "flex");
+
+        });
+
+
+        // trigger graph render on side bar
+        renderGraph(false, str);
+
+        //resize graph on windows rezise
+        $(window).resize(function () {
+          renderGraph(false, str, false);
+        });
+
+
+        // update the url
+        if (home == false) {
+          window.history.pushState({}, "", location.protocol + '//' + location.host + location.pathname + "?link=" + str);
+        }
+
+
         // on Tag click -> start search
         $('.tag').click(function (e) {
 
@@ -219,11 +199,25 @@ function getContent(str, home = false) {
 
           };
 
+        });
+
+        // Toogle Front Matter Meta Container
+        $('.frontmatter-container-header').click(function (e) {
+
+          e.preventDefault();
+
+          if ($('.frontmatter-container').hasClass('is-collapsed')) {
+            $('.frontmatter-container').removeClass('is-collapsed');
+          } else {
+            $('.frontmatter-container').addClass('is-collapsed');
+          }
 
         });
 
-
-
+        //check setting if metadata is collapsed or not
+        if ($('.metadataOption').hasClass('is-enabled')) {
+          $('.frontmatter-container-header').trigger('click')
+        }
       }
     });
   }
@@ -679,11 +673,11 @@ $(document).ready(function () {
 
   // panel sizes
   if (localStorage.getItem('leftSizePanel')) {
-    $('.workspace-split.mod-horizontal.mod-left-split').css("width", localStorage.getItem('leftSizePanel') )
+    $('.workspace-split.mod-horizontal.mod-left-split').css("width", localStorage.getItem('leftSizePanel'))
   };
-  
+
   if (localStorage.getItem('rightSizePanel')) {
-    $('.workspace-split.mod-horizontal.mod-right-split').css("width", localStorage.getItem('rightSizePanel') )
+    $('.workspace-split.mod-horizontal.mod-right-split').css("width", localStorage.getItem('rightSizePanel'))
   };
 
 
@@ -1002,17 +996,17 @@ $(document).ready(function () {
 
   });
 
-    // Panelsize Restore Defaults Button
-    $('.clickable-icon[aria-label="Restore panel settings"]').click(function (e) {
-      e.preventDefault();
-  
-      localStorage.removeItem('rightSizePanel')
-      localStorage.removeItem('leftSizePanel')
+  // Panelsize Restore Defaults Button
+  $('.clickable-icon[aria-label="Restore panel settings"]').click(function (e) {
+    e.preventDefault();
 
-      $('.workspace-split.mod-horizontal.mod-left-split').css("width", "450px")
-      $('.workspace-split.mod-horizontal.mod-right-split').css("width", "450px")
-    });
-  
+    localStorage.removeItem('rightSizePanel')
+    localStorage.removeItem('leftSizePanel')
+
+    $('.workspace-split.mod-horizontal.mod-left-split').css("width", "450px")
+    $('.workspace-split.mod-horizontal.mod-right-split').css("width", "450px")
+  });
+
 
 
   // inLine Title Option

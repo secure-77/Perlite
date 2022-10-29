@@ -1,13 +1,9 @@
-# Perlite 1.5 Release
+# Perlite
   
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/secure-77/perlite) ![GitHub](https://img.shields.io/github/license/secure-77/perlite) ![GitHub last commit](https://img.shields.io/github/last-commit/secure-77/Perlite)
 
 
 A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
-
-
-> Important for the 1.5 release: you need the php module php-yaml for the tag search and metadata section!
-> also check the new Theme section to use obsidian themes
 
 
 
@@ -16,13 +12,14 @@ A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 [Perlite Demo](https://perlite.secure77.de/1.5_demo/)
 
 
-![Demo Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/1.5_beta/Demo/screenshot.png "Demo Screenshot")
+![Demo Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/screenshot.png "Demo Screenshot")
 
-![Graph Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/1.5_beta/Demo/graph.png "Graph Screenshot")
+![Graph Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/graph.png "Graph Screenshot")
 
 ## Features
 
 - Auto build up, based on your folder (vault) structure
+- Support Obsidian Themes
 - Full responsive
 - No manual parsing or converting necessary
 - Full interactive Graph
@@ -34,7 +31,7 @@ A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 
 
 ## Changelog
-[Changelog](https://github.com/secure-77/Perlite/blob/1.5_beta/Changelog.md)
+[Changelog](https://github.com/secure-77/Perlite/blob/main/Changelog.md)
 
 
 ## Install

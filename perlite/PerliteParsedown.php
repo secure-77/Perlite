@@ -94,7 +94,7 @@ class PerliteParsedown extends Parsedown
 
             # Parse Tags if they are there
 
-            if (array_key_exists("tags", $parsed)) {
+            if (isset($parsed["tags"])) {
                 $yamlText .= '
                 <div class="frontmatter-section mod-tags"><span class="frontmatter-section-label">Tags</span>
                 <div class="frontmatter-section-tags">';
