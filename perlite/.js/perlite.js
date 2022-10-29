@@ -138,8 +138,9 @@ function getContent(str, home = false) {
 
         // update the url
         if (home == false) {
-          window.history.pushState({}, "", "/?link=" + str);
+          window.history.pushState({}, "", location.protocol + '//' + location.host + location.pathname + "?link=" + str);
         }
+        
       }
     });
   }
