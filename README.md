@@ -16,7 +16,7 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 
 ## Demo
 
-[Perlite Demo](https://perlite.secure77.de/1.4.4_stable)
+[Perlite Demo](https://perlite.secure77.de/1.4.4)
 
 
 ![Demo Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/1.4.4_stable/Demo/screenshot.png "Demo Screenshot")
