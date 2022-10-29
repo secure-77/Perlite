@@ -2,12 +2,13 @@ version: "3.9"
 
 services:
   perlite:
-    image: sec77/perlite:1.4.4
+    image: sec77/perlite:1.5
     container_name: perlite
     restart: unless-stopped
     environment:
       - NOTES_PATH=Demo
       - HIDE_FOLDERS=docs,private,trash
+      - LINE_BREAKS=true
     volumes:
       - ./Demo:/var/www/perlite/Demo:ro
 

@@ -1,3 +1,19 @@
+## 1.5
+- Complete redesign based on obsidian css
+- support for Obsidian themes
+- added tag search
+- added metadata support
+- added different settings for the graph styling
+- added different settings for the viewer, like text size
+- settings stored in local browser storage
+- updated JQuery to version 3.6.1
+- updated HighlightJS to version 11.6.0
+- updated Docker image to use latest php:fpm-alpine version (8.1.11)
+- updatet Nginx config to allow Themes
+- added docker compose variable for markdown linebreaks
+
+
+
 ## 1.4.5 RC
 - added "edit button", enable it via cookie, thx to @Tooa
 

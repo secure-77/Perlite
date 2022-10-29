@@ -1,0 +1,197 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap");
+/* 
+
+░██████╗██╗██╗░░░░░███████╗███╗░░██╗░█████╗░███████╗░░░░░░░█████╗░██████╗░░██████╗██╗██████╗░██╗░█████╗░███╗░░██╗
+██╔════╝██║██║░░░░░██╔════╝████╗░██║██╔══██╗██╔════╝░░░░░░██╔══██╗██╔══██╗██╔════╝██║██╔══██╗██║██╔══██╗████╗░██║
+╚█████╗░██║██║░░░░░█████╗░░██╔██╗██║██║░░╚═╝█████╗░░█████╗██║░░██║██████╦╝╚█████╗░██║██║░░██║██║███████║██╔██╗██║
+░╚═══██╗██║██║░░░░░██╔══╝░░██║╚████║██║░░██╗██╔══╝░░╚════╝██║░░██║██╔══██╗░╚═══██╗██║██║░░██║██║██╔══██║██║╚████║
+██████╔╝██║███████╗███████╗██║░╚███║╚█████╔╝███████╗░░░░░░╚█████╔╝██████╦╝██████╔╝██║██████╔╝██║██║░░██║██║░╚███║
+╚═════╝░╚═╝╚══════╝╚══════╝╚═╝░░╚══╝░╚════╝░╚══════╝░░░░░░░╚════╝░╚═════╝░╚═════╝░╚═╝╚═════╝░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝
+
+Made by: Luke Ruokaismaki
+Version: 1.0.0
+Repo: https://github.com/luke-rmaki/silence-obsidian
+Built with PostCSS and Gulp
+
+To edit colors, use the vars.css file or edit the variables below if not building from source
+
+
+
+*/
+:root {
+  --gray-0: #c2cadc;
+  --gray-1: #b0bbd2;
+  --gray-2: #9dabc8;
+  --gray-3: #899bbd;
+  --gray-4: #7588a9;
+  --gray-5: #60708c;
+  --gray-6: #54627b;
+  --gray-7: #465268;
+  --gray-8: #343e4f;
+  --gray-9: #272f3c;
+  --gray-10: #1e2430;
+  --gray-11: #131821;
+  --gray-12: #0c1018;
+  --serenity-0: #c8fafd;
+  --serenity-1: #a3f0f3;
+  --serenity-2: #92e1e4;
+  --serenity-3: #7bced1;
+  --serenity-4: #6cb8bb;
+  --serenity-5: #60a3a6;
+  --serenity-6: #559193;
+  --serenity-7: #487a7c;
+  --serenity-8: #406769;
+  --serenity-9: #3b5b5c;
+  --serenity-10: #345051;
+  --serenity-11: #293f40;
+  --serenity-12: #1d2c2c;
+  --green-0: #cbfbdf;
+  --green-1: #90f8c0;
+  --green-2: #6ee8aa;
+  --green-3: #60cc95;
+  --green-4: #55b382;
+  --green-5: #4ca376;
+  --green-6: #418b65;
+  --green-7: #357453;
+  --green-8: #2b5b42;
+  --green-9: #234935;
+  --green-10: #193325;
+  --green-11: #142c1f;
+  --green-12: #0d2016;
+  --purple-0: #faf8fc;
+  --purple-1: #e3dcf0;
+  --purple-2: #cec1e5;
+  --purple-3: #b29bd5;
+  --purple-4: #9a7cc6;
+  --purple-5: #8862b9;
+  --purple-6: #6f4b9c;
+  --purple-7: #593b7f;
+  --purple-8: #473164;
+  --purple-9: #35244b;
+  --purple-10: #2a1b3c;
+  --purple-11: #1e132d;
+  --purple-12: #11091b;
+  --red-0: #fef7f8;
+  --red-1: #fad7d8;
+  --red-2: #f7b6b9;
+  --red-3: #f4858c;
+  --red-4: #f25060;
+  --red-5: #dc2d44;
+  --red-6: #b12232;
+  --red-7: #901927;
+  --red-8: #77131e;
+  --red-9: #540a12;
+  --red-10: #40060c;
+  --red-11: #310407;
+  --red-12: #210204;
+  --yellow-0: #fff8eb;
+  --yellow-1: #ffefd1;
+  --yellow-2: #ffe8b7;
+  --yellow-3: #ffe2a1;
+  --yellow-4: #ffdb7e;
+  --yellow-5: #ffd34b;
+  --yellow-6: #f3c600;
+  --yellow-7: #e3b800;
+  --yellow-8: #c5a000;
+  --yellow-9: #a68600;
+  --yellow-10: #876d00;
+  --yellow-11: #705a00;
+  --yellow-12: #5b4800;
+  --cerulean-0: #f7f9ff;
+  --cerulean-1: #d4deff;
+  --cerulean-2: #b1c5ff;
+  --cerulean-3: #7aa4ff;
+  --cerulean-4: #3587ff;
+  --cerulean-5: #0072e4;
+  --cerulean-6: #005ab7;
+  --cerulean-7: #004895;
+  --cerulean-8: #003a7a;
+  --cerulean-9: #002b5e;
+  --cerulean-10: #00214b;
+  --cerulean-11: #00183a;
+  --cerulean-12: #00112d;
+}
+body {
+  /*! EDITOR */
+  --file-line-width: 70vw;
+  --background-primary: var(--gray-10);
+  --background-secondary: var(--gray-11);
+  --background-secondary-alt: var(--gray-12);
+  --divider-color: var(--gray-8);
+
+  /** Ribbon */
+  --ribbon-background-collapsed: var(--background-secondary);
+
+  /** Scrollbar */
+  --scrollbar-bg: var(--gray-9);
+  --scrollbar-thumb-bg: var(--gray-11);
+
+  /** Titlebar */
+  --titlebar-background-focused: var(--background-secondary);
+
+  /*! TABS */
+
+  /*! ICONS */
+  --icon-color: var(--serenity-1);
+  --icon-color-hover: var(--cerulean-5);
+
+  /*! TEXT COLORS */
+  --h1-color: var(--serenity-1);
+  --h2-color: var(--cerulean-5);
+  --h3-color: var(--green-1);
+  --h4-color: var(--purple-3);
+  --h5-color: var(--cerulean-3);
+  --h6-color: var(--purple-3);
+  --heading-formatting: var(--gray-1);
+  --text-normal: var(--serenity-0);
+  --text-accent: var(--yellow-5);
+  --text-muted: var(--gray-2);
+  --text-faint: var(--gray-3);
+  --list-marker-color: var(--purple-5);
+  --tag-background: var(--gray-9);
+  --hr-color: var(--cerulean-5);
+  --text-error: var(--red-4);
+
+  /** Blockquote  */
+  --blockquote-border-thickness: 4px;
+  --blockquote-border-color: var(--interactive-accent);
+  --blockquote-font-style: normal;
+  --blockquote-color: inherit;
+  --blockquote-background-color: transparent;
+
+  /** Checkboxes */
+  --checkbox-radius: var(--radius-s);
+  --checkbox-size: 15px;
+  --checkbox-marker-color: var(--background-primary);
+  --checkbox-color: var(--interactive-accent);
+  --checkbox-color-hover: var(--interactive-accent-hover);
+  --checkbox-border-color: var(--text-faint);
+  --checkbox-border-color-hover: var(--text-muted);
+  --checklist-done-decoration: line-through;
+  --checklist-done-color: var(--gray-2);
+
+  /*! MODAL  */
+  --modal-border-color: var(--cerulean-5);
+  --prompt-border-color: var(--cerulean-5);
+
+  /*! INPUTS  */
+  --background-modifier-hover: var(--gray-9);
+  --interactive-accent: var(--cerulean-5);
+}
+.theme-dark {
+  --text-highlight-bg: var(--yellow-5);
+  --interactive-normal: var(--gray-9);
+}
+/*! OVERRIDES */
+.cm-s-obsidian span.cm-highlight {
+  color: #0c1018;
+  color: var(--gray-12);
+}
+.search-result-file-matched-text {
+  color: #0c1018;
+  color: var(--gray-12);
+}
+.nav-folder-title-content {
+  font-weight: bold;
+}

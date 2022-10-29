@@ -1,0 +1,64 @@
+
+.logo {
+  position: absolute;
+  top: 8px;
+  left: 5px;
+}
+
+.sidebar-toggle-button.mod-left {
+  position: relative;
+  width: unset;
+}
+
+.collapse:not(.show) {
+  display: none;
+}
+
+.workspace-split.mod-vertical.mod-root {
+  min-width: 400px;
+}
+
+/* fix graph canvas height */
+#mynetwork, #graph_all{
+  height: 100%;
+}
+
+.is-sidedock-collapse {
+  display: none;
+  width: 0%;
+}
+
+.nav-buttons-container {
+  justify-content: right !important;
+}
+
+img {
+  display: initial !important;
+}
+
+
+
+
+/* --------------- */
+/* Mobile / Responive Settings */
+
+@media screen and (max-width: 990px) {
+
+   .workspace-split.mod-horizontal.mod-right-split {
+    display: none;
+  } 
+  .workspace-split.mod-horizontal.mod-left-split {
+    width: 90vw !important;
+    max-width: 300px !important;
+  }
+
+  .markdown-preview-view {
+    padding: 10px !important;
+
+  }
+
+  .sidebar-toggle-button.mod-right {
+    display: none;
+  }
+  
+}

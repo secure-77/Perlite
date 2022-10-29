@@ -1,43 +1,40 @@
-# Perlite
+# Perlite 1.5 Release
   
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/secure-77/perlite) ![GitHub](https://img.shields.io/github/license/secure-77/perlite) ![GitHub last commit](https://img.shields.io/github/last-commit/secure-77/Perlite)
 
 
-	
 A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 
-Just put your whole Obsidian vault or markdown folder/file structure in your web directory. The page builds itself. 
 
-Its an open source alternative to  [obisidian publish](https://obsidian.md/publish).
+> Important for the 1.5 release: you need the php module php-yaml for the tag search and metadata section!
+> also check the new Theme section to use obsidian themes
 
-Read more about Perlite and staging tips on my blog post: [Perlite on Secure77](https://secure77.de/perlite).
 
-If you want to discuss about Perlite you can join the thread in the [Obsidian Forum](https://forum.obsidian.md/t/perlite-publish-your-notes-to-your-own-web-server/21712) or join the [Perlite Discord Server](https://discord.gg/pkJ347ssWT)
 
 ## Demo
 
-[Perlite Demo](https://perlite.secure77.de/)
+[Perlite Demo](https://perlite.secure77.de/1.5_demo/)
 
 
-![Demo Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/screenshot.png "Demo Screenshot")
+![Demo Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/1.5_beta/Demo/screenshot.png "Demo Screenshot")
 
-![Graph Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/graph.png "Graph Screenshot")
+![Graph Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/1.5_beta/Demo/graph.png "Graph Screenshot")
 
 ## Features
 
 - Auto build up, based on your folder (vault) structure
-- Fullscreen mode
 - Full responsive
 - No manual parsing or converting necessary
 - Full interactive Graph
 - LaTeX and Mermaid support
 - Link to Obsidian Vault
 - Search
-- Support Obisdian links and images
-- [![coverage](https://img.shields.io/badge/Bootswatch-Themes-blue)](https://bootswatch.com) (Slate)
+- Support Obisdian tags, links and images
+
+
 
 ## Changelog
-[Changelog](https://github.com/secure-77/Perlite/blob/main/Changelog.md)
+[Changelog](https://github.com/secure-77/Perlite/blob/1.5_beta/Changelog.md)
 
 
 ## Install
@@ -46,16 +43,22 @@ Just put the content of the perlite directory in your web root directory, your n
 For Docker just check the [DOCKER](https://github.com/secure-77/Perlite/blob/main/Docker.md) readme.
 
 ### Requirements
-- Web server, tested with ![coverage](https://img.shields.io/badge/NGINX-1.22-blue)
-- Php-fpm, tested with ![coverage](https://img.shields.io/badge/PHP-7.4.30-green)
+- Web server, tested with ![coverage](https://img.shields.io/badge/NGINX-1.22.1-blue)
+- Php-fpm, tested with ![coverage](https://img.shields.io/badge/PHP-7.4.30-green) and ![coverage](https://img.shields.io/badge/PHP-8.1.11-green)
 - Php module mb_strings for the parsedown (apt install php-mbstring)
+- Php module yaml_parse for the metadata (apt install php-yaml)
 
 
 ### Required Obsidian Options
 - In the options `Files & Links` you need to set the `New link format` to `Relative path to file`
 ![Link Options](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/link.png "Link Options")
 
-#### Graph
+
+### Themes
+In your vault, there must be the `.obsidian` folder with the subfolder `themes`, perlite will load all themes presented in this folder. Perlite will also check for the file `appearance.json` in the `.obsidian` folder to get your default theme. Make sure that your webserver has access to the files in the `.obsidian` folder.
+
+
+### Graph
 - For the Graph you need to install the plugin [Metadata Extractor](https://github.com/kometenstaub/metadata-extractor), you can also do this via the build in Community Plugin Browser
 - Make sure to turn on the plugin
 - In the settings, set the path of the metadata.json to your local vault root folder (like `C:\Users\John\MyNotes\metadata.json`, when your vault is MyNotes). if you transfer your vault later to a webserver, make sure the metadata.json will be transferred too.
@@ -71,12 +74,11 @@ For Docker just check the [DOCKER](https://github.com/secure-77/Perlite/blob/mai
 
 ### Advanced Options and Infos
 
-#### Header, Logo and Start Page
-you can adjust them via the index.php
+#### About, Start Page and LineBreaks
 
 - The About opens a .md file in a modal window (.about.md per default), you can change this in the helper.php `$about` variable
-- The Logo, Blog and so on are nested in the index.php (line 47 e.g. for the link to the Blog)
 - The Startpage is set to README.md, you can change this in the helper.php `$index` variable and in the perlite.js `homeFile` variable
+- If you want to use the classic Markdown behavior for line breaks, set the variable  `LINE_BREAKS` to `false`
 
 #### Graph
 The Graph is implemented with vis.js, so there are many options you can play on with, you can adjust them via the `options` object in the perlite.js
@@ -84,21 +86,16 @@ The Graph is implemented with vis.js, so there are many options you can play on 
 #### Root Dir
 - Without setting a `NOTES_PATH` enviroment variable, Perlite takes the `perlite` directory as root folder, this means, you need to copy your content of the vault folder into the `perlite` directory (including metadata.json if you want a graph).
 - If you want to change or specify the root directory of your vault, you can do this by changing the variable `$rootDir` in the helper.php or by setting the `NOTES_PATH` as php variable.
-- You can see an example of this in the Release, just uncomment the `//$rootDir = 'Demo';` in the helper.php and see how the build changes, also notice the two metadata.json, one in the perlite folder and one in the Demo folder, depending on your rootDir either the one in perlite or the one in Demo will be used.
 
-#### Open File in Obsidian
-- Add the cookie `vaultName` with value of your Vault Name to display an edit button next to the fullscreen button. The button opens the current document in your Obsidian vault. Make sure to set the `HttpOnly` attribute to false. Otherwise, client-side script access for the cookie is blocked.
 
-#### Python Parser
-- There is a pythonParser.py to genereate the vis.js JSON structure out of the metadata.json. This script is not beeing used anymore but I will let it here.
 
 
 ### Dependencies (all included)
 
 - [![coverage](https://img.shields.io/badge/Parsedown-1.7.4-lightgrey)](https://github.com/erusev/parsedown)
-- [![coverage](https://img.shields.io/badge/jQuery-3.6.0-lightblue)](https://jquery.com/)
+- [![coverage](https://img.shields.io/badge/jQuery-3.6.1-lightblue)](https://jquery.com/)
 - [![coverage](https://img.shields.io/badge/Bootstrap-5.1.3-blue)](https://getbootstrap.com/)
-- [![coverage](https://img.shields.io/badge/Highlight.js-11.4.0-green)](https://highlightjs.org/)
+- [![coverage](https://img.shields.io/badge/Highlight.js-11.6.0-green)](https://highlightjs.org/)
 - [![coverage](https://img.shields.io/badge/vis.js-9.1.2-yellow)](https://visjs.org/)
 - [![coverage](https://img.shields.io/badge/KaTeX.js-0.15.2-red)](https://katex.org/)
 - [![coverage](https://img.shields.io/badge/Mermaid.js-9.1.2-orange)](https://mermaid-js.github.io/mermaid/)
