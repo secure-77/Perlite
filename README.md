@@ -33,6 +33,10 @@ A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 ## Changelog
 [Changelog](https://github.com/secure-77/Perlite/blob/main/Changelog.md)
 
+### previous versions
+- [Perlite 1.4.4 Demo](https://perlite.secure77.de/1.4.4)
+- [Perlite 1.3 Demo](https://perlite.secure77.de/1.3)
+
 
 ## Install
 Just put the content of the perlite directory in your web root directory, your notes should resident as a subfolder of perlite.
