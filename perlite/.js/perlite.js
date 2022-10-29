@@ -163,36 +163,39 @@ function getContent(str, home = false) {
         // Outlines
         var toc = "";
         var level = 0;
-    
+
         document.getElementById("mdContent").innerHTML =
-            document.getElementById("mdContent").innerHTML.replace(
-                /<h([\d])>([^<]+)<\/h([\d])>/gi,
-                function (str, openLevel, titleText, closeLevel) {
-                    if (openLevel != closeLevel) {
-                        return str;
-                    }
-    
-                    if (openLevel > level) {
-                        toc += (new Array(openLevel - level + 1)).join("<ul>");
-                    } else if (openLevel < level) {
-                        toc += (new Array(level - openLevel + 1)).join("</ul>");
-                    }
-    
-                    level = parseInt(openLevel);
-    
-                    var anchor = titleText.replace(/ /g, "_");
-                    toc += "<li><a href=\"#" + anchor + "\">" + titleText
-                        + "</a></li>";
-    
-                    return "<h" + openLevel + "><a name='" + anchor + "' >"
-                        + "" + "</a>"+ titleText +"</h" + closeLevel + ">";
-                }
-            );
-    
+          document.getElementById("mdContent").innerHTML.replace(
+            /<h([\d])>([^<]+)<\/h([\d])>/gi,
+            function (str, openLevel, titleText, closeLevel) {
+
+              if (openLevel != closeLevel) {
+                return str;
+              }
+
+              if (openLevel > level) {
+                toc += (new Array(openLevel - level + 1)).join('<div class="tree-item"><div class="tree-item-children">');
+              } else if (openLevel < level) {
+                toc += (new Array(level - openLevel + 1)).join("</div></div>");
+              }
+
+              level = parseInt(openLevel);
+
+              var anchor = titleText.replace(/ /g, "_");
+              toc += '<div class="tree-item-self is-clickable"><a href="#' + anchor + '">' + titleText
+                + '</a></div>';
+
+              return "<h" + openLevel + "><a name='" + anchor + "' >"
+                + "" + "</a>" + titleText + "</h" + closeLevel + ">";
+
+            }
+          );
+
         if (level) {
-            toc += (new Array(level + 1)).join("</ul>");
+          toc += (new Array(level + 1)).join("</div></div>");
         }
-    
+
+
         document.getElementById("toc").innerHTML = toc;
 
 
@@ -674,14 +677,24 @@ $(document).ready(function () {
   };
 
 
+  // panel sizes
+  if (localStorage.getItem('leftSizePanel')) {
+    $('.workspace-split.mod-horizontal.mod-left-split').css("width", localStorage.getItem('leftSizePanel') )
+  };
+  
+  if (localStorage.getItem('rightSizePanel')) {
+    $('.workspace-split.mod-horizontal.mod-right-split').css("width", localStorage.getItem('rightSizePanel') )
+  };
+
+
   //check for graph and hide local graph if none exists
   if ($("#allGraphNodes").length == 0 || $("#allGraphNodes").text == '[]') {
 
     $('.clickable-icon.side-dock-ribbon-action[aria-label="Open graph view"]').css('display', 'none')
-    $('.clickable-icon.view-action[aria-label="Open outline"]').css('display','none')
-    $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display','none')
-    $('#mynetwork').css('display','none')
-    $('#outline').css('display','unset')
+    $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
+    $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'none')
+    $('#mynetwork').css('display', 'none')
+    $('#outline').css('display', 'unset')
 
   }
 
@@ -756,22 +769,13 @@ $(document).ready(function () {
   $('.sidebar-toggle-button.mod-left.mobile-display').click(function (e) {
 
     if ($('.workspace-ribbon.side-dock-ribbon.mod-left').is(':hidden')) {
-      $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display','flex')
+      $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'flex')
     } else {
-      $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display','none')
+      $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'none')
     }
 
   })
 
-
-   // responsive show/hide ribbon
-  //  $(window).resize(function () {
-  //   if ($(window).width() < 990) {
-  //     $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'none');
-  //   } else {
-  //     $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'flex');
-  //   }
-  // });
 
 
   // toggle right sidedock
@@ -886,6 +890,7 @@ $(document).ready(function () {
 
     $(document).mouseup(function (e) {
       $(document).unbind('mousemove')
+      localStorage.setItem('rightSizePanel', rightDockContainer.css("width"))
     });
 
     $(document).mousemove(function (e) {
@@ -903,11 +908,10 @@ $(document).ready(function () {
 
     e.preventDefault()
 
-    console.log('mousedown!')
-
 
     $(document).mouseup(function (e) {
       $(document).unbind('mousemove')
+      localStorage.setItem('leftSizePanel', leftDockContainer.css("width"))
     });
 
     $(document).mousemove(function (e) {
@@ -981,8 +985,6 @@ $(document).ready(function () {
     e.preventDefault();
     target = $(e.target)
 
-    console.log(target.val())
-
     $('body').css('--font-text-size', target.val() + 'px')
     localStorage.setItem('Font_size', target.val());
 
@@ -999,6 +1001,18 @@ $(document).ready(function () {
     $('.slider.font-size').val(parseInt($('body').css('--font-text-size')));
 
   });
+
+    // Panelsize Restore Defaults Button
+    $('.clickable-icon[aria-label="Restore panel settings"]').click(function (e) {
+      e.preventDefault();
+  
+      localStorage.removeItem('rightSizePanel')
+      localStorage.removeItem('leftSizePanel')
+
+      $('.workspace-split.mod-horizontal.mod-left-split').css("width", "450px")
+      $('.workspace-split.mod-horizontal.mod-right-split').css("width", "450px")
+    });
+  
 
 
   // inLine Title Option
@@ -1282,20 +1296,20 @@ $(document).ready(function () {
   // local Graph & Outline Swith
   $('.clickable-icon.view-action[aria-label="Open outline"]').click(function (e) {
 
-    $('.clickable-icon.view-action[aria-label="Open outline"]').css('display','none')
-    $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display','unset')
-    
-    $('#mynetwork').css('display','none')
-    $('#outline').css('display','unset')
+    $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
+    $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'unset')
+
+    $('#mynetwork').css('display', 'none')
+    $('#outline').css('display', 'unset')
   });
 
   $('.clickable-icon.view-action[aria-label="Open localGraph"]').click(function (e) {
 
-    $('.clickable-icon.view-action[aria-label="Open outline"]').css('display','unset')
-    $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display','none')
-    
-    $('#mynetwork').css('display','unset')
-    $('#outline').css('display','none')
+    $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'unset')
+    $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'none')
+
+    $('#mynetwork').css('display', 'unset')
+    $('#outline').css('display', 'none')
   });
 
 

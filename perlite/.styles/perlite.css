@@ -60,8 +60,5 @@ img {
   .sidebar-toggle-button.mod-right {
     display: none;
   }
-  .mobile-display {
-    display: flex !important;
-  }
   
 }

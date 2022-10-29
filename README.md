@@ -6,9 +6,7 @@
 A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 
 
->Important for the 1.5 release: you need the php module php-yaml for the tag search and metadata section!
-
-
+> Important for the 1.5 release: you need the php module php-yaml for the tag search and metadata section!
 > also check the new Theme section to use obsidian themes
 
 
@@ -31,8 +29,8 @@ A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 - LaTeX and Mermaid support
 - Link to Obsidian Vault
 - Search
-- Support Obisdian links and images
-- Support Obsidian Tags
+- Support Obisdian tags, links and images
+
 
 
 ## Changelog
@@ -57,7 +55,7 @@ For Docker just check the [DOCKER](https://github.com/secure-77/Perlite/blob/mai
 
 
 ### Themes
-In your vault, there must be the `.obsidian` folder with the subfolder `themes`, perlite will load all themes presented in this folder. Perlite will also check for the file `appearance.json` in the `.obsidian` folder to get your default theme. Make sure that your webserver has access the .obsidian folder, to load the theme.css files.
+In your vault, there must be the `.obsidian` folder with the subfolder `themes`, perlite will load all themes presented in this folder. Perlite will also check for the file `appearance.json` in the `.obsidian` folder to get your default theme. Make sure that your webserver has access to the files in the `.obsidian` folder.
 
 
 ### Graph
@@ -76,12 +74,11 @@ In your vault, there must be the `.obsidian` folder with the subfolder `themes`,
 
 ### Advanced Options and Infos
 
-#### Header, Logo and Start Page
-you can adjust them via the index.php
+#### About, Start Page and LineBreaks
 
 - The About opens a .md file in a modal window (.about.md per default), you can change this in the helper.php `$about` variable
-- The Logo, Blog and so on are nested in the index.php (line 47 e.g. for the link to the Blog)
 - The Startpage is set to README.md, you can change this in the helper.php `$index` variable and in the perlite.js `homeFile` variable
+- If you want to use the classic Markdown behavior for line breaks, set the variable  `LINE_BREAKS` to `false`
 
 #### Graph
 The Graph is implemented with vis.js, so there are many options you can play on with, you can adjust them via the `options` object in the perlite.js
@@ -89,7 +86,6 @@ The Graph is implemented with vis.js, so there are many options you can play on 
 #### Root Dir
 - Without setting a `NOTES_PATH` enviroment variable, Perlite takes the `perlite` directory as root folder, this means, you need to copy your content of the vault folder into the `perlite` directory (including metadata.json if you want a graph).
 - If you want to change or specify the root directory of your vault, you can do this by changing the variable `$rootDir` in the helper.php or by setting the `NOTES_PATH` as php variable.
-- You can see an example of this in the Release, just uncomment the `//$rootDir = 'Demo';` in the helper.php and see how the build changes, also notice the two metadata.json, one in the perlite folder and one in the Demo folder, depending on your rootDir either the one in perlite or the one in Demo will be used.
 
 
 
@@ -99,7 +95,7 @@ The Graph is implemented with vis.js, so there are many options you can play on 
 - [![coverage](https://img.shields.io/badge/Parsedown-1.7.4-lightgrey)](https://github.com/erusev/parsedown)
 - [![coverage](https://img.shields.io/badge/jQuery-3.6.1-lightblue)](https://jquery.com/)
 - [![coverage](https://img.shields.io/badge/Bootstrap-5.1.3-blue)](https://getbootstrap.com/)
-- [![coverage](https://img.shields.io/badge/Highlight.js-11.4.0-green)](https://highlightjs.org/)
+- [![coverage](https://img.shields.io/badge/Highlight.js-11.6.0-green)](https://highlightjs.org/)
 - [![coverage](https://img.shields.io/badge/vis.js-9.1.2-yellow)](https://visjs.org/)
 - [![coverage](https://img.shields.io/badge/KaTeX.js-0.15.2-red)](https://katex.org/)
 - [![coverage](https://img.shields.io/badge/Mermaid.js-9.1.2-orange)](https://mermaid-js.github.io/mermaid/)
