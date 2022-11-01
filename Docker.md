@@ -1,5 +1,12 @@
 # Docker
 
+
+If you have any problems to get the latest correct docker image (for example you already pulled the latest tag sometime ago) run this command to delete any older image
+
+```bash
+docker container rm perlite;  docker image rm sec77/perlite:latest
+```
+
 run docker composer
 ```bash
 docker-compose up -d
