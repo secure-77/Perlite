@@ -58,7 +58,7 @@ For Docker just check the [DOCKER](https://github.com/secure-77/Perlite/blob/mai
 ### Required Obsidian Options
 - In the options `Files & Links` you need to set the `New link format` to `Relative path to file`
 ![Link Options](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/link.png "Link Options")
-
+> :warning: You must recreate the image links to take effect!
 
 ### Themes
 In your vault, there must be the `.obsidian` folder with the subfolder `themes`, perlite will load all themes presented in this folder. Perlite will also check for the file `appearance.json` in the `.obsidian` folder to get your default theme. Make sure that your webserver has access to the files in the `.obsidian` folder.
