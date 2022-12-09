@@ -10,7 +10,7 @@ services:
       - HIDE_FOLDERS=docs,private,trash
     volumes:
       - ./perlite:/var/www/perlite
-      - ./Demo:/var/www/perlite/Demo:ro
+      - ./perlite/Demo:/var/www/perlite/Demo:ro
 
   web:
     build:
@@ -21,7 +21,7 @@ services:
       - 80:80 
     volumes:
       - ./perlite:/var/www/perlite
-      - ./Demo:/var/www/perlite/Demo:ro   
+      - ./perlite/Demo:/var/www/perlite/Demo:ro   
     depends_on:
       - perlite
 

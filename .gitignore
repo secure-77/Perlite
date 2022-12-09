@@ -1,8 +1,7 @@
 .trash
 notes
-Demo/.trash
-Demo/Thumbs.db
-Perlite/Demo
+perlite/Demo/.trash
+perlite/Demo/Thumbs.db
 perlite/logo2.svg
 Thumbs.db
 ParsedownExtra.php

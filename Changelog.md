@@ -3,6 +3,7 @@
 - fixed docker-compose-dev.yml config
 - fixed callouts and contiuned quotes (Issue #40 and #27)
 - fixed logo position
+- Demo Vault is default if no NOTES_PATH is defined
 
 
 ## 1.5

@@ -17,9 +17,9 @@ Read more about Perlite and staging tips on my blog post: [Perlite on Secure77](
 [Perlite Demo](https://perlite.secure77.de/)
 
 
-![Demo Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/screenshot.png "Demo Screenshot")
+![Demo Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png "Demo Screenshot")
 
-![Graph Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/graph.png "Graph Screenshot")
+![Graph Screenshot](https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/graph.png "Graph Screenshot")
 
 ## Features
 
@@ -57,7 +57,7 @@ For Docker just check the [DOCKER](https://github.com/secure-77/Perlite/blob/mai
 
 ### Required Obsidian Options
 - In the options `Files & Links` you need to set the `New link format` to `Relative path to file`
-![Link Options](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/link.png "Link Options")
+![Link Options](https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/link.png "Link Options")
 > :warning: You must recreate the image links to take effect!
 
 ### Themes
@@ -70,13 +70,13 @@ In your vault, there must be the `.obsidian` folder with the subfolder `themes`,
 - In the settings, set the path of the metadata.json to your local vault root folder (like `C:\Users\John\MyNotes\metadata.json`, when your vault is MyNotes). if you transfer your vault later to a webserver, make sure the metadata.json will be transferred too.
 - Also dont forget to set a timer how often the file should be written or just enable `Write JSON files automatically when Obsidian launches`
 
-![Plugin Options](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/plugin_options.png "Plugin Options")
+![Plugin Options](https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/plugin_options.png "Plugin Options")
 
 ### Hide Folders and Files
 
 - If you want to exclude specific folders, e.g. your attachment folder you can set the `HIDE_FOLDERS` variable or replace `$hideFolders = getenv('HIDE_FOLDERS');` in the helper.php with something like this `$hideFolders = 'attachments';`
 - Folders and files starting with a "." (dot) are exclude by default
-![Folders Options](https://raw.githubusercontent.com/secure-77/Perlite/main/Demo/folders.png "Folders Options")
+![Folders Options](https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/folders.png "Folders Options")
 
 ### Advanced Options and Infos
 

@@ -6,11 +6,11 @@ services:
     container_name: perlite
     restart: unless-stopped
     environment:
-      - NOTES_PATH=Demo
+      - NOTES_PATH=perlite/Demo
       - HIDE_FOLDERS=docs,private,trash
       - LINE_BREAKS=true
     volumes:
-      - ./Demo:/var/www/perlite/Demo:ro
+      - ./perlite/Demo:/var/www/perlite/Demo:ro
 
   web:
     build:

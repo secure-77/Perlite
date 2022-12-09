@@ -12,7 +12,14 @@ include('PerliteParsedown.php');
 $avFiles = array();
 
 $rootDir = getenv('NOTES_PATH');
-//$rootDir = 'Demo';
+
+
+if ($rootDir == '') {
+	
+	# replace with your Vault name
+	$rootDir = 'Demo';
+}
+
 
 $vaultName = $rootDir;
 
