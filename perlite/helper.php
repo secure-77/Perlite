@@ -27,7 +27,7 @@ $hideFolders = getenv('HIDE_FOLDERS');
 $lineBreaks = getenv('LINE_BREAKS');
 
 if (empty($lineBreaks)) {
-	$lineBreaks == true;
+	$lineBreaks = true;
 } else {
 	$lineBreaks = filter_var($lineBreaks, FILTER_VALIDATE_BOOLEAN);
 }
