@@ -1,3 +1,10 @@
+## 1.5.1
+- fixed tags containing a hyphen or slash (Issue #39)
+- fixed docker-compose-dev.yml config
+- fixed callouts and contiuned quotes (Issue #40 and #27)
+- fixed logo position
+
+
 ## 1.5
 - Complete redesign based on obsidian css
 - support for Obsidian themes

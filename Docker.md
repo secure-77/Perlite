@@ -14,7 +14,7 @@ docker-compose up -d
 
 docker-compose will use the latest prebuild perlite image from docker hub (includes the php-fpm engine) and build your own nginx images called perlite_web.
 
-You can adjust your nginx and php settings via the Dockerfiles in the folder web. If you want to build your own perlite image you can also find a docker file in perlite folder, dont forget to change the docker-compose files to build a own perlite image
+You can adjust your nginx and php settings via the Dockerfiles in the folder web. If you want to build your own perlite image you can also find a docker file in the  perlite folder, dont forget to change the docker-compose files to build a own perlite image
 
 ```yml
  perlite:
@@ -23,7 +23,7 @@ You can adjust your nginx and php settings via the Dockerfiles in the folder web
 ```
 
 ## development
-there is also a development enivorment availible, this will map the perlite/ folder to the container, so you can edit the php files without rebuild of the containers
+there is also a development enivorment availible, this will map the perlite/ folder to the container, so you can edit the php files without a rebuild of the containers
 ```bash
 docker-compose --file docker-compose-dev.yml up -d
 ```
