@@ -14,7 +14,7 @@ $avFiles = array();
 $rootDir = getenv('NOTES_PATH');
 
 
-if ($rootDir == '') {
+if (empty($rootDir)) {
 	
 	# replace with your Vault name
 	$rootDir = 'Demo';
@@ -26,7 +26,7 @@ $vaultName = $rootDir;
 $hideFolders = getenv('HIDE_FOLDERS');
 $lineBreaks = getenv('LINE_BREAKS');
 
-if ($lineBreaks === '') {
+if (empty($lineBreaks)) {
 	$lineBreaks == true;
 } else {
 	$lineBreaks = filter_var($lineBreaks, FILTER_VALIDATE_BOOLEAN);

@@ -4,6 +4,7 @@
 - fixed callouts and contiuned quotes (Issue #40 and #27)
 - fixed logo position
 - Demo Vault is default if no NOTES_PATH is defined
+- fixed line breaks if LINE_BREAKS isn´t defined
 
 
 ## 1.5
