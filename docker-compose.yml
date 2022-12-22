@@ -6,7 +6,7 @@ services:
     container_name: perlite
     restart: unless-stopped
     environment:
-      - NOTES_PATH=perlite/Demo
+      - NOTES_PATH=Demo
       - HIDE_FOLDERS=docs,private,trash
       - LINE_BREAKS=true
     volumes:
