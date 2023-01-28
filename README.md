@@ -10,6 +10,7 @@ Just put your whole Obsidian vault or markdown folder/file structure in your web
 Its an open source alternative to  [obisidian publish](https://obsidian.md/publish).
 
 Read more about Perlite and staging tips on my blog post: [Perlite on Secure77](https://secure77.de/perlite).
+If you want to discuss about Perlite you can join the [Perlite Discord Server](https://discord.gg/pkJ347ssWT)
 
 
 ## Demo
@@ -31,7 +32,7 @@ Read more about Perlite and staging tips on my blog post: [Perlite on Secure77](
 - LaTeX and Mermaid support
 - Link to Obsidian Vault
 - Search
-- Support Obisdian tags, links and images
+- Support Obisdian tags, links, images and mousehover
 
 
 
@@ -42,61 +43,32 @@ Read more about Perlite and staging tips on my blog post: [Perlite on Secure77](
 - [Perlite 1.4.4 Demo](https://perlite.secure77.de/1.4.4)
 - [Perlite 1.3 Demo](https://perlite.secure77.de/1.3)
 
+## Wiki
+Please check the [wiki](https://github.com/secure-77/Perlite/wiki)
+
 
 ## Install
-Just put the content of the perlite directory in your web root directory, your notes should resident as a subfolder of perlite.
+Just put the content of the perlite directory in your web root directory, your notes should resident as a subfolder of perlite. You only need to set your root direcotry.
 
-For Docker just check the [DOCKER](https://github.com/secure-77/Perlite/blob/main/Docker.md) readme.
+- For non Docker please check [Setup](https://github.com/secure-77/Perlite/wiki/01---Setup-(no-Docker))
+- For Docker, please check [Docker Setup](https://github.com/secure-77/Perlite/wiki/02---Setup-Docker)
+
 
 ### Requirements
 - Web server, tested with ![coverage](https://img.shields.io/badge/NGINX-1.22.1-blue)
 - Php-fpm, tested with ![coverage](https://img.shields.io/badge/PHP-7.4.30-green) and ![coverage](https://img.shields.io/badge/PHP-8.1.11-green)
-- Php module mb_strings for the parsedown (apt install php-mbstring)
-- Php module yaml_parse for the metadata (apt install php-yaml)
+other webservers may work..
+
+Please make sure you read also the (required settings)https://github.com/secure-77/Perlite/wiki/03---Perlite-Settings#required-settings
 
 
-### Required Obsidian Options
-- In the options `Files & Links` you need to set the `New link format` to `Relative path to file`
-![Link Options](https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/link.png "Link Options")
-> :warning: You must recreate the image links to take effect!
+## Themes
+[Themes](https://github.com/secure-77/Perlite/wiki/Themes)
 
-### Themes
-In your vault, there must be the `.obsidian` folder with the subfolder `themes`, perlite will load all themes presented in this folder. Perlite will also check for the file `appearance.json` in the `.obsidian` folder to get your default theme. Make sure that your webserver has access to the files in the `.obsidian` folder.
+## Graph
+[Graph Setup and Settings](https://github.com/secure-77/Perlite/wiki/Graph)
 
-
-### Graph
-- For the Graph you need to install the plugin [Metadata Extractor](https://github.com/kometenstaub/metadata-extractor), you can also do this via the build in Community Plugin Browser
-- Make sure to turn on the plugin
-- In the settings, set the path of the metadata.json to your local vault root folder (like `C:\Users\John\MyNotes\metadata.json`, when your vault is MyNotes). if you transfer your vault later to a webserver, make sure the metadata.json will be transferred too.
-- Also dont forget to set a timer how often the file should be written or just enable `Write JSON files automatically when Obsidian launches`
-
-![Plugin Options](https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/plugin_options.png "Plugin Options")
-
-### Hide Folders and Files
-
-- If you want to exclude specific folders, e.g. your attachment folder you can set the `HIDE_FOLDERS` variable or replace `$hideFolders = getenv('HIDE_FOLDERS');` in the helper.php with something like this `$hideFolders = 'attachments';`
-- Folders and files starting with a "." (dot) are exclude by default
-![Folders Options](https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/folders.png "Folders Options")
-
-### Advanced Options and Infos
-
-#### About, Start Page and LineBreaks
-
-- The About opens a .md file in a modal window (.about.md per default), you can change this in the helper.php `$about` variable
-- The Startpage is set to README.md, you can change this in the helper.php `$index` variable and in the perlite.js `homeFile` variable
-- If you want to use the classic Markdown behavior for line breaks, set the variable  `LINE_BREAKS` to `false`
-
-#### Graph
-The Graph is implemented with vis.js, so there are many options you can play on with, you can adjust them via the `options` object in the perlite.js
-
-#### Root Dir
-- Without setting a `NOTES_PATH` enviroment variable, Perlite takes the `perlite` directory as root folder, this means, you need to copy your content of the vault folder into the `perlite` directory (including metadata.json if you want a graph).
-- If you want to change or specify the root directory of your vault, you can do this by changing the variable `$rootDir` in the helper.php or by setting the `NOTES_PATH` as php variable.
-
-
-
-
-### Dependencies (all included)
+## Dependencies (all included)
 
 - [![coverage](https://img.shields.io/badge/Parsedown-1.7.4-lightgrey)](https://github.com/erusev/parsedown)
 - [![coverage](https://img.shields.io/badge/jQuery-3.6.1-lightblue)](https://jquery.com/)
@@ -105,7 +77,6 @@ The Graph is implemented with vis.js, so there are many options you can play on 
 - [![coverage](https://img.shields.io/badge/vis.js-9.1.2-yellow)](https://visjs.org/)
 - [![coverage](https://img.shields.io/badge/KaTeX.js-0.15.2-red)](https://katex.org/)
 - [![coverage](https://img.shields.io/badge/Mermaid.js-9.1.2-orange)](https://mermaid-js.github.io/mermaid/)
-
 
 
 ## Security
