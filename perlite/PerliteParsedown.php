@@ -1,7 +1,7 @@
 <?php
 
 /*!
-  * Perlite v1.5.1 (https://github.com/secure-77/Perlite)
+  * Perlite v1.5.2 (https://github.com/secure-77/Perlite)
   * Author: sec77 & Toaa (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
@@ -125,7 +125,7 @@ class PerliteParsedown extends Parsedown
     # See: https://help.obsidian.md/How+to/Use+callouts
 
 
-     # Callout Block
+    # Callout Block
     protected function blockQuote($Line)
     {
 
@@ -393,7 +393,7 @@ class PerliteParsedown extends Parsedown
     }
 
     # extend to obsidian tags
-    protected $inlineMarkerList = '!"*_#&[:<>`~\\';
+    protected $inlineMarkerList = '!"*$_#&[:<>`~\\';
     protected $InlineTypes = array(
         '"' => array('SpecialCharacter'),
         '!' => array('Image'),
@@ -404,6 +404,7 @@ class PerliteParsedown extends Parsedown
         '>' => array('SpecialCharacter'),
         '[' => array('Link'),
         '#' => array('Tag'),
+        '$' => array('Katex'),
         '_' => array('Emphasis'),
         '`' => array('Code'),
         '~' => array('Strikethrough'),
@@ -411,6 +412,31 @@ class PerliteParsedown extends Parsedown
     );
 
 
+    # handle katex code
+    protected function inlineKatex($Excerpt)
+    {
+        $katex = $Excerpt['text'];
+
+        if (preg_match("/(\\$\\$[^ ].*?\\$\\$)/", $Excerpt['text'], $matches)) {
+
+            $katex = $matches[0];
+            
+        } else if (preg_match("/(\\$[^ ].*?\\$)/", $Excerpt['text'], $matches)) {
+
+            $katex = $matches[0];
+
+        } else {
+            return;
+        }
+
+        return array(
+            'extent' => strlen($katex),
+            'element' => array(
+                'name' => 'katex',
+                'text' =>  $katex,
+            ),
+        );
+    }
 
     # handle obsidian tags
     protected function inlineTag($Excerpt)
@@ -419,7 +445,7 @@ class PerliteParsedown extends Parsedown
             return;
         }
 
-        if (preg_match("/#[\w'-\/]+/ui", $Excerpt['context'], $matches, PREG_OFFSET_CAPTURE)) {
+        if (preg_match("/(^| )#[\w'-\/]+/ui", $Excerpt['context'], $matches, PREG_OFFSET_CAPTURE)) {
             $tag = $matches[0][0];
 
             $Inline = array(
@@ -555,6 +581,7 @@ class PerliteParsedown extends Parsedown
         $permitRawHtml = false;
 
         # nested element handling
+        $closing = false;
         if (isset($Element['elements'])) {
             $markup .= '>';
             $markup .= $this->elements($Element['elements']);

@@ -1,7 +1,7 @@
 <?php
 
 /*!
-  * Perlite v1.5.1 (https://github.com/secure-77/Perlite)
+  * Perlite v1.5.2 (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
@@ -373,11 +373,21 @@ function getfullGraph($rootDir)
 					$source = "";
 					$target = "";
 					if (isset($node['relativePath'])) {
-						$source = removeExtension($node['relativePath']);
+						$tempPath = removeExtension($node['relativePath']);
+						if (checkArray($tempPath)) {
+							$source = $tempPath;
+							$tempPath = null;
+						}
 					}
 
 					if (isset($links['relativePath'])) {
-						$target = removeExtension($links['relativePath']);
+
+						$tempPath = removeExtension($links['relativePath']);
+						if (checkArray($tempPath)) {
+							$target = $tempPath;
+							$tempPath = null;
+						}
+						
 					}
 
 					if ($source !== '' && $target !== '') {

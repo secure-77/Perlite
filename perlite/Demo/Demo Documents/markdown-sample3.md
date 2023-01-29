@@ -2,6 +2,7 @@
 tags:
   - tag1
   - tag2
+  - tag-test
 ---
 
 YAML front matter document

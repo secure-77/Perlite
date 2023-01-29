@@ -18,8 +18,8 @@ aliases:
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/secure-77/perlite) ![GitHub](https://img.shields.io/github/license/secure-77/perlite) ![GitHub last commit](https://img.shields.io/github/last-commit/secure-77/Perlite)
 
-#dash-after
-	
+#tag-test
+
 A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 
 Just put your whole Obsidian vault or markdown folder/file structure in your web directory. The page builds itself. 
@@ -36,6 +36,8 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 
 [[Demo Documents/markdown-sample2]]
 
+[[Demo Documents/markdown-sample3|Call outs]]
+
 ## Documentation on Github
 
 [Perlite on Github](https://github.com/secure-77/Perlite/)
@@ -43,15 +45,15 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 ## Features
 
 - Auto build up, based on your folder (vault) structure
-- Fullscreen mode
+- Support Obsidian Themes
 - Full responsive
 - No manual parsing or converting necessary
 - Full interactive Graph
-- LaTeX support
-- Mermaid support
+- LaTeX and Mermaid support
+- Link to Obsidian Vault
 - Search
-- Support Obisdian links and images
-- [![coverage](https://img.shields.io/badge/Bootswatch-Themes-blue)](https://bootswatch.com) (Slate)
+- Support Obisdian tags, links, images and preview
+- Dark and Light Mode
 
 ## Changelog
 [Changelog](https://github.com/secure-77/Perlite/blob/main/Changelog.md)

@@ -4,7 +4,7 @@
 <?php
 
 /*!
-  * Version v1.5.1
+  * Version v1.5.2
 */
 
 include('helper.php');
@@ -520,6 +520,7 @@ $jsonGraphData = getfullGraph($rootDir);
             </div>
         </div>
     </div>
+    <!-- Graph settings -->
     <div style="display: none">
         <div><?php echo $jsonGraphData; ?></div>
         <p class="graph-view color-line"></p>
@@ -531,9 +532,11 @@ $jsonGraphData = getfullGraph($rootDir);
         <p class="vault"><?php echo $vaultName ?></p>
         <p class="perliteTitle"><?php echo $title ?></p>
     </div>
+    <!-- tool tip -->
     <div class="tooltip" style="top: 83.9531px; left: 1032.51px; width: 180.984px; height: 25px; display: none">
         <div class="tooltip-arrow" style="left: initial; right: 43px;"></div>
     </div>
+    <!-- about modal -->
     <div id="about" class="modal-container mod-dim" style="display: none">
         <div class="modal-bg" style="opacity: 0.85;"></div>
         <div class="modal">
@@ -542,6 +545,7 @@ $jsonGraphData = getfullGraph($rootDir);
             <div class="aboutContent modal-content"></div>
         </div>
     </div>
+    <!-- perlite settings -->
     <div id="settings" class="modal-container mod-dim" style="display: none">
         <div class="modal-bg" style="opacity: 0.85;"></div>
         <div id="settings" class="modal mod-settings">
@@ -560,7 +564,19 @@ $jsonGraphData = getfullGraph($rootDir);
                                     <option value="">Default</option>
                                 </select><button id="resetTheme" class="mod-cta">Reset</button>
                             </div>
+
                         </div>
+
+                        <div class="setting-item mod-toggle">
+                            <div class="setting-item-info">
+                                <div class="setting-item-name">Dark mode</div>
+                                <div class="setting-item-description">Choose Perlite's default color scheme.</div>
+                            </div>
+                            <div class="setting-item-control">
+                                <div class="checkbox-container is-enabled darkModeOption"><input type="checkbox" tabindex="0"></div>
+                            </div>
+                        </div>
+
                         <div class="setting-item setting-item-heading">
                             <div class="setting-item-info">
                                 <div class="setting-item-name">Sizes</div>
@@ -599,6 +615,24 @@ $jsonGraphData = getfullGraph($rootDir);
                         </div>
                         <div class="setting-item setting-item-heading">
                             <div class="setting-item-info">
+                                <div class="setting-item-name">Mobile</div>
+                                <div class="setting-item-description"></div>
+                            </div>
+                            <div class="setting-item-control"></div>
+                        </div>
+
+                        <div class="setting-item mod-toggle">
+                            <div class="setting-item-info">
+                                <div class="setting-item-name">Pop Up</div>
+                                <div class="setting-item-description">Open a popup by clicking on an internal link</div>
+                            </div>
+                            <div class="setting-item-control">
+                                <div class="checkbox-container popUpSetting"><input type="checkbox" tabindex="0"></div>
+                            </div>
+                        </div>
+
+                        <div class="setting-item setting-item-heading">
+                            <div class="setting-item-info">
                                 <div class="setting-item-name">Advanced</div>
                                 <div class="setting-item-description"></div>
                             </div>
@@ -628,6 +662,35 @@ $jsonGraphData = getfullGraph($rootDir);
             </div>
         </div>
     </div>
+    <!-- Pop Hover -->
+    <div class="popover hover-popover" style="display: none">
+        <div class="markdown-embed is-loaded">
+            <div class="markdown-embed-content">
+                <div class="markdown-preview-view markdown-rendered node-insert-event show-indentation-guide">
+                    <div class="markdown-preview-sizer markdown-preview-section" style="padding-bottom: 0px; min-height: 100%;">
+                        <div class="markdown-preview-pusher" style="height: 0.1px; margin-bottom: 0px;"></div>
+                        <div class="mod-header">
+                            <div class="inline-title pophover-title" spellcheck="false" tabindex="-1" enterkeyhint="done"></div>
+                            <div id='mdHoverContent'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="markdown-embed-content" style="display: none;"></div>
+        </div>
+
+
+    </div>
+    <!-- pop up -->
+    <div id="popUp" class="modal-container mod-dim" style="display: none">
+        <div class="modal-bg" style="opacity: 0.85;"></div>
+        <div class="modal">
+            <div class="modal-close-button"></div>
+            <div class="popup-modal-title inline-title"></div><div class="goToLink"></div>
+            <div id='popUpContent' class="modal-content"></div>
+        </div>
+    </div>
+
 
     </div>
     <script src=".js/perlite.js"></script>

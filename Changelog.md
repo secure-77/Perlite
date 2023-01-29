@@ -1,3 +1,18 @@
+## 1.5.2
+- fixed $closing variable error
+- set focus to search field
+- fixed #Header reference in internal links (Issue #32)
+- fixed error with links to non existing files (Graph)
+- fixed ampersand problem in internal links and graph (Issue #47)
+- added mousehover for internal links, feature request #43 
+- added popup feature for internal links on mobile (setting), feature request #43 
+- fixed padding-right issue on mobile view
+- moved some instructions to the wiki
+- added light mode (in the settings)
+- updated katex to 0.16.4
+- fixed problem with two _ (underscorces) per line in katex context
+
+
 ## 1.5.1
 - fixed tags containing a hyphen or slash (Issue #39)
 - fixed docker-compose-dev.yml config
@@ -20,7 +35,6 @@
 - updated Docker image to use latest php:fpm-alpine version (8.1.11)
 - updatet Nginx config to allow Themes
 - added docker compose variable for markdown linebreaks
-
 
 
 ## 1.4.5 RC

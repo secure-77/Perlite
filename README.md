@@ -32,7 +32,8 @@ If you want to discuss about Perlite you can join the [Perlite Discord Server](h
 - LaTeX and Mermaid support
 - Link to Obsidian Vault
 - Search
-- Support Obisdian tags, links, images and mousehover
+- Support Obisdian tags, links, images and preview
+- Dark and Light Mode
 
 
 
@@ -75,7 +76,7 @@ Please make sure you read also the [required settings](https://github.com/secure
 - [![coverage](https://img.shields.io/badge/Bootstrap-5.1.3-blue)](https://getbootstrap.com/)
 - [![coverage](https://img.shields.io/badge/Highlight.js-11.6.0-green)](https://highlightjs.org/)
 - [![coverage](https://img.shields.io/badge/vis.js-9.1.2-yellow)](https://visjs.org/)
-- [![coverage](https://img.shields.io/badge/KaTeX.js-0.15.2-red)](https://katex.org/)
+- [![coverage](https://img.shields.io/badge/KaTeX.js-0.16.4-red)](https://katex.org/)
 - [![coverage](https://img.shields.io/badge/Mermaid.js-9.1.2-orange)](https://mermaid-js.github.io/mermaid/)
 
 

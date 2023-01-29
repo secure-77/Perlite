@@ -13,7 +13,7 @@ const homeFile = "README";
 
 
 // get markdown content
-function getContent(str, home = false) {
+function getContent(str, home = false, popHover = false) {
 
   // reset content if request is empty
   if (str.length == 0) {
@@ -32,37 +32,231 @@ function getContent(str, home = false) {
 
     }
 
+    mdContent = $("#mdContent")[0]
+
 
     $.ajax({
       url: requestPath, success: function (result) {
 
-        // set content
-        $("#mdContent").html(result);
+        if (popHover == false) {
 
-        // set word and char count
-        $("#wordCount").text($(".wordCount").text() + ' words');
-        $("#charCount").text($(".charCount").text() + ' characters');
+          // set content
+          $("#mdContent").html(result);
 
-        // set Browser, document title and nav path
-        var title = $("div.mdTitleHide").first().text();
-        if (title) {
+          // set word and char count
+          $("#wordCount").text($(".wordCount").text() + ' words');
+          $("#charCount").text($(".charCount").text() + ' characters');
 
-          hrefTitle = '<a href=?link=' + encodeURIComponent(title) + '>' + title + '</a>'
+          // set Browser, document title and nav path
+          var title = $("div.mdTitleHide").first().text();
+          if (title) {
+
+            hrefTitle = '<a href=?link=' + encodeURIComponent(title) + '>' + title + '</a>'
+            title = title.substring(1)
+            titleElements = title.split('/')
+            title = titleElements.splice(-1)
+            parentTitle = titleElements.join(' / ')
+            if (parentTitle) {
+              parentTitle = parentTitle + ' / ';
+            }
+            $("div.view-header-title-parent").text(parentTitle);
+            $("div.view-header-title").text(title);
+            $(".inline-title").text(title);
+
+            $("title").text(title + ' - ' + $("p.vault").text() + ' - ' + $("p.perliteTitle").text());
+
+            // set edit button url       
+            $('.clickable-icon.view-action[aria-label="Click to edit"]')
+              .attr("href", "obsidian://open?vault=" + encodeURIComponent($("p.vault").text()) + "&file=" + encodeURIComponent(title))
+
+          }
+
+          // Outlines
+          var toc = "";
+          var level = 0;
+
+          document.getElementById("mdContent").innerHTML =
+            document.getElementById("mdContent").innerHTML.replace(
+              /<h([\d])>([^<]+)<\/h([\d])>/gi,
+              function (str, openLevel, titleText, closeLevel) {
+
+                if (openLevel != closeLevel) {
+                  return str;
+                }
+
+                if (openLevel > level) {
+                  toc += (new Array(openLevel - level + 1)).join('<div class="tree-item"><div class="tree-item-children">');
+                } else if (openLevel < level) {
+                  toc += (new Array(level - openLevel + 1)).join("</div></div>");
+                }
+
+                level = parseInt(openLevel);
+
+                var anchor = titleText.replace(/ /g, "_");
+                toc += '<div class="tree-item-self is-clickable"><a href="#' + anchor + '">' + titleText
+                  + '</a></div>';
+
+                return "<h" + openLevel + "><a name='" + anchor + "' >"
+                  + "" + "</a>" + titleText + "</h" + closeLevel + ">";
+
+              }
+            );
+
+          if (level) {
+            toc += (new Array(level + 1)).join("</div></div>");
+          }
+
+          document.getElementById("toc").innerHTML = toc;
+
+
+          // add Image Click popup
+          $(".pop").on("click", function () {
+
+            var path = $(this).find("img").attr("src");
+            result = '<div class="modal-body imgModalBody"><img src="' + path + '" class="imagepreview"></div>';
+            $("div.modal-content").html(result);
+            $(".modal").css("width", "unset");
+            $(".modal").css("height", "unset");
+            $(".modal").css("max-width", "100%");
+            $(".modal").css("max-height", "100%");
+            $(".modal-title").text("Image preview");
+            $(".modal-container.mod-dim").css("display", "flex");
+
+          });
+
+
+          // trigger graph render on side bar
+          renderGraph(false, str);
+
+          //resize graph on windows rezise
+          $(window).resize(function () {
+            renderGraph(false, str, false);
+          });
+
+
+          // update the url
+          if (home == false) {
+            window.history.pushState({}, "", location.protocol + '//' + location.host + location.pathname + "?link=" + str);
+          }
+
+
+          // on Tag click -> start search
+          $('.tag').click(function (e) {
+
+            e.preventDefault();
+
+            target = $(e.target);
+            $('.workspace-tab-header[data-type="search"]').click();
+            $('*[type="search"]').val(this.text);
+            search(this.text);
+
+            // on mobile go to search
+            if ($(window).width() < 990) {
+
+              $('.workspace').addClass('is-left-sidedock-open');
+              $('.mod-left-split').removeClass('is-sidedock-collapse');
+              $('.mod-left').removeClass('is-collapsed');
+              $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'flex');
+
+            };
+
+          });
+
+          // Toogle Front Matter Meta Container
+          $('.frontmatter-container-header').click(function (e) {
+
+            e.preventDefault();
+
+            if ($('.frontmatter-container').hasClass('is-collapsed')) {
+              $('.frontmatter-container').removeClass('is-collapsed');
+            } else {
+              $('.frontmatter-container').addClass('is-collapsed');
+            }
+
+          });
+
+          // on hover internal link
+
+          var currentMousePos = { x: -1, y: -1 };
+          $(document).mousemove(function (event) {
+            currentMousePos.x = event.pageX;
+            currentMousePos.y = event.pageY;
+          });
+
+          stopThis = false;
+          // enter the hover box
+          $('.popover.hover-popover').mouseenter(function (e) {
+            stopThis = true
+            $('.popover.hover-popover').css('display', 'unset');
+          })
+          // leave the hover box
+          $('.popover.hover-popover').mouseleave(function (e) {
+            e.preventDefault();
+
+            hoverTimer = setTimeout(function () {
+
+              $('.popover.hover-popover').css('display', 'none');
+              stopThis = false;
+
+            }, 500);
+          })
+
+          // leave the link
+          $('.internal-link').mouseleave(function (e) {
+            e.preventDefault();
+
+            hoverTimer = setTimeout(function () {
+
+              if (stopThis == false) {
+                $('.popover.hover-popover').css('display', 'none');
+              }
+            }, 1200);
+          })
+
+          $('.internal-link').mouseenter(function (e) {
+            e.preventDefault();
+
+            // update position for hover element
+            $('.popover.hover-popover').css({ top: currentMousePos.y, left: currentMousePos.x });
+
+            const urlParams = new URLSearchParams(this.href.split('?')[1]);
+            if (urlParams.has('link')) {
+              var target = urlParams.get('link');
+              target = encodeURIComponent(target);
+            }
+            // get content of link
+            if (target) {
+              getContent(target, false, true)
+            }
+
+          });
+
+          //check setting if metadata is collapsed or not
+          if ($('.metadataOption').hasClass('is-enabled')) {
+            $('.frontmatter-container-header').trigger('click')
+          }
+          mdContent = $("#mdContent")[0]
+
+          // handle pop up and hover
+        } else {
+
+          // set content
+          $("#mdHoverContent").html(result);
+          $("#popUpContent").html(result);
+
+          // set title
+          var title = $("div.mdTitleHide")[1].innerText;
           title = title.substring(1)
           titleElements = title.split('/')
           title = titleElements.splice(-1)
-          parentTitle = titleElements.join(' / ')
-          if (parentTitle) {
-            parentTitle = parentTitle + ' / ';
-          }
-          $("div.view-header-title-parent").text(parentTitle);
-          $("div.view-header-title").text(title);
-          $(".inline-title").text(title);
-          $("title").text(title + ' - ' + $("p.vault").text() + ' - ' + $("p.perliteTitle").text());
+          $(".inline-title.pophover-title").text(title);
+          $(".popup-modal-title").text(title);
 
-          // set edit button url       
-          $('.clickable-icon.view-action[aria-label="Click to edit"]')
-            .attr("href", "obsidian://open?vault=" + encodeURIComponent($("p.vault").text()) + "&file=" + encodeURIComponent(title))
+
+          // show pophover
+          $('.popover.hover-popover').css('display', 'unset');
+
+          mdContent = $("#mdHoverContent")[0]
 
         }
 
@@ -72,8 +266,8 @@ function getContent(str, home = false) {
         // run mobile settings
         isMobile();
 
-        //render LaTeX
-        renderMathInElement(document.getElementById("mdContent"),
+        //render LaTeX (Katex)
+        renderMathInElement(mdContent,
           {
             delimiters: [
               { left: "$$", right: "$$", display: true },
@@ -109,115 +303,6 @@ function getContent(str, home = false) {
         mermaid.init(undefined, document.querySelectorAll(".language-mermaid"));
 
 
-        // Outlines
-        var toc = "";
-        var level = 0;
-
-        document.getElementById("mdContent").innerHTML =
-          document.getElementById("mdContent").innerHTML.replace(
-            /<h([\d])>([^<]+)<\/h([\d])>/gi,
-            function (str, openLevel, titleText, closeLevel) {
-
-              if (openLevel != closeLevel) {
-                return str;
-              }
-
-              if (openLevel > level) {
-                toc += (new Array(openLevel - level + 1)).join('<div class="tree-item"><div class="tree-item-children">');
-              } else if (openLevel < level) {
-                toc += (new Array(level - openLevel + 1)).join("</div></div>");
-              }
-
-              level = parseInt(openLevel);
-
-              var anchor = titleText.replace(/ /g, "_");
-              toc += '<div class="tree-item-self is-clickable"><a href="#' + anchor + '">' + titleText
-                + '</a></div>';
-
-              return "<h" + openLevel + "><a name='" + anchor + "' >"
-                + "" + "</a>" + titleText + "</h" + closeLevel + ">";
-
-            }
-          );
-
-        if (level) {
-          toc += (new Array(level + 1)).join("</div></div>");
-        }
-
-
-        document.getElementById("toc").innerHTML = toc;
-
-
-        // add Image Click popup
-        $(".pop").on("click", function () {
-
-          var path = $(this).find("img").attr("src");
-          result = '<div class="modal-body imgModalBody"><img src="' + path + '" class="imagepreview"></div>';
-          $("div.modal-content").html(result);
-          $(".modal").css("width", "unset");
-          $(".modal").css("height", "unset");
-          $(".modal").css("max-width", "100%");
-          $(".modal").css("max-height", "100%");
-          $(".modal-title").text("Image preview");
-          $(".modal-container.mod-dim").css("display", "flex");
-
-        });
-
-
-        // trigger graph render on side bar
-        renderGraph(false, str);
-
-        //resize graph on windows rezise
-        $(window).resize(function () {
-          renderGraph(false, str, false);
-        });
-
-
-        // update the url
-        if (home == false) {
-          window.history.pushState({}, "", location.protocol + '//' + location.host + location.pathname + "?link=" + str);
-        }
-
-
-        // on Tag click -> start search
-        $('.tag').click(function (e) {
-
-          e.preventDefault();
-
-          target = $(e.target);
-          $('.workspace-tab-header[data-type="search"]').click();
-          $('*[type="search"]').val(this.text);
-          search(this.text);
-
-          // on mobile go to search
-          if ($(window).width() < 990) {
-
-            $('.workspace').addClass('is-left-sidedock-open');
-            $('.mod-left-split').removeClass('is-sidedock-collapse');
-            $('.mod-left').removeClass('is-collapsed');
-            $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'flex');
-
-          };
-
-        });
-
-        // Toogle Front Matter Meta Container
-        $('.frontmatter-container-header').click(function (e) {
-
-          e.preventDefault();
-
-          if ($('.frontmatter-container').hasClass('is-collapsed')) {
-            $('.frontmatter-container').removeClass('is-collapsed');
-          } else {
-            $('.frontmatter-container').addClass('is-collapsed');
-          }
-
-        });
-
-        //check setting if metadata is collapsed or not
-        if ($('.metadataOption').hasClass('is-enabled')) {
-          $('.frontmatter-container-header').trigger('click')
-        }
       }
     });
   }
@@ -228,7 +313,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
 
   // no graph found exit
   if ($("#allGraphNodes").length == 0 || $("#allGraphNodes").text == '[]') {
-    console.log("Graph: no nodes found")
+    console.log("Graph: no data found")
     return;
   }
 
@@ -252,7 +337,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
 
   // get current node
   for (const x in jsonNodes) {
-    if (path == ('/' + jsonNodes[x]['title'])) {
+    if (path == ('/' + (jsonNodes[x]['title']).replace('&amp;', '&'))) {
       currId = jsonNodes[x]['id'];
       break;
     }
@@ -272,9 +357,6 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
   varLinkDistance = parseInt($('.slider.linkDistance').val())
   varLinkThickness = parseFloat($('.slider.linkThickness').val())
   varGraphStyle = $('#graphStyleDropdown').val()
-
-
-  // container = document.getElementsByClassName('nav-files-container')[0];
 
 
   var options = {
@@ -325,7 +407,6 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
   // show the whole graph
   if (modal) {
 
-
     var container_modal = document.getElementById('graph_all');
 
     var nodes = new vis.DataSet(jsonNodes);
@@ -375,7 +456,6 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
     // local Graph
   } else {
 
-
     var myNodes = [];
     var myEdges = [];
 
@@ -383,6 +463,8 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
 
     // add current node
     for (const x in jsonNodes) {
+      jsonNodes[x]['label'] = (jsonNodes[x]['label']).replace('&amp;', '&')
+      jsonNodes[x]['title'] = (jsonNodes[x]['title']).replace('&amp;', '&')
       if (path == ('/' + jsonNodes[x]['title'])) {
         myNodes.push(jsonNodes[x])
         curNode = myNodes[0]
@@ -411,6 +493,8 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
         for (const x in jsonNodes) {
           if (jsonEdges[y]['to'] == jsonNodes[x]['id']) {
             if (!idExists(jsonNodes[x]['id'])) {
+              jsonNodes[x]['label'] = (jsonNodes[x]['label']).replace('&amp;', '&')
+              jsonNodes[x]['title'] = (jsonNodes[x]['title']).replace('&amp;', '&')
               myNodes.push(jsonNodes[x])
             }
             break;
@@ -482,9 +566,32 @@ function isMobile() {
 
     hideLeftMobile();
 
+    //disable mousehover on mobile
+    $('.internal-link').unbind("mouseenter");
+    $('.internal-link').unbind("mouseleave");
+
+    //override click for internal-links to use popUp instead
+    if ( $('.popUpSetting').hasClass('is-enabled')) {
+    $('.internal-link').click(function (e) {
+      e.preventDefault();
+      const urlParams = new URLSearchParams(this.href.split('?')[1]);
+      if (urlParams.has('link')) {
+        var target = urlParams.get('link');
+        target = encodeURIComponent(target);
+      }
+
+      if (target) {
+        getContent(target, false, true)
+      }
+      $("#popUp").css("display", "flex");
+      $(".goToLink").html('<a href="' + this.href + '"> go to site</a><br><br>')
+    })
+
+    }
   }
 
 };
+
 function hideLeftMobile() {
 
   $('.workspace').removeClass('is-left-sidedock-open');
@@ -636,6 +743,20 @@ $(document).ready(function () {
     $('.frontmatter-container').addClass('is-collapsed');
   };
 
+  // light mode
+  if (localStorage.getItem('lightMode') === 'true') {
+    $('body').removeClass('theme-dark')
+    $('body').addClass('theme-light')
+    $('.darkModeOption').removeClass('is-enabled')
+  };
+
+  // popUp Setting
+  if (localStorage.getItem('popUpEnabled') === 'true') {
+    $('.popUpSetting').addClass('is-enabled')
+  };
+
+
+
   // graph settings & defaults
 
   if (localStorage.getItem('Graph_Style')) {
@@ -716,8 +837,6 @@ $(document).ready(function () {
   }
 
 
-
-
   // on search submit
   $('*[type="search"]').on('keypress', function (e) {
     if (e.which == 13) {
@@ -795,10 +914,14 @@ $(document).ready(function () {
   // click search
   $('.workspace-tab-header[data-type="search"]').click(function (e) {
     e.preventDefault();
+
     $('.workspace-leaf-content[data-type="search"]').parent().css("display", "unset");
     $('.workspace-leaf-content[data-type="file-explorer"]').parent().css("display", "none");
     $('.workspace-tab-header[data-type="search"]').addClass('is-active mod-active');
     $('.workspace-tab-header[data-type="file-explorer"]').removeClass('is-active mod-active');
+
+    // set focus to search field
+    $('input[type=search]').focus();
 
   });
 
@@ -1026,6 +1149,43 @@ $(document).ready(function () {
 
     }
   });
+
+  // Darkmode / Lightmode change 
+  $('.darkModeOption').click(function (e) {
+    e.preventDefault();
+    target = $('.darkModeOption')
+
+    if (target.hasClass('is-enabled')) {
+      target.removeClass('is-enabled')
+
+      $('body').removeClass('theme-dark')
+      $('body').addClass('theme-light')
+      localStorage.setItem('lightMode', 'true');
+
+    } else {
+      target.addClass('is-enabled')
+      $('body').removeClass('theme-light')
+      $('body').addClass('theme-dark')
+      localStorage.removeItem('lightMode');
+
+    }
+  });
+
+  // PopUp change
+    $('.popUpSetting').click(function (e) {
+      e.preventDefault();
+      target = $('.popUpSetting')
+  
+      if (target.hasClass('is-enabled')) {
+        target.removeClass('is-enabled')
+        localStorage.removeItem('popUpEnabled');     
+  
+      } else {
+        target.addClass('is-enabled')    
+        localStorage.setItem('popUpEnabled', 'true');
+  
+      }
+    });
 
 
   // collapse Metadata Option
@@ -1285,6 +1445,7 @@ $(document).ready(function () {
   $('.modal-close-button').click(function (e) {
     $("#settings").css("display", "none");
     $("#about").css("display", "none");
+    $("#popUp").css("display", "none");
   });
 
   // local Graph & Outline Swith

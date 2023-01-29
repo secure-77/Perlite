@@ -36,6 +36,12 @@ img {
   display: initial !important;
 }
 
+.popup-icon {
+  padding-bottom: 1px;
+  top: -6px;
+  position: relative;
+  left: 3px;
+}
 
 
 
@@ -59,6 +65,10 @@ img {
 
   .sidebar-toggle-button.mod-right {
     display: none;
+  }
+
+  #mdContent {
+    padding-right: 30px;
   }
   
 }

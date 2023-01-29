@@ -1,7 +1,7 @@
 <?php
 
 /*!
-  * Perlite v1.5.1 (https://github.com/secure-77/Perlite)
+  * Perlite v1.5.2 (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
@@ -93,11 +93,6 @@ function parseContent($requestFile) {
 	$pattern = array('/(\!\[\[)(.*?)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 
-	// support marmaid
-	// $replaces = '<div class="mermaid">';
-	// $pattern = array('/<code class="language-mermaid">/');
-	// $content = preg_replace($pattern, $replaces ,$content);
-
 	// handle internal site links
 	// search for links outside of the current folder
 	$pattern = array('/(\[\[)(?:\.\.\/)+(.*?)(\]\])/');
@@ -139,6 +134,18 @@ function translateLink($pattern, $content, $path, $sameFolder) {
 			$linkFile = $splitLink[0];
 			$linkName = $splitLink[1];
 		}
+
+		
+		# handle internal popups
+		$popupClass = '';
+		$popUpIcon = '';
+		
+		if (count($splitLink) > 2) {
+
+			$popupClass = ' internal-popup';
+			$popUpIcon = '<svg class="popup-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-maximize"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>';
+		}
+
 		
 		// do extra stuff to get the absolute path
 		if ($sameFolder == false) {
@@ -153,8 +160,25 @@ function translateLink($pattern, $content, $path, $sameFolder) {
 		if (substr($urlPath,0,1) != '/') {
 			$urlPath = '/' . $urlPath;
 		}
+
+		# split by # to keep the reference
+		$splitLink = explode("#", $urlPath);
+		if (count($splitLink) > 1) {
+			
+			$urlPath = $splitLink[0];
+			$refName = $splitLink[1];
+		}
+
+		# replace amp back to & (comming from parsedown)
+		$urlPath = str_replace('&amp;' , '&', $urlPath);
+	
 		$urlPath = rawurlencode($urlPath);
-		return '<a class="internal-link" href="?link='.$urlPath.'">'. $linkName .'</a>';
+		if (strlen($refName) > 0) {
+			$refName = '#'.$refName;
+		}
+
+	
+		return '<a class="internal-link'.$popupClass.'" href="?link='.$urlPath.$refName.'">'. $linkName .'</a>'.$popUpIcon;
 	}
 ,$content);
 }
@@ -178,6 +202,5 @@ function getContent($requestFile) {
 	
 	return $content;
 }
-
 
 ?>
