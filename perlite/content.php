@@ -171,14 +171,16 @@ function translateLink($pattern, $content, $path, $sameFolder) {
 
 		# replace amp back to & (comming from parsedown)
 		$urlPath = str_replace('&amp;' , '&', $urlPath);
-	
 		$urlPath = rawurlencode($urlPath);
-		if (strlen($refName) > 0) {
-			$refName = '#'.$refName;
-		}
 
-	
-		return '<a class="internal-link'.$popupClass.'" href="?link='.$urlPath.$refName.'">'. $linkName .'</a>'.$popUpIcon;
+		if (!empty($refName)) {
+			$refName = '#'.$refName;
+			return '<a class="internal-link'.$popupClass.'" href="?link='.$urlPath.$refName.'">'. $linkName .'</a>'.$popUpIcon;
+
+		} else {
+			return '<a class="internal-link'.$popupClass.'" href="?link='.$urlPath.'">'. $linkName .'</a>'.$popUpIcon;
+		}
+		
 	}
 ,$content);
 }
