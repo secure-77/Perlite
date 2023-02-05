@@ -1,3 +1,9 @@
+## 1.5.3
+- support file links with exclamation mark and aliases (issue #55)
+- support image resizing (issue #54)
+- fixed $refName missing php variable (PR #56)
+
+
 ## 1.5.2
 - fixed $closing variable error
 - set focus to search field

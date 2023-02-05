@@ -4,7 +4,7 @@
 <?php
 
 /*!
-  * Version v1.5.2
+  * Version v1.5.3
 */
 
 include('helper.php');

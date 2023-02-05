@@ -32,11 +32,18 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 
 ## Demo Files
 
+
 [[Demo Documents/markdown-sample]]
 
 [[Demo Documents/markdown-sample2]]
 
 [[Demo Documents/markdown-sample3|Call outs]]
+
+[[Demo Documents/pdf-test.pdf|PDF Alias]]
+
+## Images
+
+![[test_img.png|200x200]]
 
 ## Documentation on Github
 

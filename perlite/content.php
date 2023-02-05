@@ -83,14 +83,20 @@ function parseContent($requestFile) {
 	$mdpath = $path;
 	$path = $startDir . $path;
 
-	// pdf links
-	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="'.$path .'/'.'\\2">\\2</a>';
-	$pattern = array('/(\!\[\[)(.*?.pdf)(\]\])/');
+
+	// pdf links with Alias
+	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="'.$path .'/'.'\\2">\\3</a>';
+	$pattern = array('/(\!?\[\[)(.*?.pdf)\|(.*)(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 	
+	// pdf links without Alias
+	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="'.$path .'/'.'\\2">\\2</a>';
+	$pattern = array('/(\!?\[\[)(.*?.pdf)(\]\])/');
+	$content = preg_replace($pattern, $replaces ,$content);
+
 	// img links
-	$replaces = '<p><a href="#" class="pop"><img class="images" alt="image not found" src="'. $path .'/\\2\\3'.'"/></a></p>';
-	$pattern = array('/(\!\[\[)(.*?)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)(\]\])/');
+	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\4" height="\\5" alt="image not found" src="'. $path .'/\\2\\3'.'"/></a></p>';
+	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 
 	// handle internal site links
@@ -163,6 +169,7 @@ function translateLink($pattern, $content, $path, $sameFolder) {
 
 		# split by # to keep the reference
 		$splitLink = explode("#", $urlPath);
+		$refName = '';
 		if (count($splitLink) > 1) {
 			
 			$urlPath = $splitLink[0];
