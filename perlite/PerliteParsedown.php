@@ -495,6 +495,8 @@ class PerliteParsedown extends Parsedown
     }
 
     # handle external Urls
+    # Urls should be Links
+    # handle external Links
     protected function inlineLink($Excerpt)
     {
         $Element = array(

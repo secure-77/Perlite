@@ -32,8 +32,16 @@
   justify-content: right !important;
 }
 
-img {
+/* img {
   display: initial !important;
+} */
+
+img {
+  display: block;
+  /* center the image */
+  margin: 0 auto;
+  /* remove background-image defined in perlite/.styles/app.css */
+  background: none;
 }
 
 .popup-icon {
@@ -71,4 +79,14 @@ img {
     padding-right: 30px;
   }
   
+}
+
+/* remove text decoration */
+.tree-item-children a {
+  text-decoration: none;
+}
+
+/* scroll smooth */
+.markdown-rendered {
+  scroll-behavior: smooth;
 }

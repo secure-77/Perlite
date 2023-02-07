@@ -43,6 +43,12 @@ function getContent(str, home = false, popHover = false) {
           // set content
           $("#mdContent").html(result);
 
+          // show language in the upper right corner of code block
+          const pre = document.querySelectorAll("pre");
+          pre.forEach((item)=>{
+	          item.setAttribute("data-lang",item.children[0].classList[0].substr(9));
+          });
+
           // set word and char count
           $("#wordCount").text($(".wordCount").text() + ' words');
           $("#charCount").text($(".charCount").text() + ' characters');
@@ -77,7 +83,10 @@ function getContent(str, home = false, popHover = false) {
 
           document.getElementById("mdContent").innerHTML =
             document.getElementById("mdContent").innerHTML.replace(
-              /<h([\d])>([^<]+)<\/h([\d])>/gi,
+              // /<h([\d])>([^<]+)<\/h([\d])>/gi,
+              // support element enclosed in <h([\d])>, such as
+              // <h1><code>Code<code></h1>
+              /<h([\d])>(.*)<\/h([\d])>/gi,
               function (str, openLevel, titleText, closeLevel) {
 
                 if (openLevel != closeLevel) {
@@ -93,8 +102,9 @@ function getContent(str, home = false, popHover = false) {
                 level = parseInt(openLevel);
 
                 var anchor = titleText.replace(/ /g, "_");
-                toc += '<div class="tree-item-self is-clickable"><a href="#' + anchor + '">' + titleText
-                  + '</a></div>';
+                // toc += '<div class="tree-item-self is-clickable"><a href="#' + anchor + '">' + titleText
+                //   + '</a></div>';
+                toc += `<a href="#${anchor}"><div class="tree-item-self is-clickable">${titleText}</div></a>`;
 
                 return "<h" + openLevel + "><a name='" + anchor + "' >"
                   + "" + "</a>" + titleText + "</h" + closeLevel + ">";
@@ -1448,7 +1458,7 @@ $(document).ready(function () {
     $("#popUp").css("display", "none");
   });
 
-  // local Graph & Outline Swith
+  // local Graph & Outline Switch
   $('.clickable-icon.view-action[aria-label="Open outline"]').click(function (e) {
 
     $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
