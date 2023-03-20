@@ -57,6 +57,7 @@ function parseContent($requestFile) {
 	global $rootDir;
 	global $startDir;
 	global $lineBreaks;
+	global $allowedFileLinkTypes;
 
 
 	//$Parsedown = new ParsedownExtra();
@@ -83,15 +84,16 @@ function parseContent($requestFile) {
 	$mdpath = $path;
 	$path = $startDir . $path;
 
+	$linkFileTypes = implode( '|', $allowedFileLinkTypes);
 
 	// pdf links with Alias
 	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="'.$path .'/'.'\\2">\\3</a>';
-	$pattern = array('/(\!?\[\[)(.*?.pdf)\|(.*)(\]\])/');
+	$pattern = array('/(\!?\[\[)(.*?.(?:' . $linkFileTypes . '))\|(.*)(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 	
 	// pdf links without Alias
 	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="'.$path .'/'.'\\2">\\2</a>';
-	$pattern = array('/(\!?\[\[)(.*?.pdf)(\]\])/');
+	$pattern = array('/(\!?\[\[)(.*?.(?:' . $linkFileTypes . '))(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 
 	// img links
