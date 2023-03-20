@@ -35,7 +35,7 @@ if (empty($lineBreaks)) {
 $allowedFileLinkTypes = getenv('ALLOWED_FILE_LINK_TYPES');
 
 if (!$allowedFileLinkTypes) {
-	$allowedFileLinkTypes = ['pdf', 'docx', 'xlsx', 'pptx'];
+	$allowedFileLinkTypes = ['pdf'];
 } else {
 	$allowedFileLinkTypes = explode(",", $allowedFileLinkTypes);
 }
