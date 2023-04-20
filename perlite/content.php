@@ -96,7 +96,7 @@ function parseContent($requestFile) {
 
 	// img links
 	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\4" height="\\5" alt="image not found" src="'. $path .'/\\2\\3'.'"/></a></p>';
-	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)\|?(\d*)x?(\d*)(\]\])/');
+	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 
 	// handle internal site links
