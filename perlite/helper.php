@@ -400,8 +400,22 @@ function getfullGraph($rootDir)
 							if (strcmp($elementTitle, $source) == 0) {
 								$sourceId = $element['id'];
 							}
+							$edgeExists = false;
+
+							foreach ($graphEdges as $edge) {
+								if ($edge['from'] === $sourceId && $edge['to'] === $targetId) {
+									$edgeExists = true;
+									break;
+								}
+								if ($edge['to'] === $sourceId && $edge['from'] === $targetId) {
+									$edgeExists = true;
+									break;
+								}
+							}
 							if ($targetId !== -1 && $sourceId !== -1) {
-								array_push($graphEdges, ['from' => $sourceId, 'to' => $targetId]);
+								if (!edgeExists) {
+									array_push($graphEdges, ['from' => $sourceId, 'to' => $targetId]);
+								}
 								$targetId = -1;
 								$sourceId = -1;
 							}
