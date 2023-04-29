@@ -32,6 +32,14 @@ if (empty($lineBreaks)) {
 	$lineBreaks = filter_var($lineBreaks, FILTER_VALIDATE_BOOLEAN);
 }
 
+$allowedFileLinkTypes = getenv('ALLOWED_FILE_LINK_TYPES');
+
+if (!$allowedFileLinkTypes) {
+	$allowedFileLinkTypes = ['pdf'];
+} else {
+	$allowedFileLinkTypes = explode(",", $allowedFileLinkTypes);
+}
+
 $about = '.about';
 $index = 'README';
 
