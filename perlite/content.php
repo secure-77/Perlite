@@ -1,7 +1,7 @@
 <?php
 
 /*!
-  * Perlite v1.5.2 (https://github.com/secure-77/Perlite)
+  * Perlite v1.5.4 (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
@@ -186,8 +186,15 @@ function translateLink($pattern, $content, $path, $sameFolder) {
 			$refName = '#'.$refName;
 		}
 
+		$href = 'href="?link=';
+
+		# if internal heading reference
+		if (substr($linkName,0,1) == '#') {
+			$urlPath = '';
+			$href = 'href="';
+		}
 	
-		return '<a class="internal-link'.$popupClass.'" href="?link='.$urlPath.$refName.'">'. $linkName .'</a>'.$popUpIcon;
+		return '<a class="internal-link'.$popupClass.'"'.$href.$urlPath.$refName.'">'. $linkName .'</a>'.$popUpIcon;
 	}
 ,$content);
 }

@@ -11,6 +11,29 @@
 // define home file
 const homeFile = "README";
 
+// load default settings
+
+// disable pophovers
+if ($('#disablePopHovers').data('option') == true && localStorage.getItem("disablePopUp") === null) {
+
+  $('#disablePopUp').addClass('is-enabled')
+  localStorage.setItem('disablePopUp', 'true');
+
+}
+
+// show toc
+if ($('#showTOC').data('option') == true && localStorage.getItem("showTOC") === null) {
+
+  $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
+  $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'unset')
+
+  localStorage.setItem("showTOC","true")
+  $('#mynetwork').css('display', 'none')
+  $('#outline').css('display', 'unset')
+
+}
+
+
 
 // get markdown content
 function getContent(str, home = false, popHover = false) {
@@ -114,13 +137,13 @@ function getContent(str, home = false, popHover = false) {
 
             var path = $(this).find("img").attr("src");
             result = '<div class="modal-body imgModalBody"><img src="' + path + '" class="imagepreview"></div>';
-            $("div.modal-content").html(result);
+            $("#img-content").html(result);
             $(".modal").css("width", "unset");
             $(".modal").css("height", "unset");
             $(".modal").css("max-width", "100%");
             $(".modal").css("max-height", "100%");
-            $(".modal-title").text("Image preview");
-            $(".modal-container.mod-dim").css("display", "flex");
+            $(".img-modal-title").text("Image preview");
+            $("#img-modal").css("display", "flex");
 
           });
 
@@ -175,61 +198,67 @@ function getContent(str, home = false, popHover = false) {
 
           });
 
-          // on hover internal link
+          // popHover (on hover internal links)
+          target = $('.disablePopUp')
 
-          var currentMousePos = { x: -1, y: -1 };
-          $(document).mousemove(function (event) {
-            currentMousePos.x = event.pageX;
-            currentMousePos.y = event.pageY;
-          });
+          if (!target.hasClass('is-enabled')) {
 
-          stopThis = false;
-          // enter the hover box
-          $('.popover.hover-popover').mouseenter(function (e) {
-            stopThis = true
-            $('.popover.hover-popover').css('display', 'unset');
-          })
-          // leave the hover box
-          $('.popover.hover-popover').mouseleave(function (e) {
-            e.preventDefault();
+            var currentMousePos = { x: -1, y: -1 };
+            $(document).mousemove(function (event) {
+              currentMousePos.x = event.pageX;
+              currentMousePos.y = event.pageY;
+            });
 
-            hoverTimer = setTimeout(function () {
+            stopThis = false;
+            // enter the hover box
+            $('.popover.hover-popover').mouseenter(function (e) {
+              stopThis = true
+              $('.popover.hover-popover').css('display', 'unset');
+            })
+            // leave the hover box
+            $('.popover.hover-popover').mouseleave(function (e) {
+              e.preventDefault();
 
-              $('.popover.hover-popover').css('display', 'none');
-              stopThis = false;
+              hoverTimer = setTimeout(function () {
 
-            }, 500);
-          })
-
-          // leave the link
-          $('.internal-link').mouseleave(function (e) {
-            e.preventDefault();
-
-            hoverTimer = setTimeout(function () {
-
-              if (stopThis == false) {
                 $('.popover.hover-popover').css('display', 'none');
+                stopThis = false;
+
+              }, 500);
+            })
+
+            // leave the link
+            $('.internal-link').mouseleave(function (e) {
+              e.preventDefault();
+
+              hoverTimer = setTimeout(function () {
+
+                if (stopThis == false) {
+                  $('.popover.hover-popover').css('display', 'none');
+                }
+              }, 1200);
+            })
+
+            $('.internal-link').mouseenter(function (e) {
+              e.preventDefault();
+
+              // update position for hover element
+              $('.popover.hover-popover').css({ top: currentMousePos.y, left: currentMousePos.x });
+
+              const urlParams = new URLSearchParams(this.href.split('?')[1]);
+              if (urlParams.has('link')) {
+                var target = urlParams.get('link');
+                target = encodeURIComponent(target);
               }
-            }, 1200);
-          })
+              // get content of link
+              if (target) {
+                getContent(target, false, true)
+              }
 
-          $('.internal-link').mouseenter(function (e) {
-            e.preventDefault();
+            });
 
-            // update position for hover element
-            $('.popover.hover-popover').css({ top: currentMousePos.y, left: currentMousePos.x });
+          }
 
-            const urlParams = new URLSearchParams(this.href.split('?')[1]);
-            if (urlParams.has('link')) {
-              var target = urlParams.get('link');
-              target = encodeURIComponent(target);
-            }
-            // get content of link
-            if (target) {
-              getContent(target, false, true)
-            }
-
-          });
 
           //check setting if metadata is collapsed or not
           if ($('.metadataOption').hasClass('is-enabled')) {
@@ -363,6 +392,22 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
     interaction: {
       hover: true,
     },
+    layout: {
+      improvedLayout: true,
+      clusterThreshold: 10000,
+    },
+    physics: {
+      solver: 'forceAtlas2Based',
+      solver: 'barnesHut',
+      enabled: true,
+      stabilization: {
+        enabled: true,
+        iterations: 1000,
+        updateInterval: 10,
+        onlyDynamicEdges: false,
+        fit: true
+      }
+    },
     // configure: {
     //   enabled: true,
     //   filter: 'nodes,edges',
@@ -440,6 +485,27 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
     };
 
     network = new vis.Network(container_modal, data, options);
+
+    // show loading status
+    document.getElementById("loading-text").innerText = "loading graph: 0%";
+    document.getElementById("loading-text").style.display = "unset";
+
+    network.on("stabilizationProgress", function (params) {
+      var widthFactor = params.iterations / params.total;
+      document.getElementById("loading-text").innerText = "loading graph: " + Math.round(widthFactor * 100) + "%";
+    });
+
+    network.once("stabilizationIterationsDone", function () {
+      document.getElementById("loading-text").innerText = "loading graph: 100%";
+      // really clean the dom element
+      setTimeout(function () {
+        document.getElementById("loading-text").style.display = "none";
+      }, 500);
+    });
+
+
+
+
     //network.selectNodes([currId]);
     var node = network.body.nodes[currId];
     node.setOptions({
@@ -571,21 +637,21 @@ function isMobile() {
     $('.internal-link').unbind("mouseleave");
 
     //override click for internal-links to use popUp instead
-    if ( $('.popUpSetting').hasClass('is-enabled')) {
-    $('.internal-link').click(function (e) {
-      e.preventDefault();
-      const urlParams = new URLSearchParams(this.href.split('?')[1]);
-      if (urlParams.has('link')) {
-        var target = urlParams.get('link');
-        target = encodeURIComponent(target);
-      }
+    if ($('.popUpSetting').hasClass('is-enabled')) {
+      $('.internal-link').click(function (e) {
+        e.preventDefault();
+        const urlParams = new URLSearchParams(this.href.split('?')[1]);
+        if (urlParams.has('link')) {
+          var target = urlParams.get('link');
+          target = encodeURIComponent(target);
+        }
 
-      if (target) {
-        getContent(target, false, true)
-      }
-      $("#popUp").css("display", "flex");
-      $(".goToLink").html('<a href="' + this.href + '"> go to site</a><br><br>')
-    })
+        if (target) {
+          getContent(target, false, true)
+        }
+        $("#popUp").css("display", "flex");
+        $(".goToLink").html('<a href="' + this.href + '"> go to site</a><br><br>')
+      })
 
     }
   }
@@ -731,6 +797,14 @@ $(document).ready(function () {
 
   $('.slider.font-size').val(parseInt($('body').css('--font-text-size')));
 
+
+  // popHovers
+  if (localStorage.getItem('disablePopUp') === 'true') {
+    $('.disablePopUp').addClass('is-enabled')
+  } else if (localStorage.getItem('disablePopUp') === 'false') {
+    $('.disablePopUp').removeClass('is-enabled')
+  }
+
   // inline title
   if (localStorage.getItem('InlineTitle') === 'hide') {
     $('.inlineTitleOption').removeClass('is-enabled')
@@ -835,8 +909,6 @@ $(document).ready(function () {
     // load index page
     getContent("home", true);
   }
-
-
   // on search submit
   $('*[type="search"]').on('keypress', function (e) {
     if (e.which == 13) {
@@ -1059,6 +1131,7 @@ $(document).ready(function () {
 
   })
 
+
   // fill dropdown
   $('#themeDropdown').html(dropDownValues);
 
@@ -1150,6 +1223,23 @@ $(document).ready(function () {
     }
   });
 
+
+  // Disable PopHover Option
+  $('.disablePopUp').click(function (e) {
+    e.preventDefault();
+    target = $('.disablePopUp')
+
+    if (target.hasClass('is-enabled')) {
+      target.removeClass('is-enabled')
+      localStorage.setItem('disablePopUp', 'false');
+
+    } else {
+      target.addClass('is-enabled')
+      localStorage.setItem('disablePopUp', 'true');
+
+    }
+  });
+
   // Darkmode / Lightmode change 
   $('.darkModeOption').click(function (e) {
     e.preventDefault();
@@ -1171,21 +1261,21 @@ $(document).ready(function () {
     }
   });
 
-  // PopUp change
-    $('.popUpSetting').click(function (e) {
-      e.preventDefault();
-      target = $('.popUpSetting')
-  
-      if (target.hasClass('is-enabled')) {
-        target.removeClass('is-enabled')
-        localStorage.removeItem('popUpEnabled');     
-  
-      } else {
-        target.addClass('is-enabled')    
-        localStorage.setItem('popUpEnabled', 'true');
-  
-      }
-    });
+  // PopUp change (mobile only)
+  $('.popUpSetting').click(function (e) {
+    e.preventDefault();
+    target = $('.popUpSetting')
+
+    if (target.hasClass('is-enabled')) {
+      target.removeClass('is-enabled')
+      localStorage.removeItem('popUpEnabled');
+
+    } else {
+      target.addClass('is-enabled')
+      localStorage.setItem('popUpEnabled', 'true');
+
+    }
+  });
 
 
   // collapse Metadata Option
@@ -1209,6 +1299,18 @@ $(document).ready(function () {
       }
     }
   });
+
+
+  // show toc
+if (localStorage.getItem("showTOC") === 'true') {
+
+  $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
+  $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'unset')
+
+  $('#mynetwork').css('display', 'none')
+  $('#outline').css('display', 'unset')
+
+}
 
 
 
@@ -1446,14 +1548,16 @@ $(document).ready(function () {
     $("#settings").css("display", "none");
     $("#about").css("display", "none");
     $("#popUp").css("display", "none");
+    $("#img-modal").css("display", "none");
   });
 
-  // local Graph & Outline Swith
+  // local Graph & Toc (outline) Switch
   $('.clickable-icon.view-action[aria-label="Open outline"]').click(function (e) {
 
     $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
     $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'unset')
 
+    localStorage.setItem("showTOC","true")
     $('#mynetwork').css('display', 'none')
     $('#outline').css('display', 'unset')
   });
@@ -1463,6 +1567,7 @@ $(document).ready(function () {
     $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'unset')
     $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'none')
 
+    localStorage.setItem("showTOC","false")
     $('#mynetwork').css('display', 'unset')
     $('#outline').css('display', 'none')
   });

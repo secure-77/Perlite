@@ -4,7 +4,7 @@
 <?php
 
 /*!
-  * Version v1.5.3
+  * Version v1.5.4
 */
 
 include('helper.php');
@@ -30,7 +30,7 @@ $jsonGraphData = getfullGraph($rootDir);
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
     <link href=".styles/app.css" type="text/css" rel="stylesheet">
-    <?php echo loadThemes($rootDir); ?>
+    <?php echo loadSettings($rootDir); ?>
 
     <link id="highlight-js" rel="stylesheet" href=".styles/atom-one-dark.min.css">
     <link rel="stylesheet" href=".styles/perlite.css">
@@ -275,6 +275,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                     <div class="view-content" style="padding: 0px; overflow: hidden; position: relative;">
                                         <div id="graph_content" style="display: none">
                                             <div id="graph_all"></div>
+                                            <div id="loading-text" class="markdown-preview-view">0%</div>
                                             <div class="graph-controls is-close">
                                                 <div class="clickable-icon graph-controls-button mod-close" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-x">
                                                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -551,6 +552,7 @@ $jsonGraphData = getfullGraph($rootDir);
         <div id="settings" class="modal mod-settings">
             <div class="modal-close-button"></div>
             <div class="modal-title">Perlite Settings</div>
+            <div class="setting-item-description">Some settings need a page reload to take affect!</div>
             <div class="modal-content vertical-tabs-container">
                 <div class="vertical-tab-content-container">
                     <div class="vertical-tab-content">
@@ -640,6 +642,15 @@ $jsonGraphData = getfullGraph($rootDir);
                         </div>
                         <div class="setting-item mod-toggle">
                             <div class="setting-item-info">
+                                <div class="setting-item-name">Disable Pop Hovers</div>
+                                <div class="setting-item-description">Disable popups by hover</div>
+                            </div>
+                            <div class="setting-item-control">
+                                <div class="checkbox-container disablePopUp"><input type="checkbox" tabindex="0"></div>
+                            </div>
+                        </div>
+                        <div class="setting-item mod-toggle">
+                            <div class="setting-item-info">
                                 <div class="setting-item-name">Show inline title</div>
                                 <div class="setting-item-description">Displays the filename as an title inline with the
                                     file contents.</div>
@@ -657,6 +668,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                 <div class="checkbox-container metadataOption"><input type="checkbox" tabindex="0"></div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -686,8 +698,19 @@ $jsonGraphData = getfullGraph($rootDir);
         <div class="modal-bg" style="opacity: 0.85;"></div>
         <div class="modal">
             <div class="modal-close-button"></div>
-            <div class="popup-modal-title inline-title"></div><div class="goToLink"></div>
+            <div class="popup-modal-title inline-title"></div>
+            <div class="goToLink"></div>
             <div id='popUpContent' class="modal-content"></div>
+        </div>
+    </div>
+    <!-- img modal -->
+    <div id="img-modal" class="modal-container mod-dim" style="display: none">
+        <div class="modal-bg" style="opacity: 0.85;"></div>
+        <div class="modal">
+            <div class="modal-close-button"></div>
+            <div class="modal-title img-modal-title inline-title"></div>
+            <div class="goToLink"></div>
+            <div id='img-content' class="modal-content"></div>
         </div>
     </div>
 

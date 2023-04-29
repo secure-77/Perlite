@@ -1,3 +1,16 @@
+## 1.5.4
+- fixed img max width
+- fixed image modal (issue #58)
+- fixed double links to nodes (issue #45) thanks to @catrone3
+- added svg format, thanks to @lennartbrandin
+- added variable for allowed file link types, thanks to @dbohn
+- changed the gprah render solver from barnesHut to forceAtlas2Based to improve perfomance (issue #66)
+- added graph loading text
+- fixed heading references (issue #74)
+- added option and default behavior to disable Pop Hovers
+- added default behavior to show table of content instead of local graph
+
+
 ## 1.5.3
 - support file links with exclamation mark and aliases (issue #55)
 - support image resizing (issue #54)

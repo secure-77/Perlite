@@ -46,6 +46,12 @@ img {
 
 
 
+#loading-text {
+  position: absolute;
+  top: 8px;
+}
+
+
 /* --------------- */
 /* Mobile / Responive Settings */
 

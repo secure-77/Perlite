@@ -1,7 +1,7 @@
 <?php
 
 /*!
-  * Perlite v1.5.3 (https://github.com/secure-77/Perlite)
+  * Perlite v1.5.4 (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
@@ -15,7 +15,7 @@ $rootDir = getenv('NOTES_PATH');
 
 
 if (empty($rootDir)) {
-	
+
 	# replace with your Vault name
 	$rootDir = 'Demo';
 }
@@ -23,22 +23,40 @@ if (empty($rootDir)) {
 
 $vaultName = $rootDir;
 
+// default settings and variables
+
 $hideFolders = getenv('HIDE_FOLDERS');
 $lineBreaks = getenv('LINE_BREAKS');
 
+// line breaks
 if (empty($lineBreaks)) {
 	$lineBreaks = true;
 } else {
 	$lineBreaks = filter_var($lineBreaks, FILTER_VALIDATE_BOOLEAN);
 }
 
-$allowedFileLinkTypes = getenv('ALLOWED_FILE_LINK_TYPES');
 
+// file types
+$allowedFileLinkTypes = getenv('ALLOWED_FILE_LINK_TYPES');
 if (!$allowedFileLinkTypes) {
 	$allowedFileLinkTypes = ['pdf'];
 } else {
 	$allowedFileLinkTypes = explode(",", $allowedFileLinkTypes);
 }
+
+// disable PopHovers
+$disablePopHovers = getenv('DISABLE_POP_HOVER');
+if (empty($disablePopHovers)) {
+	$disablePopHovers = "false";
+}
+
+// swho TOC instead of graph
+$showTOC = getenv('SHOW_TOC');
+if (empty($showTOC)) {
+	$showTOC = "false";
+}
+
+
 
 $about = '.about';
 $index = 'README';
@@ -68,7 +86,7 @@ if (!strcmp($rootDir, "")) {
 	$vaultName = mb_basename($rootDir);
 	$startDir = "";
 } else {
-	$startDir = $rootDir;	
+	$startDir = $rootDir;
 }
 
 // custom sort function to prefer underscore
@@ -395,7 +413,6 @@ function getfullGraph($rootDir)
 							$target = $tempPath;
 							$tempPath = null;
 						}
-						
 					}
 
 					if ($source !== '' && $target !== '') {
@@ -461,17 +478,18 @@ function checkArray($requestNode)
 }
 
 
-function loadThemes($rootDir)
+function loadSettings($rootDir)
 {
 
-	// get themes
+	global $disablePopHovers;
+	global $showTOC;
 
+
+	// get themes
 	$themes = "";
 	$folders = glob($rootDir . '/.obsidian/themes/*');
 	$appearanceFile = $rootDir . '/.obsidian/appearance.json';
 	$defaultTheme = "";
-
-
 
 	if (is_file($appearanceFile)) {
 		$jsonData = file_get_contents($appearanceFile);
@@ -487,8 +505,6 @@ function loadThemes($rootDir)
 		}
 	}
 
-
-
 	// iterate the folders 
 	foreach ($folders as $folder) {
 		if (is_dir($folder)) {
@@ -499,13 +515,18 @@ function loadThemes($rootDir)
 
 			if ($defaultTheme === $folderName) {
 
-				$themes .= '<link data-themename="'.$folderName.'" class="theme" id="'.$folderClean.'" href="' . $themePath . '" type="text/css" rel="stylesheet">';
+				$themes .= '<link data-themename="' . $folderName . '" class="theme" id="' . $folderClean . '" href="' . $themePath . '" type="text/css" rel="stylesheet">';
 			} else {
 
-				$themes .= '<link data-themename="'.$folderName.'" class="theme" id="'.$folderClean.'" href="' . $themePath . '" type="text/css" rel="stylesheet" disabled="disabled">';
+				$themes .= '<link data-themename="' . $folderName . '" class="theme" id="' . $folderClean . '" href="' . $themePath . '" type="text/css" rel="stylesheet" disabled="disabled">';
 			}
 		}
 	}
 
-	return $themes;
+	// default settings
+	$defaultSettings = '<link id="disablePopHovers" data-option="' . $disablePopHovers . '"</link>';
+	$defaultSettings .= '<link id="showTOC" data-option="' . $showTOC . '"</link>';
+
+
+	return $themes . $defaultSettings;
 }

@@ -9,6 +9,9 @@ services:
       - NOTES_PATH=Demo
       - HIDE_FOLDERS=docs,private,trash
       - LINE_BREAKS=true
+      - ALLOWED_FILE_LINK_TYPES=pdf
+      - DISABLE_POP_HOVER=false
+      - SHOW_TOC=false
     volumes:
       - ./perlite/Demo:/var/www/perlite/Demo:ro
 

@@ -1,7 +1,7 @@
 <?php
 
 /*!
-  * Perlite v1.5.3 (https://github.com/secure-77/Perlite)
+  * Perlite v1.5.4 (https://github.com/secure-77/Perlite)
   * Author: sec77 & Toaa (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
@@ -445,6 +445,11 @@ class PerliteParsedown extends Parsedown
             return;
         }
 
+        # ignore tags in links
+        if (str_ends_with($Excerpt['context'], ']')) {
+            return;
+        }
+
         if (preg_match("/(^| )#[\w'-\/]+/ui", $Excerpt['context'], $matches, PREG_OFFSET_CAPTURE)) {
             $tag = $matches[0][0];
 
@@ -494,7 +499,7 @@ class PerliteParsedown extends Parsedown
         }
     }
 
-    # handle external Urls
+    # handle external obsidian Urls
     protected function inlineLink($Excerpt)
     {
         $Element = array(
