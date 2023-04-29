@@ -413,7 +413,7 @@ function getfullGraph($rootDir)
 								}
 							}
 							if ($targetId !== -1 && $sourceId !== -1) {
-								if (!edgeExists) {
+								if (!$edgeExists) {
 									array_push($graphEdges, ['from' => $sourceId, 'to' => $targetId]);
 								}
 								$targetId = -1;
