@@ -34,6 +34,7 @@
 
 img {
   display: initial !important;
+  max-width: 100%;
 }
 
 .popup-icon {
