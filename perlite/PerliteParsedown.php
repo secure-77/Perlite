@@ -446,7 +446,11 @@ class PerliteParsedown extends Parsedown
         }
 
         # ignore tags in links
-        if (str_ends_with($Excerpt['context'], ']')) {
+        $len = strlen($Excerpt['context']);
+        if ($len == 0) {
+            return;
+        }
+        if (substr($Excerpt['context'],-$len) === ']') {
             return;
         }
 
