@@ -1544,11 +1544,20 @@ if (localStorage.getItem("showTOC") === 'true') {
   });
 
   // close modal
+  function hideElements(elementIds) {
+    elementIds.forEach(function (id) {
+      $("#" + id).css("display", "none");
+    });
+  }
+
   $('.modal-close-button').click(function (e) {
-    $("#settings").css("display", "none");
-    $("#about").css("display", "none");
-    $("#popUp").css("display", "none");
-    $("#img-modal").css("display", "none");
+    hideElements(["settings", "about", "popUp", "img-modal"]);
+  });
+
+  $(document).keydown(function (e) {
+    if (e.key === "Escape") {
+      hideElements(["settings", "about", "popUp", "img-modal"]);
+    }
   });
 
   // local Graph & Toc (outline) Switch
