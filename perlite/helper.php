@@ -56,10 +56,15 @@ if (empty($showTOC)) {
 	$showTOC = "false";
 }
 
+// Set home page from environment variable
+$index = getenv('HOME_FILE');
+if (empty($index)) {
+	$index = "README";
+}
+
 
 
 $about = '.about';
-$index = 'README';
 
 // add about and index to allowed files
 $aboutpath = getFileInfos($rootDir . '/' . $about)[0];
@@ -483,6 +488,7 @@ function loadSettings($rootDir)
 
 	global $disablePopHovers;
 	global $showTOC;
+	global $index;
 
 
 	// get themes
@@ -526,6 +532,7 @@ function loadSettings($rootDir)
 	// default settings
 	$defaultSettings = '<link id="disablePopHovers" data-option="' . $disablePopHovers . '"</link>';
 	$defaultSettings .= '<link id="showTOC" data-option="' . $showTOC . '"</link>';
+	$defaultSettings .= '<link id="index" data-option="' . $index . '"</link>';
 
 
 	return $themes . $defaultSettings;
