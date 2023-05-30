@@ -11,11 +11,9 @@
 
 // define home file
 var homeFile = "README";
-if ($('#index').data('option') && localStorage.getItem("index") === null) {
+if ($('#index').data('option')) {
 
   homeFile = $('#index').data('option');
-  localStorage.setItem('index', homeFile);
-
 }
 
 // disable pophovers
