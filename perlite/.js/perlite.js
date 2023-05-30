@@ -7,11 +7,16 @@
 */
 
 
+// load default settings
 
 // define home file
-const homeFile = "README";
+var homeFile = "README";
+if ($('#index').data('option') && localStorage.getItem("index") === null) {
 
-// load default settings
+  homeFile = $('#index').data('option');
+  localStorage.setItem('index', homeFile);
+
+}
 
 // disable pophovers
 if ($('#disablePopHovers').data('option') == true && localStorage.getItem("disablePopUp") === null) {
