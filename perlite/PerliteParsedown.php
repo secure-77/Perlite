@@ -1,12 +1,14 @@
 <?php
 
 /*!
-  * Perlite v1.5.4 (https://github.com/secure-77/Perlite)
-  * Author: sec77 & Toaa (https://secure77.de)
+  * Perlite v1.5.5 (https://github.com/secure-77/Perlite)
+  * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
-include('Parsedown.php');
+//require __DIR__ . '/vendor/autoload.php';
+require 'Parsedown.php';
+
 
 class PerliteParsedown extends Parsedown
 {
@@ -450,7 +452,7 @@ class PerliteParsedown extends Parsedown
         if ($len == 0) {
             return;
         }
-        if (substr($Excerpt['context'],-$len) === ']') {
+        if (trim(substr($Excerpt['context'],-2)) === ']') {
             return;
         }
 

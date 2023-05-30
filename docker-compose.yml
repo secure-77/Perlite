@@ -12,6 +12,8 @@ services:
       - ALLOWED_FILE_LINK_TYPES=pdf
       - DISABLE_POP_HOVER=false
       - SHOW_TOC=false
+      - HOME_FILE=README
+      - FONT_SIZE=15
     volumes:
       - ./perlite/Demo:/var/www/perlite/Demo:ro
 

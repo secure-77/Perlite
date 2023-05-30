@@ -1,6 +1,8 @@
-Link to other Markdown file: [[markdown-sample2]]
-and Link to other Markdown file with a custom linke name: [[markdown-sample2|Custom Link Name]]
+Link to other Markdown file: [[markdown & sample2]]
+and Link to other Markdown file with a custom linke name: [[markdown & sample2|Custom Link Name]]
 Link to PDF: ![[pdf-test.pdf]]
+
+Link to same document heading [[#Paragraphs]] 
 
 ## LaTeX
 

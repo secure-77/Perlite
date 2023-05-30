@@ -4,10 +4,10 @@
 <?php
 
 /*!
-  * Version v1.5.4
+  * Version v1.5.5
 */
 
-include('helper.php');
+require 'helper.php';
 
 $title = 'Perlite';
 $menu = menu($rootDir);
@@ -34,12 +34,11 @@ $jsonGraphData = getfullGraph($rootDir);
 
     <link id="highlight-js" rel="stylesheet" href=".styles/atom-one-dark.min.css">
     <link rel="stylesheet" href=".styles/perlite.css">
-    <link rel="stylesheet" href=".styles/vis.min.css" />
+    <link rel="stylesheet" href=".styles/vis-network.min.css" />
     <link rel="stylesheet" href=".styles/katex.min.css">
 
-    <script src=".js/jquery-3.6.1.min.js"></script>
+    <script src=".js/jquery.min.js"></script>
     <script src=".js/highlight.min.js"></script>
-    <script src=".js/bootstrap.bundle.min.js"></script>
     <script src=".js/vis-network.min.js"></script>
     <script src=".js/katex.min.js"></script>
     <script src=".js/auto-render.min.js"></script>
@@ -48,7 +47,7 @@ $jsonGraphData = getfullGraph($rootDir);
 
 </head>
 
-<body class="theme-dark mod-windows is-frameless is-hidden-frameless obsidian-app show-inline-title show-view-header is-maximized" style="--zoom-factor:1; --font-text-size:15px;">
+<body class="theme-dark mod-windows is-frameless is-hidden-frameless obsidian-app show-inline-title show-view-header is-maximized" style="--zoom-factor:1; --font-text-size: <?php echo $font_size; ?>px;">
     <title><?php echo $title ?></title>
 
     <div class="titlebar">
@@ -172,13 +171,13 @@ $jsonGraphData = getfullGraph($rootDir);
                                         </div>
                                     </div>
                                     <div class="nav-files-container node-insert-event" style="position: relative;">
-                                        <div class="nav-folder mod-root">
-                                            <div class="nav-folder-title" data-path="/">
-                                                <div class="nav-folder-collapse-indicator collapse-icon"></div>
-                                                <div class="nav-folder-title-content"><?php echo $vaultName ?></div>
+                                        <div class="tree-item nav-folder mod-root">
+                                            <div class="tree-item-self nav-folder-title" data-path="/">
+                                                <!-- <div class="nav-folder-collapse-indicator collapse-icon"></div> -->
+                                                <div class="tree-item-inner nav-folder-title-content"><?php echo $vaultName ?></div>
                                             </div>
-                                            <div class="nav-folder-children">
-                                                <div style="width: 612px; height: 0.1px; margin-bottom: 0px;"></div>
+                                            <div class="tree-item-children nav-folder-children">
+                                                <div style="width: 276px; height: 0.1px; margin-bottom: 0px;"></div>
                                                 <?php echo $menu ?>
                                             </div>
                                         </div>
@@ -382,41 +381,42 @@ $jsonGraphData = getfullGraph($rootDir);
                                         </div>
                                         <div class="markdown-reading-view" style="width: 100%; height: 100%; ">
                                             <div class="markdown-preview-view markdown-rendered node-insert-event allow-fold-headings show-indentation-guide allow-fold-lists" style="tab-size: 4;">
-                                                <div class="markdown-preview-pusher" style="width: 1px; height: 0.1px; margin-bottom: 0px;"></div>
-                                                <div class="inline-title" tabindex="-1" enterkeyhint="done"></div>
-                                                <div id="mdContent"></div>
-                                                <div class="graph-controls is-close">
-                                                    <div class="clickable-icon graph-controls-button mod-close" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-x">
-                                                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                                                        </svg></div>
-                                                    <div class="clickable-icon graph-controls-button mod-open" aria-label="Open graph settings"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-settings">
-                                                            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
-                                                            <circle cx="12" cy="12" r="3"></circle>
-                                                        </svg></div>
-                                                    <div class="clickable-icon graph-controls-button mod-reset" aria-label="Restore text settings"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-rotate-ccw">
-                                                            <path d="M3 2v6h6"></path>
-                                                            <path d="M3 13a9 9 0 1 0 3-7.7L3 8"></path>
-                                                        </svg></div>
-                                                    <div class="tree-item graph-control-section mod-display">
-                                                        <div class="tree-item-self">
-                                                            <div class="tree-item-inner">
-                                                                <header class="graph-control-section-header">Display</header>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tree-item-children">
-                                                            <div class="setting-item mod-slider">
-                                                                <div class="setting-item-info">
-                                                                    <div class="setting-item-name">Font size</div>
-                                                                    <div class="setting-item-description"></div>
+                                                <div class="markdown-preview-sizer markdown-preview-section" style="padding-bottom: 200px; min-height: 500px;">
+                                                    <div class="markdown-preview-pusher" style="width: 1px; height: 0.1px; margin-bottom: 0px;"></div>
+                                                    <div class="inline-title" tabindex="-1" enterkeyhint="done"></div>
+                                                    <div id="mdContent"></div>
+                                                    <div class="graph-controls is-close">
+                                                        <div class="clickable-icon graph-controls-button mod-close" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-x">
+                                                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                            </svg></div>
+                                                        <div class="clickable-icon graph-controls-button mod-open" aria-label="Open graph settings"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-settings">
+                                                                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                                                                <circle cx="12" cy="12" r="3"></circle>
+                                                            </svg></div>
+                                                        <div class="clickable-icon graph-controls-button mod-reset" aria-label="Restore text settings"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-rotate-ccw">
+                                                                <path d="M3 2v6h6"></path>
+                                                                <path d="M3 13a9 9 0 1 0 3-7.7L3 8"></path>
+                                                            </svg></div>
+                                                        <div class="tree-item graph-control-section mod-display">
+                                                            <div class="tree-item-self">
+                                                                <div class="tree-item-inner">
+                                                                    <header class="graph-control-section-header">Display</header>
                                                                 </div>
-                                                                <div class="setting-item-control"><input class="slider font-size" type="range" min="10" max="30" step="1"></div>
                                                             </div>
+                                                            <div class="tree-item-children">
+                                                                <div class="setting-item mod-slider">
+                                                                    <div class="setting-item-info">
+                                                                        <div class="setting-item-name">Font size</div>
+                                                                        <div class="setting-item-description"></div>
+                                                                    </div>
+                                                                    <div class="setting-item-control"><input class="slider font-size" type="range" min="10" max="30" step="1"></div>
+                                                                </div>
 
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>

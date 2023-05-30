@@ -1,12 +1,12 @@
 <?php
 
 /*!
-  * Perlite v1.5.4 (https://github.com/secure-77/Perlite)
+  * Perlite v1.5.5 (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
-include('PerliteParsedown.php');
+require 'PerliteParsedown.php';
 
 
 $avFiles = array();
@@ -50,7 +50,7 @@ if (empty($disablePopHovers)) {
 	$disablePopHovers = "false";
 }
 
-// swho TOC instead of graph
+// show TOC instead of graph
 $showTOC = getenv('SHOW_TOC');
 if (empty($showTOC)) {
 	$showTOC = "false";
@@ -62,6 +62,11 @@ if (empty($index)) {
 	$index = "README";
 }
 
+// set default font size
+$font_size = getenv('FONT_SIZE');
+if (empty($font_size)) {
+	$font_size = "15";
+}
 
 
 $about = '.about';
@@ -129,16 +134,14 @@ function menu($dir, $folder = '')
 
 
 				$html .= '
-				<div class="nav-folder is-collapsed">
-					<div class="nav-folder-title" data-bs-toggle="collapse" data-bs-target="#' . $folderId . '-collapse" aria-expanded="false" onClick="toggleNavFolder(event);">
-						<div class="nav-folder-collapse-indicator collapse-icon">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle">
-								<path d="M3 8L12 17L21 8"></path>
-							</svg>
+				<div class="tree-item nav-folder is-collapsed">
+					<div class="tree-item-self is-clickable mod-collapsible nav-folder-title" data-bs-toggle="collapse" data-bs-target="#' . $folderId . '-collapse" aria-expanded="false" onClick="toggleNavFolder(event);" style="margin-left: 0px !important; padding-left: 24px !important;">
+						<div class="tree-item-icon collapse-icon nav-folder-collapse-indicator is-collapsed">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg>
 						</div>
-						<div class="nav-folder-title-content">' . $folderName . '</div>
+						<div class="tree-item-inner nav-folder-title-content">' . $folderName . '</div>
 					</div>
-					<div class="nav-folder-children collapse" id="' . $folderId . '-collapse" style="">
+					<div class="tree-item-children nav-folder-children collapse" id="' . $folderId . '-collapse" style="">
 						<div style="width: 591px; height: 0.1px; margin-bottom: 0px;"></div>';
 				$html .= menu($file, $folder . '/');
 				$html .= '</div></div>';
@@ -164,7 +167,7 @@ function menu($dir, $folder = '')
 
 
 			$html .= '
-			<div class="nav-file">
+			<div class="tree-item nav-file">
 				<div class="nav-file-title perlite-link" onclick=getContent("' . $pathClean . '"); id="' . $pathID . '"">
 					<div class="nav-file-title-content">' . $mdFile . '</div>
 				</div>

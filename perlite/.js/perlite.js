@@ -1,4 +1,4 @@
-/// <reference path="./jquery-3.6.1.min.js" />
+/// <reference path="jquery.min.js" />
 
 /*!
   * Perlite (https://github.com/secure-77/Perlite)
@@ -350,8 +350,8 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
   }
 
 
-  var visNodes = document.getElementById('allGraphNodes').innerHTML;
-  var visEdges = document.getElementById('allGraphEdges').innerHTML;
+  var visNodes = document.getElementById('allGraphNodes').textContent;
+  var visEdges = document.getElementById('allGraphEdges').textContent;
 
   var jsonNodes = JSON.parse(visNodes);
   var jsonEdges = JSON.parse(visEdges);
@@ -562,8 +562,6 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
         for (const x in jsonNodes) {
           if (jsonEdges[y]['to'] == jsonNodes[x]['id']) {
             if (!idExists(jsonNodes[x]['id'])) {
-              jsonNodes[x]['label'] = (jsonNodes[x]['label']).replace('&amp;', '&')
-              jsonNodes[x]['title'] = (jsonNodes[x]['title']).replace('&amp;', '&')
               myNodes.push(jsonNodes[x])
             }
             break;
@@ -731,26 +729,44 @@ function toggleSearchEntry(e) {
 
 };
 
-// nav menu stuff
+// nav menu collapse functions
 function toggleNavFolder(e) {
   el = $(e.target);
 
-  if (el.hasClass('nav-folder-title')) {
+  if (el.hasClass('nav-folder-title-content')) {
+    elIcon = el.prev()
     el = el.parent()
-  } else if (el.hasClass('nav-folder-collapse-indicator collapse-icon') || el.hasClass('nav-folder-title-content')) {
-    el = el.parent().parent()
+    el = el.next(el)
+  } else if (el.hasClass('collapse-icon')) {
+    elIcon = el
+    el = el.parent()
+    el = el.next(el)
+  } else if (el.hasClass('mod-collapsible')) {
+    elIcon = el.children()[0]
+    elIcon = $(elIcon)
+    el = el.next(el)
   } else if (el.hasClass('svg-icon right-triangle')) {
-    el = el.parent().parent().parent()
-  } else {
-    return
+    elIcon = el.parent()
+    el = el.parent().parent()
+    el = el.next(el)
+
   }
 
-  if (el.hasClass('is-collapsed')) {
-    el.removeClass('is-collapsed');
+  if (elIcon.hasClass('is-collapsed')) {
+    elIcon.removeClass('is-collapsed');
 
   } else {
-    el.addClass('is-collapsed');
+    elIcon.addClass('is-collapsed');
   }
+
+  if (el.hasClass('collapse')) {
+    el.removeClass('collapse');
+
+  } else {
+    el.addClass('collapse');
+  }
+
+  return
 };
 
 function openNavMenu(target, openAll = false) {
@@ -764,8 +780,10 @@ function openNavMenu(target, openAll = false) {
   var next = $('#' + navId).parent().closest('.collapse');
 
   do {
-    next.collapse('show');
-    next.parent().removeClass('is-collapsed')
+    next.removeClass('collapse');
+    elIcon = next.prev().children()[0]
+    elIcon = $(elIcon)
+    elIcon.removeClass('is-collapsed');
     next = next.parent().closest('.collapse');
   }
   while (next.length != 0);
@@ -1031,8 +1049,9 @@ $(document).ready(function () {
     e.preventDefault();
     target = $(e.target)
 
-    $('.nav-folder-children.collapse').collapse('show');
+    $('.nav-folder-children.collapse').removeClass('collapse')
     $('.nav-folder').removeClass('is-collapsed');
+    $('.collapse-icon').removeClass('is-collapsed');
     $('.clickable-icon.nav-action-button[aria-label="Collapse all"]').css('display', 'unset');
     target.css('display', 'none');
 
@@ -1044,7 +1063,16 @@ $(document).ready(function () {
     e.preventDefault();
     target = $(e.target)
 
-    $('.nav-folder-children').collapse('hide');
+    parents = $('.nav-folder-children').parent()
+
+    parents.each(function(index, value){
+      parent = $(this)
+      if (!$(this).hasClass('mod-root')) {
+        parent.find('.nav-folder-children').addClass('collapse');
+        parent.find('.collapse-icon').addClass('is-collapsed');
+      }
+    })
+
     $('.nav-folder').addClass('is-collapsed');
     $('.clickable-icon.nav-action-button[aria-label="Expand all"]').css('display', 'unset');
     target.css('display', 'none');

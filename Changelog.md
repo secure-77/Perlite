@@ -1,3 +1,21 @@
+## 1.5.5
+- updated some html structure to fit the latest app.css and theme styles
+- updated app.css
+- removed Bootstrap dependency
+- fixed heading references (issue #74)
+- fixed ampersand problem in global graph (issue #47)
+- added default font size environment variable (issue #80)
+- added escape key function for modal close button (PR #82) thank to @stellarix
+- added homepage environment variable (PR #84) thanks to @NotGovernor
+- added composer
+- added build script
+- updated highlight.js to 11.7.0
+- updated jquery to 3.7.0
+- updated mermaid to 8.12.1
+- updated vis-network to 9.1.6
+
+
+
 ## 1.5.4
 - fixed img max width
 - fixed image modal (issue #58)
@@ -6,7 +24,6 @@
 - added variable for allowed file link types, thanks to @dbohn
 - changed the gprah render solver from barnesHut to forceAtlas2Based to improve perfomance (issue #66)
 - added graph loading text
-- fixed heading references (issue #74)
 - added option and default behavior to disable Pop Hovers
 - added default behavior to show table of content instead of local graph
 

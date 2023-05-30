@@ -11,6 +11,8 @@ services:
       - ALLOWED_FILE_LINK_TYPES=pdf
       - DISABLE_POP_HOVER=true
       - SHOW_TOC=true
+      - HOME_FILE=README
+      - FONT_SIZE=15
     volumes:
       - ./perlite:/var/www/perlite
       - ./perlite/Demo:/var/www/perlite/Demo:ro
@@ -21,7 +23,7 @@ services:
     image: sec77/perlite_web:stable
     container_name: perlite_web-dev      
     ports:
-      - 80:80 
+      - 8090:80 
     volumes:
       - ./perlite:/var/www/perlite
       - ./perlite/Demo:/var/www/perlite/Demo:ro   
