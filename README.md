@@ -56,8 +56,8 @@ Just put the content of the perlite directory in your web root directory, your n
 
 
 ### Requirements
-- Web server, tested with ![coverage](https://img.shields.io/badge/NGINX-1.22.1-blue)
-- Php-fpm, tested with ![coverage](https://img.shields.io/badge/PHP-7.4.30-green) and ![coverage](https://img.shields.io/badge/PHP-8.1.11-green)
+- Web server, tested with ![coverage](https://img.shields.io/badge/NGINX-1.24.0-blue)
+- Php-fpm, tested with ![coverage](https://img.shields.io/badge/PHP-7.4.30-green) and ![coverage](https://img.shields.io/badge/PHP-8.2.6-green)
 other webservers may work..
 
 Please make sure you read also the [required settings](https://github.com/secure-77/Perlite/wiki/03---Perlite-Settings#required-settings)
