@@ -74,7 +74,7 @@ Please make sure you read also the [required settings](https://github.com/secure
 - [![coverage](https://img.shields.io/badge/Parsedown-1.7.4-lightgrey)](https://github.com/erusev/parsedown)
 - [![coverage](https://img.shields.io/badge/jQuery-3.7.0-lightblue)](https://jquery.com/)
 - [![coverage](https://img.shields.io/badge/Highlight.js-11.7.0-green)](https://highlightjs.org/)
-- [![coverage](https://img.shields.io/badge/vis-network-9.1.6-yellow)](https://visjs.org/)
+- [![coverage](https://img.shields.io/badge/vis.network-9.1.6-yellow)](https://visjs.org/)
 - [![coverage](https://img.shields.io/badge/KaTeX-0.16.4-red)](https://katex.org/)
 - [![coverage](https://img.shields.io/badge/Mermaid-8.12.1-orange)](https://mermaid-js.github.io/mermaid/)
 
