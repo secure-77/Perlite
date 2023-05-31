@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  perlite:
+    image: notgovernor/perlite:latest
+    container_name: perlite
+    restart: unless-stopped
+    environment:
+      - NOTES_PATH=Demo
+      - HIDE_FOLDERS=docs,private,trash
+      - LINE_BREAKS=true
+      - ALLOWED_FILE_LINK_TYPES=pdf
+      - DISABLE_POP_HOVER=false
+      - SHOW_TOC=false
+      - HOME_FILE=README
+      - FONT_SIZE=15
+    volumes:
+      - ./perlite/Demo:/var/www/perlite/Demo:ro
+
+  web:
+    build:
+        context: ./web
+    image: sec77/perlite_web:stable
+    container_name: perlite_web
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes_from: 
+      - perlite       
+    depends_on:
+      - perlite
+
