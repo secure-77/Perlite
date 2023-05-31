@@ -1,8 +1,13 @@
+## 1.5.6
+- fixed heading references (issue #74)
+- added safemode environment variable (PR #88) thanks to @NotGovernor
+- added default side panel size related of screen size (issue #85)
+
+
 ## 1.5.5
 - updated some html structure to fit the latest app.css and theme styles
 - updated app.css
 - removed Bootstrap dependency
-- fixed heading references (issue #74)
 - fixed ampersand problem in global graph (issue #47)
 - added default font size environment variable (issue #80)
 - added escape key function for modal close button (PR #82) thank to @stellarix

@@ -890,10 +890,14 @@ $(document).ready(function () {
   // panel sizes
   if (localStorage.getItem('leftSizePanel')) {
     $('.workspace-split.mod-horizontal.mod-left-split').css("width", localStorage.getItem('leftSizePanel'))
-  };
+  } else {
+    $('.workspace-split.mod-horizontal.mod-left-split').css("width", window.innerWidth / 6)
+  }
 
   if (localStorage.getItem('rightSizePanel')) {
     $('.workspace-split.mod-horizontal.mod-right-split').css("width", localStorage.getItem('rightSizePanel'))
+  } else {
+    $('.workspace-split.mod-horizontal.mod-right-split').css("width", window.innerWidth / 6)
   };
 
 

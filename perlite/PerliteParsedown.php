@@ -452,7 +452,7 @@ class PerliteParsedown extends Parsedown
         if ($len == 0) {
             return;
         }
-        if (trim(substr($Excerpt['context'],-2)) === ']') {
+        if (substr(trim($Excerpt['context']),-1) === ']') {
             return;
         }
 

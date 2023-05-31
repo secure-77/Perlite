@@ -13,6 +13,7 @@ services:
       - SHOW_TOC=true
       - HOME_FILE=README
       - FONT_SIZE=15
+      - HTML_SAFE_MODE=true
     volumes:
       - ./perlite:/var/www/perlite
       - ./perlite/Demo:/var/www/perlite/Demo:ro
