@@ -58,11 +58,12 @@ function parseContent($requestFile) {
 	global $startDir;
 	global $lineBreaks;
 	global $allowedFileLinkTypes;
+	global $htmlSafeMode;
 
 
 	//$Parsedown = new ParsedownExtra();
 	$Parsedown = new PerliteParsedown();
-	$Parsedown->setSafeMode(true);
+	$Parsedown->setSafeMode($htmlSafeMode);
 	$Parsedown->setBreaksEnabled($lineBreaks);
 	$cleanFile = '';
 
