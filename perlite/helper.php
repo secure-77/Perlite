@@ -68,6 +68,14 @@ if (empty($font_size)) {
 	$font_size = "15";
 }
 
+// Set safe mode from environment variable
+$htmlSafeMode = getenv('HTML_SAFE_MODE');
+if (empty($htmlSafeMode)) {
+	$htmlSafeMode = true;
+} else {
+	$htmlSafeMode = filter_var($htmlSafeMode, FILTER_VALIDATE_BOOLEAN);
+}
+
 
 $about = '.about';
 
