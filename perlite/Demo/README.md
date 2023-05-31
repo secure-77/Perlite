@@ -70,4 +70,7 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 [Wiki](https://en.wikipedia.org/wiki/Perlite):
 *Perlite is an amorphous volcanic glass ... typically formed by the hydration of obsidian.*
 
+## Safe Mode Test
+You should be very cautious about disabling safe mode. If safe mode is **OFF** the following text will be red, if safe mode is **ON** you should see unrendered HTML below.
 
+<div style="text-align: center; color: red;">Red if Unsafe</div>
