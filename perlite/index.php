@@ -110,7 +110,7 @@ $jsonGraphData = getfullGraph($rootDir);
                             </svg></div>
                     </div>
                 </div>
-                <div class="workspace-split mod-horizontal mod-left-split" style="width: 450px;">
+                <div class="workspace-split mod-horizontal mod-left-split" style="width: 230px;">
                     <hr class="workspace-leaf-resize-handle left-dock">
                     <div class="workspace-tabs mod-top mod-top-left-space">
                         <hr class="workspace-leaf-resize-handle">
@@ -425,7 +425,7 @@ $jsonGraphData = getfullGraph($rootDir);
                         </div>
                     </div>
                 </div>
-                <div class="workspace-split mod-horizontal mod-right-split" style="width: 450px;">
+                <div class="workspace-split mod-horizontal mod-right-split" style="width: 280px;">
                     <hr class="workspace-leaf-resize-handle right-dock">
                     <div class="workspace-tabs mod-top mod-top-right-space">
                         <hr class="workspace-leaf-resize-handle">

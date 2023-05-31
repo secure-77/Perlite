@@ -1230,8 +1230,8 @@ $(document).ready(function () {
     localStorage.removeItem('rightSizePanel')
     localStorage.removeItem('leftSizePanel')
 
-    $('.workspace-split.mod-horizontal.mod-left-split').css("width", "450px")
-    $('.workspace-split.mod-horizontal.mod-right-split').css("width", "450px")
+    $('.workspace-split.mod-horizontal.mod-left-split').css("width", "230px")
+    $('.workspace-split.mod-horizontal.mod-right-split').css("width", "280px")
   });
 
 
