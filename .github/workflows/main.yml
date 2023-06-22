@@ -39,7 +39,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            astertz/perlite
+            sec77/perlite
           # Docker tags based on the following events/attributes
           tags: |
             type=schedule
@@ -57,4 +57,3 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
