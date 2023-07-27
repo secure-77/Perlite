@@ -5,12 +5,12 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - 'main'
+      - 'dev'
     tags:
       - '*.*.*'
   pull_request:
     branches:
-      - 'main'
+      - 'dev'
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -42,13 +42,13 @@ jobs:
             sec77/perlite
           # Docker tags based on the following events/attributes
           tags: |
-            type=schedule
             type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha
+          # type=ref,event=pr
+          # type=semver,pattern={{version}}
+          # type=semver,pattern={{major}}.{{minor}}
+          # type=semver,pattern={{major}}
+          # type=sha
+          # type=schedule
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
