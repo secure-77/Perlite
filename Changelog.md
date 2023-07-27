@@ -1,6 +1,6 @@
 ## 1.5.7
 - added social media meta tags and variables
-- added github action for docker build process and arm support, issue #
+- added github action for docker build process and arm support, issue #65
 - improved loading performance, the graph linking will only be done at the first page load, issue #97
 - provided a python script to perform as alternative for the link generation, issue #97
 - included mermaid 10.3.0 via cdn as composer had issues to load it
@@ -8,7 +8,7 @@
 - updated katex to 0.16.8
 - fixed issue #74 (custom heading links)
 - fixed heading references in links to other notes
-- implemented copy code buttom issue #68
+- implemented copy code button issue #68
 
 
 ## 1.5.6
