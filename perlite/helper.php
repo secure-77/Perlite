@@ -340,9 +340,10 @@ function getfullGraph($rootDir)
 {
 
 	global $tempPath;
+	global $vaultName;
 	$jsonMetadaFile = $rootDir . '/metadata.json';
-	$metadaTempFile = $tempPath.'/metadata.temp';
-	$metadaTempFileSum = $tempPath.'/metadata.md5';
+	$metadaTempFile = $tempPath.'/metadata_'.$vaultName.'.temp';
+	$metadaTempFileSum = $tempPath.'/metadata_'.$vaultName.'md5';
 
 
 	if (!is_file($jsonMetadaFile)) {
