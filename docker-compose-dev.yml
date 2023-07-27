@@ -14,6 +14,10 @@ services:
       - HOME_FILE=README
       - FONT_SIZE=15
       - HTML_SAFE_MODE=true
+      - SITE_TITLE=Secure77
+      - SITE_IMAGE=
+      - SITE_DESC=
+      - SITE_TWITTER=
     volumes:
       - ./perlite:/var/www/perlite
       - ./perlite/Demo:/var/www/perlite/Demo:ro

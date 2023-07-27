@@ -19,7 +19,7 @@
         "end": {
           "line": 9,
           "col": 3,
-          "offset": 96
+          "offset": 105
         }
       }
     },
@@ -54,6 +54,10 @@
       },
       {
         "heading": "Why Perlite?",
+        "level": 2
+      },
+      {
+        "heading": "Safe Mode Test",
         "level": 2
       }
     ],
@@ -103,61 +107,6 @@
         "link": "markdown-sample3",
         "relativePath": "README.md",
         "displayText": "Call outs"
-      }
-    ]
-  },
-  {
-    "fileName": "markdown-sample",
-    "relativePath": "Demo Documents/markdown-sample.md",
-    "headings": [
-      {
-        "heading": "LaTeX",
-        "level": 2
-      },
-      {
-        "heading": "Mermaid",
-        "level": 2
-      },
-      {
-        "heading": "Paragraphs",
-        "level": 2
-      },
-      {
-        "heading": "An h1 header",
-        "level": 1
-      },
-      {
-        "heading": "An h2 header",
-        "level": 2
-      },
-      {
-        "heading": "An h3 header",
-        "level": 3
-      }
-    ],
-    "links": [
-      {
-        "link": "markdown & sample2",
-        "relativePath": "Demo Documents/markdown & sample2.md"
-      },
-      {
-        "link": "markdown & sample2",
-        "displayText": "Custom Link Name",
-        "relativePath": "Demo Documents/markdown & sample2.md"
-      },
-      {
-        "link": "#Paragraphs",
-        "relativePath": "Demo Documents/markdown-sample.md",
-        "cleanLink": "markdown-sample",
-        "displayText": "Paragraphs"
-      }
-    ],
-    "backlinks": [
-      {
-        "fileName": "README",
-        "link": "markdown-sample",
-        "relativePath": "README.md",
-        "displayText": "Demo Documents/markdown-sample"
       }
     ]
   },
@@ -242,6 +191,61 @@
         "link": "markdown & sample2",
         "relativePath": "Demo Documents/markdown-sample.md",
         "displayText": "Custom Link Name"
+      }
+    ]
+  },
+  {
+    "fileName": "markdown-sample",
+    "relativePath": "Demo Documents/markdown-sample.md",
+    "headings": [
+      {
+        "heading": "LaTeX",
+        "level": 2
+      },
+      {
+        "heading": "Mermaid",
+        "level": 2
+      },
+      {
+        "heading": "Paragraphs",
+        "level": 2
+      },
+      {
+        "heading": "An h1 header",
+        "level": 1
+      },
+      {
+        "heading": "An h2 header",
+        "level": 2
+      },
+      {
+        "heading": "An h3 header",
+        "level": 3
+      }
+    ],
+    "links": [
+      {
+        "link": "markdown & sample2",
+        "relativePath": "Demo Documents/markdown & sample2.md"
+      },
+      {
+        "link": "markdown & sample2",
+        "displayText": "Custom Link Name",
+        "relativePath": "Demo Documents/markdown & sample2.md"
+      },
+      {
+        "link": "#Paragraphs",
+        "relativePath": "Demo Documents/markdown-sample.md",
+        "cleanLink": "markdown-sample",
+        "displayText": "Paragraphs"
+      }
+    ],
+    "backlinks": [
+      {
+        "fileName": "README",
+        "link": "markdown-sample",
+        "relativePath": "README.md",
+        "displayText": "Demo Documents/markdown-sample"
       }
     ]
   }

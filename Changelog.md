@@ -1,3 +1,7 @@
+## 1.5.7
+- added social media meta tags and variables
+
+
 ## 1.5.6
 - fixed heading references (issue #74)
 - added safemode environment variable (PR #88) thanks to @NotGovernor
@@ -18,7 +22,6 @@
 - updated jquery to 3.7.0
 - updated mermaid to 8.12.1
 - updated vis-network to 9.1.6
-
 
 
 ## 1.5.4
@@ -80,6 +83,7 @@
 
 ## 1.4.5 RC
 - added "edit button", enable it via cookie, thx to @Tooa
+
 
 ## 1.4.4
 - some code cleanup

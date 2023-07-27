@@ -10,7 +10,6 @@ require 'PerliteParsedown.php';
 
 
 $avFiles = array();
-
 $rootDir = getenv('NOTES_PATH');
 
 
@@ -20,15 +19,26 @@ if (empty($rootDir)) {
 	$rootDir = 'Demo';
 }
 
-
 $vaultName = $rootDir;
 
 // default settings and variables
-
 $hideFolders = getenv('HIDE_FOLDERS');
-$lineBreaks = getenv('LINE_BREAKS');
+
+
+// Meta Tags infos
+$siteTitle = getenv('SITE_TITLE');
+$siteName = getenv('SITE_NAME');
+$siteImage = getenv('SITE_IMAGE');
+$siteDescription = getenv('SITE_DESC');
+$siteTwitter = getenv('SITE_TWITTER');
+
+isset($siteTitle) ? $siteTitle : 'Perlite';
+
+
+
 
 // line breaks
+$lineBreaks = getenv('LINE_BREAKS');
 if (empty($lineBreaks)) {
 	$lineBreaks = true;
 } else {
@@ -500,6 +510,7 @@ function loadSettings($rootDir)
 	global $disablePopHovers;
 	global $showTOC;
 	global $index;
+	global $siteTitle;
 
 
 	// get themes
@@ -540,8 +551,26 @@ function loadSettings($rootDir)
 		}
 	}
 
+	
+	// Meta Tags
+	$defaultSettings = 
+	'<!--  Essential META Tags -->
+    <meta property="og:title" content="'.$siteTitle.'">
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png">
+    <meta property="og:url" content="https://github.com/secure-77/Perlite/">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!--  Non-Essential, But Recommended -->
+    <meta property="og:description" content="A web based markdown viewer optimized for Obsidian Notes">
+    <meta property="og:site_name" content="Perlite Demo">
+    <meta name="twitter:image:alt" content="Perlite Screenshot">
+
+    <!--  Non-Essential, But Required for Analytics -->
+    <meta name="twitter:site" content="@website-username">';
+
 	// default settings
-	$defaultSettings = '<link id="disablePopHovers" data-option="' . $disablePopHovers . '"</link>';
+	$defaultSettings .= '<link id="disablePopHovers" data-option="' . $disablePopHovers . '"</link>';
 	$defaultSettings .= '<link id="showTOC" data-option="' . $showTOC . '"</link>';
 	$defaultSettings .= '<link id="index" data-option="' . $index . '"</link>';
 
