@@ -37,7 +37,7 @@ If you want to discuss about Perlite you can join the thread in the [Obsidian Fo
 [[Demo Documents/pdf-test.pdf|PDF Alias]]
 
 
-http://192.168.178.77:7777/?link=%2FDemo%20Documents%2Fmarkdown-sample#Paragraphs
+https://perlite.secure77.de/?link=%2FDemo%20Documents%2Fmarkdown-sample#Paragraphs
 
 ## Documentation on Github
 
