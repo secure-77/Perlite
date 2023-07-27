@@ -10,15 +10,11 @@ require 'PerliteParsedown.php';
 
 
 $avFiles = array();
-$rootDir = getenv('NOTES_PATH');
 
+// replace with your Vault Folder
+$rootDir = empty(getenv('NOTES_PATH')) ? 'Demo' : getenv('NOTES_PATH');
 
-if (empty($rootDir)) {
-
-	# replace with your Vault name
-	$rootDir = 'Demo';
-}
-
+// replace with your Vault Name
 $vaultName = $rootDir;
 
 // default settings and variables
@@ -26,65 +22,37 @@ $hideFolders = getenv('HIDE_FOLDERS');
 
 
 // Meta Tags infos
-$siteTitle = getenv('SITE_TITLE');
-$siteName = getenv('SITE_NAME');
-$siteImage = getenv('SITE_IMAGE');
-$siteDescription = getenv('SITE_DESC');
-$siteTwitter = getenv('SITE_TWITTER');
+$siteTitle = empty(getenv('SITE_TITLE')) ? 'Perlite' : getenv('SITE_TITLE');
+$siteType = empty(getenv('SITE_TYPE')) ? 'article' : getenv('SITE_TYPE');
+$siteImage = empty(getenv('SITE_IMAGE')) ? 'https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png' : getenv('SITE_IMAGE');
+$siteURL = empty(getenv('SITE_URL')) ? 'https://perlite.secure77.de' : getenv('SITE_URL');
+$siteDescription = empty(getenv('SITE_DESC')) ?  'A web based markdown viewer optimized for Obsidian Notes' : getenv('SITE_DESC');
+$siteName = empty(getenv('SITE_NAME')) ? 'Perlite Demo' : getenv('SITE_NAME');
+$siteTwitter = empty(getenv('SITE_TWITTER')) ? '@secure_sec77' : getenv('SITE_TWITTER');
 
-isset($siteTitle) ? $siteTitle : 'Perlite';
-
-
-
+// Temp PATH for graph linking temp files
+$tempPath = empty(getenv('TEMP_PATH')) ? '/tmp' : getenv('TEMP_PATH');
 
 // line breaks
-$lineBreaks = getenv('LINE_BREAKS');
-if (empty($lineBreaks)) {
-	$lineBreaks = true;
-} else {
-	$lineBreaks = filter_var($lineBreaks, FILTER_VALIDATE_BOOLEAN);
-}
-
+$lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
 
 // file types
-$allowedFileLinkTypes = getenv('ALLOWED_FILE_LINK_TYPES');
-if (!$allowedFileLinkTypes) {
-	$allowedFileLinkTypes = ['pdf'];
-} else {
-	$allowedFileLinkTypes = explode(",", $allowedFileLinkTypes);
-}
+$allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf'] : explode(",",getenv('ALLOWED_FILE_LINK_TYPES'));
 
 // disable PopHovers
-$disablePopHovers = getenv('DISABLE_POP_HOVER');
-if (empty($disablePopHovers)) {
-	$disablePopHovers = "false";
-}
+$disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? "false" : getenv('DISABLE_POP_HOVER');
 
 // show TOC instead of graph
-$showTOC = getenv('SHOW_TOC');
-if (empty($showTOC)) {
-	$showTOC = "false";
-}
+$showTOC = empty(getenv('SHOW_TOC')) ? "false" : getenv('SHOW_TOC');
 
 // Set home page from environment variable
-$index = getenv('HOME_FILE');
-if (empty($index)) {
-	$index = "README";
-}
+$index = empty(getenv('HOME_FILE')) ? "README" : getenv('HOME_FILE');
 
 // set default font size
-$font_size = getenv('FONT_SIZE');
-if (empty($font_size)) {
-	$font_size = "15";
-}
+$font_size = empty(getenv('FONT_SIZE')) ? "15" : getenv('FONT_SIZE');
 
 // Set safe mode from environment variable
-$htmlSafeMode = getenv('HTML_SAFE_MODE');
-if (empty($htmlSafeMode)) {
-	$htmlSafeMode = true;
-} else {
-	$htmlSafeMode = filter_var($htmlSafeMode, FILTER_VALIDATE_BOOLEAN);
-}
+$htmlSafeMode = empty(getenv('HTML_SAFE_MODE')) ? true : filter_var(getenv('HTML_SAFE_MODE'), FILTER_VALIDATE_BOOLEAN);
 
 
 $about = '.about';
@@ -371,12 +339,29 @@ function isValidFolder($file)
 function getfullGraph($rootDir)
 {
 
-
+	global $tempPath;
 	$jsonMetadaFile = $rootDir . '/metadata.json';
+	$metadaTempFile = $tempPath.'/metadata.temp';
+	$metadaTempFileSum = $tempPath.'/metadata.md5';
+
 
 	if (!is_file($jsonMetadaFile)) {
 		return;
 	}
+
+	// check if metadata file has changed
+	if (is_file($metadaTempFileSum) && is_file($metadaTempFile)) {
+		$md5_envsum = file_get_contents($metadaTempFileSum);
+		$md5_filesum = md5_file($jsonMetadaFile);
+		
+		if ($md5_envsum === $md5_filesum) {
+			if (!is_file($metadaTempFile)) {
+				return;
+			}
+			return file_get_contents($metadaTempFile);
+		}
+	}
+
 
 	$jsonData = file_get_contents($jsonMetadaFile);
 
@@ -480,7 +465,18 @@ function getfullGraph($rootDir)
 	$myGraphNodes = json_encode($graphNodes, JSON_UNESCAPED_SLASHES);
 	$myGraphEdges = json_encode($graphEdges, JSON_UNESCAPED_SLASHES);
 
-	return '<div id="allGraphNodes" style="display: none">' . $myGraphNodes . '</div><div id="allGraphEdges" style="display: none">' . $myGraphEdges . '</div>';
+	// write tempfile and store sum
+	$metadaTempFile_handler = fopen($metadaTempFile, "w") or die("Unable to open file!");
+	$graphHTML = '<div id="allGraphNodes" style="display: none">' . $myGraphNodes . '</div><div id="allGraphEdges" style="display: none">' . $myGraphEdges . '</div>';
+	fwrite($metadaTempFile_handler, $graphHTML);
+	fclose($metadaTempFile_handler);
+	
+	$metadaTempFile_handler = fopen($metadaTempFileSum, "w") or die("Unable to open file!");
+	$md5_filesum = md5_file($jsonMetadaFile);
+	fwrite($metadaTempFile_handler, $md5_filesum);
+	fclose($metadaTempFile_handler);
+
+	return $graphHTML;
 }
 
 function removeExtension($path)
@@ -511,6 +507,12 @@ function loadSettings($rootDir)
 	global $showTOC;
 	global $index;
 	global $siteTitle;
+	global $siteType;
+	global $siteImage;
+	global $siteURL;
+	global $siteDescription;
+	global $siteName;
+	global $siteTwitter;
 
 
 	// get themes
@@ -556,18 +558,18 @@ function loadSettings($rootDir)
 	$defaultSettings = 
 	'<!--  Essential META Tags -->
     <meta property="og:title" content="'.$siteTitle.'">
-    <meta property="og:type" content="article" />
-    <meta property="og:image" content="https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png">
-    <meta property="og:url" content="https://github.com/secure-77/Perlite/">
+    <meta property="og:type" content="'.$siteType.'" />
+    <meta property="og:image" content="'.$siteImage.'">
+    <meta property="og:url" content="'.$siteURL.'">
     <meta name="twitter:card" content="summary_large_image">
 
     <!--  Non-Essential, But Recommended -->
-    <meta property="og:description" content="A web based markdown viewer optimized for Obsidian Notes">
-    <meta property="og:site_name" content="Perlite Demo">
-    <meta name="twitter:image:alt" content="Perlite Screenshot">
+    <meta property="og:description" content="'.$siteDescription.'">
+    <meta property="og:site_name" content="'.$siteName.'">
+    <meta name="twitter:image:alt" content="Page Callout">
 
     <!--  Non-Essential, But Required for Analytics -->
-    <meta name="twitter:site" content="@website-username">';
+    <meta name="twitter:site" content="'.$siteTwitter.'">';
 
 	// default settings
 	$defaultSettings .= '<link id="disablePopHovers" data-option="' . $disablePopHovers . '"</link>';

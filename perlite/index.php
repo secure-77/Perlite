@@ -4,7 +4,7 @@
 <?php
 
 /*!
-  * Version v1.5.5 dev test
+  * Version v1.5.7
 */
 
 require 'helper.php';

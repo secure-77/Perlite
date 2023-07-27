@@ -1,5 +1,9 @@
 ## 1.5.7
 - added social media meta tags and variables
+- added github action for docker build process and arm support, issue #
+- improved loading performance, the graph linking will only be done at the first page load, issue #97
+- provided a python script to perform as alternative for the link generation, issue #97
+- updated highlight.js to 11.8.0
 
 
 ## 1.5.6

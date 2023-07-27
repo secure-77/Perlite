@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # update dependencies
+cd perlite
 composer update
+cd ..
 
 # update highlight js
 cp perlite/vendor/npm-asset/highlightjs--cdn-assets/highlight.min.js perlite/.js/
@@ -29,15 +31,15 @@ cp perlite/vendor/npm-asset/vis-network/dist/dist/vis-network.min.css perlite/.s
 cp perlite/vendor/erusev/parsedown/Parsedown.php perlite/
 
 # remove old container and images
-docker container rm perlite;
-docker container rm perlite_web;
-docker container rm perlite_web_dev; 
-docker image rm sec77/perlite_web:stable; 
-docker image rm sec77/perlite; 
-docker image rm php;
+# docker container rm perlite;
+# docker container rm perlite_web;
+# docker container rm perlite_web_dev; 
+# docker image rm sec77/perlite_web:stable; 
+# docker image rm sec77/perlite; 
+# docker image rm php;
 
-# rebuild and start
-cd perlite
-docker build -t sec77/perlite:latest . --network host;
-cd ..;
-docker-compose --file docker-compose.yml up
+# # rebuild and start
+# cd perlite
+# docker build -t sec77/perlite:latest . --network host;
+# cd ..;
+# docker-compose --file docker-compose.yml up

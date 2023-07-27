@@ -632,10 +632,10 @@
         },
         {
             "name": "npm-asset/highlightjs--cdn-assets",
-            "version": "11.7.0",
+            "version": "11.8.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@highlightjs/cdn-assets/-/cdn-assets-11.7.0.tgz"
+                "url": "https://registry.npmjs.org/@highlightjs/cdn-assets/-/cdn-assets-11.8.0.tgz"
             },
             "type": "npm-asset",
             "license": [
