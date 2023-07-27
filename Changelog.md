@@ -7,6 +7,8 @@
 - updated highlight.js to 11.8.0
 - updated katex to 0.16.8
 - fixed issue #74 (custom heading links)
+- fixed heading references in links to other notes
+- implemented copy code buttom issue #68
 
 
 ## 1.5.6

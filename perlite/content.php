@@ -133,7 +133,8 @@ function translateLink($pattern, $content, $path, $sameFolder) {
 		
 		$newAbPath = $path;
 		$pathSplit = explode("/",$path);
-		$linkName = $matches[2];
+		$linkName_full = $matches[2];
+		$linkName = $linkName_full;
 		$linkFile = $matches[2];
 
 		# handle custom internal obsidian links
@@ -143,8 +144,7 @@ function translateLink($pattern, $content, $path, $sameFolder) {
 			$linkFile = $splitLink[0];
 			$linkName = $splitLink[1];
 		}
-
-		
+	
 		# handle internal popups
 		$popupClass = '';
 		$popUpIcon = '';
@@ -170,30 +170,24 @@ function translateLink($pattern, $content, $path, $sameFolder) {
 			$urlPath = '/' . $urlPath;
 		}
 
-		# split by # to keep the reference
-		$splitLink = explode("#", $urlPath);
 		$refName = '';
-		if (count($splitLink) > 1) {
+
+		# if same document heading reference
+		if (substr($linkName_full,0,1) == '#') {
 			
-			$urlPath = $splitLink[0];
-			$refName = $splitLink[1];
-		}
-
-		# replace amp back to & (comming from parsedown)
-		$urlPath = str_replace('&amp;' , '&', $urlPath);
-	
-		$urlPath = rawurlencode($urlPath);
-		if (strlen($refName) > 0) {
-			$refName = '#'.$refName;
-		}
-
-		$href = 'href="?link=';
-
-		# if internal heading reference
-		if (substr($refName,0,1) == '#') {
+			$splitLink = explode("#", $urlPath);
 			$urlPath = '';
+			$refName = $splitLink[1];
+			$refName = '#'.$refName;
 			$href = 'href="';
+		} else{
+			$href = 'href="?link=';
 		}
+
+		$urlPath = str_replace('&amp;' , '&', $urlPath);
+			
+		$urlPath = rawurlencode($urlPath);
+		$urlPath = str_replace('%23' , '#', $urlPath);
 	
 		return '<a class="internal-link'.$popupClass.'"'.$href.$urlPath.$refName.'">'. $linkName .'</a>'.$popUpIcon;
 	}

@@ -30,16 +30,22 @@ if ($('#showTOC').data('option') == true && localStorage.getItem("showTOC") === 
   $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
   $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'unset')
 
-  localStorage.setItem("showTOC","true")
+  localStorage.setItem("showTOC", "true")
   $('#mynetwork').css('display', 'none')
   $('#outline').css('display', 'unset')
 
 }
 
 
+// scroll to anchor
+function scrollToAnchor(aid) {
+  var aTag = $("a[name='" + aid + "']");
+  $('html,body,div').animate({ scrollTop: aTag.offset().top }, 'slow');
+}
+
 
 // get markdown content
-function getContent(str, home = false, popHover = false) {
+function getContent(str, home = false, popHover = false, anchor = "") {
 
   // reset content if request is empty
   if (str.length == 0) {
@@ -77,7 +83,7 @@ function getContent(str, home = false, popHover = false) {
           var title = $("div.mdTitleHide").first().text();
           if (title) {
 
-            hrefTitle = '<a href=?link=' + encodeURIComponent(title) + '>' + title + '</a>'
+            //hrefTitle = '<a href=?link=' + encodeURIComponent(title) + '>' + title + '</a>'
             title = title.substring(1)
             titleElements = title.split('/')
             title = titleElements.splice(-1)
@@ -94,7 +100,6 @@ function getContent(str, home = false, popHover = false) {
             // set edit button url       
             $('.clickable-icon.view-action[aria-label="Click to edit"]')
               .attr("href", "obsidian://open?vault=" + encodeURIComponent($("p.vault").text()) + "&file=" + encodeURIComponent(title))
-
           }
 
           // Outlines
@@ -162,7 +167,7 @@ function getContent(str, home = false, popHover = false) {
 
           // update the url
           if (home == false) {
-            window.history.pushState({}, "", location.protocol + '//' + location.host + location.pathname + "?link=" + str);
+            window.history.pushState({}, "", location.protocol + '//' + location.host + location.pathname + "?link=" + str + anchor);
           }
 
 
@@ -295,6 +300,34 @@ function getContent(str, home = false, popHover = false) {
         // highlight code     
         hljs.highlightAll();
 
+        var snippets = document.getElementsByTagName('pre');
+        var numberOfSnippets = snippets.length;
+        for (var i = 0; i < numberOfSnippets; i++) {
+          //code = snippets[i].getElementsByTagName('code')[0].innerText;
+
+          snippets[i].classList.add('hljs'); // append copy button to pre tag
+
+          snippets[i].innerHTML = '<button class="copy-code-button">Copy</button>' + snippets[i].innerHTML; // append copy button
+
+          snippets[i].getElementsByClassName('copy-code-button')[0].addEventListener("click", function () {
+            this.innerText = 'Copying..';
+            button = this;
+            code = $(button).next()[0].innerText
+            navigator.clipboard.writeText(code).then(function () {
+              button.innerText = 'Copied!';
+            }, function (err) {
+              button.innerText = 'Cant Copy!';
+              console.error('Async: Could not copy Code: ', err);
+            });
+
+            setTimeout(function () {
+              button.innerText = 'Copy';
+            }, 1000)
+
+          });
+        }
+
+
         // run mobile settings
         isMobile();
 
@@ -333,6 +366,12 @@ function getContent(str, home = false, popHover = false) {
 
         //render mermaid
         mermaid.init(undefined, document.querySelectorAll(".language-mermaid"));
+
+        //scroll to anchor
+
+        if (anchor != "") {
+          scrollToAnchor(anchor.substring(1));
+        }
 
 
       }
@@ -926,7 +965,9 @@ $(document).ready(function () {
 
     target = encodeURIComponent(target)
 
-    getContent(target);
+    var hash = window.location.hash;
+
+    getContent(target, false, false, hash);
     openNavMenu(target);
 
   } else {
@@ -1069,7 +1110,7 @@ $(document).ready(function () {
 
     parents = $('.nav-folder-children').parent()
 
-    parents.each(function(index, value){
+    parents.each(function (index, value) {
       parent = $(this)
       if (!$(this).hasClass('mod-root')) {
         parent.find('.nav-folder-children').addClass('collapse');
@@ -1337,15 +1378,15 @@ $(document).ready(function () {
 
 
   // show toc
-if (localStorage.getItem("showTOC") === 'true') {
+  if (localStorage.getItem("showTOC") === 'true') {
 
-  $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
-  $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'unset')
+    $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
+    $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'unset')
 
-  $('#mynetwork').css('display', 'none')
-  $('#outline').css('display', 'unset')
+    $('#mynetwork').css('display', 'none')
+    $('#outline').css('display', 'unset')
 
-}
+  }
 
 
 
@@ -1601,7 +1642,7 @@ if (localStorage.getItem("showTOC") === 'true') {
     $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
     $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'unset')
 
-    localStorage.setItem("showTOC","true")
+    localStorage.setItem("showTOC", "true")
     $('#mynetwork').css('display', 'none')
     $('#outline').css('display', 'unset')
   });
@@ -1611,7 +1652,7 @@ if (localStorage.getItem("showTOC") === 'true') {
     $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'unset')
     $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'none')
 
-    localStorage.setItem("showTOC","false")
+    localStorage.setItem("showTOC", "false")
     $('#mynetwork').css('display', 'unset')
     $('#outline').css('display', 'none')
   });
