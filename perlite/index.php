@@ -41,7 +41,9 @@ $jsonGraphData = getfullGraph($rootDir);
     <script src=".js/vis-network.min.js"></script>
     <script src=".js/katex.min.js"></script>
     <script src=".js/auto-render.min.js"></script>
-    <script src=".js/mermaid.min.js"></script>
+    <script src=".js/vis-network.min.js"></script>
+    <!-- <script src=".js/mermaid.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.3.0/mermaid.min.js"></script>
 
 
 </head>

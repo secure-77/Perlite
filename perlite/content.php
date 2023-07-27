@@ -190,7 +190,7 @@ function translateLink($pattern, $content, $path, $sameFolder) {
 		$href = 'href="?link=';
 
 		# if internal heading reference
-		if (substr($linkName,0,1) == '#') {
+		if (substr($refName,0,1) == '#') {
 			$urlPath = '';
 			$href = 'href="';
 		}

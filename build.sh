@@ -2,7 +2,8 @@
 
 # update dependencies
 cd perlite
-composer update
+composer clear-cache
+composer update -v
 cd ..
 
 # update highlight js
@@ -13,8 +14,8 @@ cp perlite/vendor/npm-asset/highlightjs--cdn-assets/styles/atom-one-dark.min.css
 cp perlite/vendor/npm-asset/jquery/dist/jquery.min.js perlite/.js/
 
 # update mermaid
-cp perlite/vendor/npm-asset/mermaid/dist/mermaid.min.js perlite/.js/
-cp perlite/vendor/npm-asset/mermaid/dist/mermaid.min.js.map perlite/.js/
+# cp perlite/vendor/npm-asset/mermaid/dist/mermaid.min.js perlite/.js/
+# cp perlite/vendor/npm-asset/mermaid/dist/mermaid.min.js.map perlite/.js/
 
 # update katex
 cp perlite/vendor/npm-asset/katex/dist/katex.min.js perlite/.js/

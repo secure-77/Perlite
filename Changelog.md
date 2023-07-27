@@ -3,7 +3,10 @@
 - added github action for docker build process and arm support, issue #
 - improved loading performance, the graph linking will only be done at the first page load, issue #97
 - provided a python script to perform as alternative for the link generation, issue #97
+- included mermaid 10.3.0 via cdn as composer had issues to load it
 - updated highlight.js to 11.8.0
+- updated katex to 0.16.8
+- fixed issue #74 (custom heading links)
 
 
 ## 1.5.6
@@ -91,7 +94,7 @@
 
 ## 1.4.4
 - some code cleanup
-- replaced mermaid.min.js with the correct one (9.1.2)
+- replaced mermaid.min.js with the correct one (29.1.)
 - implemented start page (README.md) for non mobile view
 - hide graph display, when node has no graph
 - some visual graph updates
