@@ -6,8 +6,10 @@
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
+use Perlite\PerliteParsedown;
 
-include('helper.php');
+require_once __DIR__ . '/vendor/autoload.php';
+// note: helper.php is loaded via autoload
 
 // check get params
 if (isset($_GET['mdfile'])) {

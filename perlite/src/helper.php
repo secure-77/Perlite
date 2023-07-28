@@ -6,11 +6,12 @@
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
-require 'PerliteParsedown.php';
+use Perlite\PerliteParsedown;
 
-
+global $avFiles;
 $avFiles = array();
 
+global $rootDir;
 $rootDir = getenv('NOTES_PATH');
 
 
@@ -25,10 +26,12 @@ $vaultName = $rootDir;
 
 // default settings and variables
 
+global $hideFolders;
 $hideFolders = getenv('HIDE_FOLDERS');
-$lineBreaks = getenv('LINE_BREAKS');
 
 // line breaks
+global $lineBreaks;
+$lineBreaks = getenv('LINE_BREAKS');
 if (empty($lineBreaks)) {
 	$lineBreaks = true;
 } else {
@@ -37,6 +40,7 @@ if (empty($lineBreaks)) {
 
 
 // file types
+global $allowedFileLinkTypes;
 $allowedFileLinkTypes = getenv('ALLOWED_FILE_LINK_TYPES');
 if (!$allowedFileLinkTypes) {
 	$allowedFileLinkTypes = ['pdf'];
@@ -45,30 +49,35 @@ if (!$allowedFileLinkTypes) {
 }
 
 // disable PopHovers
+global $disablePopHovers;
 $disablePopHovers = getenv('DISABLE_POP_HOVER');
 if (empty($disablePopHovers)) {
 	$disablePopHovers = "false";
 }
 
 // show TOC instead of graph
+global $showTOC;
 $showTOC = getenv('SHOW_TOC');
 if (empty($showTOC)) {
 	$showTOC = "false";
 }
 
 // Set home page from environment variable
+global $index;
 $index = getenv('HOME_FILE');
 if (empty($index)) {
 	$index = "README";
 }
 
 // set default font size
+global $font_size;
 $font_size = getenv('FONT_SIZE');
 if (empty($font_size)) {
 	$font_size = "15";
 }
 
 // Set safe mode from environment variable
+global $htmlSafeMode;
 $htmlSafeMode = getenv('HTML_SAFE_MODE');
 if (empty($htmlSafeMode)) {
 	$htmlSafeMode = true;
@@ -347,7 +356,7 @@ function isValidFolder($file)
 	$folderName = mb_basename($file);
 
 	// check if folder is in array
-	if (in_array($folderName, $hideFolders, true)) {
+	if (in_array($folderName, is_array($hideFolders) ? $hideFolders : [$hideFolders], true)) {
 		return false;
 	}
 

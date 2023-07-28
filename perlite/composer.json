@@ -1,4 +1,31 @@
 {
+    "name": "secure-77/perlite",
+    "description": "A web based markdown viewer optimized for Obsidian Notes",
+    "version": "1.5.6",
+    "type": "project",
+    "keywords": ["markdown viewer","obsidian notes"],
+    "homepage": "https://github.com/secure-77/Perlite",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "secure-77",
+            "email": "sec77@secure77.de",
+            "homepage": "https://secure77.de"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/secure-77/Perlite/issues",
+        "wiki": "https://github.com/secure-77/Perlite/wiki",
+        "chat": "https://discord.gg/pkJ347ssWT"
+    },
+    "autoload": {
+        "psr-4" : {
+            "Perlite\\": "src/"
+        },
+        "files": [
+            "src/helper.php"
+        ]
+    },
     "repositories": [
         {
             "type": "composer",
@@ -6,7 +33,9 @@
         }
     ],
     "require": {
-        "erusev/parsedown": "^1.7.4",
+        "erusev/parsedown": "^1.7.4"
+    },
+    "require-dev": {
         "npm-asset/vis-network": "^9.1",
         "npm-asset/katex": "^0.16.4",
         "npm-asset/mermaid": "^8.12",

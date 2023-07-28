@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f394aa46e489f33303b5aa80b171f98b",
+    "content-hash": "6304c8d1637e517dfcc9e88b66b4d834",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -55,7 +55,9 @@
                 "source": "https://github.com/erusev/parsedown/tree/1.7.x"
             },
             "time": "2019-12-30T22:54:17+00:00"
-        },
+        }
+    ],
+    "packages-dev": [
         {
             "name": "npm-asset/braintree--sanitize-url",
             "version": "3.1.0",
@@ -632,10 +634,10 @@
         },
         {
             "name": "npm-asset/highlightjs--cdn-assets",
-            "version": "11.7.0",
+            "version": "11.8.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@highlightjs/cdn-assets/-/cdn-assets-11.7.0.tgz"
+                "url": "https://registry.npmjs.org/@highlightjs/cdn-assets/-/cdn-assets-11.8.0.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -656,13 +658,13 @@
         },
         {
             "name": "npm-asset/katex",
-            "version": "0.16.4",
+            "version": "0.16.8",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/katex/-/katex-0.16.4.tgz"
+                "url": "https://registry.npmjs.org/katex/-/katex-0.16.8.tgz"
             },
             "require": {
-                "npm-asset/commander": ">=8.0.0,<9.0.0"
+                "npm-asset/commander": ">=8.3.0,<9.0.0"
             },
             "type": "npm-asset",
             "license": [
@@ -771,7 +773,6 @@
             ]
         }
     ],
-    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],

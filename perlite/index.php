@@ -7,7 +7,8 @@
   * Version v1.5.5
 */
 
-require 'helper.php';
+require_once __DIR__ . '/vendor/autoload.php';
+// note: helper.php is loaded via autoload
 
 $title = 'Perlite';
 $menu = menu($rootDir);

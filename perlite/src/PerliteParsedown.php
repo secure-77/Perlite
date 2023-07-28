@@ -1,15 +1,14 @@
 <?php
 
+namespace Perlite;
+
+use Parsedown;
+
 /*!
   * Perlite v1.5.5 (https://github.com/secure-77/Perlite)
   * Author: sec77 (https://secure77.de)
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
-
-//require __DIR__ . '/vendor/autoload.php';
-require 'Parsedown.php';
-
-
 class PerliteParsedown extends Parsedown
 {
 
