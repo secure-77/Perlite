@@ -45,14 +45,16 @@ img {
 }
 
 
-
 #loading-text {
   position: absolute;
   top: 8px;
 }
 
+.inline-title {
+  padding-bottom: 30px;
+}
 
-h1:first-child {
+#mdContent h1:nth-of-type(1) {
   padding-top: 0px !important;
 }
 
