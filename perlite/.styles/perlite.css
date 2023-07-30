@@ -52,6 +52,18 @@ img {
 }
 
 
+h1:first-child {
+  padding-top: 0px !important;
+}
+
+h1, h2, h3, h4 {
+  padding-top: 30px;
+}
+
+#outline h3{
+  padding-top: 0px !important;
+}
+
 /* --------------- */
 /* Mobile / Responive Settings */
 
@@ -77,5 +89,6 @@ img {
   #mdContent {
     padding-right: 30px;
   }
+
   
 }
