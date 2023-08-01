@@ -7,6 +7,7 @@
   * Version v1.5.7
 */
 
+require_once __DIR__ . '/vendor/autoload.php';
 require 'helper.php';
 
 $title = 'Perlite';

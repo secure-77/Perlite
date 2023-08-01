@@ -6,7 +6,7 @@
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
-require 'PerliteParsedown.php';
+use Perlite\PerliteParsedown;
 
 
 $avFiles = array();
@@ -31,7 +31,7 @@ $siteName = empty(getenv('SITE_NAME')) ? 'Perlite Demo' : getenv('SITE_NAME');
 $siteTwitter = empty(getenv('SITE_TWITTER')) ? '@secure_sec77' : getenv('SITE_TWITTER');
 
 // Temp PATH for graph linking temp files
-$tempPath = empty(getenv('TEMP_PATH')) ? '/tmp' : getenv('TEMP_PATH');
+$tempPath = empty(getenv('TEMP_PATH')) ? sys_get_temp_dir() : getenv('TEMP_PATH');
 
 // line breaks
 $lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);

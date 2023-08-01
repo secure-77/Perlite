@@ -6,9 +6,9 @@
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
-//require __DIR__ . '/vendor/autoload.php';
-require 'Parsedown.php';
+namespace Perlite;
 
+use Parsedown;
 
 class PerliteParsedown extends Parsedown
 {
