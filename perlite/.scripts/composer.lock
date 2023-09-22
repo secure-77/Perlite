@@ -1,0 +1,82 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "5fbad3def2053196e202611a14296870",
+    "packages": [
+        {
+            "name": "npm-asset/commander",
+            "version": "8.3.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/commander/-/commander-8.3.0.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/highlightjs--cdn-assets",
+            "version": "11.8.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/@highlightjs/cdn-assets/-/cdn-assets-11.8.0.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "BSD-3-Clause"
+            ]
+        },
+        {
+            "name": "npm-asset/jquery",
+            "version": "3.7.1",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/katex",
+            "version": "0.16.8",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/katex/-/katex-0.16.8.tgz"
+            },
+            "require": {
+                "npm-asset/commander": ">=8.3.0,<9.0.0"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/vis-network",
+            "version": "9.1.6",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/vis-network/-/vis-network-9.1.6.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "(Apache-2.0 OR MIT)"
+            ]
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

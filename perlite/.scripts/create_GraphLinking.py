@@ -7,7 +7,7 @@ def remove_extension(path):
 def check_array(node_path):
     return True
 
-json_metadata_file = "Demo/metadata.json"
+json_metadata_file = "../Demo/metadata.json"
 metadata_temp_file = "/tmp/metadata.temp"
 metadata_temp_file_sum = "/tmp/metadata.md5"
 

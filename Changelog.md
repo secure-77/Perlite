@@ -10,6 +10,8 @@
 - fixed heading references in links to other notes
 - implemented copy code button issue #68
 - added a little padding for the headers
+- merged PR #102 (thx to @selfiens)
+- seperated php composer into two files (npm-assets and php-assets)
 
 
 ## 1.5.6

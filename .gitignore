@@ -16,5 +16,5 @@ Thumbs.db
 ParsedownExtra.php
 perlite-dev
 _Notes
-perlite/vendor
+perlite/.scripts/vendor
 release.sh
