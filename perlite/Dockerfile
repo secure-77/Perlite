@@ -12,6 +12,8 @@ COPY ./*.svg ./
 COPY ./*.ico ./
 COPY ./.styles/ ./.styles/
 COPY ./.js/ ./.js/
+COPY ./.src/ ./.src/
+COPY ./vendor/ ./vendor/
 
 VOLUME /var/www/perlite/
 

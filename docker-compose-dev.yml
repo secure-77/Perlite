@@ -6,8 +6,8 @@ services:
     container_name: perlite
     environment:
       - NOTES_PATH=Demo
-      - LINE_BREAKS=true
       - HIDE_FOLDERS=docs,private,trash
+      - LINE_BREAKS=true
       - ALLOWED_FILE_LINK_TYPES=pdf
       - DISABLE_POP_HOVER=true
       - SHOW_TOC=true

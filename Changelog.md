@@ -6,6 +6,7 @@
 - included mermaid 10.3.0 via cdn as composer had issues to load it
 - updated highlight.js to 11.8.0
 - updated katex to 0.16.8
+- updated jquery to 3.7.1
 - fixed issue #74 (custom heading links)
 - fixed heading references in links to other notes
 - implemented copy code button issue #68
