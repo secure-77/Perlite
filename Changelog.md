@@ -9,6 +9,7 @@
 - fixed issue #74 (custom heading links)
 - fixed heading references in links to other notes
 - implemented copy code button issue #68
+- added a little padding for the headers
 
 
 ## 1.5.6
