@@ -17,8 +17,4 @@ ParsedownExtra.php
 perlite-dev
 _Notes
 perlite/vendor
-<<<<<<< Updated upstream
 release.sh
-=======
-release.sh
->>>>>>> Stashed changes
