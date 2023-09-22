@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae8dfebc2119191614b450a78e84425a",
+    "content-hash": "025181e885ed6a95553a38165515101c",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -82,10 +82,10 @@
         },
         {
             "name": "npm-asset/jquery",
-            "version": "3.7.0",
+            "version": "3.7.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/jquery/-/jquery-3.7.0.tgz"
+                "url": "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz"
             },
             "type": "npm-asset",
             "license": [
