@@ -13,6 +13,7 @@
 - added a little padding for the headers
 - merged PR #102 (thx to @selfiens)
 - seperated php composer into two files (npm-assets and php-assets)
+- fixed issue #91
 
 
 ## 1.5.6
