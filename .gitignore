@@ -13,8 +13,7 @@ perlite/Demo/.obsidian/workspace.json
 perlite/Demo/Test Canvas.canvas
 perlite/logo2.svg
 Thumbs.db
-ParsedownExtra.php
 perlite-dev
 _Notes
 perlite/.scripts/vendor
-release.sh
+perlite/.scripts/release.sh

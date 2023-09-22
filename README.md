@@ -36,47 +36,22 @@ If you want to discuss about Perlite you can join the [Perlite Discord Server](h
 - Dark and Light Mode
 
 
-
-## Changelog
-[Changelog](https://github.com/secure-77/Perlite/blob/main/Changelog.md)
-
-### previous versions
-- [Perlite 1.4.4 Demo](https://perlite.secure77.de/1.4.4)
-- [Perlite 1.3 Demo](https://perlite.secure77.de/1.3)
-
-## Wiki
-Please check the [wiki](https://github.com/secure-77/Perlite/wiki)
-
-
 ## Install
-Just put the content of the perlite directory in your web root directory, your notes should resident as a subfolder of perlite. You only need to set your root direcotry.
+Please make sure you read the [required settings](https://github.com/secure-77/Perlite/wiki/03---Perlite-Settings#required-settings) first!
+
+You can download the latest release from github or git clone the project and use docker.
 
 - For non Docker please check [Setup](https://github.com/secure-77/Perlite/wiki/01---Setup-(no-Docker))
 - For Docker, please check [Docker Setup](https://github.com/secure-77/Perlite/wiki/02---Setup-Docker)
 
 
-### Requirements
-- Web server, tested with ![coverage](https://img.shields.io/badge/NGINX-1.24.0-blue)
-- Php-fpm, tested with ![coverage](https://img.shields.io/badge/PHP-7.4.30-green) and ![coverage](https://img.shields.io/badge/PHP-8.2.6-green)
-other webservers may work..
+## Wiki
+Please check the [wiki](https://github.com/secure-77/Perlite/wiki), here you will find further information, for example:
 
-Please make sure you read also the [required settings](https://github.com/secure-77/Perlite/wiki/03---Perlite-Settings#required-settings)
-
-
-## Themes
-[Themes](https://github.com/secure-77/Perlite/wiki/Themes)
-
-## Graph
-[Graph Setup and Settings](https://github.com/secure-77/Perlite/wiki/Graph)
-
-## Dependencies (all included)
-
-- [![coverage](https://img.shields.io/badge/Parsedown-1.7.4-lightgrey)](https://github.com/erusev/parsedown)
-- [![coverage](https://img.shields.io/badge/jQuery-3.7.0-lightblue)](https://jquery.com/)
-- [![coverage](https://img.shields.io/badge/Highlight.js-11.7.0-green)](https://highlightjs.org/)
-- [![coverage](https://img.shields.io/badge/vis.network-9.1.6-yellow)](https://visjs.org/)
-- [![coverage](https://img.shields.io/badge/KaTeX-0.16.4-red)](https://katex.org/)
-- [![coverage](https://img.shields.io/badge/Mermaid-8.12.1-orange)](https://mermaid-js.github.io/mermaid/)
+- [Themes](https://github.com/secure-77/Perlite/wiki/Themes)
+- [Graph Setup and Settings](https://github.com/secure-77/Perlite/wiki/Graph)
+- [Perlite Settings](https://github.com/secure-77/Perlite/wiki/03---Perlite-Settings)
+- [Troubleshooting](https://github.com/secure-77/Perlite/wiki/Troubleshooting)
 
 
 ## Security
@@ -85,6 +60,17 @@ Please make sure you read also the [required settings](https://github.com/secure
 - You should prevent that the metadata.json file is direct accessible via the browser (only the php engine need access to it). The extracted metadata.json contains the whole obsidian structure, so this file could be sensitive if you plan to exclude some files or folders from Perlite. However, the parsing is done by the php engine and it checks for every path if the file really exists in the provided vault, so files you excluded from the vault will also not be visible in the graph, but they are still present in the metadata.json. This is why you should prevent access to it.
 
 
+## Contributing
+Want to contribute? Awesome! Please use the [dev branch](https://github.com/secure-77/Perlite/tree/dev) for pull requests.
+
+
 ## Why Perlite?
 [Wiki](https://en.wikipedia.org/wiki/Perlite):
 *Perlite is an amorphous volcanic glass ... typically formed by the hydration of obsidian.*
+
+
+## Previous Versions and Changelog
+
+- [Changelog](https://github.com/secure-77/Perlite/blob/main/Changelog.md)
+- [Perlite 1.4.4 Demo](https://perlite.secure77.de/1.4.4)
+- [Perlite 1.3 Demo](https://perlite.secure77.de/1.3)
