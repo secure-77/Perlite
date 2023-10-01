@@ -7,7 +7,7 @@ A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 
 Just put your whole Obsidian vault or markdown folder/file structure in your web directory. The page builds itself. 
 
-Its an open source alternative to  [obisidian publish](https://obsidian.md/publish).
+Its an open source alternative to  [obsidian publish](https://obsidian.md/publish).
 
 Read more about Perlite and staging tips on my blog post: [Perlite on Secure77](https://secure77.de/perlite).
 If you want to discuss about Perlite you can join the [Perlite Discord Server](https://discord.gg/pkJ347ssWT)
@@ -25,14 +25,14 @@ If you want to discuss about Perlite you can join the [Perlite Discord Server](h
 ## Features
 
 - Auto build up, based on your folder (vault) structure
-- Support Obsidian Themes
-- Full responsive
+- Obsidian Themes Support
+- Fully Responsive
 - No manual parsing or converting necessary
 - Full interactive Graph
-- LaTeX and Mermaid support
+- LaTeX and Mermaid Support
 - Link to Obsidian Vault
 - Search
-- Support Obisdian tags, links, images and preview
+- Obsidian tags, links, images and preview Support
 - Dark and Light Mode
 
 
