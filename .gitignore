@@ -17,3 +17,5 @@ perlite-dev
 _Notes
 perlite/.scripts/vendor
 perlite/.scripts/release.sh
+fiveserver.config.js
+perlite/Shadowrun

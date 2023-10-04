@@ -1,8 +1,11 @@
 
 .logo {
-  position: fixed;
+  position: relative;
   top: 8px;
-  left: 5px;
+  max-height: 200px;
+  max-width: calc(100% - 18px);
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 .sidebar-toggle-button.mod-left {
