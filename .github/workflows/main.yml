@@ -3,14 +3,8 @@ name: Docker Build Main
 # Controls when the workflow will run
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - 'main'
-    tags:
-      - '*.*.*'
-  pull_request:
-    branches:
-      - 'main'
+  release:
+    types: [published]
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:

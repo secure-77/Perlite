@@ -17,3 +17,4 @@ perlite-dev
 _Notes
 perlite/.scripts/vendor
 perlite/.scripts/release.sh
+perlite/.scripts/canvas.js

@@ -25,6 +25,7 @@ If you want to discuss about Perlite you can join the [Perlite Discord Server](h
 ## Features
 
 - Auto build up, based on your folder (vault) structure
+- No Database required
 - Obsidian Themes Support
 - Fully Responsive
 - No manual parsing or converting necessary
