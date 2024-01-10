@@ -37,14 +37,23 @@ if ($('#showTOC').data('option') == true && localStorage.getItem("showTOC") === 
 }
 
 
-// scroll to anchor
+/**
+ * scroll to anchor
+ * @param {String} aid
+ */
 function scrollToAnchor(aid) {
   var aTag = $("a[name='" + aid + "']");
   $('html,body,div').animate({ scrollTop: aTag.offset().top }, 'slow');
 }
 
 
-// get markdown content
+/**
+ * get markdown content
+ * @param {String} str
+ * @param {Boolean} home
+ * @param {Boolean} popHover
+ * @param {String} anchor
+ */
 function getContent(str, home = false, popHover = false, anchor = "") {
 
   // reset content if request is empty
@@ -415,7 +424,12 @@ function getContent(str, home = false, popHover = false, anchor = "") {
   }
 };
 
-// vis js stuff
+/**
+ * vis js stuff
+ * @param {Boolean} modal
+ * @param {String} path
+ * @param {Boolean} filter_emptyNodes
+ */
 function renderGraph(modal, path = "", filter_emptyNodes = false) {
 
   // no graph found exit
@@ -701,7 +715,9 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
 
 };
 
-// change mobile settings
+/**
+ * change mobile settings
+ */
 function isMobile() {
 
   if ($(window).width() < 990) {
@@ -743,7 +759,10 @@ function hideLeftMobile() {
 
 };
 
-// search  
+/**
+ * search
+ * @param {String} str
+ */
 function search(str) {
   if (str.length == 0) {
     $("div.search-results-children").html("");
@@ -766,20 +785,32 @@ function search(str) {
 };
 
 // edit button
+
+/**
+ * @param {String} name
+ * @returns {string}
+ */
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
 };
 
-// helper
+/**
+ * helper
+ * @param {String} oldClass
+ * @param {String} newClass
+ */
 function replaceClass(oldClass, newClass) {
   var elem = $("." + oldClass);
   elem.removeClass(oldClass);
   elem.addClass(newClass);
 };
 
-// search entry
+/**
+ * search entry
+ * @param {Event} e
+ */
 function toggleSearchEntry(e) {
 
   el = $(e.target);
@@ -804,7 +835,10 @@ function toggleSearchEntry(e) {
 
 };
 
-// nav menu collapse functions
+/**
+ * nav menu collapse functions
+ * @param {Event} e
+ */
 function toggleNavFolder(e) {
   el = $(e.target);
 
@@ -844,6 +878,11 @@ function toggleNavFolder(e) {
   return
 };
 
+/**
+ *
+ * @param {String} target
+ * @param {Boolean} openAll
+ */
 function openNavMenu(target, openAll = false) {
 
   // open nav menu to target
@@ -1655,7 +1694,10 @@ $(document).ready(function () {
 
   });
 
-  // close modal
+  /**
+   * close modal
+   * @param {String[]} elementIds
+   */
   function hideElements(elementIds) {
     elementIds.forEach(function (id) {
       $("#" + id).css("display", "none");
