@@ -137,12 +137,14 @@ body
     --text-faint:                    var(--light1);
     --text-muted:                    var(--light2);
 
+    --link-url:                      var(--neutral-green);
+
     --h1-color:                      var(--neutral-red);
-    --h2-color:                      var(--neutral-orange);
-    --h3-color:                      var(--neutral-yellow);
-    --h4-color:                      var(--neutral-green);
-    --h5-color:                      var(--neutral-aqua);
-    --h6-color:                      var(--neutral-blue);
+    --h2-color:                      var(--neutral-yellow);
+    --h3-color:                      var(--neutral-green);
+    --h4-color:                      var(--neutral-aqua);
+    --h5-color:                      var(--neutral-blue);
+    --h6-color:                      var(--neutral-purple);
 
     --text-highlight-bg:             var(--neutral-yellow);
     --text-highlight-fg:             var(--dark0-hard);
@@ -167,19 +169,23 @@ body
     --checkbox-border-color-hover:   var(--light4);
     --checklist-done-color:          rgba(var(--light2_x), 0.5);
 
-    --table-header-background:       rgba(var(--dark3_x), 0.2);
-    --table-header-background-hover: var(--dark4);
-    --table-row-even-background:     rgba(var(--dark4_x), 0.4);
-    --table-row-odd-background:      rgba(var(--dark4_x), 0.6);
-    --table-row-background-hover:    var(--dark4);
+    --table-header-background:       rgba(var(--dark0_x), 0.2);
+    --table-header-background-hover: var(--dark2);
+    --table-row-even-background:     rgba(var(--dark2_x), 0.2);
+    --table-row-odd-background:      rgba(var(--dark2_x), 0.4);
+    --table-row-background-hover:    var(--dark2);
 
     --text-selection:                rgba(var(--neutral-red_x), 0.6);
     --flashing-background:           rgba(var(--neutral-red_x), 0.3);
 
+    --code-normal:                   var(--bright-blue);
     --code-background:               var(--dark1);
-    --code-normal:                   var(--light2);
 
     --mermaid-note:                  var(--neutral-blue);
+    --mermaid-actor:                 var(--dark2);
+    --mermaid-loopline:              var(--neutral-blue);
+    --mermaid-exclude:               var(--dark4);
+    --mermaid-seqnum:                var(--dark0);
 
     --icon-color-hover:              var(--bright-red);
     --icon-color-focused:            var(--bright-blue);
@@ -202,6 +208,9 @@ body
     --dataview-key-background:       rgba(var(--faded-red_x), 0.5);
     --dataview-value:                var(--text-faint);
     --dataview-value-background:     rgba(var(--neutral-green_x), 0.3);
+
+    --tab-text-color-focused-active:         var(--neutral-yellow);
+    --tab-text-color-focused-active-current: var(--bright-red);
 }
 
 .theme-light
@@ -235,12 +244,14 @@ body
     --text-faint:                    var(--dark3);
     --text-muted:                    var(--dark2);
 
+    --link-url:                      var(--neutral-green);
+
     --h1-color:                      var(--neutral-red);
-    --h2-color:                      var(--neutral-orange);
-    --h3-color:                      var(--neutral-yellow);
-    --h4-color:                      var(--neutral-green);
-    --h5-color:                      var(--neutral-aqua);
-    --h6-color:                      var(--neutral-blue);
+    --h2-color:                      var(--neutral-yellow);
+    --h3-color:                      var(--neutral-green);
+    --h4-color:                      var(--neutral-aqua);
+    --h5-color:                      var(--neutral-blue);
+    --h6-color:                      var(--neutral-purple);
 
     --text-highlight-bg:             var(--bright-yellow);
     --text-highlight-fg:             var(--dark0);
@@ -265,20 +276,23 @@ body
     --checkbox-border-color-hover:   var(--light4);
     --checklist-done-color:          rgba(var(--dark2_x), 0.4);
 
-    --table-header-background:       rgba(var(--light3_x), 0.2);
+    --table-header-background:       rgba(var(--light3_x), 0.4);
     --table-header-background-hover: var(--light2);
-    --table-row-even-background:     rgba(var(--light2_x), 0.4);
-    --table-row-odd-background:      rgba(var(--light2_x), 0.6);
+    --table-row-even-background:     rgba(var(--light1_x), 0.2);
+    --table-row-odd-background:      rgba(var(--light1_x), 0.7);
     --table-row-background-hover:    var(--light2);
 
     --text-selection:                rgba(var(--neutral-red_x), 0.6);
     --flashing-background:           rgba(var(--neutral-red_x), 0.3);
 
+    --code-normal:                   var(--bright-blue);
     --code-background:               var(--light1);
-    --code-normal:                   var(--dark2);
 
     --mermaid-note:                  var(--bright-blue);
     --mermaid-actor:                 var(--light3);
+    --mermaid-loopline:              var(--neutral-blue);
+    --mermaid-exclude:               var(--light2);
+    --mermaid-seqnum:                var(--light0);
 
     --icon-color-hover:              var(--bright-red);
     --icon-color-focused:            var(--bright-blue);
@@ -301,6 +315,9 @@ body
     --dataview-key-background:       rgba(var(--faded-red_x), 0.3);
     --dataview-value:                var(--text-faint);
     --dataview-value-background:     rgba(var(--neutral-green_x), 0.2);
+
+    --tab-text-color-focused-active:         var(--neutral-yellow);
+    --tab-text-color-focused-active-current: var(--bright-red);
 }
 
 table
@@ -317,13 +334,13 @@ thead
 th
 {
     font-weight: 600 !important;
-    border: 0px !important;
+    border: 1px solid var(--background-secondary) !important;
 }
 
 td
 {
-    border-left: 0px !important;
-    border-right: 0px !important;
+    border-left: 1px solid var(--background-secondary) !important;
+    border-right: 1px solid var(--background-secondary) !important;
     border-bottom: 1px solid var(--background-secondary) !important;
 }
 
@@ -342,10 +359,11 @@ td
 {
     background-color: var(--table-row-background-hover) !important;
 }
+
 .markdown-rendered mark
 {
-    background-color: var(--text-highlight-bg) !important;
-    color: var(--text-highlight-fg) !important;
+    background-color: var(--text-highlight-bg);
+    color: var(--text-highlight-fg);
 }
 
 .markdown-rendered mark a
@@ -388,6 +406,16 @@ pre[class*="language-"]
     line-height: var(--line-height-tight) !important;
 }
 
+.cm-url
+{
+    color: var(--link-url) !important;
+}
+
+.cm-url:hover
+{
+    color: var(--text-accent-color) !important;
+}
+
 /* Keep highlight/marks the same between viewer and editor. */
 .cm-highlight
 {
@@ -402,11 +430,21 @@ pre[class*="language-"]
     padding: 0.1em 0.25em;
 }
 
-/* Keep list bullet padding the same between viewer and editor. */
+.cm-line .cm-strong
+{
+    color: var(--bold-color) !important;
+}
+
+/*
+ * Keep list bullet padding the same between viewer and editor.
+ * This is annoying with the cursor in the editor as there is a gap.
+ */
+/*
 .cm-formatting-list
 {
     padding-right: 4px !important;
 }
+*/
 
 /*
  * Keep sub-list indenting the same between viewer and editor.
@@ -427,6 +465,27 @@ pre[class*="language-"]
 .mermaid .actor
 {
     fill: var(--mermaid-actor) !important;
+}
+
+.mermaid .loopLine
+{
+    stroke: var(--mermaid-loopline) !important;
+}
+
+.mermaid .loopText>tspan,
+.mermaid .entityLabel
+{
+    fill: var(--neutral-red) !important;
+}
+
+.mermaid .exclude-range
+{
+    fill: var(--mermaid-exclude) !important;
+}
+
+.mermaid .sequenceNumber
+{
+    fill: var(--mermaid-seqnum) !important;
 }
 
 .calendar .week-num
@@ -487,5 +546,10 @@ pre[class*="language-"]
     font-size: var(--font-smaller);
     color: var(--dataview-value) !important;
     background-color: var(--dataview-value-background) !important;
+}
+
+.suggestion-highlight
+{
+    color: var(--bright-red);
 }
 

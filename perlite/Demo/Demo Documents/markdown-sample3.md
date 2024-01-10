@@ -1,15 +1,24 @@
 ---
 tags:
   - tag1
-  - tag2
   - tag-test
+  - blub
 ---
 
 YAML front matter document
+![[markdown & sample2]]
 
 
-Callout with title
 
+![[docs/Pasted image 202401101247081.png|Description of the image content|100]]
+
+
+> [!note]- Information the user should notice even if skimming. 
+> Test
+
+
+> [!note]+ Information the user should notice even if skimming. 
+> Test
 
 Regular blockquote
 

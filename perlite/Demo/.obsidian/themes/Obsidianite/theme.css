@@ -76,6 +76,7 @@
   --bg-accent-25: rgba(14, 210, 247, 0.25);
   --text-highlight-bg: rgba(244, 86, 157, 0.25);
   --background-modifier-border: rgba(14, 210, 247, 0.05);
+  --table-border-color: rgb(14, 210, 247, 0.15);
   --test-color: rgb(122, 162, 247);
   --editor-border-color: #101014;
 }
@@ -184,19 +185,6 @@ a.tag[href*='#想法'] {
 | Obsidian main controls related.
 /**************************************/
 
-/** GENERAL STYLES **/
-body {
-  font-weight: var(--body-font-weight, normal);
-  font-size: var(--default-font-size, 16px);
-}
-
-body [role='presentation'] pre,
-body [role='presentation'] div,
-body .markdown-preview-section div {
-  font-weight: var(--body-font-weight, normal);
-  font-size: var(--default-font-size, 16px) !important;
-}
-
 ::-webkit-scrollbar {
   opacity: 1;
   width: 0.6rem;
@@ -253,6 +241,10 @@ body .markdown-preview-section div {
 }
 
 /** NAVIGATION / SIDE-DOCK **/
+.nav-file-title,
+.nav-folder-title {
+  border: 1px solid transparent;
+}
 
 .nav-folder-collapse-indicator {
   color: var(--text-accent);
@@ -294,15 +286,21 @@ body .markdown-preview-section div {
 }
 
 /** Navigation tabs **/
-.workspace-tab-header.is-active {
+.is-focused .workspace-tab-header.is-active {
   opacity: 1;
+}
+
+.is-focused .mod-active .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
+.is-focused .mod-active .workspace-tab-header.is-active .workspace-tab-header-inner-title {
+  background: var(--background-modifier-border);
   color: var(--text-accent);
 }
 
 .nav-file-title.is-active,
 .nav-folder-title.is-active {
-  background: var(--background-modifier-border);
+  background: var(--background-secondary);
   border: 1px solid var(--bg-accent-25);
+  color: var(--text-accent);
 }
 
 body:not(.is-grabbing) .nav-file-title:hover,
@@ -668,12 +666,6 @@ em {
   color: var(--text-accent);
 }
 
-.markdown-source-view.mod-cm6 .list-bullet:after {
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.5rem;
-}
-
 .markdown-source-view.mod-cm6 .cm-indent::before {
   border-width: 2px;
   border-color: var(--text-accent);
@@ -686,101 +678,22 @@ em {
   opacity: 0.8;
 }
 
-/* Adding a rule line before ul list -- PREVIEW Mode */
-ul ul,
-ol ol,
-.markdown-preview-section > ul > li {
-  position: relative;
-}
-ol > li > ol::before,
-ul > li > ul::before {
-  content: '';
-  border-left: 2px solid var(--text-accent);
-  position: absolute;
-  opacity: 0.35;
-  left: -0.95em;
-  top: 0;
-  bottom: 0;
-}
-
-/* bullet lists */
-ul,
-ul ul,
-ol ul,
-ul ul ul,
-ol ul ul {
-  list-style: none;
-}
-li > p {
-  display: inline;
-}
-
-ul li:not(.task-list-item)::before {
-  content: '•';
-  color: var(--text-accent);
-  display: inline-block;
-  width: 1em;
-  margin-left: -1.15em;
-  padding: 0;
-  font-weight: bold;
-  text-shadow: 0 0 0.5em var(--accent-2);
-}
-ul ul li:not(.task-list-item)::before {
-  content: '•';
-}
-ul ul ul li:not(.task-list-item)::before {
-  content: '•';
-}
-
-/* numbered lists */
-ol {
-  list-style: none;
-  counter-reset: li;
-}
-ol > li {
-  counter-increment: li;
-}
-ol > li:not(.task-list-item)::before,
-ul ol > li:not(.task-list-item)::before,
-ul ul ol > li:not(.task-list-item)::before,
-ul ul ul ol > li:not(.task-list-item)::before {
-  content: '.' counter(li);
-  color: var(--text-a);
-  font-weight: normal;
-  display: inline-block;
-  width: 1em;
-  margin-left: -1.5em;
-  margin-right: 0.5em;
-  text-align: right;
-  direction: rtl;
-  overflow: visible;
-  word-break: keep-all;
-  white-space: nowrap;
-}
-
-/* rule line when there are checkboxes*/
-ul .task-list-item ul::before {
-  left: 0.15em !important;
-}
-
 /**-------------------**
 | LINKS STYLING
 **--------------------**/
 
 /** editor mode **/
-
 .cm-s-obsidian span.cm-link:not(.cm-formatting-link) .cm-underline,
 .cm-s-obsidian span.cm-hmd-internal-link .cm-underline {
-  text-shadow: -1px -1px 2px var(--background-secondary), -1px 1px 2px var(--background-secondary),
-    1px -1px 2px var(--background-secondary), 1px 1px 2px var(--background-secondary);
   color: var(--text-normal);
+  -webkit-text-fill-color: var(--text-normal);
   background-position: 0 100%;
   background-repeat: repeat-x;
   background-size: 5px 5px;
   text-decoration: none;
 }
 
-.cm-s-obsidian span.cm-link:not(.cm-formatting-link) .cm-underline {
+cm-s-obsidian span.cm-link:not(.cm-formatting-link) .cm-underline {
   background-image: linear-gradient(
     to bottom,
     var(--bg-sub-accent-55) 0%,
@@ -800,45 +713,44 @@ ul .task-list-item ul::before {
 
 .internal-link,
 .external-link {
-  text-shadow: -1px -1px 2px var(--background-primary), -1px 1px 2px var(--background-primary),
-    1px -1px 2px var(--background-primary), 1px 1px 2px var(--background-primary);
-  -webkit-text-fill-color: var(--text-normal);
+  color: var(--text-normal);
   background-position: 0 100%;
   background-repeat: repeat-x;
   background-size: 5px 5px;
   text-decoration: none;
-  transition: all 350ms ease;
+  transition: background 350ms ease-in-out;
 }
 
+.cm-s-obsidian span.cm-link:not(.cm-formatting-link) .cm-underline,
 .external-link {
   background-image: linear-gradient(
     to bottom,
     var(--bg-sub-accent-55) 0%,
     var(--bg-sub-accent-55) 100%
   );
+  transition: background 350ms ease-in-out;
 }
 
 .cm-s-obsidian span.cm-hmd-internal-link .cm-underline,
 .internal-link {
   background-image: linear-gradient(to bottom, var(--bg-accent-55) 0%, var(--bg-accent-55) 100%);
+  transition: background 350ms ease-in-out;
 }
 
 .internal-link:hover,
 .cm-s-obsidian span.cm-hmd-internal-link .cm-underline:hover {
-  text-shadow: -1px -1px 2px var(--background-modifier-border),
-    -1px 1px 2px var(--background-modifier-border), 1px -1px 2px var(--background-modifier-border),
-    1px 1px 2px var(--background-modifier-border);
-  -webkit-text-fill-color: var(--text-accent);
+  -webkit-text-fill-color: #fff;
+  color: #fff;
   background-size: 4px 50px;
+  text-decoration-line: none !important;
 }
 
 .cm-s-obsidian span.cm-link:not(.cm-formatting-link) .cm-underline:hover,
 .external-link:hover {
-  text-shadow: -1px -1px 2px var(--background-modifier-border),
-    -1px 1px 2px var(--background-modifier-border), 1px -1px 2px var(--background-modifier-border),
-    1px 1px 2px var(--background-modifier-border);
-  -webkit-text-fill-color: var(--text-sub-accent);
+  -webkit-text-fill-color: #fff;
+  color: #fff;
   background-size: 4px 50px;
+  text-decoration-line: none !important;
 }
 
 /* link */
@@ -930,7 +842,9 @@ h6 a.tag {
 **--------------------**/
 
 .CodeMirror-activeline
-  span.cm-inline-code:not(.cm-formatting):not(.cm-hmd-indented-code):not(.obsidian-search-match-highlight) {
+  span.cm-inline-code:not(.cm-formatting):not(.cm-hmd-indented-code):not(
+    .obsidian-search-match-highlight
+  ) {
   padding: 0 !important;
   margin: 0 !important;
 }
@@ -942,6 +856,19 @@ h6 a.tag {
 .cm-s-obsidian span.cm-inline-code.cm-formatting-code {
   display: inline-flex;
   min-width: 0.55rem;
+}
+
+/**-------------------**
+| HIGHLIGHTING STYLES
+**--------------------**/
+
+.cm-s-obsidian span.cm-formatting-highlight,
+.cm-s-obsidian span.cm-highlight {
+  background-image: none !important;
+  background-color: var(--text-highlight-bg);
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  -webkit-background-clip: initial;
 }
 
 /**-------------------**
@@ -1159,7 +1086,9 @@ blockquote {
 
 /** inline code */
 .cm-s-obsidian
-  span.cm-inline-code:not(.cm-formatting):not(.cm-hmd-indented-code):not(.obsidian-search-match-highlight),
+  span.cm-inline-code:not(.cm-formatting):not(.cm-hmd-indented-code):not(
+    .obsidian-search-match-highlight
+  ),
 .markdown-preview-view code {
   overflow-wrap: break-word;
   background-color: rgba(14, 210, 247, 0.05);

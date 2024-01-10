@@ -194,14 +194,50 @@ function getContent(str, home = false, popHover = false, anchor = "") {
           });
 
           // Toogle Front Matter Meta Container
-          $('.frontmatter-container-header').click(function (e) {
+          $('.metadata-properties-heading').click(function (e) {
 
             e.preventDefault();
 
-            if ($('.frontmatter-container').hasClass('is-collapsed')) {
-              $('.frontmatter-container').removeClass('is-collapsed');
+            if ($('.metadata-container').hasClass('is-collapsed')) {
+              $('.metadata-container').removeClass('is-collapsed');
             } else {
-              $('.frontmatter-container').addClass('is-collapsed');
+              $('.metadata-container').addClass('is-collapsed');
+            }
+
+          });
+
+          // Toogle Collapsable Callout Container
+          $('.callout.is-collapsible').on('click', function (e) {
+
+            e.preventDefault();
+            target = $(e.target);
+         
+            for (let i = 0; i < 5; i++) {      
+              if (target.is('.callout','is-collapsible')) {
+                break;
+              } 
+              target = target.parent()
+            }
+
+            calloutContent = target.find('.callout-content')
+            calloutIcon = target.find('.callout-fold')       
+
+            if (calloutContent.hasClass('is-collapsed-callout')) {
+              calloutContent.removeClass('is-collapsed-callout');
+            } else {
+              calloutContent.addClass('is-collapsed-callout');
+            }
+
+            if (calloutIcon.hasClass('is-collapsed')) {
+              calloutIcon.removeClass('is-collapsed');
+            } else {
+              calloutIcon.addClass('is-collapsed');
+            }
+
+            if (target.hasClass('is-collapsed')) {
+              target.removeClass('is-collapsed');
+            } else {
+              target.addClass('is-collapsed');
             }
 
           });
@@ -270,7 +306,7 @@ function getContent(str, home = false, popHover = false, anchor = "") {
 
           //check setting if metadata is collapsed or not
           if ($('.metadataOption').hasClass('is-enabled')) {
-            $('.frontmatter-container-header').trigger('click')
+            $('.metadata-properties-heading').trigger('click')
           }
           mdContent = $("#mdContent")[0]
 
@@ -874,7 +910,7 @@ $(document).ready(function () {
   // metadata
   if (localStorage.getItem('Metadata') === 'hide') {
     $('.metadataOption').addClass('is-enabled')
-    $('.frontmatter-container').addClass('is-collapsed');
+    $('.metadata-container').addClass('is-collapsed');
   }
 
   // light mode
@@ -1361,16 +1397,16 @@ $(document).ready(function () {
 
     if (target.hasClass('is-enabled')) {
       target.removeClass('is-enabled')
-      if ($('.frontmatter-container').hasClass('is-collapsed')) {
-        $('.frontmatter-container').removeClass('is-collapsed');
+      if ($('.metadata-container').hasClass('is-collapsed')) {
+        $('.metadata-container').removeClass('is-collapsed');
       }
       localStorage.removeItem('Metadata');
 
     } else {
       target.addClass('is-enabled')
 
-      if (!$('.frontmatter-container').hasClass('is-collapsed')) {
-        $('.frontmatter-container').addClass('is-collapsed');
+      if (!$('.metadata-container').hasClass('is-collapsed')) {
+        $('.metadata-container').addClass('is-collapsed');
         localStorage.setItem('Metadata', 'hide');
       }
     }

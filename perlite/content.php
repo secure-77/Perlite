@@ -104,6 +104,17 @@ function parseContent($requestFile) {
 	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces ,$content);
 
+	// img links with captions and size
+	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\5" height="\\6" alt="\\4" src="'. $path .'/\\2\\3'.'"/></a></p>';
+	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(.+\|)\|?(\d*)x?(\d*)(\]\])/');
+	$content = preg_replace($pattern, $replaces ,$content);
+
+	// img links with captions
+	$replaces = '<p><a href="#" class="pop"><img class="images" alt="\\4" src="'. $path .'/\\2\\3'.'"/></a></p>';
+	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(.*)(\]\])/');
+	$content = preg_replace($pattern, $replaces ,$content);
+
+
 	// handle internal site links
 	// search for links outside of the current folder
 	$pattern = array('/(\[\[)(?:\.\.\/)+(.*?)(\]\])/');

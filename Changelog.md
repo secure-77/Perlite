@@ -1,3 +1,13 @@
+## 1.5.8
+- Merged PR #111 thanks to @selfiens
+- Merged PR #112 thanks to @selfiens
+- Merged PR #106 thanks to @Shardbyte
+- Updated app.css
+- Fixed issue [#107](https://github.com/secure-77/Perlite/issues/107)
+- Implemented issue [#92](https://github.com/secure-77/Perlite/issues/92)
+- Implemented issue [#113](https://github.com/secure-77/Perlite/issues/113)
+
+
 ## 1.5.7
 - added social media meta tags and variables
 - added github action for docker build process and arm support, issue #65

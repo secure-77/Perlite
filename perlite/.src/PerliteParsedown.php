@@ -68,56 +68,80 @@ class PerliteParsedown extends Parsedown
             // var_dump($yaml);
             $parsed = yaml_parse($yaml);
             $yamlText = '
-            <div class="frontmatter-container">
-             <div class="frontmatter-container-header">
-                <div class="frontmatter-collapse-indicator collapse-indicator collapse-icon"><svg
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="svg-icon right-triangle">
-                <path d="M3 8L12 17L21 8"></path>
-            </svg></div>Metadata</div>';
+            <div class="mod-header">
+            <div class="metadata-properties-heading">
+            <div class="collapse-indicator collapse-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8">
+                </path></svg>
+            </div>
+            <div class="metadata-properties-title">Properties</div>
+            </div>
+            <div class="metadata-container" tabindex="-1" data-property-count="1">
+                <div class="metadata-content">
+                <div class="metadata-properties">
+            ';
 
             # Parse Aliase if they are there
             if (array_key_exists("aliases", $parsed)) {
-                $yamlText .= '<div class="frontmatter-section mod-aliases"><span class="frontmatter-section-label">Aliases</span>
-                <div class="frontmatter-section-aliases">';
+                $yamlText .= '
+                <div class="metadata-property" tabindex="0" data-property-key="tags" data-property-type="multitext">
+                <div class="metadata-property-key">
+                        <span class="metadata-property-icon" aria-disabled="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-forward">
+                            <polyline points="15 17 20 12 15 7"/>
+                            <path d="M4 18v-2a4 4 0 0 1 4-4h12"/>
+                        </svg>
+                    </span>
+                    <span class="metadata-text">aliases</span>
+                </div>
+                <div class="metadata-property-value">
+                <div class="multi-select-container">';
                 foreach ($parsed["aliases"] as $alias) {
-                    $yamlText .=  '<span class="frontmatter-alias"><span
-                    class="frontmatter-alias-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" class="svg-icon lucide-forward">
-                        <polyline points="15 17 20 12 15 7"></polyline>
-                        <path d="M4 18v-2a4 4 0 0 1 4-4h12"></path>
-                    </svg></span>' . $alias . '</span>';
+                    $yamlText .=  '<div class="multi-select-pill multi-select-pill-content">' . $alias . '</div>';
                 }
 
-                $yamlText .= '</div></div>';
+                $yamlText .= '</div></div></div>';
             }
 
             # Parse Tags if they are there
 
             if (isset($parsed["tags"])) {
                 $yamlText .= '
-                <div class="frontmatter-section mod-tags"><span class="frontmatter-section-label">Tags</span>
-                <div class="frontmatter-section-tags">';
+                        <div class="metadata-property" tabindex="0" data-property-key="tags" data-property-type="multitext">
+                            <div class="metadata-property-key">
+                                <span class="metadata-property-icon" aria-disabled="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-tags">
+                                        <path d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42L9 5Z"/>
+                                        <path d="M6 9.01V9"/>
+                                        <path d="m15 5 6.3 6.3a2.4 2.4 0 0 1 0 3.4L17 19"/>
+                                    </svg>
+                                </span>
+                                <span class="metadata-text">tags</span>
+                            </div>
+                            <div class="metadata-property-value">
+                            <div class="multi-select-container">
+                                ';
 
                 foreach ($parsed["tags"] as $tag) {
 
                     $Block = array(
                         'element' => array(
-                            'name' => 'p',
+                            'name' => 'div',
                             'text' => '#' . $tag,
+                            'attributes' => array(
+                                'class' => 'multi-select-pill multi-select-pill-content'
+                            ),
                             'handler' => 'line',
                         ),
                     );
 
                     $yamlText .= $this->elements($Block);
                 }
-                $yamlText .= '</div></div>';
+                $yamlText .= '</div></div></div>';
             }
 
 
-            $yamlText .= '</div>';
+            $yamlText .= '</div></div></div></div></div>';
             return $yamlText;
         }
     }
@@ -147,13 +171,68 @@ class PerliteParsedown extends Parsedown
                 $title = $matches[2];
 
                 $calloutTitle = $title ?: ucfirst($type);
+                
+                # Handle collapsible callouts
+                $calloutclass = 'callout';
+                $calloutStyle = 'unset';
+                $collapsibleIcon = array(
+                    'name' => 'div',
+                    'text' => ''
+                );
+                $isCollapsed = '';
+                $needCollapseIcon = False;
+
+                if (substr($calloutTitle,0,1) == '+') {
+                    $calloutTitle = substr($calloutTitle,1);
+                    $calloutclass = 'callout is-collapsible';
+                    $calloutStyle = 'unset';
+                    $needCollapseIcon = True;
+                }
+
+                if (substr($calloutTitle,0,1) == '-') {
+                    $calloutTitle = substr($calloutTitle,1);
+                    $calloutclass = 'callout is-collapsible is-collapsed';
+                    $calloutStyle = 'none';
+                    $isCollapsed = 'is-collapsed-callout';
+                    $isCollapsedIcon = 'is-collapsed';
+                    $needCollapseIcon = True;
+                }
+
+                if ($needCollapseIcon) {
+                    $collapsibleIcon = array(
+                        'name' => 'div',
+                        'attributes' => array('class' => 'callout-fold ' . $isCollapsedIcon),
+                        'elements' => array(
+                            # svg
+                            array(
+                                'name' => 'svg',
+                                'attributes' => array(
+                                    'xmlns' => 'http://www.w3.org/2000/svg',
+                                    'width' => '24',
+                                    'height' => '24',
+                                    'viewBox' => '0 0 24 24',
+                                    'fill' => 'none',
+                                    'stroke' => 'currentColor',
+                                    'stroke-width' => '2',
+                                    'stroke-linecap' => 'round',
+                                    'stroke-linejoin' => 'round',
+                                    'class' => 'svg-icon lucide-chevron-down',
+                                ),
+                                # pathes and lines
+                                'elements' => array(array('name' => '<path d="m6 9 6 6 6-6"/>')),
+                            ),
+                        ),
+                    );
+                }
+
+
 
                 $Block = array(
                     'element' => array(
                         'name' => 'div',
                         'attributes' => array(
                             'data-callout' => $type,
-                            'class' => 'callout'
+                            'class' =>  $calloutclass
                         ),
                         'elements' => array(
                             array(
@@ -185,19 +264,23 @@ class PerliteParsedown extends Parsedown
                                             ),
                                         ),
                                     ),
+                                    # callout title
                                     array(
                                         'name' => 'div',
                                         'attributes' => array('class' => 'callout-title-inner'),
                                         'text' => $calloutTitle,
 
                                     ),
+                                    # collapsible icon
+                                    $collapsibleIcon,
                                 ),
-
                             ),
-
+                            # callout content
                             array(
                                 'name' => 'div',
-                                'attributes' => array('class' => 'callout-content'),
+                                'attributes' => array(
+                                    'class' => 'callout-content ' . $isCollapsed,
+                                ),
                                 'handler' => 'lines',
                             ),
 

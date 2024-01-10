@@ -66,6 +66,15 @@ h1, h2, h3, h4 {
   padding-top: 0px !important;
 }
 
+.metadata-text {
+  line-height: 1.9;
+  text-indent: 5px;
+}
+
+.is-collapsed-callout {
+  display: none;
+}
+
 /* --------------- */
 /* Mobile / Responive Settings */
 
@@ -96,5 +105,4 @@ h1, h2, h3, h4 {
     padding-right: 30px;
   }
 
-  
 }

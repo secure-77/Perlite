@@ -91,18 +91,20 @@ body
     --background-secondary-alt:      var(--dark2);
     --background-modifier-border:    var(--dark2);
 
-    --cursor-line-background:        rgba(var(--dark3_x), 0.5);
+    --cursor-line-background:        rgba(var(--red_x), 0.2);
 
     --text-normal:                   var(--light2);
     --text-faint:                    var(--light0);
     --text-muted:                    var(--light1);
 
+    --link-url:                      var(--purple);
+
     --h1-color:                      var(--red);
-    --h2-color:                      var(--orange);
-    --h3-color:                      var(--yellow);
-    --h4-color:                      var(--green);
-    --h5-color:                      var(--purple);
-    --h6-color:                      var(--orange);
+    --h2-color:                      var(--yellow);
+    --h3-color:                      var(--green);
+    --h4-color:                      var(--purple);
+    --h5-color:                      var(--frost0);
+    --h6-color:                      var(--frost2);
 
     --text-highlight-bg:             var(--frost1);
     --text-highlight-fg:             var(--dark0);
@@ -136,9 +138,13 @@ body
     --text-selection:                rgba(var(--red_x), 0.6);
     --flashing-background:           rgba(var(--red_x), 0.3);
 
+    --code-normal:                   var(--frost1);
     --code-background:               var(--dark1);
 
     --mermaid-note:                  var(--frost3);
+    --mermaid-loopline:              var(--frost1);
+    --mermaid-exclude:               var(--dark3);
+    --mermaid-seqnum:                var(--dark0);
 
     --icon-color-hover:              var(--red);
     --icon-color-focused:            var(--frost2);
@@ -161,6 +167,9 @@ body
     --dataview-key-background:       rgba(var(--frost2_x), 0.3);
     --dataview-value:                var(--text-faint);
     --dataview-value-background:     rgba(var(--red_x), 0.3);
+
+    --tab-text-color-focused-active:         var(--frost2);
+    --tab-text-color-focused-active-current: var(--red);
 }
 
 .theme-light
@@ -187,18 +196,20 @@ body
     --background-secondary-alt:      var(--light1);
     --background-modifier-border:    var(--light1);
 
-    --cursor-line-background:        rgba(var(--light0_x), 0.2);
+    --cursor-line-background:        rgba(var(--red_x), 0.1);
 
     --text-normal:                   var(--dark2);
     --text-faint:                    var(--dark0);
     --text-muted:                    var(--dark1);
 
+    --link-url:                      var(--purple);
+
     --h1-color:                      var(--red);
-    --h2-color:                      var(--orange);
-    --h3-color:                      var(--yellow);
-    --h4-color:                      var(--green);
-    --h5-color:                      var(--purple);
-    --h6-color:                      var(--orange);
+    --h2-color:                      var(--yellow);
+    --h3-color:                      var(--green);
+    --h4-color:                      var(--purple);
+    --h5-color:                      var(--frost0);
+    --h6-color:                      var(--frost2);
 
     --text-highlight-bg:             var(--yellow);
     --text-highlight-fg:             var(--dark0);
@@ -232,9 +243,13 @@ body
     --text-selection:                rgba(var(--red_x), 0.6);
     --flashing-background:           rgba(var(--red_x), 0.3);
 
+    --code-normal:                   var(--frost1);
     --code-background:               var(--light2);
 
     --mermaid-note:                  var(--frost0);
+    --mermaid-loopline:              var(--frost1);
+    --mermaid-exclude:               var(--light0);
+    --mermaid-seqnum:                var(--light0);
 
     --icon-color-hover:              var(--red);
     --icon-color-focused:            var(--frost3);
@@ -257,6 +272,9 @@ body
     --dataview-key-background:       rgba(var(--frost2_x), 0.3);
     --dataview-value:                var(--text-faint);
     --dataview-value-background:     rgba(var(--red_x), 0.3);
+
+    --tab-text-color-focused-active:         var(--frost2);
+    --tab-text-color-focused-active-current: var(--red);
 }
 
 table
@@ -273,13 +291,13 @@ thead
 th
 {
     font-weight: 600 !important;
-    border: 0px !important;
+    border: 1px solid var(--background-secondary) !important;
 }
 
 td
 {
-    border-left: 0px !important;
-    border-right: 0px !important;
+    border-left: 1px solid var(--background-secondary) !important;
+    border-right: 1px solid var(--background-secondary) !important;
     border-bottom: 1px solid var(--background-secondary) !important;
 }
 
@@ -298,10 +316,11 @@ td
 {
     background-color: var(--table-row-background-hover) !important;
 }
+
 .markdown-rendered mark
 {
-    background-color: var(--text-highlight-bg) !important;
-    color: var(--text-highlight-fg) !important;
+    background-color: var(--text-highlight-bg);
+    color: var(--text-highlight-fg);
 }
 
 .markdown-rendered mark a
@@ -344,6 +363,16 @@ pre[class*="language-"]
     line-height: var(--line-height-tight) !important;
 }
 
+.cm-url
+{
+    color: var(--link-url) !important;
+}
+
+.cm-url:hover
+{
+    color: var(--text-accent-hover) !important;
+}
+
 /* Keep highlight/marks the same between viewer and editor. */
 .cm-highlight
 {
@@ -376,11 +405,21 @@ pre[class*="language-"]
     padding: 0.1em 0.25em 0.1em 0;
 }
 
-/* Keep list bullet padding the same between viewer and editor. */
+.cm-line .cm-strong
+{
+    color: var(--bold-color) !important;
+}
+
+/*
+ * Keep list bullet padding the same between viewer and editor.
+ * This is annoying with the cursor in the editor as there is a gap.
+ */
+/*
 .cm-formatting-list
 {
-    padding-right: 4px !important;
+     padding-right: 4px !important;
 }
+*/
 
 /*
  * Keep sub-list indenting the same between viewer and editor.
@@ -396,6 +435,27 @@ pre[class*="language-"]
 .mermaid .note
 {
     fill: var(--mermaid-note) !important;
+}
+
+.mermaid .loopLine,
+{
+    stroke: var(--mermaid-loopline) !important;
+}
+
+.mermaid .loopText>tspan,
+.mermaid .entityLabel
+{
+    fill: var(--red) !important;
+}
+
+.mermaid .exclude-range
+{
+    fill: var(--mermaid-exclude) !important;
+}
+
+.mermaid .sequenceNumber
+{
+    fill: var(--mermaid-seqnum) !important;
 }
 
 .calendar .week-num
@@ -456,5 +516,10 @@ pre[class*="language-"]
     font-size: var(--font-smaller);
     color: var(--dataview-value) !important;
     background-color: var(--dataview-value-background) !important;
+}
+
+.suggestion-highlight
+{
+    color: var(--red);
 }
 
