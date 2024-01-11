@@ -6,13 +6,14 @@
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
+use Perlite\Env;
 use Perlite\PerliteParsedown;
 
 /** @var string[] $avFiles available file paths. paths start with "/" */
-$avFiles = array();
+$avFiles = [];
 
 /** @var string $rootDir replace with your Vault Folder */
-$rootDir = getenv('NOTES_PATH') ?: 'Demo';
+$rootDir = Env::get('NOTES_PATH', 'Demo');
 
 // replace with your Vault Name
 $vaultName = $rootDir;
@@ -21,53 +22,48 @@ $vaultName = $rootDir;
 
 
 // Meta Tags infos
-$siteTitle = getenv('SITE_TITLE') ?: 'Perlite';
-$siteType = getenv('SITE_TYPE') ?: 'article';
-$siteImage = getenv('SITE_IMAGE') ?: 'https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png';
-$siteURL = getenv('SITE_URL') ?: 'https://perlite.secure77.de';
-$siteDescription = getenv('SITE_DESC') ?: 'A web based markdown viewer optimized for Obsidian Notes';
-$siteName = getenv('SITE_NAME') ?: 'Perlite Demo';
-$siteTwitter = getenv('SITE_TWITTER') ?: '@secure_sec77';
+$siteTitle = Env::get('SITE_TITLE', 'Perlite');
+$siteType = Env::get('SITE_TYPE', 'article');
+$siteImage = Env::get('SITE_IMAGE', 'https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png');
+$siteURL = Env::get('SITE_URL', 'https://perlite.secure77.de');
+$siteDescription = Env::get('SITE_DESC', 'A web based markdown viewer optimized for Obsidian Notes');
+$siteName = Env::get('SITE_NAME', 'Perlite Demo');
+$siteTwitter = Env::get('SITE_TWITTER', '@secure_sec77');
 
 // Temp PATH for graph linking temp files
-$tempPath = getenv('TEMP_PATH') ?: sys_get_temp_dir();
+$tempPath = Env::get('TEMP_PATH', sys_get_temp_dir());
 
-// line breaks
-$lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
+// whether to display "\n" as new line.
+$lineBreaks = Env::getBool('LINE_BREAKS', true);
 
 // file types
-$allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf'] : explode(",",getenv('ALLOWED_FILE_LINK_TYPES'));
+$allowedFileLinkTypes = explode(",", Env::get('ALLOWED_FILE_LINK_TYPES', 'pdf'));
 
 // disable PopHovers
-$disablePopHovers = getenv('DISABLE_POP_HOVER') ?: "false";
+$disablePopHovers = Env::get('DISABLE_POP_HOVER', "false");
 
 // show TOC instead of graph
-$showTOC = getenv('SHOW_TOC') ?: "false";
+$showTOC = Env::get('SHOW_TOC', "false");
 
 // Set home page from environment variable
-$index = getenv('HOME_FILE') ?: "README";
+$index = Env::get('HOME_FILE', "README");
 
 // set default font size
-$font_size = getenv('FONT_SIZE') ?: "15";
+$font_size = Env::get('FONT_SIZE', "15");
 
 // Set safe mode from environment variable
-$htmlSafeMode = empty(getenv('HTML_SAFE_MODE')) ? true : filter_var(getenv('HTML_SAFE_MODE'), FILTER_VALIDATE_BOOLEAN);
+$htmlSafeMode = Env::getBool('HTML_SAFE_MODE', true);
 
 
 $about = '.about';
 
 // add about and index to allowed files
-$aboutpath = getFileInfos($rootDir . '/' . $about)[0];
-$indexpath = getFileInfos($rootDir . '/' . $index)[0];
-$aboutpath = '/' . $aboutpath;
-$indexpath = '/' . $indexpath;
-array_push($avFiles, $aboutpath);
-array_push($avFiles, $indexpath);
-
+$avFiles[] = '/' . getFileInfos($rootDir . '/' . $about)[0];
+$avFiles[] = '/' . getFileInfos($rootDir . '/' . $index)[0];
 
 
 // hide folders
-$hideFolders = explode(',', getenv('HIDE_FOLDERS') ?: '');
+$hideFolders = explode(',', Env::get('HIDE_FOLDERS', ''));
 
 // path management
 if (!strcmp($rootDir, "")) {
