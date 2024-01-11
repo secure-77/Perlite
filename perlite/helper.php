@@ -6,74 +6,64 @@
   * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
 */
 
+use Perlite\Env;
 use Perlite\PerliteParsedown;
 
+/** @var string[] $avFiles available file paths. paths start with "/" */
+$avFiles = [];
 
-$avFiles = array();
-
-// replace with your Vault Folder
-$rootDir = empty(getenv('NOTES_PATH')) ? 'Demo' : getenv('NOTES_PATH');
+/** @var string $rootDir replace with your Vault Folder */
+$rootDir = Env::get('NOTES_PATH', 'Demo');
 
 // replace with your Vault Name
 $vaultName = $rootDir;
 
 // default settings and variables
-$hideFolders = getenv('HIDE_FOLDERS');
 
 
 // Meta Tags infos
-$siteTitle = empty(getenv('SITE_TITLE')) ? 'Perlite' : getenv('SITE_TITLE');
-$siteType = empty(getenv('SITE_TYPE')) ? 'article' : getenv('SITE_TYPE');
-$siteImage = empty(getenv('SITE_IMAGE')) ? 'https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png' : getenv('SITE_IMAGE');
-$siteURL = empty(getenv('SITE_URL')) ? 'https://perlite.secure77.de' : getenv('SITE_URL');
-$siteDescription = empty(getenv('SITE_DESC')) ?  'A web based markdown viewer optimized for Obsidian Notes' : getenv('SITE_DESC');
-$siteName = empty(getenv('SITE_NAME')) ? 'Perlite Demo' : getenv('SITE_NAME');
-$siteTwitter = empty(getenv('SITE_TWITTER')) ? '@secure_sec77' : getenv('SITE_TWITTER');
+$siteTitle = Env::get('SITE_TITLE', 'Perlite');
+$siteType = Env::get('SITE_TYPE', 'article');
+$siteImage = Env::get('SITE_IMAGE', 'https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png');
+$siteURL = Env::get('SITE_URL', 'https://perlite.secure77.de');
+$siteDescription = Env::get('SITE_DESC', 'A web based markdown viewer optimized for Obsidian Notes');
+$siteName = Env::get('SITE_NAME', 'Perlite Demo');
+$siteTwitter = Env::get('SITE_TWITTER', '@secure_sec77');
 
 // Temp PATH for graph linking temp files
-$tempPath = empty(getenv('TEMP_PATH')) ? sys_get_temp_dir() : getenv('TEMP_PATH');
+$tempPath = Env::get('TEMP_PATH', sys_get_temp_dir());
 
-// line breaks
-$lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
+// whether to display "\n" as new line.
+$lineBreaks = Env::getBool('LINE_BREAKS', true);
 
 // file types
-$allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf'] : explode(",",getenv('ALLOWED_FILE_LINK_TYPES'));
+$allowedFileLinkTypes = explode(",", Env::get('ALLOWED_FILE_LINK_TYPES', 'pdf'));
 
 // disable PopHovers
-$disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? "false" : getenv('DISABLE_POP_HOVER');
+$disablePopHovers = Env::get('DISABLE_POP_HOVER', "false");
 
 // show TOC instead of graph
-$showTOC = empty(getenv('SHOW_TOC')) ? "false" : getenv('SHOW_TOC');
+$showTOC = Env::get('SHOW_TOC', "false");
 
 // Set home page from environment variable
-$index = empty(getenv('HOME_FILE')) ? "README" : getenv('HOME_FILE');
+$index = Env::get('HOME_FILE', "README");
 
 // set default font size
-$font_size = empty(getenv('FONT_SIZE')) ? "15" : getenv('FONT_SIZE');
+$font_size = Env::get('FONT_SIZE', "15");
 
 // Set safe mode from environment variable
-$htmlSafeMode = empty(getenv('HTML_SAFE_MODE')) ? true : filter_var(getenv('HTML_SAFE_MODE'), FILTER_VALIDATE_BOOLEAN);
+$htmlSafeMode = Env::getBool('HTML_SAFE_MODE', true);
 
 
 $about = '.about';
 
 // add about and index to allowed files
-$aboutpath = getFileInfos($rootDir . '/' . $about)[0];
-$indexpath = getFileInfos($rootDir . '/' . $index)[0];
-$aboutpath = '/' . $aboutpath;
-$indexpath = '/' . $indexpath;
-array_push($avFiles, $aboutpath);
-array_push($avFiles, $indexpath);
-
+$avFiles[] = '/' . getFileInfos($rootDir . '/' . $about)[0];
+$avFiles[] = '/' . getFileInfos($rootDir . '/' . $index)[0];
 
 
 // hide folders
-if (strcmp($hideFolders, '')) {
-
-	$hideFolders = explode(',', $hideFolders);
-} else {
-	$hideFolders = array();
-}
+$hideFolders = explode(',', Env::get('HIDE_FOLDERS', ''));
 
 // path management
 if (!strcmp($rootDir, "")) {
@@ -143,8 +133,8 @@ function menu($dir, $folder = '')
 			$mdFile = getFileInfos($file)[1];
 
 			$path = '/' . $path;
-			// push the the path to the array
-			array_push($avFiles, $path);
+			// add the path to the available files
+			$avFiles[] = $path;
 
 			// URL Encode the Path for the JS call
 			$pathClean = rawurlencode($path);
@@ -486,18 +476,15 @@ function removeExtension($path)
 	return substr($path, 0, -3);
 }
 
-// check if node is in array
-function checkArray($requestNode)
+/**
+ * check if node is in available files
+ * @param string $requestNode
+ * @return bool
+ */
+function checkArray(string $requestNode): bool
 {
-	global $avFiles;
-	$requestNode = '/' . $requestNode;
-
-	if (in_array($requestNode, $avFiles, true)) {
-
-		return true;
-	}
-
-	return false;
+    global $avFiles;
+    return in_array('/' . $requestNode, $avFiles, true);
 }
 
 
