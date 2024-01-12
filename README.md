@@ -10,7 +10,7 @@ Just put your whole Obsidian vault or markdown folder/file structure in your web
 Its an open source alternative to  [obsidian publish](https://obsidian.md/publish).
 
 Read more about Perlite and staging tips on my blog post: [Perlite on Secure77](https://secure77.de/perlite).
-If you want to discuss about Perlite you can join the [Perlite Discord Server](https://discord.gg/pkJ347ssWT)
+If you want to discuss Perlite you can join the [Perlite Discord Server](https://discord.gg/pkJ347ssWT)
 
 
 ## Demo
