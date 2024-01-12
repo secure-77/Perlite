@@ -3,42 +3,12 @@
     "fileName": "README",
     "relativePath": "README.md",
     "tags": [
-      "testtag",
-      "readme",
-      "dash-after",
       "tag-test"
-    ],
-    "frontmatter": {
-      "publish": false,
-      "position": {
-        "start": {
-          "line": 0,
-          "col": 0,
-          "offset": 0
-        },
-        "end": {
-          "line": 9,
-          "col": 3,
-          "offset": 105
-        }
-      }
-    },
-    "aliases": [
-      "perlite",
-      "metadataTest"
     ],
     "headings": [
       {
         "heading": "Perlite",
         "level": 1
-      },
-      {
-        "heading": "Demo Files",
-        "level": 2
-      },
-      {
-        "heading": "Images",
-        "level": 2
       },
       {
         "heading": "Documentation on Github",
@@ -60,65 +30,18 @@
         "heading": "Safe Mode Test",
         "level": 2
       }
-    ],
-    "links": [
-      {
-        "link": "markdown-sample",
-        "displayText": "Demo Documents/markdown-sample",
-        "relativePath": "Demo Documents/markdown-sample.md"
-      },
-      {
-        "link": "markdown & sample2",
-        "displayText": "Demo Documents/markdown & sample2",
-        "relativePath": "Demo Documents/markdown & sample2.md"
-      },
-      {
-        "link": "markdown-sample3",
-        "displayText": "Call outs",
-        "relativePath": "Demo Documents/markdown-sample3.md"
-      }
     ]
   },
   {
-    "fileName": "markdown-sample3",
-    "relativePath": "Demo Documents/markdown-sample3.md",
+    "fileName": "Markdown Samples",
+    "relativePath": "Demo Documents/Markdown Samples.md",
     "tags": [
-      "tag1",
-      "tag2",
-      "tag-test"
-    ],
-    "frontmatter": {
-      "position": {
-        "start": {
-          "line": 0,
-          "col": 0,
-          "offset": 0
-        },
-        "end": {
-          "line": 5,
-          "col": 3,
-          "offset": 44
-        }
-      }
-    },
-    "backlinks": [
-      {
-        "fileName": "README",
-        "link": "markdown-sample3",
-        "relativePath": "README.md",
-        "displayText": "Call outs"
-      }
-    ]
-  },
-  {
-    "fileName": "markdown & sample2",
-    "relativePath": "Demo Documents/markdown & sample2.md",
-    "tags": [
-      "tag-test"
+      "tag-test",
+      "readme"
     ],
     "headings": [
       {
-        "heading": "h1 Heading 8-)",
+        "heading": "h1 Heading",
         "level": 1
       },
       {
@@ -142,7 +65,11 @@
         "level": 6
       },
       {
-        "heading": "Horizontal Rules",
+        "heading": "Horizontal Rules (--)",
+        "level": 2
+      },
+      {
+        "heading": "Tags",
         "level": 2
       },
       {
@@ -154,8 +81,12 @@
         "level": 2
       },
       {
-        "heading": "Blockquote",
+        "heading": "Paragraphs and Blockquote",
         "level": 2
+      },
+      {
+        "heading": "Blockquote",
+        "level": 3
       },
       {
         "heading": "Code",
@@ -164,39 +95,85 @@
       {
         "heading": "Tables",
         "level": 2
-      },
-      {
-        "heading": "Links",
-        "level": 2
-      },
-      {
-        "heading": "Images",
-        "level": 2
       }
     ],
     "backlinks": [
       {
-        "fileName": "README",
-        "link": "markdown & sample2",
-        "relativePath": "README.md",
-        "displayText": "Demo Documents/markdown & sample2"
+        "fileName": "Links and Embedded",
+        "link": "Markdown Samples",
+        "relativePath": "Demo Documents/Links and Embedded.md"
       },
       {
-        "fileName": "markdown-sample",
-        "link": "markdown & sample2",
-        "relativePath": "Demo Documents/markdown-sample.md"
-      },
-      {
-        "fileName": "markdown-sample",
-        "link": "markdown & sample2",
-        "relativePath": "Demo Documents/markdown-sample.md",
+        "fileName": "Links and Embedded",
+        "link": "Markdown Samples",
+        "relativePath": "Demo Documents/Links and Embedded.md",
         "displayText": "Custom Link Name"
+      },
+      {
+        "fileName": "Links and Embedded",
+        "link": "Markdown Samples",
+        "relativePath": "Demo Documents/Links and Embedded.md",
+        "displayText": "#Tags"
       }
     ]
   },
   {
-    "fileName": "markdown-sample",
-    "relativePath": "Demo Documents/markdown-sample.md",
+    "fileName": "Links and Embedded",
+    "relativePath": "Demo Documents/Links and Embedded.md",
+    "headings": [
+      {
+        "heading": "External Links",
+        "level": 1
+      },
+      {
+        "heading": "Files",
+        "level": 1
+      },
+      {
+        "heading": "Links to Headings",
+        "level": 2
+      },
+      {
+        "heading": "Video",
+        "level": 2
+      },
+      {
+        "heading": "PDF",
+        "level": 2
+      }
+    ],
+    "links": [
+      {
+        "link": "Markdown Samples",
+        "relativePath": "Demo Documents/Markdown Samples.md"
+      },
+      {
+        "link": "Markdown Samples",
+        "displayText": "Custom Link Name",
+        "relativePath": "Demo Documents/Markdown Samples.md"
+      },
+      {
+        "link": "#PDF",
+        "relativePath": "Demo Documents/Links and Embedded.md",
+        "cleanLink": "Links and Embedded",
+        "displayText": "PDF"
+      },
+      {
+        "link": "#PDF",
+        "relativePath": "Demo Documents/Links and Embedded.md",
+        "cleanLink": "Links and Embedded",
+        "displayText": "Scroll to PDF"
+      },
+      {
+        "link": "Markdown Samples",
+        "displayText": "#Tags",
+        "relativePath": "Demo Documents/Markdown Samples.md"
+      }
+    ]
+  },
+  {
+    "fileName": "Latex and Mermaid",
+    "relativePath": "Demo Documents/Latex and Mermaid.md",
     "headings": [
       {
         "heading": "LaTeX",
@@ -205,47 +182,49 @@
       {
         "heading": "Mermaid",
         "level": 2
-      },
+      }
+    ]
+  },
+  {
+    "fileName": "Images",
+    "relativePath": "Demo Documents/Images.md",
+    "headings": [
       {
-        "heading": "Paragraphs",
-        "level": 2
-      },
-      {
-        "heading": "An h1 header",
+        "heading": "Internal Images",
         "level": 1
       },
       {
-        "heading": "An h2 header",
+        "heading": "External images",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "fileName": "Callouts and Frontmatter",
+    "relativePath": "Demo Documents/Callouts and Frontmatter.md",
+    "tags": [
+      "tag1",
+      "tag-test",
+      "readme"
+    ],
+    "frontmatter": {},
+    "aliases": [
+      "Callouts",
+      "Frontsmatter",
+      "Sample"
+    ],
+    "headings": [
+      {
+        "heading": "Blockquots",
+        "level": 1
+      },
+      {
+        "heading": "Callouts",
         "level": 2
       },
       {
-        "heading": "An h3 header",
-        "level": 3
-      }
-    ],
-    "links": [
-      {
-        "link": "markdown & sample2",
-        "relativePath": "Demo Documents/markdown & sample2.md"
-      },
-      {
-        "link": "markdown & sample2",
-        "displayText": "Custom Link Name",
-        "relativePath": "Demo Documents/markdown & sample2.md"
-      },
-      {
-        "link": "#Paragraphs",
-        "relativePath": "Demo Documents/markdown-sample.md",
-        "cleanLink": "markdown-sample",
-        "displayText": "Paragraphs"
-      }
-    ],
-    "backlinks": [
-      {
-        "fileName": "README",
-        "link": "markdown-sample",
-        "relativePath": "README.md",
-        "displayText": "Demo Documents/markdown-sample"
+        "heading": "Collapsible Callouts",
+        "level": 2
       }
     ]
   }

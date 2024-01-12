@@ -1,7 +1,15 @@
 #!/bin/bash
 
 # update JS dependencies
-composer clear-cache
+
+# force update on asset-packagist
+curl https://asset-packagist.org/package/npm-asset/katex -D - >/dev/null
+curl https://asset-packagist.org/package/npm-asset/vis-network -D - >/dev/null
+curl https://asset-packagist.org/package/npm-asset/jquery -D - >/dev/null
+curl https://asset-packagist.org/package/npm-asset/highlightjs--cdn-assets -D - >/dev/null
+
+# composer clear-cache
+# rm -rf vendor
 composer update -v
 
 # update highlight js
@@ -28,7 +36,8 @@ cp vendor/npm-asset/vis-network/dist/dist/vis-network.min.css ../.styles/
 
 # update Parsedown dependencie
 cd ..
-composer clear-cache
+# composer clear-cache
+# rm -rf vendor
 composer update -v
 
 

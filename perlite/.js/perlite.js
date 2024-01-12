@@ -219,17 +219,18 @@ function getContent(str, home = false, popHover = false, anchor = "") {
           $('.callout.is-collapsible').on('click', function (e) {
 
             e.preventDefault();
+            e.stopPropagation();
             target = $(e.target);
-         
-            for (let i = 0; i < 5; i++) {      
-              if (target.is('.callout','is-collapsible')) {
+
+            for (let i = 0; i < 5; i++) {
+              if (target.is('.callout', 'is-collapsible')) {
                 break;
-              } 
+              }
               target = target.parent()
             }
 
             calloutContent = target.find('.callout-content')
-            calloutIcon = target.find('.callout-fold')       
+            calloutIcon = target.find('.callout-fold')
 
             if (calloutContent.hasClass('is-collapsed-callout')) {
               calloutContent.removeClass('is-collapsed-callout');
@@ -1691,6 +1692,21 @@ $(document).ready(function () {
   $('.clickable-icon.side-dock-ribbon-action[aria-label="Settings"]').click(function (e) {
 
     $("#settings").css("display", "flex");
+
+  });
+
+  // open random note
+  $('.clickable-icon.side-dock-ribbon-action[aria-label="Open random note"]').click(function (e) {
+
+    var nodes = JSON.parse($("#allGraphNodes").text())
+    nodesCount = nodes.length
+
+    min = Math.ceil(0);
+    max = Math.floor(nodesCount);
+    randomNode = Math.floor(Math.random() * (max - min) + min)
+    target = '/' + nodes[randomNode]['title']
+    target = encodeURIComponent(target);
+    getContent(target)
 
   });
 

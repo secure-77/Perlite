@@ -1,4 +1,4 @@
-# h1 Heading 8-)
+# h1 Heading 
 ## h2 Heading
 ### h3 Heading
 #### h4 Heading
@@ -6,13 +6,18 @@
 ###### h6 Heading
 
 
-## Horizontal Rules
-
-___
-
+## Horizontal Rules (--)
 ---
-#tag-test
+
+and `___`
+__________
+
+and `***`
+
 ***
+## Tags
+
+#tag-test #readme 
 
 ## Emphasis
 
@@ -26,6 +31,9 @@ _This is italic text_
 
 ~~Strikethrough~~
 
+ `This is monospace`
+
+Unicode is supported. ☺
 
 ## Lists
 
@@ -54,9 +62,62 @@ Start numbering with offset:
 57. foo
 1. bar
 
-## Blockquote
+Nested
+
+ 1. First, get these ingredients:
+
+      * carrots
+      * celery
+      * lentils
+
+ 2. Boil some water.
+
+ 3. Dump everything in the pot and follow
+    this algorithm:
+
+        find wooden spoon
+        uncover pot
+        stir
+        cover pot
+        balance wooden spoon precariously on pot handle
+        wait 10 minutes
+        goto first step (or shut off burner when done)
+
+    Do not bump wooden spoon or it will fall.
+
+Notice again how text always lines up on 4-space indents (including
+that last line which continues item 3 above).
+
+Definition list
+
+apples
+  : Good for making applesauce.
+oranges
+  : Citrus!
+tomatoes
+  : There's no "e" in tomatoe.
+
+## Paragraphs and Blockquote
+are separated by a blank line.
+
+2nd paragraph.  Itemized lists look like:
+
+  * this one
+  * that one
+  * the other one
+
+### Blockquote
 
 > Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et gravida diam, et varius magna. Proin id felis quis nisl gravida auctor a eu est. In viverra dui viverra placerat cursus. Curabitur non commodo mi. Mauris volutpat nisl vitae nulla efficitur condimentum. Nulla facilisi. Maecenas malesuada purus mi, eget fringilla quam ultrices sit amet.
+
+
+Another one
+
+> Block quotes are
+> written like so.
+>
+> They can span multiple paragraphs,
+> if you like.
 
 ## Code
 
@@ -102,26 +163,4 @@ Right aligned columns
 | engine | engine to be used for processing templates. Handlebars is the default. |
 | ext    | extension to be used for dest files. |
 
-
-## Links
-
-[link text](http://dev.nodeca.com)
-
-[link with title](http://nodeca.github.io/pica/demo/ "title text!")
-
-Autoconverted link https://github.com/nodeca/pica (enable linkify to see)
-
-
-## Images
-
-![Minion](https://octodex.github.com/images/minion.png)
-![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")
-
-Like links, Images also have a footnote style syntax
-
-![Alt text][id]
-
-With a reference later in the document defining the URL location:
-
-[id]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"
 

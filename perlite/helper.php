@@ -1,12 +1,16 @@
 <?php
 
 /*!
-  * Perlite v1.5.5 (https://github.com/secure-77/Perlite)
-  * Author: sec77 (https://secure77.de)
-  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
-*/
+ * Perlite v1.5.8 (https://github.com/secure-77/Perlite)
+ * Author: sec77 (https://secure77.de)
+ * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
+ */
 
 use Perlite\PerliteParsedown;
+
+//
+// default settings and variables
+//
 
 
 $avFiles = array();
@@ -17,16 +21,18 @@ $rootDir = empty(getenv('NOTES_PATH')) ? 'Demo' : getenv('NOTES_PATH');
 // replace with your Vault Name
 $vaultName = $rootDir;
 
-// default settings and variables
+// hide folders
 $hideFolders = getenv('HIDE_FOLDERS');
 
+// use absolut paths instead of relative paths
+$relPathes = empty(getenv('ABSOLUTE_PATHES')) ? false : filter_var(getenv('RELATIVE_PATHES'), FILTER_VALIDATE_BOOLEAN);
 
 // Meta Tags infos
 $siteTitle = empty(getenv('SITE_TITLE')) ? 'Perlite' : getenv('SITE_TITLE');
 $siteType = empty(getenv('SITE_TYPE')) ? 'article' : getenv('SITE_TYPE');
 $siteImage = empty(getenv('SITE_IMAGE')) ? 'https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png' : getenv('SITE_IMAGE');
 $siteURL = empty(getenv('SITE_URL')) ? 'https://perlite.secure77.de' : getenv('SITE_URL');
-$siteDescription = empty(getenv('SITE_DESC')) ?  'A web based markdown viewer optimized for Obsidian Notes' : getenv('SITE_DESC');
+$siteDescription = empty(getenv('SITE_DESC')) ? 'A web based markdown viewer optimized for Obsidian Notes' : getenv('SITE_DESC');
 $siteName = empty(getenv('SITE_NAME')) ? 'Perlite Demo' : getenv('SITE_NAME');
 $siteTwitter = empty(getenv('SITE_TWITTER')) ? '@secure_sec77' : getenv('SITE_TWITTER');
 
@@ -37,7 +43,7 @@ $tempPath = empty(getenv('TEMP_PATH')) ? sys_get_temp_dir() : getenv('TEMP_PATH'
 $lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
 
 // file types
-$allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf'] : explode(",",getenv('ALLOWED_FILE_LINK_TYPES'));
+$allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf'] : explode(",", getenv('ALLOWED_FILE_LINK_TYPES'));
 
 // disable PopHovers
 $disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? "false" : getenv('DISABLE_POP_HOVER');
@@ -246,7 +252,7 @@ function search($dir, $searchfor, $folder = '')
 					// escape found string + highlight text
 					$cleaned = array_map("htmlspecialchars", $matches[0]);
 					//$cleaned =
-					$out = str_ireplace($searchfor, '<span class="search-result-file-matched-text">' . $searchfor . '</span>',  $cleaned);
+					$out = str_ireplace($searchfor, '<span class="search-result-file-matched-text">' . $searchfor . '</span>', $cleaned);
 					$text = implode('</span></div><div class="search-result-file-match"><span>', $out);
 					$result .= $text . '</span></div>
 
@@ -342,8 +348,8 @@ function getfullGraph($rootDir)
 	global $tempPath;
 	global $vaultName;
 	$jsonMetadaFile = $rootDir . '/metadata.json';
-	$metadaTempFile = $tempPath.'/metadata_'.$vaultName.'.temp';
-	$metadaTempFileSum = $tempPath.'/metadata_'.$vaultName.'.md5';
+	$metadaTempFile = $tempPath . '/metadata_' . $vaultName . '.temp';
+	$metadaTempFileSum = $tempPath . '/metadata_' . $vaultName . '.md5';
 
 
 	if (!is_file($jsonMetadaFile)) {
@@ -354,7 +360,7 @@ function getfullGraph($rootDir)
 	if (is_file($metadaTempFileSum) && is_file($metadaTempFile)) {
 		$md5_envsum = file_get_contents($metadaTempFileSum);
 		$md5_filesum = md5_file($jsonMetadaFile);
-		
+
 		if ($md5_envsum === $md5_filesum) {
 			if (!is_file($metadaTempFile)) {
 				return;
@@ -471,7 +477,7 @@ function getfullGraph($rootDir)
 	$graphHTML = '<div id="allGraphNodes" style="display: none">' . $myGraphNodes . '</div><div id="allGraphEdges" style="display: none">' . $myGraphEdges . '</div>';
 	fwrite($metadaTempFile_handler, $graphHTML);
 	fclose($metadaTempFile_handler);
-	
+
 	$metadaTempFile_handler = fopen($metadaTempFileSum, "w") or die("Unable to open file!");
 	$md5_filesum = md5_file($jsonMetadaFile);
 	fwrite($metadaTempFile_handler, $md5_filesum);
@@ -554,23 +560,23 @@ function loadSettings($rootDir)
 		}
 	}
 
-	
+
 	// Meta Tags
-	$defaultSettings = 
-	'<!--  Essential META Tags -->
-    <meta property="og:title" content="'.$siteTitle.'">
-    <meta property="og:type" content="'.$siteType.'" />
-    <meta property="og:image" content="'.$siteImage.'">
-    <meta property="og:url" content="'.$siteURL.'">
+	$defaultSettings =
+		'<!--  Essential META Tags -->
+    <meta property="og:title" content="' . $siteTitle . '">
+    <meta property="og:type" content="' . $siteType . '" />
+    <meta property="og:image" content="' . $siteImage . '">
+    <meta property="og:url" content="' . $siteURL . '">
     <meta name="twitter:card" content="summary_large_image">
 
     <!--  Non-Essential, But Recommended -->
-    <meta property="og:description" content="'.$siteDescription.'">
-    <meta property="og:site_name" content="'.$siteName.'">
+    <meta property="og:description" content="' . $siteDescription . '">
+    <meta property="og:site_name" content="' . $siteName . '">
     <meta name="twitter:image:alt" content="Page Callout">
 
     <!--  Non-Essential, But Required for Analytics -->
-    <meta name="twitter:site" content="'.$siteTwitter.'">';
+    <meta name="twitter:site" content="' . $siteTwitter . '">';
 
 	// default settings
 	$defaultSettings .= '<link id="disablePopHovers" data-option="' . $disablePopHovers . '"</link>';

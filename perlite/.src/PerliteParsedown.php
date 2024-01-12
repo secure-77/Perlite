@@ -1,10 +1,10 @@
 <?php
 
 /*!
-  * Perlite v1.5.5 (https://github.com/secure-77/Perlite)
-  * Author: sec77 (https://secure77.de)
-  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
-*/
+ * Perlite v1.5.8 (https://github.com/secure-77/Perlite)
+ * Author: sec77 (https://secure77.de)
+ * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
+ */
 
 namespace Perlite;
 
@@ -97,7 +97,7 @@ class PerliteParsedown extends Parsedown
                 <div class="metadata-property-value">
                 <div class="multi-select-container">';
                 foreach ($parsed["aliases"] as $alias) {
-                    $yamlText .=  '<div class="multi-select-pill multi-select-pill-content">' . $alias . '</div>';
+                    $yamlText .= '<div class="multi-select-pill multi-select-pill-content">' . $alias . '</div>';
                 }
 
                 $yamlText .= '</div></div></div>';
@@ -171,7 +171,7 @@ class PerliteParsedown extends Parsedown
                 $title = $matches[2];
 
                 $calloutTitle = $title ?: ucfirst($type);
-                
+
                 # Handle collapsible callouts
                 $calloutclass = 'callout';
                 $calloutStyle = 'unset';
@@ -181,16 +181,17 @@ class PerliteParsedown extends Parsedown
                 );
                 $isCollapsed = '';
                 $needCollapseIcon = False;
+                $isCollapsedIcon = '';
 
-                if (substr($calloutTitle,0,1) == '+') {
-                    $calloutTitle = substr($calloutTitle,1);
+                if (substr($calloutTitle, 0, 1) == '+') {
+                    $calloutTitle = substr($calloutTitle, 1);
                     $calloutclass = 'callout is-collapsible';
                     $calloutStyle = 'unset';
                     $needCollapseIcon = True;
                 }
 
-                if (substr($calloutTitle,0,1) == '-') {
-                    $calloutTitle = substr($calloutTitle,1);
+                if (substr($calloutTitle, 0, 1) == '-') {
+                    $calloutTitle = substr($calloutTitle, 1);
                     $calloutclass = 'callout is-collapsible is-collapsed';
                     $calloutStyle = 'none';
                     $isCollapsed = 'is-collapsed-callout';
@@ -232,7 +233,7 @@ class PerliteParsedown extends Parsedown
                         'name' => 'div',
                         'attributes' => array(
                             'data-callout' => $type,
-                            'class' =>  $calloutclass
+                            'class' => $calloutclass
                         ),
                         'elements' => array(
                             array(
@@ -505,7 +506,7 @@ class PerliteParsedown extends Parsedown
         if (preg_match("/(\\$\\$[^ ].*?\\$\\$)/", $Excerpt['text'], $matches)) {
 
             $katex = $matches[0];
-            
+
         } else if (preg_match("/(\\$[^ ].*?\\$)/", $Excerpt['text'], $matches)) {
 
             $katex = $matches[0];
@@ -518,7 +519,7 @@ class PerliteParsedown extends Parsedown
             'extent' => strlen($katex),
             'element' => array(
                 'name' => 'katex',
-                'text' =>  $katex,
+                'text' => $katex,
             ),
         );
     }
@@ -535,7 +536,7 @@ class PerliteParsedown extends Parsedown
         if ($len == 0) {
             return;
         }
-        if (substr(trim($Excerpt['context']),-1) === ']') {
+        if (substr(trim($Excerpt['context']), -1) === ']') {
             return;
         }
 

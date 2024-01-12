@@ -18,3 +18,11 @@ _Notes
 perlite/.scripts/vendor
 perlite/.scripts/release.sh
 perlite/.scripts/canvas.js
+perlite/Link Tests/root_image.png
+perlite/Link Tests/folder1/image_parentFolder.png
+perlite/Link Tests/folder1/folder 2/image_sameFolder.png
+perlite/Link Tests/folder1/folder 2/parent_andRoot_folder_test.md
+perlite/Link Tests/folder1/folder 2/same_folder_test.md
+perlite/Link Tests/folder1/folder 2/subfolder_test.md
+perlite/Link Tests/folder1/folder 2/docs/image_subFolder.png
+perlite/Link Tests/folder1/folder 2/docs/subfolder_document.md

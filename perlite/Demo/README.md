@@ -1,18 +1,8 @@
----
-tags: 
-- testtag
-- readme
-- dash-after
-publish: false
-aliases: 
-- perlite
-- metadataTest
----
 
 # Perlite
 
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/secure-77/perlite) ![GitHub](https://img.shields.io/github/license/secure-77/perlite) ![GitHub last commit](https://img.shields.io/github/last-commit/secure-77/Perlite)
+![[latest by date)](latest by date|GitHub release (latest by date)]])) ![GitHub](https://img.shields.io/github/license/secure-77/perlite) ![GitHub last commit](https://img.shields.io/github/last-commit/secure-77/Perlite)
 
 #tag-test
 
@@ -26,18 +16,6 @@ Read more about Perlite and staging tips on my blog post: [Perlite on Secure77](
 
 If you want to discuss about Perlite you can join the thread in the [Obsidian Forum](https://forum.obsidian.md/t/perlite-publish-your-notes-to-your-own-web-server/21712) or join the [Perlite Discord Server](https://discord.gg/pkJ347ssWT)
 
-## Demo Files
-
-[[Demo Documents/markdown-sample#Paragraphs]]
-
-[[Demo Documents/markdown & sample2]]
-
-[[Demo Documents/markdown-sample3|Call outs]]
-
-[[Demo Documents/pdf-test.pdf|PDF Alias]]
-
-
-https://perlite.secure77.de/?link=%2FDemo%20Documents%2Fmarkdown-sample#Paragraphs
 
 ## Documentation on Github
 

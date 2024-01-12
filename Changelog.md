@@ -1,11 +1,20 @@
 ## 1.5.8
-- Merged PR #111 thanks to @selfiens
-- Merged PR #112 thanks to @selfiens
-- Merged PR #106 thanks to @Shardbyte
-- Updated app.css
-- Fixed issue [#107](https://github.com/secure-77/Perlite/issues/107)
-- Implemented issue [#92](https://github.com/secure-77/Perlite/issues/92)
-- Implemented issue [#113](https://github.com/secure-77/Perlite/issues/113)
+- merged PR #111 thanks to @selfiens
+- merged PR #112 thanks to @selfiens
+- merged PR #106 thanks to @Shardbyte
+- updated obsidian app.css
+- fixed yaml frontmatter [#107](https://github.com/secure-77/Perlite/issues/107)
+- implemented support for alternate image text [#92](https://github.com/secure-77/Perlite/issues/92)
+- implemented support for collapsed callouts [#113](https://github.com/secure-77/Perlite/issues/113)
+- implemented support for embedded pdf and videos [#105](https://github.com/secure-77/Perlite/issues/105)
+- implemented random node function [#109](https://github.com/secure-77/Perlite/issues/109)
+- implemented support for absolut pathes [#90](https://github.com/secure-77/Perlite/issues/90)
+- updated Demo Documetns and Themes
+- updated build.sh to force composer updates
+- updated highlight.js to 11.9.0
+- updated katex to 0.16.9
+- updated vis-network to 9.1.9
+
 
 
 ## 1.5.7
