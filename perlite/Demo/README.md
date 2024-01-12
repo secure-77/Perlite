@@ -10,11 +10,11 @@ A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 
 Just put your whole Obsidian vault or markdown folder/file structure in your web directory. The page builds itself. 
 
-Its an open source alternative to  [obisidian publish](https://obsidian.md/publish).
+It's an open source alternative to [Obsidian publish](https://obsidian.md/publish).
 
 Read more about Perlite and staging tips on my blog post: [Perlite on Secure77](https://secure77.de/perlite).
 
-If you want to discuss about Perlite you can join the thread in the [Obsidian Forum](https://forum.obsidian.md/t/perlite-publish-your-notes-to-your-own-web-server/21712) or join the [Perlite Discord Server](https://discord.gg/pkJ347ssWT)
+If you want to discuss Perlite you can join the thread in the [Obsidian Forum](https://forum.obsidian.md/t/perlite-publish-your-notes-to-your-own-web-server/21712) or join the [Perlite Discord Server](https://discord.gg/pkJ347ssWT)
 
 
 ## Documentation on Github
