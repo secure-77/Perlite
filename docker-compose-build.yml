@@ -9,7 +9,7 @@ services:
       - HIDE_FOLDERS=docs,private,trash
       - LINE_BREAKS=true
       - ABSOLUTE_PATHES=false
-      - ALLOWED_FILE_LINK_TYPES=pdf
+      - ALLOWED_FILE_LINK_TYPES=pdf,mp4
       - DISABLE_POP_HOVER=true
       - SHOW_TOC=true
       - HOME_FILE=README
