@@ -235,6 +235,34 @@ $jsonGraphData = getfullGraph($rootDir);
                             <div class="workspace-leaf">
                                 <hr class="workspace-leaf-resize-handle">
                                 <div class="workspace-leaf-content" data-type="file-explorer">
+                                    <?php echo $customSection; ?>
+                                    <!-- custom page sidebar -->
+                                    <!-- <h3 class="sm-site-title"> Perlite</h3> -->
+                                    <!-- <div class="sm-site-title">&nbsp;</div>
+                                    <div class="custom-page">
+
+                                    
+                                    
+                                    <img class="custom-page-logo" src="logo1.jpg" alt="Custom Logo">
+                                    <div> &nbsp;</div>
+                                    <div class="sm-site-desc"><i>IT-Security Notes and Writeups</i></div>
+
+                                    <div><ul class="social-media-list">
+                                        <li><a href="https://github.com/secure-77"><img class="social-logo" src="github-color.svg" alt="Custom Logo"></a></li>
+                                        <li><a href="https://twitter.com/secure_sec77"><img class="social-logo" src="x-color.svg" alt="Custom Logo"></a></li>
+                                        <li><a href="https://secure77.de"><img class="social-logo" src="fontawesome-color.svg" alt="Custom Logo"></a></li>
+                                    </ul> -->
+                                    
+                                    <!-- <div><ul class="social-media-list">
+                                        <li><img class="social-logo" src="github-color.svg" alt="Custom Logo"> &nbsp;<a href="https://github.com/secure-77">Secure-77</a></li>
+                                        <li><img class="social-logo" src="x-color.svg" alt="Custom Logo"> &nbsp;<a href="https://github.com/secure-77">Twitter (X)</a></li>
+                                        <li><img class="social-logo" src="fontawesome-color.svg" alt="Custom Logo"> &nbsp;<a href="https://github.com/secure-77">secure77.de</a></li>
+                                    </ul>
+ 
+                                    </div>
+                                    </div> -->
+                                
+                                    <!-- nav sidebar-left -->
                                     <div class="nav-header">
                                         <div class="nav-buttons-container">
                                             <div class="clickable-icon nav-action-button" aria-label="Collapse all"
@@ -703,8 +731,13 @@ $jsonGraphData = getfullGraph($rootDir);
                                         </div>
 
                                         <div class="backlink-pane node-insert-event" style="position: relative;">
-                                            <div id="outline" class="outline" style="display: none">
-                                                <h3>Table of Contents</h3>
+                                        <div class="sidebar-graph">
+                                        <h3>Local Graph</h3>    
+                                        </div>
+                                        <div id="mynetwork"></div>
+                                        
+                                        <div id="outline" class="outline" style="display: none">
+                                                <h3>Content</h3>
 
                                                 <div id="toc"></div>
 
@@ -717,12 +750,12 @@ $jsonGraphData = getfullGraph($rootDir);
                                                         class="svg-icon right-triangle">
                                                         <path d="M3 8L12 17L21 8"></path>
                                                     </svg></span>
-                                                <div class="tree-item-inner">Linked mentions</div>
+                                                    <div class="tree-item-inner">Linked mentions</div>
                                                 <div class="tree-item-flair-outer"><span class="tree-item-flair"
                                                         id="nodeCount">0</span></div>
 
                                             </div>
-                                            <div id="mynetwork"></div>
+                                            
 
                                         </div>
                                     </div>

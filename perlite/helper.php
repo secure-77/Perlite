@@ -34,7 +34,7 @@ $siteImage = empty(getenv('SITE_IMAGE')) ? 'https://raw.githubusercontent.com/se
 $siteURL = empty(getenv('SITE_URL')) ? 'https://perlite.secure77.de' : getenv('SITE_URL');
 $siteDescription = empty(getenv('SITE_DESC')) ? 'A web based markdown viewer optimized for Obsidian Notes' : getenv('SITE_DESC');
 $siteName = empty(getenv('SITE_NAME')) ? 'Perlite Demo' : getenv('SITE_NAME');
-$siteTwitter = empty(getenv('SITE_TWITTER')) ? '@secure_sec77' : getenv('SITE_TWITTER');
+$siteTwitter = empty(getenv('SITE_TWITTER')) ? '@obsdmd' : getenv('SITE_TWITTER');
 
 // Temp PATH for graph linking temp files
 $tempPath = empty(getenv('TEMP_PATH')) ? sys_get_temp_dir() : getenv('TEMP_PATH');
@@ -59,6 +59,32 @@ $font_size = empty(getenv('FONT_SIZE')) ? "15" : getenv('FONT_SIZE');
 
 // Set safe mode from environment variable
 $htmlSafeMode = empty(getenv('HTML_SAFE_MODE')) ? true : filter_var(getenv('HTML_SAFE_MODE'), FILTER_VALIDATE_BOOLEAN);
+
+
+// Custom Site Section
+
+$customSection = '';
+if (getenv('SITE_LOGO')) {
+	$customSection = '<div class="sm-site-title">&nbsp;</div>
+                    <div class="custom-page">
+					<img class="custom-page-logo" src="'. getenv('SITE_LOGO') .'" alt="Custom Logo">
+					<div> &nbsp;</div>';
+	
+					$customSection = $customSection . '<div class="sm-site-desc"><i>'. $siteDescription . '</i></div>
+
+					<div><ul class="social-media-list">';
+					if (getenv('SITE_GITHUB')) {
+						$customSection = $customSection . '<li><a href="'.getenv('SITE_GITHUB').'"><img class="social-logo" src="github-color.svg" alt="Custom Logo"></a></li>';
+					}
+					
+					// set custom homepage or current site url
+					$siteHomepage = empty(getenv('SITE_HOMEPAGE')) ? $siteURL : getenv('SITE_HOMEPAGE');
+					$customSection = $customSection . '<li><a href="https://twitter.com/'. substr($siteTwitter,1) .'"><img class="social-logo" src="x-color.svg" alt="Custom Logo"></a></li>
+						<li><a href="'.$siteHomepage.'"><img class="social-logo" src="fontawesome-color.svg" alt="Custom Logo"></a></li>
+					</ul>';
+
+	$customSection = $customSection . '</div></div>';
+}
 
 
 $about = '.about';

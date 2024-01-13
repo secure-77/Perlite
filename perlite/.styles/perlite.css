@@ -5,6 +5,42 @@
   left: 5px;
 }
 
+.custom-page {
+  text-align: center;
+  border-bottom: var(--divider-width) solid var(--divider-color);
+}
+
+.custom-page-logo {
+  border-radius: 50%;
+  width: 130px;
+}
+
+.social-logo {
+  width: 20px;
+}
+
+.social-media-list {
+  padding-left: 0px;
+  list-style-type: none;
+}
+
+.social-media-list li {
+  display: inline-block;
+  padding-right: 10px;
+}
+
+.sm-site-title {
+  padding-top: 0px;
+  padding-bottom: 10px;
+}
+
+.sm-site-desc {
+  padding-bottom: 10px;
+  max-width: 80%;
+  display: inline-block;
+}
+
+
 .sidebar-toggle-button.mod-left {
   position: relative;
   width: unset;
@@ -19,7 +55,12 @@
 }
 
 /* fix graph canvas height */
-#mynetwork, #graph_all{
+#mynetwork {
+  border: calc(0.5px + var(--divider-width)) solid var(--divider-color);
+  height: 30%;
+}
+
+#graph_all{
   height: 100%;
 }
 
@@ -62,8 +103,13 @@ h1, h2, h3, h4 {
   padding-top: 30px;
 }
 
-#outline h3{
+.sidebar-graph h3{
   padding-top: 0px !important;
+  margin-top: 0px !important;
+}
+
+.toc-item {
+  padding-left: 10px !important;
 }
 
 .metadata-text {

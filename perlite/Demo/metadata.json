@@ -108,12 +108,6 @@
         "link": "Markdown Samples",
         "relativePath": "Demo Documents/Links and Embedded.md",
         "displayText": "Custom Link Name"
-      },
-      {
-        "fileName": "Links and Embedded",
-        "link": "Markdown Samples",
-        "relativePath": "Demo Documents/Links and Embedded.md",
-        "displayText": "#Tags"
       }
     ]
   },
@@ -163,11 +157,6 @@
         "relativePath": "Demo Documents/Links and Embedded.md",
         "cleanLink": "Links and Embedded",
         "displayText": "Scroll to PDF"
-      },
-      {
-        "link": "Markdown Samples",
-        "displayText": "#Tags",
-        "relativePath": "Demo Documents/Markdown Samples.md"
       }
     ]
   },

@@ -123,17 +123,16 @@ function getContent(str, home = false, popHover = false, anchor = "") {
                 if (openLevel != closeLevel) {
                   return str;
                 }
-
                 if (openLevel > level) {
-                  toc += (new Array(openLevel - level + 1)).join('<div class="tree-item"><div class="tree-item-children">');
+                  toc += (new Array(openLevel - level + 1)).join('<div class="tree-item tree-item-children">');
                 } else if (openLevel < level) {
-                  toc += (new Array(level - openLevel + 1)).join("</div></div>");
+                  toc += (new Array(level - openLevel + 1)).join("</div>");
                 }
 
                 level = parseInt(openLevel);
 
                 var anchor = titleText.replace(/ /g, "_");
-                toc += '<div class="tree-item-self is-clickable"><a href="#' + anchor + '">' + titleText
+                toc += '<div class="tree-item-self is-clickable toc-item"><a href="#' + anchor + '">' + titleText
                   + '</a></div>';
 
                 return "<h" + openLevel + "><a name='" + anchor + "' >"
@@ -618,7 +617,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
     var myNodes = [];
     var myEdges = [];
 
-    options['edges']['length'] = 300;
+    options['edges']['length'] = 250;
 
     // add current node
     for (const x in jsonNodes) {
@@ -1459,7 +1458,7 @@ $(document).ready(function () {
     $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
     $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'unset')
 
-    $('#mynetwork').css('display', 'none')
+    //$('#mynetwork').css('display', 'none')
     $('#outline').css('display', 'unset')
 
   }
