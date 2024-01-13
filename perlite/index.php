@@ -731,17 +731,18 @@ $jsonGraphData = getfullGraph($rootDir);
                                         </div>
 
                                         <div class="backlink-pane node-insert-event" style="position: relative;">
-                                        <div class="sidebar-graph">
-                                        <h3>Local Graph</h3>    
-                                        </div>
-                                        <div id="mynetwork"></div>
+
                                         
                                         <div id="outline" class="outline" style="display: none">
                                                 <h3>Content</h3>
 
                                                 <div id="toc"></div>
 
-                                            </div>
+                                        </div>
+                                        <div class="sidebar-graph">
+                                        <h3>Local Graph</h3>    
+                                        </div>
+                                        <div id="mynetwork"></div>
                                             <div class="tree-item-self" aria-label-position="left"><span
                                                     class="tree-item-icon collapse-icon"><svg
                                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24"

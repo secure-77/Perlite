@@ -841,6 +841,7 @@ function toggleSearchEntry(e) {
  */
 function toggleNavFolder(e) {
   el = $(e.target);
+  console.log(el)
 
   if (el.hasClass('nav-folder-title-content')) {
     elIcon = el.prev()
@@ -857,6 +858,9 @@ function toggleNavFolder(e) {
   } else if (el.hasClass('svg-icon right-triangle')) {
     elIcon = el.parent()
     el = el.parent().parent()
+    el = el.next(el)
+  } else if (el.is('path')) {
+    el = el.parent().parent().parent()
     el = el.next(el)
 
   }
