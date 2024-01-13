@@ -734,14 +734,16 @@ $jsonGraphData = getfullGraph($rootDir);
 
                                         
                                         <div id="outline" class="outline" style="display: none">
-                                                <h3>Content</h3>
+                                        <div class="sidebar-top">        
+                                        <h3>Content</h3>
+</div>
 
                                                 <div id="toc"></div>
 
                                         </div>
-                                        <div class="sidebar-graph">
-                                        <h3>Local Graph</h3>    
-                                        </div>
+                                        
+                                        <h3>Graph</h3>    
+                                        
                                         <div id="mynetwork"></div>
                                             <div class="tree-item-self" aria-label-position="left"><span
                                                     class="tree-item-icon collapse-icon"><svg
