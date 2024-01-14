@@ -74,13 +74,13 @@ if (getenv('SITE_LOGO')) {
 
 					<div><ul class="social-media-list">';
 					if (getenv('SITE_GITHUB')) {
-						$customSection = $customSection . '<li><a href="'.getenv('SITE_GITHUB').'"><img class="social-logo" src="github-color.svg" alt="Custom Logo"></a></li>';
+						$customSection = $customSection . '<li><a href="'.getenv('SITE_GITHUB').'"><img class="social-logo" src=".styles\github-color.svg" alt="Github Logo"></a></li>';
 					}
 					
 					// set custom homepage or current site url
 					$siteHomepage = empty(getenv('SITE_HOMEPAGE')) ? $siteURL : getenv('SITE_HOMEPAGE');
-					$customSection = $customSection . '<li><a href="https://twitter.com/'. substr($siteTwitter,1) .'"><img class="social-logo" src="x-color.svg" alt="Custom Logo"></a></li>
-						<li><a href="'.$siteHomepage.'"><img class="social-logo" src="fontawesome-color.svg" alt="Custom Logo"></a></li>
+					$customSection = $customSection . '<li><a href="https://twitter.com/'. substr($siteTwitter,1) .'"><img class="social-logo" src=".styles\x-color.svg" alt="X Logo"></a></li>
+						<li><a href="'.$siteHomepage.'"><img class="social-logo" src=".styles\fontawesome-color.svg" alt="Homepage Logo"></a></li>
 					</ul>';
 
 	$customSection = $customSection . '</div></div>';
