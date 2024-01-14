@@ -12,6 +12,7 @@ services:
       - ALLOWED_FILE_LINK_TYPES=pdf,mp4
       - DISABLE_POP_HOVER=true
       - SHOW_TOC=true
+      - SHOW_LOCAL_GRAPH=true
       - HOME_FILE=README
       - FONT_SIZE=15
       - HTML_SAFE_MODE=true

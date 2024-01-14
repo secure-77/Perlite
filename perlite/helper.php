@@ -43,13 +43,16 @@ $tempPath = empty(getenv('TEMP_PATH')) ? sys_get_temp_dir() : getenv('TEMP_PATH'
 $lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
 
 // file types
-$allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf','mp4'] : explode(",", getenv('ALLOWED_FILE_LINK_TYPES'));
+$allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf', 'mp4'] : explode(",", getenv('ALLOWED_FILE_LINK_TYPES'));
 
 // disable PopHovers
 $disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? "false" : getenv('DISABLE_POP_HOVER');
 
-// show TOC instead of graph
-$showTOC = empty(getenv('SHOW_TOC')) ? "false" : getenv('SHOW_TOC');
+// show TOC
+$showTOC = empty(getenv('SHOW_TOC')) ? "true" : getenv('SHOW_TOC');
+
+// show local Graph
+$showLocalGraph = empty(getenv('SHOW_LOCAL_GRAPH')) ? "true" : getenv('SHOW_TOC');
 
 // Set home page from environment variable
 $index = empty(getenv('HOME_FILE')) ? "README" : getenv('HOME_FILE');
@@ -67,20 +70,20 @@ $customSection = '';
 if (getenv('SITE_LOGO')) {
 	$customSection = '<div class="sm-site-title">&nbsp;</div>
                     <div class="custom-page">
-					<img class="custom-page-logo" src="'. getenv('SITE_LOGO') .'" alt="Custom Logo">
+					<img class="custom-page-logo" src="' . getenv('SITE_LOGO') . '" alt="Custom Logo">
 					<div> &nbsp;</div>';
-	
-					$customSection = $customSection . '<div class="sm-site-desc"><i>'. $siteDescription . '</i></div>
+
+	$customSection = $customSection . '<div class="sm-site-desc"><i>' . $siteDescription . '</i></div>
 
 					<div><ul class="social-media-list">';
-					if (getenv('SITE_GITHUB')) {
-						$customSection = $customSection . '<li><a href="'.getenv('SITE_GITHUB').'"><img class="social-logo" src=".styles\github-color.svg" alt="Github Logo"></a></li>';
-					}
-					
-					// set custom homepage or current site url
-					$siteHomepage = empty(getenv('SITE_HOMEPAGE')) ? $siteURL : getenv('SITE_HOMEPAGE');
-					$customSection = $customSection . '<li><a href="https://twitter.com/'. substr($siteTwitter,1) .'"><img class="social-logo" src=".styles\x-color.svg" alt="X Logo"></a></li>
-						<li><a href="'.$siteHomepage.'"><img class="social-logo" src=".styles\fontawesome-color.svg" alt="Homepage Logo"></a></li>
+	if (getenv('SITE_GITHUB')) {
+		$customSection = $customSection . '<li><a href="' . getenv('SITE_GITHUB') . '"><img class="social-logo" src=".styles\github-color.svg" alt="Github Logo"></a></li>';
+	}
+
+	// set custom homepage or current site url
+	$siteHomepage = empty(getenv('SITE_HOMEPAGE')) ? $siteURL : getenv('SITE_HOMEPAGE');
+	$customSection = $customSection . '<li><a href="https://twitter.com/' . substr($siteTwitter, 1) . '"><img class="social-logo" src=".styles\x-color.svg" alt="X Logo"></a></li>
+						<li><a href="' . $siteHomepage . '"><img class="social-logo" src=".styles\fontawesome-color.svg" alt="Homepage Logo"></a></li>
 					</ul>';
 
 	$customSection = $customSection . '</div></div>';
@@ -538,6 +541,7 @@ function loadSettings($rootDir)
 
 	global $disablePopHovers;
 	global $showTOC;
+	global $showLocalGraph;
 	global $index;
 	global $siteTitle;
 	global $siteType;
@@ -607,6 +611,7 @@ function loadSettings($rootDir)
 	// default settings
 	$defaultSettings .= '<link id="disablePopHovers" data-option="' . $disablePopHovers . '"</link>';
 	$defaultSettings .= '<link id="showTOC" data-option="' . $showTOC . '"</link>';
+	$defaultSettings .= '<link id="showLocalGraph" data-option="' . $showLocalGraph . '"</link>';
 	$defaultSettings .= '<link id="index" data-option="' . $index . '"</link>';
 
 

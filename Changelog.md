@@ -16,6 +16,7 @@
 - updated vis-network to 9.1.9
 - added new custom logo and social media section
 - fixed issue Folder arrow marker randomly disappears [#94](https://github.com/secure-77/Perlite/issues/94)
+- changed to show TOC and local Graph at the same time
 
 
 ## 1.5.7

@@ -252,7 +252,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                         <li><a href="https://twitter.com/secure_sec77"><img class="social-logo" src="x-color.svg" alt="Custom Logo"></a></li>
                                         <li><a href="https://secure77.de"><img class="social-logo" src="fontawesome-color.svg" alt="Custom Logo"></a></li>
                                     </ul> -->
-                                    
+
                                     <!-- <div><ul class="social-media-list">
                                         <li><img class="social-logo" src="github-color.svg" alt="Custom Logo"> &nbsp;<a href="https://github.com/secure-77">Secure-77</a></li>
                                         <li><img class="social-logo" src="x-color.svg" alt="Custom Logo"> &nbsp;<a href="https://github.com/secure-77">Twitter (X)</a></li>
@@ -261,7 +261,7 @@ $jsonGraphData = getfullGraph($rootDir);
  
                                     </div>
                                     </div> -->
-                                
+
                                     <!-- nav sidebar-left -->
                                     <div class="nav-header">
                                         <div class="nav-buttons-container">
@@ -699,7 +699,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                         <div class="nav-header">
                                             <div class="view-header-nav-buttons">
                                                 <a class="clickable-icon view-action" aria-label="Open localGraph"
-                                                    style="display: none"><svg xmlns="http://www.w3.org/2000/svg"
+                                                    ><svg xmlns="http://www.w3.org/2000/svg"
                                                         width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                                         stroke-linejoin="round" class="svg-icon lucide-git-fork">
@@ -732,19 +732,20 @@ $jsonGraphData = getfullGraph($rootDir);
 
                                         <div class="backlink-pane node-insert-event" style="position: relative;">
 
-                                        
-                                        <div id="outline" class="outline" style="display: none">
-                                        <div class="sidebar-top">        
-                                        <h3>Content</h3>
-</div>
+
+                                            <div id="outline" class="outline" style="display: unset">
+                                                <div class="sidebar-top">
+                                                    <h3>Content</h3>
+                                                </div>
 
                                                 <div id="toc"></div>
 
-                                        </div>
-                                        
-                                        <h3>Graph</h3>    
-                                        
-                                        <div id="mynetwork"></div>
+                                            </div>
+                                            <div id=localGraph>
+                                            <h3>Graph</h3>
+
+                                            <div id="mynetwork"></div>
+                                            </div>
                                             <div class="tree-item-self" aria-label-position="left"><span
                                                     class="tree-item-icon collapse-icon"><svg
                                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -753,12 +754,12 @@ $jsonGraphData = getfullGraph($rootDir);
                                                         class="svg-icon right-triangle">
                                                         <path d="M3 8L12 17L21 8"></path>
                                                     </svg></span>
-                                                    <div class="tree-item-inner">Linked mentions</div>
+                                                <div class="tree-item-inner">Linked mentions</div>
                                                 <div class="tree-item-flair-outer"><span class="tree-item-flair"
                                                         id="nodeCount">0</span></div>
 
                                             </div>
-                                            
+
 
                                         </div>
                                     </div>

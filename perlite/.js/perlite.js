@@ -25,16 +25,18 @@ if ($('#disablePopHovers').data('option') == true && localStorage.getItem("disab
 }
 
 // show toc
-if ($('#showTOC').data('option') == true && localStorage.getItem("showTOC") === null) {
+if ($('#showTOC').data('option') == false || localStorage.getItem("showTOC") === false) {
 
-  $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
-  $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'unset')
-
-  localStorage.setItem("showTOC", "true")
-  $('#mynetwork').css('display', 'none')
-  $('#outline').css('display', 'unset')
-
+  localStorage.setItem("showTOC", "false")
+  $('#outline').css('display', 'none')
 }
+
+if ($('#showLocalGraph').data('option') == false || localStorage.getItem("showLocalGraph") === false) {
+
+  localStorage.setItem("showLocalGraph", "false")
+  $('#localGraph').css('display', 'none')
+}
+
 
 
 /**
@@ -1025,8 +1027,8 @@ $(document).ready(function () {
     $('.clickable-icon.side-dock-ribbon-action[aria-label="Open graph view"]').css('display', 'none')
     $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
     $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'none')
-    $('#mynetwork').css('display', 'none')
-    $('#outline').css('display', 'unset')
+    $('#localGraph').css('display', 'none')
+    $('#outline').css('display', 'inline')
 
   }
 
@@ -1456,16 +1458,12 @@ $(document).ready(function () {
   });
 
 
-  // show toc
-  if (localStorage.getItem("showTOC") === 'true') {
+  // // show toc
+  // if (localStorage.getItem("showTOC") === 'true') {
 
-    $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
-    $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'unset')
+  //   $('#outline').css('display', 'unset')
 
-    //$('#mynetwork').css('display', 'none')
-    $('#outline').css('display', 'unset')
-
-  }
+  // }
 
 
 
@@ -1736,22 +1734,28 @@ $(document).ready(function () {
   // local Graph & Toc (outline) Switch
   $('.clickable-icon.view-action[aria-label="Open outline"]').click(function (e) {
 
-    $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'none')
-    $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'unset')
+    console.log('click')
+    if ($('#outline').css('display') == 'inline') {
+      localStorage.setItem("showTOC", "false")
+      $('#outline').css('display', 'none')
+      console.log('into')
 
-    localStorage.setItem("showTOC", "true")
-    $('#mynetwork').css('display', 'none')
-    $('#outline').css('display', 'unset')
+    } else {
+      localStorage.setItem("showTOC", "true")
+      $('#outline').css('display', 'inline')
+    }
+    
   });
 
   $('.clickable-icon.view-action[aria-label="Open localGraph"]').click(function (e) {
 
-    $('.clickable-icon.view-action[aria-label="Open outline"]').css('display', 'unset')
-    $('.clickable-icon.view-action[aria-label="Open localGraph"]').css('display', 'none')
-
-    localStorage.setItem("showTOC", "false")
-    $('#mynetwork').css('display', 'unset')
-    $('#outline').css('display', 'none')
+    if ($('#localGraph').css('display') == 'inline') {
+      localStorage.setItem("showLocalGraph", "false")
+      $('#localGraph').css('display', 'none')
+    } else {
+      localStorage.setItem("showLocalGraph", "true")
+      $('#localGraph').css('display', 'inline')
+    }
   });
 
 
