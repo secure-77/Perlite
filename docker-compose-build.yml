@@ -23,6 +23,9 @@ services:
       - SITE_DESC=
       - SITE_NAME=
       - SITE_TWITTER=
+      - SITE_LOGO=
+      - SITE_HOMEPAGE=
+      - SITE_GITHUB=
     volumes:
       - ./perlite:/var/www/perlite
       - ./perlite/Demo:/var/www/perlite/Demo:ro
