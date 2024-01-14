@@ -55,9 +55,9 @@
 }
 
 /* fix graph canvas height */
-#mynetwork {
+#localGraph {
   border: calc(0.5px + var(--divider-width)) solid var(--divider-color);
-  height: 30%;
+  height: 50%;
 }
 
 #graph_all{
