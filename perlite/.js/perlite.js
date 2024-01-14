@@ -843,7 +843,7 @@ function toggleSearchEntry(e) {
  */
 function toggleNavFolder(e) {
   el = $(e.target);
-  console.log(el)
+  
 
   if (el.hasClass('nav-folder-title-content')) {
     elIcon = el.prev()
@@ -1734,11 +1734,11 @@ $(document).ready(function () {
   // local Graph & Toc (outline) Switch
   $('.clickable-icon.view-action[aria-label="Open outline"]').click(function (e) {
 
-    console.log('click')
+    
     if ($('#outline').css('display') == 'inline') {
       localStorage.setItem("showTOC", "false")
       $('#outline').css('display', 'none')
-      console.log('into')
+    
 
     } else {
       localStorage.setItem("showTOC", "true")
