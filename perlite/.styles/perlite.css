@@ -60,6 +60,10 @@
   height: 50%;
 }
 
+#mynetwork {
+  height: 100%;
+}
+
 #graph_all{
   height: 100%;
 }
