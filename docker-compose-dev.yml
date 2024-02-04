@@ -9,7 +9,7 @@ services:
       - NOTES_PATH=Demo
       - HIDE_FOLDERS=docs,private,trash
       - LINE_BREAKS=true
-      - ABSOLUTE_PATHES=false
+      - ABSOLUTE_PATHS=false
       - ALLOWED_FILE_LINK_TYPES=pdf,mp4
       - DISABLE_POP_HOVER=false
       - SHOW_TOC=true

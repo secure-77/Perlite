@@ -25,7 +25,7 @@ $vaultName = $rootDir;
 $hideFolders = getenv('HIDE_FOLDERS');
 
 // use absolut paths instead of relative paths
-$relPathes = empty(getenv('ABSOLUTE_PATHES')) ? false : filter_var(getenv('RELATIVE_PATHES'), FILTER_VALIDATE_BOOLEAN);
+$relPathes = empty(getenv('ABSOLUTE_PATHS')) ? false : filter_var(getenv('ABSOLUTE_PATHS'), FILTER_VALIDATE_BOOLEAN);
 
 // Meta Tags infos
 $siteTitle = empty(getenv('SITE_TITLE')) ? 'Perlite' : getenv('SITE_TITLE');
