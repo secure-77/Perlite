@@ -142,6 +142,21 @@ function parseContent($requestFile)
 	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
+	// centerise or right align images with "center"/"right" directive
+	$pattern = '/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(center|right)\|?(\d*)x?(\d*)(\]\])/';
+	$replaces = function ($matches) use ($path) {
+		$class = "images";  // Default class for all images
+		if (strpos($matches[4], 'center') !== false) {
+			$class .= " center";  // Add 'center' class
+		} elseif (strpos($matches[4], 'right') !== false) {
+			$class .= " right";  // Add 'right' class
+		}
+		$width = $matches[5] ?? 'auto';
+		$height = $matches[6] ?? 'auto';
+		return '<p><a href="#" class="pop"><img class="' . $class . '" src="' . $path . '/' . $matches[2] . $matches[3] . '" width="' . $width . '" height="' . $height . '"/></a></p>';
+	};
+	$content = preg_replace_callback($pattern, $replaces, $content);
+
 	// img links with captions and size
 	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\5" height="\\6" alt="\\4" src="' . $path . '/\\2\\3' . '"/></a></p>';
 	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(.+\|)\|?(\d*)x?(\d*)(\]\])/');
