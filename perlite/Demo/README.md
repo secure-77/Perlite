@@ -6,7 +6,7 @@
 
 #tag-test
 
-A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
+A web based edited markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 
 Just put your whole Obsidian vault or markdown folder/file structure in your web directory. The page builds itself. 
 
