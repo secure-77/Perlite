@@ -501,27 +501,24 @@ class PerliteParsedown extends Parsedown
     # handle katex code
     protected function inlineKatex($Excerpt)
     {
-        $katex = $Excerpt['text'];
+        $marker = $Excerpt['text'][0];
+        if (preg_match('/^(\\'.$marker.'+)[ ]*(.+?)[ ]*(?<!\\'.$marker.')\1(?!\\'.$marker.')/s', $Excerpt['text'], $matches))
+        {
+            $text = $matches[0];
+            $text = preg_replace("/[ ]*\n/", ' ', $text);
 
-        if (preg_match("/(\\$\\$[^ ].*?\\$\\$)/", $Excerpt['text'], $matches)) {
-
-            $katex = $matches[0];
-
-        } else if (preg_match("/(\\$[^ ].*?\\$)/", $Excerpt['text'], $matches)) {
-
-            $katex = $matches[0];
-
-        } else {
-            return;
+            $name = 'katex';
+            if ($matches[1] === '$') {
+                $name = 'katex-inline';
+            }
+            return array(
+                'extent' => strlen($matches[0]),
+                'element' => array(
+                    'name' => $name,
+                    'text' => $text,
+                ),
+            );
         }
-
-        return array(
-            'extent' => strlen($katex),
-            'element' => array(
-                'name' => 'katex',
-                'text' => $katex,
-            ),
-        );
     }
 
     # handle obsidian tags
