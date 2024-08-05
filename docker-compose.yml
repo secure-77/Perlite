@@ -6,7 +6,7 @@ services:
     container_name: perlite
     restart: unless-stopped
     environment:
-      - NOTES_PATH=Demo
+      - NOTES_PATH=Notes
       - HIDE_FOLDERS=docs,private,trash
       - LINE_BREAKS=true
       - ABSOLUTE_PATHES=false
@@ -29,7 +29,7 @@ services:
       - SITE_HOMEPAGE=
       - SITE_GITHUB=
     volumes:
-      - ./perlite/Demo:/var/www/perlite/Demo:ro
+      - ./perlite/Notes:/var/www/perlite/Notes:ro
 
   web:
     build:
