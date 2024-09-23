@@ -13,6 +13,10 @@ use Parsedown;
 class PerliteParsedown extends Parsedown
 {
 
+    public function __construct()
+    {
+        $this->BlockTypes['!'] = array('YouTube');
+    }
 
     function text($text)
     {
@@ -477,6 +481,53 @@ class PerliteParsedown extends Parsedown
             return $Block;
         }
     }
+
+    protected function blockYouTube($Line)
+    {
+
+        if ( ! isset($Line['text'][1]) or $Line['text'][1] !== '[')
+        {
+            return;
+        }
+
+        $Line['text']= substr($Line['text'], 1);
+
+        $Link = $this->inlineLink($Line);
+
+
+        if ($Link === null)
+        {
+            return;
+        }
+
+        // See: https://stackoverflow.com/a/64320469
+        $yt = preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $Link['element']['attributes']['href'], $match);
+
+        if (! $yt)
+        {
+            return;
+        }
+
+        $youtubeId = $match[1];
+        $Block = array(
+            'element' => array(
+                'name' => 'iframe',
+                'text' => $Line['text'],
+                'handler' => 'line',
+
+                'attributes' => array(
+                    'class'  => 'external-embed mod-receives-events', 'sandbox' => 'allow-forms allow-presentation allow-same-origin allow-scripts allow-modals allow-popups',
+                    'allow' => 'fullscreen',
+                    'frameborder' => '0',
+                    'src' => 'https://www.youtube.com/embed/'. $youtubeId,
+                ),
+
+            ),
+        );
+
+        return $Block;
+    }
+
 
     # extend to obsidian tags
     protected $inlineMarkerList = '!"*$_#&[:<>`~\\';
