@@ -129,6 +129,16 @@ function parseContent($requestFile)
 	$pattern = array('/(\!\[\[)(.*?.(?:mp4))(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
+	
+     // embedded m4a links
+	 $replaces = '
+	 <video controls src="' . $path . '/\\2" type="audio/x-m4a">
+			 <a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $path . '/' . '\\2">Your browser does not support the audio tag: Download \\2</a>
+	 </video>';
+	 $pattern = array('/(\!\[\[)(.*?.(?:m4a))(\]\])/');
+	 $content = preg_replace($pattern, $replaces, $content);
+
+
 	// links to other files with Alias
 	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $path . '/' . '\\2">\\3</a>';
 	$pattern = array('/(\[\[)(.*?.(?:' . $linkFileTypes . '))\|(.*)(\]\])/');
@@ -142,6 +152,8 @@ function parseContent($requestFile)
 	// img links with size
 	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\4" height="\\5" alt="image not found" src="' . $path . '/\\2\\3' . '"/></a></p>';
 	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(\d*)x?(\d*)(\]\])/');
+
+
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// centerise or right align images with "center"/"right" directive
@@ -166,7 +178,7 @@ function parseContent($requestFile)
 
 	// img links with captions
 	$replaces = '<p><a href="#" class="pop"><img class="images" alt="\\4" src="' . $path . '/\\2\\3' . '"/></a></p>';
-	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(.*)(\]\])/');
+	$pattern = array('/(\!?\[[)(.*?)'.$allowedImageTypes.'|?(.+|)(]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 

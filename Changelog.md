@@ -6,6 +6,8 @@
 - fixed kartex problem PR [#131](https://github.com/secure-77/Perlite/pull/131) thanks to @Yaro2709
 - fixed obsidian edit link thanks to klgzzz
 - changed site title to use the env. variable site_title
+- fixed issue [#128](https://github.com/secure-77/Perlite/issues/128) thanks to @rgaricano
+- added m4a support thanks to @rgaricano
 
 
 
