@@ -28,6 +28,10 @@ Video embedded:
 
 ![[mov_bbb.mp4]]
 
+Youtube embedded:
+
+![Making a Minecraft Obsidian Block in Real Life Using Astro Tech Resin](https://www.youtube.com/watch?v=NnTvZWp5Q7o)
+
 ## PDF
 
 Link to internal stored PDF: [[pdf-test.pdf]]
