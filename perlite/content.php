@@ -185,9 +185,6 @@ function parseContent($requestFile)
 	$content = preg_replace($pattern, $replaces, $content);
 
 
-
-
-
 	// handle internal site links
 	// search for links outside of the current folder
 	$pattern = array('/(\[\[)(?:\.\.\/)+(.*?)(\]\])/');
