@@ -139,13 +139,6 @@ function parseContent($requestFile)
 	 $content = preg_replace($pattern, $replaces, $content);
 
 
-	// img with external links
-	echo $content;
-	// $replaces = '<p><a href="test" class="pop"><img class="images" alt="\\4" src="' . $path . '/\\2\\3' . '"/></a></p>';
-	// $pattern = array('/(\[\!?\[\[)'.$allowedImageTypes.'\|?(.+|)(\]\]\])(\(.*?\))/');
-	// $content = preg_replace($pattern, $replaces, $content);
-
-
 	// links to other files with Alias
 	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $path . '/' . '\\2">\\3</a>';
 	$pattern = array('/(\[\[)(.*?.(?:' . $linkFileTypes . '))\|(.*)(\]\])/');
