@@ -113,7 +113,7 @@ function parseContent($requestFile)
 
 	$linkFileTypes = implode('|', $allowedFileLinkTypes);
 
-	$allowedImageTypes = '(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff|.webp)';
+	$allowedImageTypes = '(\.png|\.jpg|\.jpeg|\.svg|\.gif|\.bmp|\.tif|\.tiff|\.webp)';
 
 
 	// embedded pdf links
@@ -139,6 +139,13 @@ function parseContent($requestFile)
 	 $content = preg_replace($pattern, $replaces, $content);
 
 
+	// img with external links
+	echo $content;
+	// $replaces = '<p><a href="test" class="pop"><img class="images" alt="\\4" src="' . $path . '/\\2\\3' . '"/></a></p>';
+	// $pattern = array('/(\[\!?\[\[)'.$allowedImageTypes.'\|?(.+|)(\]\]\])(\(.*?\))/');
+	// $content = preg_replace($pattern, $replaces, $content);
+
+
 	// links to other files with Alias
 	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $path . '/' . '\\2">\\3</a>';
 	$pattern = array('/(\[\[)(.*?.(?:' . $linkFileTypes . '))\|(.*)(\]\])/');
@@ -149,11 +156,14 @@ function parseContent($requestFile)
 	$pattern = array('/(\[\[)(.*?.(?:' . $linkFileTypes . '))(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
+	// img links with external target link
+	$replaces = 'noreferrer"><img class="images" width="\\4" height="\\5" alt="image not found" src="' . $path . '/\\2\\3' . '"/>';
+	$pattern = array('/noreferrer">(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(\d*)x?(\d*)(\]\])/');
+	$content = preg_replace($pattern, $replaces, $content);
+
 	// img links with size
 	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\4" height="\\5" alt="image not found" src="' . $path . '/\\2\\3' . '"/></a></p>';
 	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(\d*)x?(\d*)(\]\])/');
-
-
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// centerise or right align images with "center"/"right" directive
@@ -178,8 +188,11 @@ function parseContent($requestFile)
 
 	// img links with captions
 	$replaces = '<p><a href="#" class="pop"><img class="images" alt="\\4" src="' . $path . '/\\2\\3' . '"/></a></p>';
-	$pattern = array('/(\!?\[[)(.*?)'.$allowedImageTypes.'|?(.+|)(]\])/');
+	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(.+|)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
+
+
+
 
 
 	// handle internal site links

@@ -22,6 +22,12 @@ webp Image
 
 ![[docs/aufbau.webp]]
 
+internal image + link to external source
+
+[![[background.png]]](https://website.com)
+
+
+
 ## External images
 
 
