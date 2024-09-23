@@ -20,11 +20,11 @@ services:
       - SITE_URL=
       - SITE_IMAGE=
       - SITE_DESC=
-      - SITE_NAME=
-      - SITE_TWITTER=
-      - SITE_LOGO=
-      - SITE_HOMEPAGE=
-      - SITE_GITHUB=
+      - SITE_NAME=Perlite
+      - SITE_TWITTER=https://x.com/
+      - SITE_LOGO=perlite.svg
+      - SITE_HOMEPAGE=https://perlite.secure77.de/
+      - SITE_GITHUB=https://github.com/
     volumes:
       - ./perlite:/var/www/perlite
       - ./perlite/Demo:/var/www/perlite/Demo:ro

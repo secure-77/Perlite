@@ -4,7 +4,7 @@
 <?php
 
 /*!
- * Version v1.5.8
+ * Version v1.5.9
  */
 
 require_once __DIR__ . '/vendor/autoload.php';
