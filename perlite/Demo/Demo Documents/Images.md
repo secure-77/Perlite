@@ -10,6 +10,14 @@ Image with a alternate text and size
 
 ![[background.png|This is a description|100]]
 
+Centered image
+
+![[background.png|center]]
+
+Right aligned image with a custom size
+
+![[background.png|right|200]]
+
 ## External images
 
 
