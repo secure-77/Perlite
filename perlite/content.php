@@ -113,6 +113,8 @@ function parseContent($requestFile)
 
 	$linkFileTypes = implode('|', $allowedFileLinkTypes);
 
+	$allowedImageTypes = '(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff|.webp)';
+
 
 	// embedded pdf links
 	$replaces = '<embed src="' . $path . '/\\2" type="application/pdf" style="min-height:100vh;width:100%">';
@@ -139,11 +141,11 @@ function parseContent($requestFile)
 
 	// img links with size
 	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\4" height="\\5" alt="image not found" src="' . $path . '/\\2\\3' . '"/></a></p>';
-	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(\d*)x?(\d*)(\]\])/');
+	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// centerise or right align images with "center"/"right" directive
-	$pattern = '/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(center|right)\|?(\d*)x?(\d*)(\]\])/';
+	$pattern = '/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(center|right)\|?(\d*)x?(\d*)(\]\])/';
 	$replaces = function ($matches) use ($path) {
 		$class = "images";  // Default class for all images
 		if (strpos($matches[4], 'center') !== false) {
@@ -159,12 +161,12 @@ function parseContent($requestFile)
 
 	// img links with captions and size
 	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\5" height="\\6" alt="\\4" src="' . $path . '/\\2\\3' . '"/></a></p>';
-	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(.+\|)\|?(\d*)x?(\d*)(\]\])/');
+	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(.+\|)\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// img links with captions
 	$replaces = '<p><a href="#" class="pop"><img class="images" alt="\\4" src="' . $path . '/\\2\\3' . '"/></a></p>';
-	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(.*)(\]\])/');
+	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(.*)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 

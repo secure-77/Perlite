@@ -18,6 +18,10 @@ Right aligned image with a custom size
 
 ![[background.png|right|200]]
 
+webp Image
+
+![[docs/aufbau.webp]]
+
 ## External images
 
 

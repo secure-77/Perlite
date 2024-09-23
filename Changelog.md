@@ -1,3 +1,12 @@
+## 1.5.9
+- added YouTube link support #133 thanks to @rsubr
+- added image postion support thanks to @ar0x4
+- fixed direct page links [#90](https://github.com/secure-77/Perlite/issues/90)
+- added support for webp images [#126](https://github.com/secure-77/Perlite/issues/126)
+
+
+
+
 ## 1.5.8
 - merged PR #111 thanks to @selfiens
 - merged PR #112 thanks to @selfiens
