@@ -10,7 +10,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 require 'helper.php';
 
-$title = 'Perlite';
+$title = $siteTitle;
 $menu = menu($rootDir);
 $jsonGraphData = getfullGraph($rootDir);
 
@@ -791,12 +791,8 @@ $jsonGraphData = getfullGraph($rootDir);
         <p class="graph-view color-fill-highlight"></p>
         <p class="graph-view color-fill-focused"></p>
         <p class="graph-view color-line-hightlight"></p>
-        <p class="vault">
-            <?php echo $vaultName ?>
-        </p>
-        <p class="perliteTitle">
-            <?php echo $title ?>
-        </p>
+        <p class="vault"><?php echo $vaultName ?></p>
+        <p class="perliteTitle"><?php echo $title ?></p>
     </div>
     <!-- tool tip -->
     <div class="tooltip" style="top: 83.9531px; left: 1032.51px; width: 180.984px; height: 25px; display: none">

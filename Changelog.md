@@ -3,6 +3,9 @@
 - added image postion support thanks to @ar0x4
 - fixed direct page links [#90](https://github.com/secure-77/Perlite/issues/90)
 - added support for webp images [#126](https://github.com/secure-77/Perlite/issues/126)
+- fixed kartex problem PR [#131](https://github.com/secure-77/Perlite/pull/131) thanks to @Yaro2709
+- fixed obsidian edit link thanks to klgzzz
+- changed site title to use the env. variable site_title
 
 
 
