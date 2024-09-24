@@ -36,14 +36,16 @@ $jsonGraphData = getfullGraph($rootDir);
     <link id="highlight-js" rel="stylesheet" href=".styles/atom-one-dark.min.css" type="text/css">
     <link rel="stylesheet" href=".styles/perlite.css" type="text/css">
     <link rel="stylesheet" href=".styles/vis-network.min.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
-    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.3.0/mermaid.min.js"></script>
+    <link rel="stylesheet" href=".styles/katex.min.css" type="text/css">
+   
+    <script src=".js/jquery.min.js"></script>
+    <script src=".js/highlight.min.js"></script>
+    <script src=".js/vis-network.min.js"></script>
+    <script src=".js/katex.min.js"></script>
+    <script src=".js/auto-render.min.js"></script>
+    <script src=".js/vis-network.min.js"></script>
+    <!-- <script src=".js/mermaid.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.2.1/dist/mermaid.min.js"></script>
 
 
 </head>

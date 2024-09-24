@@ -10,7 +10,11 @@
 - added m4a support thanks to @rgaricano
 - added img link support to external urls issue [#89](https://github.com/secure-77/Perlite/issues/89)
 - added tasks support, issue [#118](https://github.com/secure-77/Perlite/issues/118)
-- changed js dependency source to CDN instead of using local files
+- updated mermaid to 11.2.1
+- updated katex to 0.16.11
+- updated highlight.js to 11.10.0
+
+
 
 
 

@@ -1,6 +1,6 @@
 services:
   perlite:
-    image: sec77/perlite:latest
+    image: sec77/perlite:dev
     container_name: perlite-build
     environment:
       - NOTES_PATH=Demo
