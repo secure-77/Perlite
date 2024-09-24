@@ -13,9 +13,7 @@
 - updated mermaid to 11.2.1
 - updated katex to 0.16.11
 - updated highlight.js to 11.10.0
-
-
-
+- changed base image for perlite_web to nginx:stable, issue [#100](https://github.com/secure-77/Perlite/issues/100)
 
 
 ## 1.5.8
