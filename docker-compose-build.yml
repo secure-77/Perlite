@@ -30,13 +30,12 @@ services:
       - ./perlite/Demo:/var/www/perlite/Demo:ro
 
   web:
-    build:
-        context: ./web
-    image: sec77/perlite_web:stable
+    image: nginx:stable
     container_name: perlite_web-build      
     ports:
       - 80:80 
     volumes:
+      - ./web/config/perlite.conf:/etc/nginx/conf.d/default.conf:ro
       - ./perlite:/var/www/perlite
       - ./perlite/Demo:/var/www/perlite/Demo:ro   
     depends_on:
