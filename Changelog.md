@@ -1,3 +1,21 @@
+## 1.5.9
+- added YouTube link support #133 thanks to @rsubr
+- added image postion support thanks to @ar0x4
+- fixed direct page links [#90](https://github.com/secure-77/Perlite/issues/90)
+- added support for webp images [#126](https://github.com/secure-77/Perlite/issues/126)
+- fixed kartex problem PR [#131](https://github.com/secure-77/Perlite/pull/131) thanks to @Yaro2709
+- fixed obsidian edit link thanks to klgzzz
+- changed site title to use the env. variable site_title
+- fixed issue [#128](https://github.com/secure-77/Perlite/issues/128) thanks to @rgaricano
+- added m4a support thanks to @rgaricano
+- added img link support to external urls issue [#89](https://github.com/secure-77/Perlite/issues/89)
+- added tasks support, issue [#118](https://github.com/secure-77/Perlite/issues/118)
+- updated mermaid to 11.2.1
+- updated katex to 0.16.11
+- updated highlight.js to 11.10.0
+- changed base image for perlite_web to nginx:stable, issue [#100](https://github.com/secure-77/Perlite/issues/100)
+
+
 ## 1.5.8
 - merged PR #111 thanks to @selfiens
 - merged PR #112 thanks to @selfiens

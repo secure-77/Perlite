@@ -1,7 +1,7 @@
 {
     "name": "secure-77/perlite",
     "description": "A web based markdown viewer optimized for Obsidian Notes",
-    "version": "1.5.7",
+    "version": "1.5.9",
     "type": "project",
     "keywords": ["markdown viewer","obsidian notes"],
     "homepage": "https://github.com/secure-77/Perlite",

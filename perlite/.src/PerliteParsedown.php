@@ -1,7 +1,7 @@
 <?php
 
 /*!
- * Perlite v1.5.8 (https://github.com/secure-77/Perlite)
+ * Perlite v1.5.9 (https://github.com/secure-77/Perlite)
  * Author: sec77 (https://secure77.de)
  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
  */
@@ -13,6 +13,10 @@ use Parsedown;
 class PerliteParsedown extends Parsedown
 {
 
+    public function __construct()
+    {
+        $this->BlockTypes['!'] = array('YouTube');
+    }
 
     function text($text)
     {
@@ -478,6 +482,53 @@ class PerliteParsedown extends Parsedown
         }
     }
 
+    protected function blockYouTube($Line)
+    {
+
+        if ( ! isset($Line['text'][1]) or $Line['text'][1] !== '[')
+        {
+            return;
+        }
+
+        $Line['text']= substr($Line['text'], 1);
+
+        $Link = $this->inlineLink($Line);
+
+
+        if ($Link === null)
+        {
+            return;
+        }
+
+        // See: https://stackoverflow.com/a/64320469
+        $yt = preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $Link['element']['attributes']['href'], $match);
+
+        if (! $yt)
+        {
+            return;
+        }
+
+        $youtubeId = $match[1];
+        $Block = array(
+            'element' => array(
+                'name' => 'iframe',
+                'text' => $Line['text'],
+                'handler' => 'line',
+
+                'attributes' => array(
+                    'class'  => 'external-embed mod-receives-events', 'sandbox' => 'allow-forms allow-presentation allow-same-origin allow-scripts allow-modals allow-popups',
+                    'allow' => 'fullscreen',
+                    'frameborder' => '0',
+                    'src' => 'https://www.youtube.com/embed/'. $youtubeId,
+                ),
+
+            ),
+        );
+
+        return $Block;
+    }
+
+
     # extend to obsidian tags
     protected $inlineMarkerList = '!"*$_#&[:<>`~\\';
     protected $InlineTypes = array(
@@ -501,27 +552,24 @@ class PerliteParsedown extends Parsedown
     # handle katex code
     protected function inlineKatex($Excerpt)
     {
-        $katex = $Excerpt['text'];
+        $marker = $Excerpt['text'][0];
+        if (preg_match('/^(\\'.$marker.'+)[ ]*(.+?)[ ]*(?<!\\'.$marker.')\1(?!\\'.$marker.')/s', $Excerpt['text'], $matches))
+        {
+            $text = $matches[0];
+            $text = preg_replace("/[ ]*\n/", ' ', $text);
 
-        if (preg_match("/(\\$\\$[^ ].*?\\$\\$)/", $Excerpt['text'], $matches)) {
-
-            $katex = $matches[0];
-
-        } else if (preg_match("/(\\$[^ ].*?\\$)/", $Excerpt['text'], $matches)) {
-
-            $katex = $matches[0];
-
-        } else {
-            return;
+            $name = 'katex';
+            if ($matches[1] === '$') {
+                $name = 'katex-inline';
+            }
+            return array(
+                'extent' => strlen($matches[0]),
+                'element' => array(
+                    'name' => $name,
+                    'text' => $text,
+                ),
+            );
         }
-
-        return array(
-            'extent' => strlen($katex),
-            'element' => array(
-                'name' => 'katex',
-                'text' => $katex,
-            ),
-        );
     }
 
     # handle obsidian tags
@@ -557,6 +605,210 @@ class PerliteParsedown extends Parsedown
             );
 
             return $Inline;
+        }
+    }
+
+    protected function blockList($Line)
+    {
+        list($name, $pattern) = $Line['text'][0] <= '-' ? array('ul', '[*+-]') : array('ol', '[0-9]+[.]');
+
+        
+        
+        if (preg_match('/(- \[(x| )\])(.*)/', $Line['text'], $matches)) {
+
+            $text = isset($matches[3]) ? $matches[3] : '';
+            $isActive = $matches[2];
+            $checked = '';
+            if ($isActive === 'x') {
+                $checked = 'checked';
+            }
+
+   
+
+            $Block = array(
+                'element' => array(
+                    'name' => 'div',
+                        'elements' => array(
+                            array(
+                            'name' => 'div',
+                            'attributes' => array(
+                                'class' => 'HyperMD-list-line HyperMD-list-line-1 HyperMD-task-line cm-line',
+                                'data-task' => $isActive,
+                                ),
+                            ),
+                            array(
+                                'name' => 'label',
+                                'attributes' => array('class' => 'task-list-label'),
+                                'elements' => array(
+                                    array(
+                                        'name' => 'input',
+                                        'attributes' => array(
+                                            'class' => 'task-list-item-checkbox',
+                                            'type' => 'checkbox',
+                                            'data-task' => $isActive,
+                                            $checked => '',
+                                        ),
+                                    ),
+                                    array(
+                                        'name' => 'label',
+                                        'attributes' => array('class' => 'cm-widgetBuffer'),
+                                        'text' => $text,
+                                    ),
+                                ),
+                            ),                       
+                    ),
+                ),
+            );
+            
+            
+            return $Block;
+        }
+
+        if (preg_match('/^('.$pattern.'[ ]+)(.*)/', $Line['text'], $matches))
+        {
+            $Block = array(
+                'indent' => $Line['indent'],
+                'pattern' => $pattern,
+                'element' => array(
+                    'name' => $name,
+                    'handler' => 'elements',
+                ),
+            );
+
+            if($name === 'ol')
+            {
+                $listStart = stristr($matches[0], '.', true);
+
+                if($listStart !== '1')
+                {
+                    $Block['element']['attributes'] = array('start' => $listStart);
+                }
+            }
+
+            $Block['li'] = array(
+                'name' => 'li',
+                'handler' => 'li',
+                'text' => array(
+                    $matches[2],
+                ),
+            );
+
+            $Block['element']['text'] []= & $Block['li'];
+
+            return $Block;
+        }
+    }
+
+    protected function blockListContinue($Line, array $Block)
+    {
+        
+        
+        if (preg_match('/(- \[(x| )\])(.*)/', $Line['text'], $matches)) {
+
+            $text = isset($matches[3]) ? $matches[3] : '';
+            $isActive = $matches[2];
+
+            $checked = '';
+            if ($isActive === 'x') {
+                $checked = 'checked';
+            }
+
+
+
+           
+    
+            $conBlock = array(
+                    'name' => 'div',
+                    'attributes' => array(
+                        'class' => 'HyperMD-list-line HyperMD-list-line-1 HyperMD-task-line cm-line',
+                        'data-task' => $isActive,
+                    ),
+                    'elements' => array(
+                        array(
+                            'name' => 'label',
+                            'attributes' => array('class' => 'task-list-label'),
+                            'elements' => array(
+                                array(
+                                    'name' => 'input',
+                                    'attributes' => array(
+                                        'class' => 'task-list-item-checkbox',
+                                        'type' => 'checkbox',
+                                        'data-task' => $isActive,
+                                        $checked => '',
+                                    ),
+                                ),
+                                array(
+                                    'name' => 'label',
+                                    'attributes' => array('class' => 'cm-widgetBuffer'),
+                                    'text' => $text,
+                                ),
+                            ),
+                        ),
+                    )       
+            );
+         
+            
+            $Block['element']['elements'][ ] = & $conBlock;
+            
+            return $Block;
+        }
+
+        $Block['indent'] = isset($Block['indent']) ? $Block['indent'] : '0';
+
+        if ($Block['indent'] === $Line['indent'] and preg_match('/^'.$Block['pattern'].'(?:[ ]+(.*)|$)/', $Line['text'], $matches))
+        {
+                      
+            if (isset($Block['interrupted']))
+            {
+                $Block['li']['text'] []= '';
+
+                $Block['loose'] = true;
+
+                unset($Block['interrupted']);
+            }
+
+            unset($Block['li']);
+
+            $text = isset($matches[1]) ? $matches[1] : '';
+
+            $Block['li'] = array(
+                'name' => 'li',
+                'handler' => 'li',
+                'text' => array(
+                    $text,
+                ),
+            );
+
+            $Block['element']['text'] []= & $Block['li'];
+
+            return $Block;
+        }
+
+        if ($Line['text'][0] === '[' and $this->blockReference($Line))
+        {
+            return $Block;
+        }
+
+        if ( ! isset($Block['interrupted']))
+        {
+            $text = preg_replace('/^[ ]{0,4}/', '', $Line['body']);
+
+            $Block['li']['text'] []= $text;
+
+            return $Block;
+        }
+
+        if ($Line['indent'] > 0)
+        {
+            $Block['li']['text'] []= '';
+
+            $text = preg_replace('/^[ ]{0,4}/', '', $Line['body']);
+
+            $Block['li']['text'] []= $text;
+
+            unset($Block['interrupted']);
+
+            return $Block;
         }
     }
 

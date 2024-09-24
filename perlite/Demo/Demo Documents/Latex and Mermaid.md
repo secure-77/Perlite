@@ -9,7 +9,10 @@ $$I = \int \rho R^{2} dV$$
 
 And note that you can backslash-escape any punctuation characters which you wish to be displayed literally, ex.: \`foo\`, \*bar\*, etc.
 
- 
+
+Consider non-empty sets $A$, $B$ and $C$. Then a binary operation $f$ is a mapping from set $A\times C$ to set $A$ or $B$.
+$$f\colon D\subseteq A \times C \to \left[ \begin{array}{lcl} A \\ B \end{array} \right.$$
+
 ## Mermaid
 
 Simple Flow Chart

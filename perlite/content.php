@@ -1,7 +1,7 @@
 <?php
 
 /*!
- * Perlite v1.5.8 (https://github.com/secure-77/Perlite)
+ * Perlite v1.5.9 (https://github.com/secure-77/Perlite)
  * Author: sec77 (https://secure77.de)
  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
  */
@@ -113,6 +113,8 @@ function parseContent($requestFile)
 
 	$linkFileTypes = implode('|', $allowedFileLinkTypes);
 
+	$allowedImageTypes = '(\.png|\.jpg|\.jpeg|\.svg|\.gif|\.bmp|\.tif|\.tiff|\.webp)';
+
 
 	// embedded pdf links
 	$replaces = '<embed src="' . $path . '/\\2" type="application/pdf" style="min-height:100vh;width:100%">';
@@ -127,6 +129,16 @@ function parseContent($requestFile)
 	$pattern = array('/(\!\[\[)(.*?.(?:mp4))(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
+	
+     // embedded m4a links
+	 $replaces = '
+	 <video controls src="' . $path . '/\\2" type="audio/x-m4a">
+			 <a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $path . '/' . '\\2">Your browser does not support the audio tag: Download \\2</a>
+	 </video>';
+	 $pattern = array('/(\!\[\[)(.*?.(?:m4a))(\]\])/');
+	 $content = preg_replace($pattern, $replaces, $content);
+
+
 	// links to other files with Alias
 	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $path . '/' . '\\2">\\3</a>';
 	$pattern = array('/(\[\[)(.*?.(?:' . $linkFileTypes . '))\|(.*)(\]\])/');
@@ -137,19 +149,39 @@ function parseContent($requestFile)
 	$pattern = array('/(\[\[)(.*?.(?:' . $linkFileTypes . '))(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
+	// img links with external target link
+	$replaces = 'noreferrer"><img class="images" width="\\4" height="\\5" alt="image not found" src="' . $path . '/\\2\\3' . '"/>';
+	$pattern = array('/noreferrer">(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(\d*)x?(\d*)(\]\])/');
+	$content = preg_replace($pattern, $replaces, $content);
+
 	// img links with size
 	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\4" height="\\5" alt="image not found" src="' . $path . '/\\2\\3' . '"/></a></p>';
-	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(\d*)x?(\d*)(\]\])/');
+	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
+
+	// centerise or right align images with "center"/"right" directive
+	$pattern = '/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(center|right)\|?(\d*)x?(\d*)(\]\])/';
+	$replaces = function ($matches) use ($path) {
+		$class = "images";  // Default class for all images
+		if (strpos($matches[4], 'center') !== false) {
+			$class .= " center";  // Add 'center' class
+		} elseif (strpos($matches[4], 'right') !== false) {
+			$class .= " right";  // Add 'right' class
+		}
+		$width = $matches[5] ?? 'auto';
+		$height = $matches[6] ?? 'auto';
+		return '<p><a href="#" class="pop"><img class="' . $class . '" src="' . $path . '/' . $matches[2] . $matches[3] . '" width="' . $width . '" height="' . $height . '"/></a></p>';
+	};
+	$content = preg_replace_callback($pattern, $replaces, $content);
 
 	// img links with captions and size
 	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\5" height="\\6" alt="\\4" src="' . $path . '/\\2\\3' . '"/></a></p>';
-	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(.+\|)\|?(\d*)x?(\d*)(\]\])/');
+	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(.+\|)\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// img links with captions
 	$replaces = '<p><a href="#" class="pop"><img class="images" alt="\\4" src="' . $path . '/\\2\\3' . '"/></a></p>';
-	$pattern = array('/(\!?\[\[)(.*?)(.png|.jpg|.jpeg|.svg|.gif|.bmp|.tif|.tiff)\|?(.*)(\]\])/');
+	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(.+|)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 

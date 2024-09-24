@@ -7,6 +7,18 @@ curl https://asset-packagist.org/package/npm-asset/katex -D - >/dev/null
 curl https://asset-packagist.org/package/npm-asset/vis-network -D - >/dev/null
 curl https://asset-packagist.org/package/npm-asset/jquery -D - >/dev/null
 curl https://asset-packagist.org/package/npm-asset/highlightjs--cdn-assets -D - >/dev/null
+# curl https://asset-packagist.org/package/npm-asset/mermaid -D - >/dev/null
+# curl https://asset-packagist.org/package/npm-asset/roughjs -D - >/dev/null
+# curl https://asset-packagist.org/package/npm-asset/stylis -D - >/dev/null
+# curl https://asset-packagist.org/package/npm-asset/mlly -D - >/dev/null
+# curl https://asset-packagist.org/package/npm-asset/tinyexec -D - >/dev/null
+# curl https://asset-packagist.org/package/npm-asset/package-manager-detector -D - >/dev/null
+# curl https://asset-packagist.org/package/npm-asset/iconify--utils  -D - >/dev/null
+# curl https://asset-packagist.org/package/npm-asset/antfu--install-pkg  -D - >/dev/null
+
+
+
+
 
 # composer clear-cache
 # rm -rf vendor
@@ -56,3 +68,6 @@ composer update -v
 # docker build -t sec77/perlite:latest . --network host;
 # cd ..;
 # docker-compose --file docker-compose.yml up
+
+
+

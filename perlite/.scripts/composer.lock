@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c8297cc87c080407388895ad94d9d634",
+    "content-hash": "804283b252f55afc81b79735bfa0c2c1",
     "packages": [
         {
             "name": "npm-asset/commander",
@@ -20,10 +20,10 @@
         },
         {
             "name": "npm-asset/highlightjs--cdn-assets",
-            "version": "11.9.0",
+            "version": "11.10.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@highlightjs/cdn-assets/-/cdn-assets-11.9.0.tgz"
+                "url": "https://registry.npmjs.org/@highlightjs/cdn-assets/-/cdn-assets-11.10.0.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -44,10 +44,10 @@
         },
         {
             "name": "npm-asset/katex",
-            "version": "0.16.9",
+            "version": "0.16.11",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/katex/-/katex-0.16.9.tgz"
+                "url": "https://registry.npmjs.org/katex/-/katex-0.16.11.tgz"
             },
             "require": {
                 "npm-asset/commander": ">=8.3.0,<9.0.0"

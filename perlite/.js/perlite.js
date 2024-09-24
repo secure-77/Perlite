@@ -757,7 +757,7 @@ function hideLeftMobile() {
   $('.workspace').removeClass('is-left-sidedock-open');
   $('.mod-left-split').addClass('is-sidedock-collapse');
   $('.mod-left').addClass('is-collapsed');
-  $('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'none');
+  //$('.workspace-ribbon.side-dock-ribbon.mod-left').css('display', 'none');
 
 };
 

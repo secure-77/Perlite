@@ -4,13 +4,13 @@
 <?php
 
 /*!
- * Version v1.5.8
+ * Version v1.5.9
  */
 
 require_once __DIR__ . '/vendor/autoload.php';
 require 'helper.php';
 
-$title = 'Perlite';
+$title = $siteTitle;
 $menu = menu($rootDir);
 $jsonGraphData = getfullGraph($rootDir);
 
@@ -37,7 +37,7 @@ $jsonGraphData = getfullGraph($rootDir);
     <link rel="stylesheet" href=".styles/perlite.css" type="text/css">
     <link rel="stylesheet" href=".styles/vis-network.min.css" type="text/css">
     <link rel="stylesheet" href=".styles/katex.min.css" type="text/css">
-
+   
     <script src=".js/jquery.min.js"></script>
     <script src=".js/highlight.min.js"></script>
     <script src=".js/vis-network.min.js"></script>
@@ -45,7 +45,7 @@ $jsonGraphData = getfullGraph($rootDir);
     <script src=".js/auto-render.min.js"></script>
     <script src=".js/vis-network.min.js"></script>
     <!-- <script src=".js/mermaid.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.3.0/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.2.1/dist/mermaid.min.js"></script>
 
 
 </head>
@@ -791,12 +791,8 @@ $jsonGraphData = getfullGraph($rootDir);
         <p class="graph-view color-fill-highlight"></p>
         <p class="graph-view color-fill-focused"></p>
         <p class="graph-view color-line-hightlight"></p>
-        <p class="vault">
-            <?php echo $vaultName ?>
-        </p>
-        <p class="perliteTitle">
-            <?php echo $title ?>
-        </p>
+        <p class="vault"><?php echo $vaultName ?></p>
+        <p class="perliteTitle"><?php echo $title ?></p>
     </div>
     <!-- tool tip -->
     <div class="tooltip" style="top: 83.9531px; left: 1032.51px; width: 180.984px; height: 25px; display: none">

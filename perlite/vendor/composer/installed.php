@@ -1,8 +1,8 @@
 <?php return array(
     'root' => array(
         'name' => 'secure-77/perlite',
-        'pretty_version' => '1.5.7',
-        'version' => '1.5.7.0',
+        'pretty_version' => '1.5.9',
+        'version' => '1.5.9.0',
         'reference' => NULL,
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
@@ -20,8 +20,8 @@
             'dev_requirement' => false,
         ),
         'secure-77/perlite' => array(
-            'pretty_version' => '1.5.7',
-            'version' => '1.5.7.0',
+            'pretty_version' => '1.5.9',
+            'version' => '1.5.9.0',
             'reference' => NULL,
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',

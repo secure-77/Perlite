@@ -82,13 +82,24 @@ img {
   max-width: 100%;
 }
 
+.images.center {
+  display: block !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.images.right {
+  display: block !important;
+  margin-left: auto;
+  margin-right: 0;
+}
+
 .popup-icon {
   padding-bottom: 1px;
   top: -6px;
   position: relative;
   left: 3px;
 }
-
 
 #loading-text {
   position: absolute;
