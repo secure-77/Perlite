@@ -37,6 +37,7 @@ $jsonGraphData = getfullGraph($rootDir);
     <link rel="stylesheet" href=".styles/perlite.css" type="text/css">
     <link rel="stylesheet" href=".styles/vis-network.min.css" type="text/css">
     <link rel="stylesheet" href=".styles/katex.min.css" type="text/css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
    
     <script src=".js/jquery.min.js"></script>
     <script src=".js/highlight.min.js"></script>
