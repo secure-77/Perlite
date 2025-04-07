@@ -29,6 +29,9 @@ if (empty($vaultName)) $vaultName = $rootDir;
 // hide folders
 if (empty($hideFolders)) $hideFolders = getenv('HIDE_FOLDERS');
 
+// folders that are hidden but accessible
+if (empty($avHidden)) $avHidden = getenv("HIDE_AVAILABLE");
+
 // use absolut paths instead of relative paths
 if (! isset($relPathes)) $relPathes = empty(getenv('ABSOLUTE_PATHS')) ? false : filter_var(getenv('ABSOLUTE_PATHS'), FILTER_VALIDATE_BOOLEAN);
 
@@ -114,6 +117,14 @@ if (strcmp($hideFolders, '')) {
 	$hideFolders = array();
 }
 
+// hidden but accessible
+if (strcmp($avHidden, "")) {
+	$avHidden = explode(",", $avHidden);
+
+} else {
+	$avHidden = array();
+}
+
 // path management
 if (!strcmp($rootDir, "")) {
 
@@ -170,6 +181,9 @@ function menu($dir, $folder = '')
 						<div style="width: 591px; height: 0.1px; margin-bottom: 0px;"></div>';
 				$html .= menu($file, $folder . '/');
 				$html .= '</div></div>';
+			} else if (isAvailableFolder($file)) {
+				// add to $avFiles but don't list it
+				menu($file);
 			}
 		}
 	}
@@ -365,6 +379,23 @@ function isValidFolder($file)
 
 	// check if folder is in array
 	if (in_array($folderName, $hideFolders, true)) {
+		return false;
+	}
+
+	if (strcmp(substr($folderName, 0, 1), '.') !== 0) {
+		return true;
+	}
+
+	return false;
+}
+
+function isAvailableFolder($file) {
+	global $avHidden;
+
+	$folderName = mb_basename($file);
+
+	// check if folder is in $avHidden
+	if (!in_array($folderName, $avHidden, true)) {
 		return false;
 	}
 
