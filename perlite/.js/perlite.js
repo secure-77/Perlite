@@ -874,7 +874,7 @@ function toggleSearchEntry(e) {
  */
 function toggleNavFolder(e) {
   el = $(e.target);
-  
+
 
   if (el.hasClass('nav-folder-title-content')) {
     elIcon = el.prev()
@@ -1804,17 +1804,17 @@ $(document).ready(function () {
   // local Graph & Toc (outline) Switch
   $('.clickable-icon.view-action[aria-label="Open outline"]').click(function (e) {
 
-    
+
     if ($('#outline').css('display') == 'inline') {
       localStorage.setItem("showTOC", "false")
       $('#outline').css('display', 'none')
-    
+
 
     } else {
       localStorage.setItem("showTOC", "true")
       $('#outline').css('display', 'inline')
     }
-    
+
   });
 
   $('.clickable-icon.view-action[aria-label="Open localGraph"]').click(function (e) {
