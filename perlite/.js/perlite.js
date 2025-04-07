@@ -538,6 +538,19 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
           background: getComputedStyle(document.querySelector('.graph-view.color-fill-highlight')).color,
         },
       },
+    },
+
+    groups: {
+      tag: {
+        color: {
+          background: getComputedStyle(document.querySelector('.graph-view.color-fill-tag')).color,
+          border: getComputedStyle(document.querySelector('.graph-view.color-fill-tag')).color,
+          highlight: {
+            border: getComputedStyle(document.querySelector('.graph-view.color-fill-tag')).color,
+            background: getComputedStyle(document.querySelector('.graph-view.color-fill-tag')).color,
+          },
+        }
+      }
     }
   };
 
@@ -710,8 +723,15 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
 
       if (!properties.nodes.length) return;
       var node = nodes.get(properties.nodes[0]);
-      var glink = '?link=' + encodeURIComponent('/' + node.title);
-      window.open(glink, "_self");
+
+      if (node.group && node.group === "tag") {
+        $('.workspace-tab-header[data-type="search"]').click();
+        $('*[type="search"]').val(node.title);
+        search(node.title);
+      } else {
+        var glink = '?link=' + encodeURIComponent('/' + node.title);
+        window.open(glink, "_self");
+      }
     });
   }
 

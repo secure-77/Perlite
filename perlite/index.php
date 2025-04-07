@@ -788,6 +788,7 @@ $jsonGraphData = getfullGraph($rootDir);
         </div>
         <p class="graph-view color-line"></p>
         <p class="graph-view color-fill"></p>
+        <p class="graph-view color-fill-tag"></p>
         <p class="graph-view color-text"></p>
         <p class="graph-view color-fill-highlight"></p>
         <p class="graph-view color-fill-focused"></p>
