@@ -495,7 +495,7 @@ function getfullGraph($rootDir)
 					if (!$tagExists) {
 						$tagID = $nodeID;
 
-						$tag = ["id" => $nodeID, "label" => $tag, "title" => $tag, "color" => "#60A060"];
+						$tag = ["id" => $nodeID, "label" => $tag, "title" => $tag, "group" => "tag"];
 
 						array_push($graphNodes, $tag);
 						$nodeID += 1;
