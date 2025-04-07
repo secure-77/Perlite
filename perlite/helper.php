@@ -406,11 +406,32 @@ function isAvailableFolder($file) {
 	return false;
 }
 
+function isCached($rootDir, $filename) {
+	global $tempPath;
+	global $vaultName;
+
+	$filePath = $rootDir . "/" . $filename;
+	$tempFileSum = $tempPath . "/" . $filename . "_" . $vaultName . ".md5";
+
+	if (is_file($tempFileSum)) {
+		$md5_envsum = file_get_contents($tempFileSum);
+		$md5_filesum = md5_file($filePath);
+
+		if ($md5_envsum === $md5_filesum) {
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
 function getfullGraph($rootDir)
 {
 
 	global $tempPath;
 	global $vaultName;
+
 	$jsonMetadaFile = $rootDir . '/metadata.json';
 	$metadaTempFile = $tempPath . '/metadata_' . $vaultName . '.temp';
 	$metadaTempFileSum = $tempPath . '/metadata_' . $vaultName . '.md5';
@@ -421,19 +442,11 @@ function getfullGraph($rootDir)
 	}
 
 	// check if metadata file has changed
-	if (is_file($metadaTempFileSum) && is_file($metadaTempFile)) {
-		$md5_envsum = file_get_contents($metadaTempFileSum);
-		$md5_filesum = md5_file($jsonMetadaFile);
-
-		if ($md5_envsum === $md5_filesum) {
-			if (!is_file($metadaTempFile)) {
-				return;
-			}
-			return file_get_contents($metadaTempFile);
-		}
+	if (is_file($metadaTempFile) and isCached($rootDir, "metadata.json")) {
+		return file_get_contents($metadaTempFile);
 	}
 
-
+	// metadata has changed / was not cached
 	$jsonData = file_get_contents($jsonMetadaFile);
 
 	if ($jsonData === false) {
@@ -459,14 +472,44 @@ function getfullGraph($rootDir)
 
 		// check if node from the  json file really exists
 		if (checkArray($nodePath)) {
+			$thisNodeID = $nodeID;  // does not get overwritten when a tag node gets created
+
 			// add node to the graph
 			array_push($graphNodes, ['id' => $nodeID, 'label' => $node['fileName'], 'title' => $nodePath]);
 			$nodeID += 1;
+
+			// create tag nodes if they don't already exist
+			if (isset($node["tags"])) {
+				foreach ($node["tags"] as $tag) {
+					$tag = "#" . $tag;
+
+					$tagID = -1;
+					$tagExists = false;
+					foreach ($graphNodes as $graphNode) {
+						if ($graphNode["label"] == $tag) {
+							$tagID = $graphNode["id"];
+							$tagExists = true;
+						}
+					}
+
+					if (!$tagExists) {
+						$tagID = $nodeID;
+
+						$tag = ["id" => $nodeID, "label" => $tag, "title" => $tag, "color" => "#60A060"];
+
+						array_push($graphNodes, $tag);
+						$nodeID += 1;
+					}
+
+					array_push($graphEdges, ["from" => $thisNodeID, "to" => $tagID]);
+				}
+			}
 		}
 	}
 	$targetId = -1;
 	$sourceId = -1;
 
+	// create links
 	foreach ($json_obj as $index => $node) {
 
 		$nodePath = removeExtension($node['relativePath']);
