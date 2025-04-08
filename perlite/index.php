@@ -493,6 +493,20 @@ $jsonGraphData = getfullGraph($rootDir);
                                                         <div class="setting-item mod-toggle">
                                                             <div class="setting-item-info">
                                                                 <div class="setting-item-name"
+                                                                    aria-label="Make the node size depend on its connection count">
+                                                                    Size Depends On Connections</div>
+                                                                <div class="setting-item-description"></div>
+                                                            </div>
+                                                            <div class="setting-item-control">
+                                                                <div
+                                                                    class="checkbox-container mod-small graphSizeDepsOnConnsOption">
+                                                                    <input type="checkbox" tabindex="0">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="setting-item mod-toggle">
+                                                            <div class="setting-item-info">
+                                                                <div class="setting-item-name"
                                                                     aria-label="Automatically reload the graph when a setting gets changed.">
                                                                     Auto-Reload</div>
                                                                 <div class="setting-item-description"></div>

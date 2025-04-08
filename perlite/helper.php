@@ -576,6 +576,22 @@ function getfullGraph($rootDir)
 		}
 	}
 
+	foreach ($graphEdges as $graphEdge) {
+		foreach ($graphNodes as &$graphNode) {
+			if ($graphEdge["from"] == $graphNode["id"] or $graphEdge["to"] == $graphNode["id"]) {
+				$nodeValue = 0;
+
+				if (isset($graphNode["value"])) {
+					$nodeValue = $graphNode["value"];
+				}
+
+				$nodeValue += 1;
+
+				$graphNode["value"] = $nodeValue;
+			}
+		}
+	}
+
 	$myGraphNodes = json_encode($graphNodes, JSON_UNESCAPED_SLASHES);
 	$myGraphEdges = json_encode($graphEdges, JSON_UNESCAPED_SLASHES);
 
