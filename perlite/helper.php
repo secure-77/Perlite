@@ -45,7 +45,7 @@ if (empty($siteDescription)) $siteDescription = empty(getenv('SITE_DESC')) ? 'A 
 if (empty($siteName)) $siteName = empty(getenv('SITE_NAME')) ? 'Perlite Demo' : getenv('SITE_NAME');
 if (empty($siteHomepage)) $siteHomepage = empty(getenv("SITE_HOMEPAGE")) ? $siteURL : getenv("SITE_HOMEPAGE");
 if (empty($siteGithub)) $siteGithub = getenv("SITE_GITHUB");
-if (! isset($siteTwitter)) $siteTwitter = empty(getenv('SITE_TWITTER')) ? '@obsdmd' : getenv('SITE_TWITTER');
+if (! isset($siteTwitter)) $siteTwitter = getenv('SITE_TWITTER');
 
 // Temp PATH for graph linking temp files
 if (empty($tempPath)) $tempPath = empty(getenv('TEMP_PATH')) ? sys_get_temp_dir() : getenv('TEMP_PATH');
@@ -78,22 +78,44 @@ if (! isset($htmlSafeMode)) $htmlSafeMode = empty(getenv('HTML_SAFE_MODE')) ? tr
 if (! isset($customSection)) $customSection = '';
 if ($siteLogo and empty($customSection)) {
 	$customSection = '<div class="sm-site-title">&nbsp;</div>
-                    <div class="custom-page">
-					<img class="custom-page-logo" src="' . $siteLogo . '" alt="Custom Logo">
-					<div> &nbsp;</div>';
+                                    <div class="custom-page">
+					                  <img class="custom-page-logo" src="' . $siteLogo . '" alt="Custom Logo">
+					                  <div> &nbsp;</div>';
 
-	$customSection = $customSection . '<div class="sm-site-desc"><i>' . $siteDescription . '</i></div>
+	$customSection = $customSection . '
+	                                  <div class="sm-site-desc"><i>' . $siteDescription . '</i></div>
+					                  <div>
+									    <ul class="social-media-list">';
 
-					<div><ul class="social-media-list">';
 	if (! empty($siteGithub)) {
-		$customSection = $customSection . '<li><a href="' . $siteGithub . '"><img class="social-logo" src=".styles\github-color.svg" alt="Github Logo"></a></li>';
+		$customSection = $customSection . '
+		                                  <li>
+		                                    <a href="' . $siteGithub . '">
+										      <img class="social-logo" src=".styles\github-color.svg" alt="Github Logo">
+										    </a>
+										  </li>';
 	}
 
-	$customSection = $customSection . '<li><a href="https://twitter.com/' . substr($siteTwitter, 1) . '"><img class="social-logo" src=".styles\x-color.svg" alt="X Logo"></a></li>
-						<li><a href="' . $siteHomepage . '"><img class="social-logo" src=".styles\fontawesome-color.svg" alt="Homepage Logo"></a></li>
-					</ul>';
+	if (!empty($siteTwitter)) {
+		$customSection = $customSection . '
+		                                  <li>
+		                                    <a href="https://twitter.com/' . substr($siteTwitter, 1) . '">
+										      <img class="social-logo" src=".styles\x-color.svg" alt="X Logo">
+										    </a>
+										  </li>';
+	}
 
-	$customSection = $customSection . '</div></div>';
+	$customSection = $customSection . '
+						                  <li>
+	                                        <a href="' . $siteHomepage . '">
+									          <img class="social-logo" src=".styles\fontawesome-color.svg" alt="Homepage Logo">
+									        </a>
+									      </li>
+					                    </ul>';
+
+	$customSection = $customSection . '
+	                                  </div>
+	                                </div>';
 }
 
 
