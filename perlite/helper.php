@@ -30,7 +30,7 @@ if (empty($vaultName)) $vaultName = $rootDir;
 if (empty($hideFolders)) $hideFolders = getenv('HIDE_FOLDERS');
 
 // folders that are hidden but accessible
-if (empty($avHidden)) $avHidden = getenv("HIDE_AVAILABLE");
+// if (empty($avHidden)) $avHidden = getenv("HIDE_AVAILABLE");
 
 // use absolut paths instead of relative paths
 if (! isset($relPathes)) $relPathes = empty(getenv('ABSOLUTE_PATHS')) ? false : filter_var(getenv('ABSOLUTE_PATHS'), FILTER_VALIDATE_BOOLEAN);
