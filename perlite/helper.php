@@ -140,12 +140,12 @@ if (strcmp($hideFolders, '')) {
 }
 
 // hidden but accessible
-if (strcmp($avHidden, "")) {
-	$avHidden = explode(",", $avHidden);
+// if (strcmp($avHidden, "")) {
+// 	$avHidden = explode(",", $avHidden);
 
-} else {
-	$avHidden = array();
-}
+// } else {
+// 	$avHidden = array();
+// }
 
 // path management
 if (!strcmp($rootDir, "")) {
@@ -203,10 +203,11 @@ function menu($dir, $folder = '')
 						<div style="width: 591px; height: 0.1px; margin-bottom: 0px;"></div>';
 				$html .= menu($file, $folder . '/');
 				$html .= '</div></div>';
-			} else if (isAvailableFolder($file)) {
-				// add to $avFiles but don't list it
-				menu($file);
 			}
+			// } else if (isAvailableFolder($file)) {
+			// 	// add to $avFiles but don't list it
+			// 	menu($file);
+			// }
 		}
 	}
 
@@ -411,22 +412,22 @@ function isValidFolder($file)
 	return false;
 }
 
-function isAvailableFolder($file) {
-	global $avHidden;
+// function isAvailableFolder($file) {
+// 	global $avHidden;
 
-	$folderName = mb_basename($file);
+// 	$folderName = mb_basename($file);
 
-	// check if folder is in $avHidden
-	if (!in_array($folderName, $avHidden, true)) {
-		return false;
-	}
+// 	// check if folder is in $avHidden
+// 	if (!in_array($folderName, $avHidden, true)) {
+// 		return false;
+// 	}
 
-	if (strcmp(substr($folderName, 0, 1), '.') !== 0) {
-		return true;
-	}
+// 	if (strcmp(substr($folderName, 0, 1), '.') !== 0) {
+// 		return true;
+// 	}
 
-	return false;
-}
+// 	return false;
+// }
 
 function isCached($rootDir, $filename) {
 	global $tempPath;
