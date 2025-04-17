@@ -37,6 +37,7 @@ $jsonGraphData = getfullGraph($rootDir);
     <link rel="stylesheet" href=".styles/perlite.css" type="text/css">
     <link rel="stylesheet" href=".styles/vis-network.min.css" type="text/css">
     <link rel="stylesheet" href=".styles/katex.min.css" type="text/css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
    
     <script src=".js/jquery.min.js"></script>
     <script src=".js/highlight.min.js"></script>
@@ -478,7 +479,35 @@ $jsonGraphData = getfullGraph($rootDir);
                                                         <div class="setting-item mod-toggle">
                                                             <div class="setting-item-info">
                                                                 <div class="setting-item-name"
-                                                                    aria-label="Show files that are not linked to any other file">
+                                                                    aria-label="Show tags">
+                                                                    Tags</div>
+                                                                <div class="setting-item-description"></div>
+                                                            </div>
+                                                            <div class="setting-item-control">
+                                                                <div
+                                                                    class="checkbox-container mod-small graphShowTagsOption is-enabled">
+                                                                    <input type="checkbox" tabindex="0">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="setting-item mod-toggle">
+                                                            <div class="setting-item-info">
+                                                                <div class="setting-item-name"
+                                                                    aria-label="Make the node size depend on its connection count">
+                                                                    Size Depends On Connections</div>
+                                                                <div class="setting-item-description"></div>
+                                                            </div>
+                                                            <div class="setting-item-control">
+                                                                <div
+                                                                    class="checkbox-container mod-small graphSizeDepsOnConnsOption">
+                                                                    <input type="checkbox" tabindex="0">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="setting-item mod-toggle">
+                                                            <div class="setting-item-info">
+                                                                <div class="setting-item-name"
+                                                                    aria-label="Automatically reload the graph when a setting gets changed.">
                                                                     Auto-Reload</div>
                                                                 <div class="setting-item-description"></div>
                                                             </div>
@@ -787,6 +816,7 @@ $jsonGraphData = getfullGraph($rootDir);
         </div>
         <p class="graph-view color-line"></p>
         <p class="graph-view color-fill"></p>
+        <p class="graph-view color-fill-tag"></p>
         <p class="graph-view color-text"></p>
         <p class="graph-view color-fill-highlight"></p>
         <p class="graph-view color-fill-focused"></p>

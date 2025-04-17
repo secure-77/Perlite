@@ -427,12 +427,28 @@ function getContent(str, home = false, popHover = false, anchor = "") {
 };
 
 /**
+ * Gets the state of the graph setting inputs as a list.
+ * The options in order are: \
+ * [showNoLinks, showTags, sizeDepsOnConns]
+ * @returns {Array}
+ */
+function getGraphConfig() {
+  var showNoLinks = !$(".graphNoLinkOption").hasClass('is-enabled')
+  var showTags = $(".graphShowTagsOption").hasClass("is-enabled")
+  var sizeDepsOnConns = $(".graphSizeDepsOnConnsOption").hasClass("is-enabled")
+
+  return [showNoLinks, showTags, sizeDepsOnConns];
+}
+
+/**
  * vis js stuff
  * @param {Boolean} modal
  * @param {String} path
  * @param {Boolean} filter_emptyNodes
+ * @param {Boolean} show_tags
+ * @param {Boolean} sizeDepsOnConns
  */
-function renderGraph(modal, path = "", filter_emptyNodes = false) {
+function renderGraph(modal, path = "", filter_emptyNodes = false, show_tags = true, sizeDepsOnConns = false) {
 
   // no graph found exit
   if ($("#allGraphNodes").length == 0 || $("#allGraphNodes").text == '[]') {
@@ -521,6 +537,10 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
     nodes: {
       shape: 'dot',
       size: nodeSize,
+      scaling: {
+        min: 10,
+        max: 30
+      },
       font: {
         size: 16,
         color: getComputedStyle(document.querySelector('.graph-view.color-text')).color,
@@ -538,6 +558,19 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
           background: getComputedStyle(document.querySelector('.graph-view.color-fill-highlight')).color,
         },
       },
+    },
+
+    groups: {
+      tag: {
+        color: {
+          background: getComputedStyle(document.querySelector('.graph-view.color-fill-tag')).color,
+          border: getComputedStyle(document.querySelector('.graph-view.color-fill-tag')).color,
+          highlight: {
+            border: getComputedStyle(document.querySelector('.graph-view.color-fill-tag')).color,
+            background: getComputedStyle(document.querySelector('.graph-view.color-fill-tag')).color,
+          },
+        }
+      }
     }
   };
 
@@ -570,6 +603,27 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
         }
       });
 
+    }
+
+    // filter out tags
+    if (!show_tags) {
+      nodeView = new vis.DataView(nodes, {
+        filter: function (node) {
+          return !(node.group && node.group === "tag");
+        }
+      })
+    }
+
+    // overwrite scaling function to make all nodes the same size
+    if (!sizeDepsOnConns) {
+      options["nodes"]["scaling"]["customScalingFunction"] = function (min, max, total, value) {
+        var maxSize = options["nodes"]["scaling"]["max"]
+        var minSize = options["nodes"]["scaling"]["min"]
+
+        var diff = maxSize - minSize;
+
+        return Math.max(0, (nodeSize - minSize) / diff);  // reverse vis size calculation
+      }
     }
 
     // provide the data in the vis format
@@ -688,6 +742,24 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
     var nodes = new vis.DataSet(myNodes);
     var edges = new vis.DataSet(myEdges);
 
+    // filter out tags
+    if (!show_tags) {
+      nodeView = new vis.DataView(nodes, {
+        filter: function (node) {
+          return !(node.group && node.group === "tag");
+        }
+      })
+    }
+
+    // overwrite scaling function to make all nodes the same size
+    options["nodes"]["scaling"]["customScalingFunction"] = function (min, max, total, value) {
+      var maxSize = options["nodes"]["scaling"]["max"]
+      var minSize = options["nodes"]["scaling"]["min"]
+
+      var diff = maxSize - minSize;
+
+      return Math.max(0, (nodeSize - minSize) / diff);  // reverse vis size calculation
+    }
 
     var data = {
       nodes: nodes,
@@ -710,8 +782,16 @@ function renderGraph(modal, path = "", filter_emptyNodes = false) {
 
       if (!properties.nodes.length) return;
       var node = nodes.get(properties.nodes[0]);
-      var glink = '?link=' + encodeURIComponent('/' + node.title);
-      window.open(glink, "_self");
+
+      if (node.group && node.group === "tag") {
+        $('.workspace-tab-header[data-type="search"]').click();
+        $('*[type="search"]').val(node.title);
+        search(node.title);
+
+      } else {
+        var glink = '?link=' + encodeURIComponent('/' + node.title);
+        window.open(glink, "_self");
+      }
     });
   }
 
@@ -843,7 +923,7 @@ function toggleSearchEntry(e) {
  */
 function toggleNavFolder(e) {
   el = $(e.target);
-  
+
 
   if (el.hasClass('nav-folder-title-content')) {
     elIcon = el.prev()
@@ -1000,6 +1080,14 @@ $(document).ready(function () {
 
   if (localStorage.getItem('Graph_Orphans') === 'hide') {
     $('.graphNoLinkOption').removeClass('is-enabled')
+  }
+
+  if (localStorage.getItem('Graph_Tags') === 'hide') {
+    $('.graphShowTagsOption').removeClass('is-enabled')
+  }
+
+  if (localStorage.getItem('Graph_NodeScaling') === 'depsOnSize') {
+    $('.graphSizeDepsOnConnsOption').addClass('is-enabled')
   }
 
   if (localStorage.getItem('Graph_Autoreload') === 'no') {
@@ -1484,8 +1572,9 @@ $(document).ready(function () {
     } else {
       str = "";
     }
-    var showNoLinks = !$(".graphNoLinkOption").hasClass('is-enabled')
-    renderGraph(true, str, showNoLinks);
+
+    [showNoLinks, showTags, sizeDepsOnConns] = getGraphConfig()
+    renderGraph(true, str, showNoLinks, showTags, sizeDepsOnConns);
 
     if ($('.view-header-nav-buttons[data-section="close"]').is(':hidden')) {
       // show graph and close button
@@ -1544,7 +1633,8 @@ $(document).ready(function () {
       target.removeClass('is-enabled')
 
       if ($('.graphAutoReloadOption').hasClass('is-enabled')) {
-        renderGraph(true, str, true);
+        [showNoLinks, showTags, sizeDepsOnConns] = getGraphConfig()
+        renderGraph(true, str, true, showTags, sizeDepsOnConns);
       }
 
       localStorage.setItem('Graph_Orphans', 'hide');
@@ -1553,9 +1643,60 @@ $(document).ready(function () {
     } else {
       target.addClass('is-enabled')
       if ($('.graphAutoReloadOption').hasClass('is-enabled')) {
-        renderGraph(true, str, false);
+        [showNoLinks, showTags, sizeDepsOnConns] = getGraphConfig()
+        renderGraph(true, str, false, showTags, sizeDepsOnConns);
       }
       localStorage.removeItem('Graph_Orphans');
+    }
+  });
+
+  // Graph Show Tags Option
+  $('.graphShowTagsOption').click(function (e) {
+    e.preventDefault();
+    target = $('.graphShowTagsOption')
+
+    if (target.hasClass('is-enabled')) {
+      target.removeClass('is-enabled')
+
+      if ($('.graphAutoReloadOption').hasClass('is-enabled')) {
+        [showNoLinks, showTags, sizeDepsOnConns] = getGraphConfig()
+        renderGraph(true, str, showNoLinks, false, sizeDepsOnConns);
+      }
+
+      localStorage.setItem('Graph_Tags', 'hide');
+
+    } else {
+      target.addClass('is-enabled')
+      if ($('.graphAutoReloadOption').hasClass('is-enabled')) {
+        [showNoLinks, showTags, sizeDepsOnConns] = getGraphConfig()
+        renderGraph(true, str, showNoLinks, true, sizeDepsOnConns);
+      }
+      localStorage.removeItem('Graph_Tags');
+    }
+  });
+
+  // Graph Node Size Depends On Node Connection Number Option
+  $('.graphSizeDepsOnConnsOption').click(function (e) {
+    e.preventDefault();
+    target = $('.graphSizeDepsOnConnsOption')
+
+    if (target.hasClass('is-enabled')) {
+      target.removeClass('is-enabled')
+
+      if ($('.graphAutoReloadOption').hasClass('is-enabled')) {
+        [showNoLinks, showTags, sizeDepsOnConns] = getGraphConfig()
+        renderGraph(true, str, showNoLinks, showTags, false);
+      }
+
+      localStorage.setItem('Graph_NodeScaling', 'default');
+
+    } else {
+      target.addClass('is-enabled')
+      if ($('.graphAutoReloadOption').hasClass('is-enabled')) {
+        [showNoLinks, showTags, sizeDepsOnConns] = getGraphConfig()
+        renderGraph(true, str, showNoLinks, showTags, true);
+      }
+      localStorage.setItem('Graph_NodeScaling', 'depsOnSize');
     }
   });
 
@@ -1582,8 +1723,8 @@ $(document).ready(function () {
     $('#nodeSizeVal').text(target.val())
 
     if ($('.graphAutoReloadOption').hasClass('is-enabled')) {
-      var showNoLinks = !$(".graphNoLinkOption").hasClass('is-enabled')
-      renderGraph(true, str, showNoLinks);
+      [showNoLinks, showTags, sizeDepsOnConns] = getGraphConfig()
+      renderGraph(true, str, showNoLinks, showTags, sizeDepsOnConns);
     }
 
     localStorage.setItem('Graph_NodeSize', target.val());
@@ -1597,8 +1738,8 @@ $(document).ready(function () {
     $('#linkDistanceVal').text(target.val())
     var showNoLinks = !$(".graphNoLinkOption").hasClass('is-enabled')
     if ($('.graphAutoReloadOption').hasClass('is-enabled')) {
-      var showNoLinks = !$(".graphNoLinkOption").hasClass('is-enabled')
-      renderGraph(true, str, showNoLinks);
+      [showNoLinks, showTags, sizeDepsOnConns] = getGraphConfig()
+      renderGraph(true, str, showNoLinks, showTags, sizeDepsOnConns);
     }
     localStorage.setItem('Graph_LinkDistance', target.val());
 
@@ -1611,8 +1752,8 @@ $(document).ready(function () {
     $('#linkThicknessVal').text(target.val())
     var showNoLinks = !$(".graphNoLinkOption").hasClass('is-enabled')
     if ($('.graphAutoReloadOption').hasClass('is-enabled')) {
-      var showNoLinks = !$(".graphNoLinkOption").hasClass('is-enabled')
-      renderGraph(true, str, showNoLinks);
+      [showNoLinks, showTags, sizeDepsOnConns] = getGraphConfig()
+      renderGraph(true, str, showNoLinks, showTags, sizeDepsOnConns);
     }
     localStorage.setItem('Graph_LinkThickness', target.val());
 
@@ -1623,17 +1764,16 @@ $(document).ready(function () {
     e.preventDefault();
     target = $(e.target)
     if ($('.graphAutoReloadOption').hasClass('is-enabled')) {
-      var showNoLinks = !$(".graphNoLinkOption").hasClass('is-enabled')
-      renderGraph(true, str, showNoLinks);
+      [showNoLinks, showTags, sizeDepsOnConns] = getGraphConfig()
+      renderGraph(true, str, showNoLinks, showTags, sizeDepsOnConns);
     }
     localStorage.setItem('Graph_Style', target.val());
   });
 
   // Graph Reload Button
   $("#graphReload").click(function (e) {
-
-    var showNoLinks = !$(".graphNoLinkOption").hasClass('is-enabled')
-    renderGraph(true, str, showNoLinks);
+    [showNoLinks, showTags, sizeDepsOnConns] = getGraphConfig()
+    renderGraph(true, str, showNoLinks, showTags, sizeDepsOnConns);
 
   });
 
@@ -1643,6 +1783,14 @@ $(document).ready(function () {
 
     if (!$('.graphNoLinkOption').hasClass('is-enabled')) {
       $('.graphNoLinkOption').addClass('is-enabled')
+    }
+
+    if (!$(".graphShowTagsOption").hasClass("is-enabled")) {
+      $(".graphShowTagsOption").addClass("is-enabled")
+    }
+
+    if ($(".graphSizeDepsOnConnsOption").hasClass("is-enabled")) {
+      $(".graphSizeDepsOnConnsOption").removeClass("is-enabled")
     }
 
     if (!$('.graphAutoReloadOption').hasClass('is-enabled')) {
@@ -1655,6 +1803,8 @@ $(document).ready(function () {
     $('#graphStyleDropdown').val('dynamic')
 
     localStorage.removeItem('Graph_Orphans');
+    localStorage.removeItem('Graph_ShowTags');
+    localStorage.removeItem('Graph_NodeScaling')
     localStorage.removeItem('Graph_Autoreload');
     localStorage.removeItem('Graph_Style');
     localStorage.removeItem('Graph_LinkDistance');
@@ -1662,8 +1812,8 @@ $(document).ready(function () {
     localStorage.removeItem('Graph_NodeSize');
 
 
-    var showNoLinks = !$(".graphNoLinkOption").hasClass('is-enabled')
-    renderGraph(true, str, showNoLinks);
+    [showNoLinks, showTags, sizeDepsOnConns] = getGraphConfig()
+    renderGraph(true, str, showNoLinks, showTags, sizeDepsOnConns);
 
   });
 
@@ -1734,17 +1884,17 @@ $(document).ready(function () {
   // local Graph & Toc (outline) Switch
   $('.clickable-icon.view-action[aria-label="Open outline"]').click(function (e) {
 
-    
+
     if ($('#outline').css('display') == 'inline') {
       localStorage.setItem("showTOC", "false")
       $('#outline').css('display', 'none')
-    
+
 
     } else {
       localStorage.setItem("showTOC", "true")
       $('#outline').css('display', 'inline')
     }
-    
+
   });
 
   $('.clickable-icon.view-action[aria-label="Open localGraph"]').click(function (e) {

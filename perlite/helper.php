@@ -8,6 +8,11 @@
 
 use Perlite\PerliteParsedown;
 
+// load settings from settings.php if it exists instead of using environment variables
+if (file_exists("settings.php")) {
+	include "settings.php";
+}
+
 //
 // default settings and variables
 //
@@ -16,77 +21,101 @@ use Perlite\PerliteParsedown;
 $avFiles = array();
 
 // replace with your Vault Folder
-$rootDir = empty(getenv('NOTES_PATH')) ? 'Demo' : getenv('NOTES_PATH');
+if (empty($rootDir)) $rootDir = empty(getenv('NOTES_PATH')) ? 'Demo' : getenv('NOTES_PATH');
 
 // replace with your Vault Name
-$vaultName = $rootDir;
+if (empty($vaultName)) $vaultName = $rootDir;
 
 // hide folders
-$hideFolders = getenv('HIDE_FOLDERS');
+if (empty($hideFolders)) $hideFolders = getenv('HIDE_FOLDERS');
+
+// folders that are hidden but accessible
+// if (empty($avHidden)) $avHidden = getenv("HIDE_AVAILABLE");
 
 // use absolut paths instead of relative paths
-$relPathes = empty(getenv('ABSOLUTE_PATHS')) ? false : filter_var(getenv('ABSOLUTE_PATHS'), FILTER_VALIDATE_BOOLEAN);
+if (! isset($relPathes)) $relPathes = empty(getenv('ABSOLUTE_PATHS')) ? false : filter_var(getenv('ABSOLUTE_PATHS'), FILTER_VALIDATE_BOOLEAN);
 
 // Meta Tags infos
-$siteTitle = empty(getenv('SITE_TITLE')) ? 'Perlite' : getenv('SITE_TITLE');
-$siteType = empty(getenv('SITE_TYPE')) ? 'article' : getenv('SITE_TYPE');
-$siteImage = empty(getenv('SITE_IMAGE')) ? 'https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png' : getenv('SITE_IMAGE');
-$siteURL = empty(getenv('SITE_URL')) ? 'https://perlite.secure77.de' : getenv('SITE_URL');
-$siteDescription = empty(getenv('SITE_DESC')) ? 'A web based markdown viewer optimized for Obsidian Notes' : getenv('SITE_DESC');
-$siteName = empty(getenv('SITE_NAME')) ? 'Perlite Demo' : getenv('SITE_NAME');
-$siteTwitter = empty(getenv('SITE_TWITTER')) ? '@obsdmd' : getenv('SITE_TWITTER');
+if (empty($siteTitle)) $siteTitle = empty(getenv('SITE_TITLE')) ? 'Perlite' : getenv('SITE_TITLE');
+if (empty($siteType)) $siteType = empty(getenv('SITE_TYPE')) ? 'article' : getenv('SITE_TYPE');
+if (empty($siteImage)) $siteImage = empty(getenv('SITE_IMAGE')) ? 'https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png' : getenv('SITE_IMAGE');
+if (! isset($siteURL)) $siteURL = empty(getenv('SITE_URL')) ? 'https://perlite.secure77.de' : getenv('SITE_URL');
+if (empty($siteLogo)) $siteLogo = getenv("SITE_LOGO");
+if (empty($siteDescription)) $siteDescription = empty(getenv('SITE_DESC')) ? 'A web based markdown viewer optimized for Obsidian Notes' : getenv('SITE_DESC');
+if (empty($siteName)) $siteName = empty(getenv('SITE_NAME')) ? 'Perlite Demo' : getenv('SITE_NAME');
+if (empty($siteHomepage)) $siteHomepage = empty(getenv("SITE_HOMEPAGE")) ? $siteURL : getenv("SITE_HOMEPAGE");
+if (empty($siteGithub)) $siteGithub = getenv("SITE_GITHUB");
+if (! isset($siteTwitter)) $siteTwitter = getenv('SITE_TWITTER');
 
 // Temp PATH for graph linking temp files
-$tempPath = empty(getenv('TEMP_PATH')) ? sys_get_temp_dir() : getenv('TEMP_PATH');
+if (empty($tempPath)) $tempPath = empty(getenv('TEMP_PATH')) ? sys_get_temp_dir() : getenv('TEMP_PATH');
 
 // line breaks
-$lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
+if (! isset($lineBreaks)) $lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
 
 // file types
-$allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf', 'mp4'] : explode(",", getenv('ALLOWED_FILE_LINK_TYPES'));
+if (empty($allowedFileLinkTypes)) $allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf', 'mp4'] : explode(",", getenv('ALLOWED_FILE_LINK_TYPES'));
 
 // disable PopHovers
-$disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? "false" : getenv('DISABLE_POP_HOVER');
+if (empty($disablePopHovers)) $disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? "false" : getenv('DISABLE_POP_HOVER');
 
 // show TOC
-$showTOC = empty(getenv('SHOW_TOC')) ? "true" : getenv('SHOW_TOC');
+if (empty($showTOC)) $showTOC = empty(getenv('SHOW_TOC')) ? "true" : getenv('SHOW_TOC');
 
 // show local Graph
-$showLocalGraph = empty(getenv('SHOW_LOCAL_GRAPH')) ? "true" : getenv('SHOW_TOC');
+if (empty($showLocalGraph)) $showLocalGraph = empty(getenv('SHOW_LOCAL_GRAPH')) ? "true" : getenv('SHOW_TOC');
 
-// Set home page from environment variable
-$index = empty(getenv('HOME_FILE')) ? "README" : getenv('HOME_FILE');
+// Set home page from env/settings
+if (empty($index)) $index = empty(getenv('HOME_FILE')) ? "README" : getenv('HOME_FILE');
 
 // set default font size
-$font_size = empty(getenv('FONT_SIZE')) ? "15" : getenv('FONT_SIZE');
+if (empty($font_size)) $font_size = empty(getenv('FONT_SIZE')) ? "15" : getenv('FONT_SIZE');
 
-// Set safe mode from environment variable
-$htmlSafeMode = empty(getenv('HTML_SAFE_MODE')) ? true : filter_var(getenv('HTML_SAFE_MODE'), FILTER_VALIDATE_BOOLEAN);
-
+// Set safe mode from env/settings
+if (! isset($htmlSafeMode)) $htmlSafeMode = empty(getenv('HTML_SAFE_MODE')) ? true : filter_var(getenv('HTML_SAFE_MODE'), FILTER_VALIDATE_BOOLEAN);
 
 // Custom Site Section
-
-$customSection = '';
-if (getenv('SITE_LOGO')) {
+if (! isset($customSection)) $customSection = '';
+if ($siteLogo and empty($customSection)) {
 	$customSection = '<div class="sm-site-title">&nbsp;</div>
-                    <div class="custom-page">
-					<img class="custom-page-logo" src="' . getenv('SITE_LOGO') . '" alt="Custom Logo">
-					<div> &nbsp;</div>';
+                                    <div class="custom-page">
+					                  <img class="custom-page-logo" src="' . $siteLogo . '" alt="Custom Logo">
+					                  <div> &nbsp;</div>';
 
-	$customSection = $customSection . '<div class="sm-site-desc"><i>' . $siteDescription . '</i></div>
+	$customSection = $customSection . '
+	                                  <div class="sm-site-desc"><i>' . $siteDescription . '</i></div>
+					                  <div>
+									    <ul class="social-media-list">';
 
-					<div><ul class="social-media-list">';
-	if (getenv('SITE_GITHUB')) {
-		$customSection = $customSection . '<li><a href="' . getenv('SITE_GITHUB') . '"><img class="social-logo" src=".styles\github-color.svg" alt="Github Logo"></a></li>';
+	if (! empty($siteGithub)) {
+		$customSection = $customSection . '
+		                                  <li>
+		                                    <a href="' . $siteGithub . '">
+										      <img class="social-logo" src=".styles\github-color.svg" alt="Github Logo">
+										    </a>
+										  </li>';
 	}
 
-	// set custom homepage or current site url
-	$siteHomepage = empty(getenv('SITE_HOMEPAGE')) ? $siteURL : getenv('SITE_HOMEPAGE');
-	$customSection = $customSection . '<li><a href="https://twitter.com/' . substr($siteTwitter, 1) . '"><img class="social-logo" src=".styles\x-color.svg" alt="X Logo"></a></li>
-						<li><a href="' . $siteHomepage . '"><img class="social-logo" src=".styles\fontawesome-color.svg" alt="Homepage Logo"></a></li>
-					</ul>';
+	if (!empty($siteTwitter)) {
+		$customSection = $customSection . '
+		                                  <li>
+		                                    <a href="https://twitter.com/' . substr($siteTwitter, 1) . '">
+										      <img class="social-logo" src=".styles\x-color.svg" alt="X Logo">
+										    </a>
+										  </li>';
+	}
 
-	$customSection = $customSection . '</div></div>';
+	$customSection = $customSection . '
+						                  <li>
+	                                        <a href="' . $siteHomepage . '">
+									          <img class="social-logo" src=".styles\fontawesome-color.svg" alt="Homepage Logo">
+									        </a>
+									      </li>
+					                    </ul>';
+
+	$customSection = $customSection . '
+	                                  </div>
+	                                </div>';
 }
 
 
@@ -109,6 +138,14 @@ if (strcmp($hideFolders, '')) {
 } else {
 	$hideFolders = array();
 }
+
+// hidden but accessible
+// if (strcmp($avHidden, "")) {
+// 	$avHidden = explode(",", $avHidden);
+
+// } else {
+// 	$avHidden = array();
+// }
 
 // path management
 if (!strcmp($rootDir, "")) {
@@ -167,6 +204,10 @@ function menu($dir, $folder = '')
 				$html .= menu($file, $folder . '/');
 				$html .= '</div></div>';
 			}
+			// } else if (isAvailableFolder($file)) {
+			// 	// add to $avFiles but don't list it
+			// 	menu($file);
+			// }
 		}
 	}
 
@@ -371,11 +412,49 @@ function isValidFolder($file)
 	return false;
 }
 
+// function isAvailableFolder($file) {
+// 	global $avHidden;
+
+// 	$folderName = mb_basename($file);
+
+// 	// check if folder is in $avHidden
+// 	if (!in_array($folderName, $avHidden, true)) {
+// 		return false;
+// 	}
+
+// 	if (strcmp(substr($folderName, 0, 1), '.') !== 0) {
+// 		return true;
+// 	}
+
+// 	return false;
+// }
+
+function isCached($rootDir, $filename) {
+	global $tempPath;
+	global $vaultName;
+
+	$filePath = $rootDir . "/" . $filename;
+	$tempFileSum = $tempPath . "/" . $filename . "_" . $vaultName . ".md5";
+
+	if (is_file($tempFileSum)) {
+		$md5_envsum = file_get_contents($tempFileSum);
+		$md5_filesum = md5_file($filePath);
+
+		if ($md5_envsum === $md5_filesum) {
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
 function getfullGraph($rootDir)
 {
 
 	global $tempPath;
 	global $vaultName;
+
 	$jsonMetadaFile = $rootDir . '/metadata.json';
 	$metadaTempFile = $tempPath . '/metadata_' . $vaultName . '.temp';
 	$metadaTempFileSum = $tempPath . '/metadata_' . $vaultName . '.md5';
@@ -386,19 +465,11 @@ function getfullGraph($rootDir)
 	}
 
 	// check if metadata file has changed
-	if (is_file($metadaTempFileSum) && is_file($metadaTempFile)) {
-		$md5_envsum = file_get_contents($metadaTempFileSum);
-		$md5_filesum = md5_file($jsonMetadaFile);
-
-		if ($md5_envsum === $md5_filesum) {
-			if (!is_file($metadaTempFile)) {
-				return;
-			}
-			return file_get_contents($metadaTempFile);
-		}
+	if (is_file($metadaTempFile) and isCached($rootDir, "metadata.json")) {
+		return file_get_contents($metadaTempFile);
 	}
 
-
+	// metadata has changed / was not cached
 	$jsonData = file_get_contents($jsonMetadaFile);
 
 	if ($jsonData === false) {
@@ -424,14 +495,44 @@ function getfullGraph($rootDir)
 
 		// check if node from the  json file really exists
 		if (checkArray($nodePath)) {
+			$thisNodeID = $nodeID;  // does not get overwritten when a tag node gets created
+
 			// add node to the graph
 			array_push($graphNodes, ['id' => $nodeID, 'label' => $node['fileName'], 'title' => $nodePath]);
 			$nodeID += 1;
+
+			// create tag nodes if they don't already exist
+			if (isset($node["tags"])) {
+				foreach ($node["tags"] as $tag) {
+					$tag = "#" . $tag;
+
+					$tagID = -1;
+					$tagExists = false;
+					foreach ($graphNodes as $graphNode) {
+						if ($graphNode["label"] == $tag) {
+							$tagID = $graphNode["id"];
+							$tagExists = true;
+						}
+					}
+
+					if (!$tagExists) {
+						$tagID = $nodeID;
+
+						$tag = ["id" => $nodeID, "label" => $tag, "title" => $tag, "group" => "tag"];
+
+						array_push($graphNodes, $tag);
+						$nodeID += 1;
+					}
+
+					array_push($graphEdges, ["from" => $thisNodeID, "to" => $tagID]);
+				}
+			}
 		}
 	}
 	$targetId = -1;
 	$sourceId = -1;
 
+	// create links
 	foreach ($json_obj as $index => $node) {
 
 		$nodePath = removeExtension($node['relativePath']);
@@ -494,6 +595,22 @@ function getfullGraph($rootDir)
 						}
 					}
 				}
+			}
+		}
+	}
+
+	foreach ($graphEdges as $graphEdge) {
+		foreach ($graphNodes as &$graphNode) {
+			if ($graphEdge["from"] == $graphNode["id"] or $graphEdge["to"] == $graphNode["id"]) {
+				$nodeValue = 0;
+
+				if (isset($graphNode["value"])) {
+					$nodeValue = $graphNode["value"];
+				}
+
+				$nodeValue += 1;
+
+				$graphNode["value"] = $nodeValue;
 			}
 		}
 	}
