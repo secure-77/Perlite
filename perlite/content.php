@@ -115,16 +115,17 @@ function parseContent($requestFile)
 
 	$allowedImageTypes = '(\.png|\.jpg|\.jpeg|\.svg|\.gif|\.bmp|\.tif|\.tiff|\.webp)';
 
+	$src_path = '/' . $path;
 
 	// embedded pdf links
-	$replaces = '<embed src="' . $path . '/\\2" type="application/pdf" style="min-height:100vh;width:100%">';
+	$replaces = '<embed src="' . $src_path . '/\\2" type="application/pdf" style="min-height:100vh;width:100%">';
 	$pattern = array('/(\!\[\[)(.*?.(?:pdf))(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// embedded mp4 links
 	$replaces = '
-	<video controls src="' . $path . '/\\2" type="video/mp4">
-		<a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $path . '/' . '\\2">Your browser does not support the video tag: Download \\2</a>
+	<video controls src="' . $src_path . '/\\2" type="video/mp4">
+		<a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $src_path . '/' . '\\2">Your browser does not support the video tag: Download \\2</a>
   	</video>';
 	$pattern = array('/(\!\[\[)(.*?.(?:mp4))(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
@@ -132,36 +133,36 @@ function parseContent($requestFile)
 	
      // embedded m4a links
 	 $replaces = '
-	 <video controls src="' . $path . '/\\2" type="audio/x-m4a">
-			 <a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $path . '/' . '\\2">Your browser does not support the audio tag: Download \\2</a>
+	 <video controls src="' . $src_path . '/\\2" type="audio/x-m4a">
+			 <a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $src_path . '/' . '\\2">Your browser does not support the audio tag: Download \\2</a>
 	 </video>';
 	 $pattern = array('/(\!\[\[)(.*?.(?:m4a))(\]\])/');
 	 $content = preg_replace($pattern, $replaces, $content);
 
 
 	// links to other files with Alias
-	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $path . '/' . '\\2">\\3</a>';
+	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $src_path . '/' . '\\2">\\3</a>';
 	$pattern = array('/(\[\[)(.*?.(?:' . $linkFileTypes . '))\|(.*)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// links to other files without Alias
-	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $path . '/' . '\\2">\\2</a>';
+	$replaces = '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $src_path . '/' . '\\2">\\2</a>';
 	$pattern = array('/(\[\[)(.*?.(?:' . $linkFileTypes . '))(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// img links with external target link
-	$replaces = 'noreferrer"><img class="images" width="\\4" height="\\5" alt="image not found" src="' . $path . '/\\2\\3' . '"/>';
+	$replaces = 'noreferrer"><img class="images" width="\\4" height="\\5" alt="image not found" src="' . $src_path . '/\\2\\3' . '"/>';
 	$pattern = array('/noreferrer">(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// img links with size
-	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\4" height="\\5" alt="image not found" src="' . $path . '/\\2\\3' . '"/></a></p>';
+	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\4" height="\\5" alt="image not found" src="' . $src_path . '/\\2\\3' . '"/></a></p>';
 	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// centerise or right align images with "center"/"right" directive
 	$pattern = '/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(center|right)\|?(\d*)x?(\d*)(\]\])/';
-	$replaces = function ($matches) use ($path) {
+	$replaces = function ($matches) use ($src_path) {
 		$class = "images";  // Default class for all images
 		if (strpos($matches[4], 'center') !== false) {
 			$class .= " center";  // Add 'center' class
@@ -170,17 +171,17 @@ function parseContent($requestFile)
 		}
 		$width = $matches[5] ?? 'auto';
 		$height = $matches[6] ?? 'auto';
-		return '<p><a href="#" class="pop"><img class="' . $class . '" src="' . $path . '/' . $matches[2] . $matches[3] . '" width="' . $width . '" height="' . $height . '"/></a></p>';
+		return '<p><a href="#" class="pop"><img class="' . $class . '" src="' . $src_path . '/' . $matches[2] . $matches[3] . '" width="' . $width . '" height="' . $height . '"/></a></p>';
 	};
 	$content = preg_replace_callback($pattern, $replaces, $content);
 
 	// img links with captions and size
-	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\5" height="\\6" alt="\\4" src="' . $path . '/\\2\\3' . '"/></a></p>';
+	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\5" height="\\6" alt="\\4" src="' . $src_path . '/\\2\\3' . '"/></a></p>';
 	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(.+\|)\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// img links with captions
-	$replaces = '<p><a href="#" class="pop"><img class="images" alt="\\4" src="' . $path . '/\\2\\3' . '"/></a></p>';
+	$replaces = '<p><a href="#" class="pop"><img class="images" alt="\\4" src="' . $src_path . '/\\2\\3' . '"/></a></p>';
 	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(.+|)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
@@ -326,8 +327,9 @@ function translateLink($pattern, $content, $path, $sameFolder)
 
 
 			$urlPath = $newAbPath . '/' . $linkFile;
-			if (substr($urlPath, 0, 1) != '/') {
-				$urlPath = '/' . $urlPath;
+			if (substr($urlPath, 0, 1) == '/') {
+				#$urlPath = '/' . $urlPath;
+				$urlPath = substr($urlPath, 1);
 			}
 
 			$refName = '';
@@ -341,12 +343,13 @@ function translateLink($pattern, $content, $path, $sameFolder)
 				$refName = '#' . $refName;
 				$href = 'href="';
 			} else {
-				$href = 'href="?link=';
+				#$href = 'href="?link=';
+				$href = 'href="/';
 			}
 
 			$urlPath = str_replace('&amp;', '&', $urlPath);
 
-			$urlPath = rawurlencode($urlPath);
+			#$urlPath = rawurlencode($urlPath);
 			$urlPath = str_replace('%23', '#', $urlPath);
 
 			return '<a class="internal-link' . $popupClass . '"' . $href . $urlPath . $refName . '">' . $linkName . '</a>' . $popUpIcon;

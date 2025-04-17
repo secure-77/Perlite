@@ -79,7 +79,7 @@ if (! isset($customSection)) $customSection = '';
 if ($siteLogo and empty($customSection)) {
 	$customSection = '<div class="sm-site-title">&nbsp;</div>
                                     <div class="custom-page">
-					                  <img class="custom-page-logo" src="' . $siteLogo . '" alt="Custom Logo">
+					                  <img class="custom-page-logo" src="/' . $siteLogo . '" alt="Custom Logo">
 					                  <div> &nbsp;</div>';
 
 	$customSection = $customSection . '
@@ -91,7 +91,7 @@ if ($siteLogo and empty($customSection)) {
 		$customSection = $customSection . '
 		                                  <li>
 		                                    <a href="' . $siteGithub . '">
-										      <img class="social-logo" src=".styles\github-color.svg" alt="Github Logo">
+										      <img class="social-logo" src="/.styles/github-color.svg" alt="Github Logo">
 										    </a>
 										  </li>';
 	}
@@ -100,7 +100,7 @@ if ($siteLogo and empty($customSection)) {
 		$customSection = $customSection . '
 		                                  <li>
 		                                    <a href="https://twitter.com/' . substr($siteTwitter, 1) . '">
-										      <img class="social-logo" src=".styles\x-color.svg" alt="X Logo">
+										      <img class="social-logo" src="/.styles/x-color.svg" alt="X Logo">
 										    </a>
 										  </li>';
 	}
@@ -108,7 +108,7 @@ if ($siteLogo and empty($customSection)) {
 	$customSection = $customSection . '
 						                  <li>
 	                                        <a href="' . $siteHomepage . '">
-									          <img class="social-logo" src=".styles\fontawesome-color.svg" alt="Homepage Logo">
+									          <img class="social-logo" src="/.styles/fontawesome-color.svg" alt="Homepage Logo">
 									        </a>
 									      </li>
 					                    </ul>';
@@ -695,7 +695,7 @@ function loadSettings($rootDir)
 
 			$folderName = getFolderInfos($folder)[2];
 			$folderClean = str_replace(' ', '_', $folderName);
-			$themePath = $rootDir . '/.obsidian/themes/' . $folderName . '/theme.css';
+			$themePath = '/' . $rootDir . '/.obsidian/themes/' . $folderName . '/theme.css';
 
 			if ($defaultTheme === $folderName) {
 

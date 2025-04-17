@@ -1,3 +1,10 @@
+## 1.6
+- get rid of mb_strlen, fixed issue [#151](https://github.com/secure-77/Perlite/issues/151)
+- hide X / Twitter when not set, issue [#152](https://github.com/secure-77/Perlite/issues/152) thanks to @EKNr1
+- implemented settings.php, issue [#119](https://github.com/secure-77/Perlite/issues/119) thanks to @EKNr1
+
+
+
 ## 1.5.9
 - added YouTube link support #133 thanks to @rsubr
 - added image postion support thanks to @ar0x4
