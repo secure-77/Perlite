@@ -6,6 +6,8 @@
 - removed not used Dockerfile
 - fixed issue [#148](https://github.com/secure-77/Perlite/issues/148)
 - fixed issue [#149](https://github.com/secure-77/Perlite/issues/149)
+- implemented highlight support [#150](https://github.com/secure-77/Perlite/issues/150)
+
 
 - [ ] create settings.php
 - [ ] update wiki for pretty urls

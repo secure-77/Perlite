@@ -534,7 +534,7 @@ class PerliteParsedown extends Parsedown
 
 
     # extend to obsidian tags
-    protected $inlineMarkerList = '!"*$_#&[:<>`~\\';
+    protected $inlineMarkerList = '!"*$_#&[:<>`~\\=';
     protected $InlineTypes = array(
         '"' => array('SpecialCharacter'),
         '!' => array('Image'),
@@ -550,7 +550,35 @@ class PerliteParsedown extends Parsedown
         '`' => array('Code'),
         '~' => array('Strikethrough'),
         '\\' => array('EscapeSequence'),
+        '=' => array('Highlight'),
     );
+
+
+
+    # handle highlight code
+    protected function inlineHighlight($Excerpt)
+    {
+        $marker = $Excerpt['text'][1];
+
+        if (preg_match('/^==(.+?)==/s', $Excerpt['text'], $matches))
+        {
+            $content = $matches[1];
+            $Inline = array(
+                'extent' => strlen($matches[0]),
+                'element' => array(
+                    'name' => 'span',
+                    'text' => $content,
+                    'attributes' => array(
+                        'class' => 'cm-highlight'
+                    ),
+                ),
+            );
+
+            return $Inline;
+        }
+    }
+
+
 
 
     # handle katex code

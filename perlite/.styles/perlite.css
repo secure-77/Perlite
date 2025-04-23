@@ -141,6 +141,11 @@ h1, h2, h3, h4 {
   
 }
 
+span.cm-highlight {
+  background-color: var(--text-highlight-bg);
+  color: var(--text-normal);
+}
+
 /* --------------- */
 /* Mobile / Responive Settings */
 
