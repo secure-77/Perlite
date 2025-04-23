@@ -69,7 +69,13 @@ Im a YAML front matter document
 >> Test
 
 
-> [!note]+ code inline test. 
+> [!note]+ ###code inline test. 
+> ```bash
+> whoami
+> ```
+
+
+> [!note]+ 
 > ```bash
 > whoami
 > ```

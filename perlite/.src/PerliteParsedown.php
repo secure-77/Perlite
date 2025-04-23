@@ -186,11 +186,12 @@ class PerliteParsedown extends Parsedown
                 $isCollapsed = '';
                 $needCollapseIcon = False;
                 $isCollapsedIcon = '';
+                $calloutTitleClass = 'callout-title-inner';
 
                 if (substr($calloutTitle, 0, 1) == '+') {
                     $calloutTitle = substr($calloutTitle, 1);
                     $calloutclass = 'callout is-collapsible';
-                    $calloutTitle = 'callout-title-inner is-collapsible';
+                    $calloutTitleClass = 'callout-title-inner is-collapsible';
                     $calloutStyle = 'unset';
                     $needCollapseIcon = True;
                 }
@@ -201,7 +202,7 @@ class PerliteParsedown extends Parsedown
                     $calloutStyle = 'none';
                     $isCollapsed = 'is-collapsed-callout';
                     $isCollapsedIcon = 'is-collapsed';
-                    $calloutTitle = 'callout-title-inner is-collapsed';
+                    $calloutTitleClass = 'callout-title-inner is-collapsed';
                     $needCollapseIcon = True;
                 }
 
@@ -274,8 +275,9 @@ class PerliteParsedown extends Parsedown
                                     # callout title
                                     array(
                                         'name' => 'div',
-                                        'attributes' => array('class' => $calloutTitle),
-                                        'text' => $calloutTitle,
+                                        'attributes' => array('class' => $calloutTitleClass),
+                                        'text' => (array) $calloutTitle,
+                                        'handler' => 'lines',
 
                                     ),
                                     # collapsible icon

@@ -136,6 +136,11 @@ h1, h2, h3, h4 {
   display: none;
 }
 
+.callout-title-inner * {
+  display: inline !important;
+  
+}
+
 /* --------------- */
 /* Mobile / Responive Settings */
 
