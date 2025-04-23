@@ -4,7 +4,7 @@
 - implemented settings.php, issue [#119](https://github.com/secure-77/Perlite/issues/119) thanks to @EKNr1
 - implemented pretty urls, issue [#140](https://github.com/secure-77/Perlite/issues/140)
 - removed not used Dockerfile
-
+- fixed issue [#148](https://github.com/secure-77/Perlite/issues/148)
 
 - [ ] create settings.php
 - [ ] update wiki for pretty urls

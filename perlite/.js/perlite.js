@@ -272,7 +272,7 @@ function getContent(str, home = false, popHover = false, anchor = "") {
           });
 
           // Toogle Collapsable Callout Container
-          $('.callout.is-collapsible').on('click', function (e) {
+          $('.callout-title-inner.is-collapsible').on('click', function (e) {
 
             e.preventDefault();
             e.stopPropagation();

@@ -68,3 +68,8 @@ Im a YAML front matter document
 > > [!note]+ Information the user should notice even if skimming. 
 >> Test
 
+
+> [!note]+ code inline test. 
+> ```bash
+> whoami
+> ```
