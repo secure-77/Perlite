@@ -876,7 +876,13 @@ function isMobile() {
         if (urlParams.has('link')) {
           var target = urlParams.get('link');
           target = encodeURIComponent(target);
+        } else {
+
+          const path = new URL(this.href).pathname;
+          target = unslugURL(path)
+      
         }
+
 
         if (target) {
           getContent(target, false, true)
