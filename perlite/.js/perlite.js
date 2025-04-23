@@ -1940,6 +1940,17 @@ $(document).ready(function () {
 
   });
 
+    // open random note
+    $('.clickable-icon.side-dock-ribbon-action[aria-label="Open TOC"]').click(function (e) {
+
+      console.log("open TOC")
+
+      $("#popUpContent").html($("#toc").html())
+      $(".popup-modal-title").text($(".popup-modal-title").text() + ' - Content');
+      $("#popUp").css("display", "flex")
+
+    });
+
   /**
    * close modal
    * @param {String[]} elementIds
