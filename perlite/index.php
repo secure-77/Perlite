@@ -25,26 +25,25 @@ $jsonGraphData = getfullGraph($rootDir);
 */
 -->
 
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
     <?php echo loadSettings($rootDir); ?>
-    <link rel="stylesheet" href="/.styles/app.css" type="text/css">
-    <link id="highlight-js" rel="stylesheet" href="/.styles/atom-one-dark.min.css" type="text/css">
-    <link rel="stylesheet" href="/.styles/perlite.css" type="text/css">
-    <link rel="stylesheet" href="/.styles/vis-network.min.css" type="text/css">
-    <link rel="stylesheet" href="/.styles/katex.min.css" type="text/css">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="<?php echo $uriPath ?>.styles/app.css" type="text/css">
+    <link id="highlight-js" rel="stylesheet" href="<?php echo $uriPath ?>.styles/atom-one-dark.min.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo $uriPath ?>.styles/perlite.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo $uriPath ?>.styles/vis-network.min.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo $uriPath ?>.styles/katex.min.css" type="text/css">
+    <link rel="icon" type="image/x-icon" href="<?php echo $uriPath ?>favicon.ico">
    
-    <script src="/.js/jquery.min.js"></script>
-    <script src="/.js/highlight.min.js"></script>
-    <script src="/.js/vis-network.min.js"></script>
-    <script src="/.js/katex.min.js"></script>
-    <script src="/.js/auto-render.min.js"></script>
-    <script src="/.js/vis-network.min.js"></script>
+    <script src="<?php echo $uriPath ?>.js/jquery.min.js"></script>
+    <script src="<?php echo $uriPath ?>.js/highlight.min.js"></script>
+    <script src="<?php echo $uriPath ?>.js/vis-network.min.js"></script>
+    <script src="<?php echo $uriPath ?>.js/katex.min.js"></script>
+    <script src="<?php echo $uriPath ?>.js/auto-render.min.js"></script>
+    <script src="<?php echo $uriPath ?>.js/vis-network.min.js"></script>
     <!-- <script src=".js/mermaid.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@11.2.1/dist/mermaid.min.js"></script>
 
@@ -93,7 +92,7 @@ $jsonGraphData = getfullGraph($rootDir);
             <div class="workspace is-left-sidedock-open">
                 <div class="workspace-ribbon side-dock-ribbon mod-left">
 
-                    <a href="."><img src="/logo.svg" height="25" class="logo" alt="Perlite Logo"></a>
+                    <a href="."><img src="<?php echo $uriPath ?>logo.svg" height="25" class="logo" alt="Perlite Logo"></a>
                     <div class="sidebar-toggle-button mod-left sidebar" aria-label="" aria-label-position="right">
 
 
@@ -833,7 +832,7 @@ $jsonGraphData = getfullGraph($rootDir);
         <div class="modal-bg" style="opacity: 0.85;"></div>
         <div class="modal">
             <div class="modal-close-button"></div>
-            <div class="modal-title"> <a href="."><img src="/logo.svg" height="35" alt="Perlite Logo"
+            <div class="modal-title"> <a href="."><img src="<?php echo $uriPath ?>logo.svg" height="35" alt="Perlite Logo"
                         style="padding-top: 10px"></a> Perlite</div>
             <div class="aboutContent modal-content"></div>
         </div>
@@ -1020,7 +1019,7 @@ $jsonGraphData = getfullGraph($rootDir);
 
 
     </div>
-    <script src="/.js/perlite.js"></script>
+    <script src="<?php echo $uriPath ?>.js/perlite.js"></script>
 </body>
 
 </html>

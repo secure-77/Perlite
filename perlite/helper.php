@@ -23,6 +23,9 @@ $avFiles = array();
 // replace with your Vault Folder
 if (empty($rootDir)) $rootDir = empty(getenv('NOTES_PATH')) ? 'Demo' : getenv('NOTES_PATH');
 
+//if (empty($uriPath)) $uriPath = empty(getenv('URI_PATH')) ? '/perlite/' : getenv('URI_PATH');
+if (empty($uriPath)) $uriPath = empty(getenv('URI_PATH')) ? '/' : getenv('URI_PATH');
+
 // replace with your Vault Name
 if (empty($vaultName)) $vaultName = $rootDir;
 
@@ -79,7 +82,7 @@ if (! isset($customSection)) $customSection = '';
 if ($siteLogo and empty($customSection)) {
 	$customSection = '<div class="sm-site-title">&nbsp;</div>
                                     <div class="custom-page">
-					                  <img class="custom-page-logo" src="/' . $siteLogo . '" alt="Custom Logo">
+					                  <img class="custom-page-logo" src="' . $uriPath . $siteLogo . '" alt="Custom Logo">
 					                  <div> &nbsp;</div>';
 
 	$customSection = $customSection . '
@@ -91,7 +94,7 @@ if ($siteLogo and empty($customSection)) {
 		$customSection = $customSection . '
 		                                  <li>
 		                                    <a href="' . $siteGithub . '">
-										      <img class="social-logo" src="/.styles/github-color.svg" alt="Github Logo">
+										      <img class="social-logo" src="'  . $uriPath . '.styles/github-color.svg" alt="Github Logo">
 										    </a>
 										  </li>';
 	}
@@ -99,8 +102,8 @@ if ($siteLogo and empty($customSection)) {
 	if (!empty($siteTwitter)) {
 		$customSection = $customSection . '
 		                                  <li>
-		                                    <a href="https://twitter.com/' . substr($siteTwitter, 1) . '">
-										      <img class="social-logo" src="/.styles/x-color.svg" alt="X Logo">
+		                                    <a href="https://x.com/' . substr($siteTwitter, 1) . '">
+										      <img class="social-logo" src="'  . $uriPath . '.styles/x-color.svg" alt="X Logo">
 										    </a>
 										  </li>';
 	}
@@ -108,7 +111,7 @@ if ($siteLogo and empty($customSection)) {
 	$customSection = $customSection . '
 						                  <li>
 	                                        <a href="' . $siteHomepage . '">
-									          <img class="social-logo" src="/.styles/fontawesome-color.svg" alt="Homepage Logo">
+									          <img class="social-logo" src="'  . $uriPath . '.styles/fontawesome-color.svg" alt="Homepage Logo">
 									        </a>
 									      </li>
 					                    </ul>';
@@ -667,6 +670,7 @@ function loadSettings($rootDir)
 	global $siteDescription;
 	global $siteName;
 	global $siteTwitter;
+	global $uriPath;
 
 
 	// get themes
@@ -695,7 +699,7 @@ function loadSettings($rootDir)
 
 			$folderName = getFolderInfos($folder)[2];
 			$folderClean = str_replace(' ', '_', $folderName);
-			$themePath = '/' . $rootDir . '/.obsidian/themes/' . $folderName . '/theme.css';
+			$themePath =  $uriPath . $rootDir . '/.obsidian/themes/' . $folderName . '/theme.css';
 
 			if ($defaultTheme === $folderName) {
 

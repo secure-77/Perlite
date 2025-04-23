@@ -7,10 +7,17 @@
 */
 
 
-// load default settings
+// // load default settings
+
+// define perlite location on webserver
+
+//var uriPath = '/perlite/'
+var uriPath = '/'
+
 
 // define home file
 var homeFile = "README";
+
 if ($('#index').data('option')) {
 
   homeFile = $('#index').data('option');
@@ -35,6 +42,51 @@ if ($('#showLocalGraph').data('option') == false || localStorage.getItem("showLo
 
   localStorage.setItem("showLocalGraph", "false")
   $('#localGraph').css('display', 'none')
+}
+
+
+/**
+ * unslugURL
+ * @param {String} targetPath
+ */
+function unslugURL(targetPath) {
+
+  decodedURI = decodeURIComponent(targetPath);
+  decodedURI = decodedURI.replaceAll('-', ' ')
+  decodedURI = decodedURI.replaceAll('~', '-')
+  decodedURI = decodedURI.replaceAll('%80', '~')
+
+  // when perlite is in subdirectory remove it for content retrieval 
+  if (decodedURI.startsWith(uriPath)) {
+    decodedURI = decodedURI.substring(uriPath.length - 1)
+  }
+
+  return decodedURI;
+}
+
+/**
+ * slugURL
+ * @param {String} targetPath
+ */
+function slugURL(targetPath) {
+
+  encodedURI = decodeURIComponent(targetPath)
+  encodedURI = encodedURI.replaceAll('~', '%80')
+  encodedURI = encodedURI.replaceAll('-', '~')
+  encodedURI = encodedURI.replaceAll(' ', '-')
+
+  // remove absolute path
+  if (encodedURI.substring(0, 1) == '/') {
+    encodedURI = encodedURI.substring(1)
+  }
+
+  // when perlite is in subdirectory remove it for content retrieval 
+  if (encodedURI.startsWith(uriPath)) {
+    encodedURI = encodedURI.substring(uriPath.length - 1)
+  }
+
+
+  return encodedURI;
 }
 
 
@@ -65,13 +117,13 @@ function getContent(str, home = false, popHover = false, anchor = "") {
     return;
   } else {
 
-    requestPath = "/content.php?mdfile=" + str;
+    requestPath = uriPath + "content.php?mdfile=" + str;
 
     if (home) {
       if ($("div.no-mobile").css("display") == "none") {
         return
       }
-      requestPath = "/content.php?home";
+      requestPath = uriPath + "content.php?home";
 
     }
 
@@ -177,14 +229,9 @@ function getContent(str, home = false, popHover = false, anchor = "") {
 
           // update the url
           if (home == false) {
-          //   //window.history.pushState({}, "", location.protocol + '//' + location.host + location.pathname + "?link=" + str + anchor);
-          
-          decodedURI = decodeURIComponent(str).substring(1)
-          decodedURI = decodedURI.replaceAll('~','%80')
-          decodedURI = decodedURI.replaceAll('-','~')
-          decodedURI = decodedURI.replaceAll(' ','-')
-          window.history.pushState({}, "", location.protocol + '//' + location.host + '/' + decodedURI + anchor);
-          
+
+            target = slugURL(str)
+            window.history.pushState({}, "", location.protocol + '//' + location.host + uriPath + target + anchor);
 
           }
 
@@ -313,10 +360,9 @@ function getContent(str, home = false, popHover = false, anchor = "") {
                 var target = urlParams.get('link');
                 target = encodeURIComponent(target);
               } else {
-                target = decodeURIComponent(window.location.pathname)
+                target = unslugURL(window.location.pathname)
               }
 
-              
               // get content of link
               if (target) {
                 getContent(target, false, true)
@@ -413,7 +459,7 @@ function getContent(str, home = false, popHover = false, anchor = "") {
 
             var linkElement = mermaidLinks[f]
 
-            if (linkElement.getAttribute("href").startsWith('/')) {
+            if (linkElement.getAttribute("href").startsWith(uriPath)) {
 
               var textonly = '[[' + linkElement.innerHTML + ']]';
               linkElement.replaceWith(textonly)
@@ -801,7 +847,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false, show_tags = tr
         search(node.title);
 
       } else {
-        var glink = '/' + node.title;
+        var glink = uriPath + node.title;
         window.open(glink, "_self");
       }
     });
@@ -866,7 +912,7 @@ function search(str) {
     str = encodeURIComponent(str);
 
     $.ajax({
-      url: "content.php?search=" + str, success: function (result) {
+      url: uriPath + "content.php?search=" + str, success: function (result) {
 
         $("div.search-results-children").html(result);
         let preCodes = $("div.search-results-children").find("pre code")
@@ -1140,19 +1186,14 @@ $(document).ready(function () {
   var target = "";
   if (urlParams.has('link')) {
     var target = urlParams.get('link');
- 
+
   } else {
 
-    decodedURI = decodeURIComponent(window.location.pathname);
-    decodedURI = decodedURI.replaceAll('-',' ')
-    decodedURI = decodedURI.replaceAll('~','-')
-    decodedURI = decodedURI.replaceAll('%80','~')
-    
-    target = decodedURI
+    target = unslugURL(window.location.pathname)
 
   }
 
-  if (target != "") {
+  if (window.location.pathname != uriPath | urlParams.has('link')) {
 
     target = encodeURIComponent(target)
 
@@ -1849,7 +1890,7 @@ $(document).ready(function () {
   // info modal
   $('.clickable-icon.side-dock-ribbon-action[aria-label="Help"]').click(function (e) {
     $.ajax({
-      url: "/content.php?about", success: function (result) {
+      url: uriPath + "content.php?about", success: function (result) {
 
         $("div.aboutContent").html(result);
         $("#about").css("display", "flex");
@@ -1881,13 +1922,13 @@ $(document).ready(function () {
     do {
       tag = true
       randomNode = Math.floor(Math.random() * (max - min) + min)
-      if (nodes[randomNode]['title'].substring(0,1) != "#") {
+      if (nodes[randomNode]['title'].substring(0, 1) != "#") {
         tag = false
       }
 
     } while (tag);
 
-    target = '/' + nodes[randomNode]['title'] 
+    target = '/' + nodes[randomNode]['title']
     target = encodeURIComponent(target);
     getContent(target)
 
@@ -1947,12 +1988,13 @@ $(document).ready(function () {
   mermaid.initialize({ startOnLoad: false, 'securityLevel': 'Strict', 'theme': 'dark' });
 
 
-  window.addEventListener("popstate", function(event) {
-    
-    // Get the current URL
-    const currentPath = window.location.pathname;
-    getContent(currentPath);
-});
+  // handle browser history 
+  window.addEventListener("popstate", function (event) {
+
+    target = unslugURL(window.location.pathname)
+    getContent(target)
+
+  });
 
 });
 

@@ -56,6 +56,7 @@ function parseContent($requestFile)
 {
 
 	global $path;
+	global $uriPath;
 	global $cleanFile;
 	global $rootDir;
 	global $startDir;
@@ -115,7 +116,7 @@ function parseContent($requestFile)
 
 	$allowedImageTypes = '(\.png|\.jpg|\.jpeg|\.svg|\.gif|\.bmp|\.tif|\.tiff|\.webp)';
 
-	$src_path = '/' . $path;
+	$src_path = $uriPath . $path;
 
 	// embedded pdf links
 	$replaces = '<embed src="' . $src_path . '/\\2" type="application/pdf" style="min-height:100vh;width:100%">';
@@ -292,6 +293,8 @@ function translateLink($pattern, $content, $path, $sameFolder)
 		$pattern,
 		function ($matches) use ($path, $sameFolder) {
 
+			
+			global $uriPath;
 			$newAbPath = $path;
 			$pathSplit = explode("/", $path);
 			$linkName_full = $matches[2];
@@ -344,13 +347,18 @@ function translateLink($pattern, $content, $path, $sameFolder)
 				$href = 'href="';
 			} else {
 				#$href = 'href="?link=';
-				$href = 'href="/';
+				$href = 'href="' . $uriPath;
 			}
 
 			$urlPath = str_replace('&amp;', '&', $urlPath);
 
 			#$urlPath = rawurlencode($urlPath);
 			$urlPath = str_replace('%23', '#', $urlPath);
+
+			$urlPath = str_replace('~','%80', $urlPath);
+			$urlPath = str_replace('-','~', $urlPath);
+			$urlPath = str_replace(' ','-', $urlPath);		
+
 
 			return '<a class="internal-link' . $popupClass . '"' . $href . $urlPath . $refName . '">' . $linkName . '</a>' . $popUpIcon;
 		}
