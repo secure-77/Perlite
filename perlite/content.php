@@ -1,7 +1,7 @@
 <?php
 
 /*!
- * Perlite v1.5.9 (https://github.com/secure-77/Perlite)
+ * Perlite v1.6 (https://github.com/secure-77/Perlite)
  * Author: sec77 (https://secure77.de)
  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
  */
@@ -92,8 +92,8 @@ function parseContent($requestFile)
 		$path = $startDir;
 		$mdpath = '';
 	} else {
-		$mdpath =  $path;
-		$path = $startDir . $path;	
+		$mdpath = $path;
+		$path = $startDir . $path;
 	}
 
 	// fix links (not used)
@@ -131,14 +131,14 @@ function parseContent($requestFile)
 	$pattern = array('/(\!\[\[)(.*?.(?:mp4))(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
-	
-     // embedded m4a links
-	 $replaces = '
+
+	// embedded m4a links
+	$replaces = '
 	 <video controls src="' . $src_path . '/\\2" type="audio/x-m4a">
 			 <a class="internal-link" target="_blank" rel="noopener noreferrer" href="' . $src_path . '/' . '\\2">Your browser does not support the audio tag: Download \\2</a>
 	 </video>';
-	 $pattern = array('/(\!\[\[)(.*?.(?:m4a))(\]\])/');
-	 $content = preg_replace($pattern, $replaces, $content);
+	$pattern = array('/(\!\[\[)(.*?.(?:m4a))(\]\])/');
+	$content = preg_replace($pattern, $replaces, $content);
 
 
 	// links to other files with Alias
@@ -153,16 +153,16 @@ function parseContent($requestFile)
 
 	// img links with external target link
 	$replaces = 'noreferrer"><img class="images" width="\\4" height="\\5" alt="image not found" src="' . $src_path . '/\\2\\3' . '"/>';
-	$pattern = array('/noreferrer">(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(\d*)x?(\d*)(\]\])/');
+	$pattern = array('/noreferrer">(\!?\[\[)(.*?)' . $allowedImageTypes . '\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// img links with size
 	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\4" height="\\5" alt="image not found" src="' . $src_path . '/\\2\\3' . '"/></a></p>';
-	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(\d*)x?(\d*)(\]\])/');
+	$pattern = array('/(\!?\[\[)(.*?)' . $allowedImageTypes . '\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// centerise or right align images with "center"/"right" directive
-	$pattern = '/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(center|right)\|?(\d*)x?(\d*)(\]\])/';
+	$pattern = '/(\!?\[\[)(.*?)' . $allowedImageTypes . '\|?(center|right)\|?(\d*)x?(\d*)(\]\])/';
 	$replaces = function ($matches) use ($src_path) {
 		$class = "images";  // Default class for all images
 		if (strpos($matches[4], 'center') !== false) {
@@ -178,12 +178,12 @@ function parseContent($requestFile)
 
 	// img links with captions and size
 	$replaces = '<p><a href="#" class="pop"><img class="images" width="\\5" height="\\6" alt="\\4" src="' . $src_path . '/\\2\\3' . '"/></a></p>';
-	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(.+\|)\|?(\d*)x?(\d*)(\]\])/');
+	$pattern = array('/(\!?\[\[)(.*?)' . $allowedImageTypes . '\|?(.+\|)\|?(\d*)x?(\d*)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 	// img links with captions
 	$replaces = '<p><a href="#" class="pop"><img class="images" alt="\\4" src="' . $src_path . '/\\2\\3' . '"/></a></p>';
-	$pattern = array('/(\!?\[\[)(.*?)'.$allowedImageTypes.'\|?(.+|)(\]\])/');
+	$pattern = array('/(\!?\[\[)(.*?)' . $allowedImageTypes . '\|?(.+|)(\]\])/');
 	$content = preg_replace($pattern, $replaces, $content);
 
 
@@ -293,7 +293,7 @@ function translateLink($pattern, $content, $path, $sameFolder)
 		$pattern,
 		function ($matches) use ($path, $sameFolder) {
 
-			
+
 			global $uriPath;
 			$newAbPath = $path;
 			$pathSplit = explode("/", $path);
@@ -355,9 +355,9 @@ function translateLink($pattern, $content, $path, $sameFolder)
 			#$urlPath = rawurlencode($urlPath);
 			$urlPath = str_replace('%23', '#', $urlPath);
 
-			$urlPath = str_replace('~','%80', $urlPath);
-			$urlPath = str_replace('-','~', $urlPath);
-			$urlPath = str_replace(' ','-', $urlPath);		
+			$urlPath = str_replace('~', '%80', $urlPath);
+			$urlPath = str_replace('-', '~', $urlPath);
+			$urlPath = str_replace(' ', '-', $urlPath);
 
 
 			return '<a class="internal-link' . $popupClass . '"' . $href . $urlPath . $refName . '">' . $linkName . '</a>' . $popUpIcon;

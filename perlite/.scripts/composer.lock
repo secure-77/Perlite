@@ -20,10 +20,10 @@
         },
         {
             "name": "npm-asset/highlightjs--cdn-assets",
-            "version": "11.10.0",
+            "version": "11.11.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@highlightjs/cdn-assets/-/cdn-assets-11.10.0.tgz"
+                "url": "https://registry.npmjs.org/@highlightjs/cdn-assets/-/cdn-assets-11.11.1.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -44,10 +44,10 @@
         },
         {
             "name": "npm-asset/katex",
-            "version": "0.16.11",
+            "version": "0.16.22",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/katex/-/katex-0.16.11.tgz"
+                "url": "https://registry.npmjs.org/katex/-/katex-0.16.22.tgz"
             },
             "require": {
                 "npm-asset/commander": ">=8.3.0,<9.0.0"

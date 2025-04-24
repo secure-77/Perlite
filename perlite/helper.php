@@ -1,7 +1,7 @@
 <?php
 
 /*!
- * Perlite v1.5.9 (https://github.com/secure-77/Perlite)
+ * Perlite v1.6 (https://github.com/secure-77/Perlite)
  * Author: sec77 (https://secure77.de)
  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
  */
@@ -21,64 +21,89 @@ if (file_exists("settings.php")) {
 $avFiles = array();
 
 // replace with your Vault Folder
-if (empty($rootDir)) $rootDir = empty(getenv('NOTES_PATH')) ? 'Demo' : getenv('NOTES_PATH');
+if (empty($rootDir))
+	$rootDir = empty(getenv('NOTES_PATH')) ? 'Demo' : getenv('NOTES_PATH');
 
 //if (empty($uriPath)) $uriPath = empty(getenv('URI_PATH')) ? '/perlite/' : getenv('URI_PATH');
-if (empty($uriPath)) $uriPath = empty(getenv('URI_PATH')) ? '/' : getenv('URI_PATH');
+if (empty($uriPath))
+	$uriPath = empty(getenv('URI_PATH')) ? '/' : getenv('URI_PATH');
 
 // replace with your Vault Name
-if (empty($vaultName)) $vaultName = $rootDir;
+if (empty($vaultName))
+	$vaultName = $rootDir;
 
 // hide folders
-if (empty($hideFolders)) $hideFolders = getenv('HIDE_FOLDERS');
+if (empty($hideFolders))
+	$hideFolders = getenv('HIDE_FOLDERS');
 
 // folders that are hidden but accessible
 // if (empty($avHidden)) $avHidden = getenv("HIDE_AVAILABLE");
 
 // use absolut paths instead of relative paths
-if (! isset($relPathes)) $relPathes = empty(getenv('ABSOLUTE_PATHS')) ? false : filter_var(getenv('ABSOLUTE_PATHS'), FILTER_VALIDATE_BOOLEAN);
+if (!isset($relPathes))
+	$relPathes = empty(getenv('ABSOLUTE_PATHS')) ? false : filter_var(getenv('ABSOLUTE_PATHS'), FILTER_VALIDATE_BOOLEAN);
 
 // Meta Tags infos
-if (empty($siteTitle)) $siteTitle = empty(getenv('SITE_TITLE')) ? 'Perlite' : getenv('SITE_TITLE');
-if (empty($siteType)) $siteType = empty(getenv('SITE_TYPE')) ? 'article' : getenv('SITE_TYPE');
-if (empty($siteImage)) $siteImage = empty(getenv('SITE_IMAGE')) ? 'https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png' : getenv('SITE_IMAGE');
-if (! isset($siteURL)) $siteURL = empty(getenv('SITE_URL')) ? 'https://perlite.secure77.de' : getenv('SITE_URL');
-if (empty($siteLogo)) $siteLogo = getenv("SITE_LOGO");
-if (empty($siteDescription)) $siteDescription = empty(getenv('SITE_DESC')) ? 'A web based markdown viewer optimized for Obsidian Notes' : getenv('SITE_DESC');
-if (empty($siteName)) $siteName = empty(getenv('SITE_NAME')) ? 'Perlite Demo' : getenv('SITE_NAME');
-if (empty($siteHomepage)) $siteHomepage = empty(getenv("SITE_HOMEPAGE")) ? $siteURL : getenv("SITE_HOMEPAGE");
-if (empty($siteGithub)) $siteGithub = getenv("SITE_GITHUB");
-if (! isset($siteTwitter)) $siteTwitter = getenv('SITE_TWITTER');
+if (empty($siteTitle))
+	$siteTitle = empty(getenv('SITE_TITLE')) ? 'Perlite' : getenv('SITE_TITLE');
+if (empty($siteType))
+	$siteType = empty(getenv('SITE_TYPE')) ? 'article' : getenv('SITE_TYPE');
+if (empty($siteImage))
+	$siteImage = empty(getenv('SITE_IMAGE')) ? 'https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png' : getenv('SITE_IMAGE');
+if (!isset($siteURL))
+	$siteURL = empty(getenv('SITE_URL')) ? 'https://perlite.secure77.de' : getenv('SITE_URL');
+if (empty($siteLogo))
+	$siteLogo = getenv("SITE_LOGO");
+if (empty($siteDescription))
+	$siteDescription = empty(getenv('SITE_DESC')) ? 'A web based markdown viewer optimized for Obsidian Notes' : getenv('SITE_DESC');
+if (empty($siteName))
+	$siteName = empty(getenv('SITE_NAME')) ? 'Perlite Demo' : getenv('SITE_NAME');
+if (empty($siteHomepage))
+	$siteHomepage = empty(getenv("SITE_HOMEPAGE")) ? $siteURL : getenv("SITE_HOMEPAGE");
+if (empty($siteGithub))
+	$siteGithub = getenv("SITE_GITHUB");
+if (!isset($siteTwitter))
+	$siteTwitter = getenv('SITE_TWITTER');
 
 // Temp PATH for graph linking temp files
-if (empty($tempPath)) $tempPath = empty(getenv('TEMP_PATH')) ? sys_get_temp_dir() : getenv('TEMP_PATH');
+if (empty($tempPath))
+	$tempPath = empty(getenv('TEMP_PATH')) ? sys_get_temp_dir() : getenv('TEMP_PATH');
 
 // line breaks
-if (! isset($lineBreaks)) $lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
+if (!isset($lineBreaks))
+	$lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
 
 // file types
-if (empty($allowedFileLinkTypes)) $allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf', 'mp4'] : explode(",", getenv('ALLOWED_FILE_LINK_TYPES'));
+if (empty($allowedFileLinkTypes))
+	$allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf', 'mp4'] : explode(",", getenv('ALLOWED_FILE_LINK_TYPES'));
 
 // disable PopHovers
-if (empty($disablePopHovers)) $disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? "false" : getenv('DISABLE_POP_HOVER');
+if (empty($disablePopHovers))
+	$disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? "false" : getenv('DISABLE_POP_HOVER');
 
 // show TOC
-if (empty($showTOC)) $showTOC = empty(getenv('SHOW_TOC')) ? "true" : getenv('SHOW_TOC');
+if (empty($showTOC))
+	$showTOC = empty(getenv('SHOW_TOC')) ? "true" : getenv('SHOW_TOC');
 
 // show local Graph
-if (empty($showLocalGraph)) $showLocalGraph = empty(getenv('SHOW_LOCAL_GRAPH')) ? "true" : getenv('SHOW_TOC');
+if (empty($showLocalGraph))
+	$showLocalGraph = empty(getenv('SHOW_LOCAL_GRAPH')) ? "true" : getenv('SHOW_TOC');
 
 // Set home page from env/settings
-if (empty($index)) $index = empty(getenv('HOME_FILE')) ? "README" : getenv('HOME_FILE');
+if (empty($index))
+	$index = empty(getenv('HOME_FILE')) ? "README" : getenv('HOME_FILE');
 
 // set default font size
-if (empty($font_size)) $font_size = empty(getenv('FONT_SIZE')) ? "15" : getenv('FONT_SIZE');
+if (empty($font_size))
+	$font_size = empty(getenv('FONT_SIZE')) ? "15" : getenv('FONT_SIZE');
 
 // Set safe mode from env/settings
-if (! isset($htmlSafeMode)) $htmlSafeMode = empty(getenv('HTML_SAFE_MODE')) ? true : filter_var(getenv('HTML_SAFE_MODE'), FILTER_VALIDATE_BOOLEAN);
+if (!isset($htmlSafeMode))
+	$htmlSafeMode = empty(getenv('HTML_SAFE_MODE')) ? true : filter_var(getenv('HTML_SAFE_MODE'), FILTER_VALIDATE_BOOLEAN);
 
 // Custom Site Section
-if (! isset($customSection)) $customSection = '';
+if (!isset($customSection))
+	$customSection = '';
 if ($siteLogo and empty($customSection)) {
 	$customSection = '<div class="sm-site-title">&nbsp;</div>
                                     <div class="custom-page">
@@ -90,11 +115,11 @@ if ($siteLogo and empty($customSection)) {
 					                  <div>
 									    <ul class="social-media-list">';
 
-	if (! empty($siteGithub)) {
+	if (!empty($siteGithub)) {
 		$customSection = $customSection . '
 		                                  <li>
 		                                    <a href="' . $siteGithub . '">
-										      <img class="social-logo" src="'  . $uriPath . '.styles/github-color.svg" alt="Github Logo">
+										      <img class="social-logo" src="' . $uriPath . '.styles/github-color.svg" alt="Github Logo">
 										    </a>
 										  </li>';
 	}
@@ -103,7 +128,7 @@ if ($siteLogo and empty($customSection)) {
 		$customSection = $customSection . '
 		                                  <li>
 		                                    <a href="https://x.com/' . substr($siteTwitter, 1) . '">
-										      <img class="social-logo" src="'  . $uriPath . '.styles/x-color.svg" alt="X Logo">
+										      <img class="social-logo" src="' . $uriPath . '.styles/x-color.svg" alt="X Logo">
 										    </a>
 										  </li>';
 	}
@@ -111,7 +136,7 @@ if ($siteLogo and empty($customSection)) {
 	$customSection = $customSection . '
 						                  <li>
 	                                        <a href="' . $siteHomepage . '">
-									          <img class="social-logo" src="'  . $uriPath . '.styles/fontawesome-color.svg" alt="Homepage Logo">
+									          <img class="social-logo" src="' . $uriPath . '.styles/fontawesome-color.svg" alt="Homepage Logo">
 									        </a>
 									      </li>
 					                    </ul>';
@@ -432,7 +457,8 @@ function isValidFolder($file)
 // 	return false;
 // }
 
-function isCached($rootDir, $filename) {
+function isCached($rootDir, $filename)
+{
 	global $tempPath;
 	global $vaultName;
 
@@ -699,7 +725,7 @@ function loadSettings($rootDir)
 
 			$folderName = getFolderInfos($folder)[2];
 			$folderClean = str_replace(' ', '_', $folderName);
-			$themePath =  $uriPath . $rootDir . '/.obsidian/themes/' . $folderName . '/theme.css';
+			$themePath = $uriPath . $rootDir . '/.obsidian/themes/' . $folderName . '/theme.css';
 
 			if ($defaultTheme === $folderName) {
 

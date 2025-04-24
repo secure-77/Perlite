@@ -4,7 +4,7 @@
 <?php
 
 /*!
- * Version v1.5.9
+ * Version v1.6
  */
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -37,7 +37,7 @@ $jsonGraphData = getfullGraph($rootDir);
     <link rel="stylesheet" href="<?php echo $uriPath ?>.styles/vis-network.min.css" type="text/css">
     <link rel="stylesheet" href="<?php echo $uriPath ?>.styles/katex.min.css" type="text/css">
     <link rel="icon" type="image/x-icon" href="<?php echo $uriPath ?>favicon.ico">
-   
+
     <script src="<?php echo $uriPath ?>.js/jquery.min.js"></script>
     <script src="<?php echo $uriPath ?>.js/highlight.min.js"></script>
     <script src="<?php echo $uriPath ?>.js/vis-network.min.js"></script>
@@ -45,7 +45,7 @@ $jsonGraphData = getfullGraph($rootDir);
     <script src="<?php echo $uriPath ?>.js/auto-render.min.js"></script>
     <script src="<?php echo $uriPath ?>.js/vis-network.min.js"></script>
     <!-- <script src=".js/mermaid.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.2.1/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>
 
 
 </head>
@@ -92,7 +92,8 @@ $jsonGraphData = getfullGraph($rootDir);
             <div class="workspace is-left-sidedock-open">
                 <div class="workspace-ribbon side-dock-ribbon mod-left">
 
-                    <a href="."><img src="<?php echo $uriPath ?>logo.svg" height="25" class="logo" alt="Perlite Logo"></a>
+                    <a href="."><img src="<?php echo $uriPath ?>logo.svg" height="25" class="logo"
+                            alt="Perlite Logo"></a>
                     <div class="sidebar-toggle-button mod-left sidebar" aria-label="" aria-label-position="right">
 
 
@@ -138,15 +139,18 @@ $jsonGraphData = getfullGraph($rootDir);
                         </div>
                     </div>
                     <div class="side-dock-actions">
-                        <div class="clickable-icon side-dock-ribbon-action" aria-label="Open TOC" data-tooltip-position="right" data-tooltip-delay="300">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-list">
-                                                        <line x1="8" y1="6" x2="21" y2="6"></line>
-                                                        <line x1="8" y1="12" x2="21" y2="12"></line>
-                                                        <line x1="8" y1="18" x2="21" y2="18"></line>
-                                                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                                                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                                                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                                                    </svg>
+                        <div class="clickable-icon side-dock-ribbon-action" aria-label="Open TOC"
+                            data-tooltip-position="right" data-tooltip-delay="300">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="svg-icon lucide-list">
+                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
                         </div>
                     </div>
                     <div class="side-dock-settings">
@@ -489,8 +493,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                                         </div>
                                                         <div class="setting-item mod-toggle">
                                                             <div class="setting-item-info">
-                                                                <div class="setting-item-name"
-                                                                    aria-label="Show tags">
+                                                                <div class="setting-item-name" aria-label="Show tags">
                                                                     Tags</div>
                                                                 <div class="setting-item-description"></div>
                                                             </div>
@@ -738,11 +741,11 @@ $jsonGraphData = getfullGraph($rootDir);
 
                                         <div class="nav-header">
                                             <div class="view-header-nav-buttons">
-                                                <a class="clickable-icon view-action" aria-label="Open localGraph"
-                                                    ><svg xmlns="http://www.w3.org/2000/svg"
-                                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="svg-icon lucide-git-fork">
+                                                <a class="clickable-icon view-action" aria-label="Open localGraph"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="svg-icon lucide-git-fork">
                                                         <circle cx="12" cy="18" r="3"></circle>
                                                         <circle cx="6" cy="6" r="3"></circle>
                                                         <circle cx="18" cy="6" r="3"></circle>
@@ -765,13 +768,16 @@ $jsonGraphData = getfullGraph($rootDir);
 
                                                 </a>
                                                 <a class="clickable-icon view-action" aria-label="Open Tags">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                                                    class="svg-icon lucide-tags">
-                                                    <path d="m15 5 6.3 6.3a2.4 2.4 0 0 1 0 3.4L17 19"></path>
-                                                    <path d="M9.586 5.586A2 2 0 0 0 8.172 5H3a1 1 0 0 0-1 1v5.172a2 2 0 0 0 .586 1.414L8.29 18.29a2.426 2.426 0 0 0 3.42 0l3.58-3.58a2.426 2.426 0 0 0 0-3.42z"></path>
-                                                    <circle cx="6.5" cy="9.5" r="0.5"></circle></svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="svg-icon lucide-tags">
+                                                        <path d="m15 5 6.3 6.3a2.4 2.4 0 0 1 0 3.4L17 19"></path>
+                                                        <path
+                                                            d="M9.586 5.586A2 2 0 0 0 8.172 5H3a1 1 0 0 0-1 1v5.172a2 2 0 0 0 .586 1.414L8.29 18.29a2.426 2.426 0 0 0 3.42 0l3.58-3.58a2.426 2.426 0 0 0 0-3.42z">
+                                                        </path>
+                                                        <circle cx="6.5" cy="9.5" r="0.5"></circle>
+                                                    </svg>
                                                 </a>
                                             </div>
 
@@ -802,9 +808,9 @@ $jsonGraphData = getfullGraph($rootDir);
 
 
                                             <div id=localGraph>
-                                            <h3>Graph</h3>
+                                                <h3>Graph</h3>
 
-                                            <div id="mynetwork"></div>
+                                                <div id="mynetwork"></div>
                                             </div>
                                             <div class="tree-item-self" aria-label-position="left"><span
                                                     class="tree-item-icon collapse-icon"><svg
@@ -864,8 +870,8 @@ $jsonGraphData = getfullGraph($rootDir);
         <div class="modal-bg" style="opacity: 0.85;"></div>
         <div class="modal">
             <div class="modal-close-button"></div>
-            <div class="modal-title"> <a href="."><img src="<?php echo $uriPath ?>logo.svg" height="35" alt="Perlite Logo"
-                        style="padding-top: 10px"></a> Perlite</div>
+            <div class="modal-title"> <a href="."><img src="<?php echo $uriPath ?>logo.svg" height="35"
+                        alt="Perlite Logo" style="padding-top: 10px"></a> Perlite</div>
             <div class="aboutContent modal-content"></div>
         </div>
     </div>

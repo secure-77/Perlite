@@ -7,10 +7,9 @@
 */
 
 
-// // load default settings
+//// load default settings
 
 // define perlite location on webserver
-
 //var uriPath = '/perlite/'
 var uriPath = '/'
 
@@ -237,7 +236,7 @@ function getContent(str, home = false, popHover = false, anchor = "") {
 
           // add Tag section
           $('#tags').html("")
-          $('.tag').each(function(index) {
+          $('.tag').each(function (index) {
             const count = index + 1;
             const originalHTML = $(this).prop('outerHTML');
             const countTag = '<div class="tree-item-flair-outer"><span class="tree-item-flair" id="nodeCount">' + count + '</span></div>';
@@ -246,11 +245,11 @@ function getContent(str, home = false, popHover = false, anchor = "") {
 
           // hide them when no tags are found
           if ($('#tags').html() == "") {
-
             $('#tags_container').css('display', 'none')
-
+          } else {
+            $('#tags_container').css('display', 'block')
           }
-      
+
 
           // on Tag click -> start search
           $('.tag').click(function (e) {
@@ -896,7 +895,7 @@ function isMobile() {
 
           const path = new URL(this.href).pathname;
           target = unslugURL(path)
-      
+
         }
 
 
@@ -1947,16 +1946,16 @@ $(document).ready(function () {
 
   });
 
-    // open random note
-    $('.clickable-icon.side-dock-ribbon-action[aria-label="Open TOC"]').click(function (e) {
+  // open random note
+  $('.clickable-icon.side-dock-ribbon-action[aria-label="Open TOC"]').click(function (e) {
 
-      console.log("open TOC")
+    console.log("open TOC")
 
-      $("#popUpContent").html($("#toc").html())
-      $(".popup-modal-title").text($(".popup-modal-title").text() + ' - Content');
-      $("#popUp").css("display", "flex")
+    $("#popUpContent").html($("#toc").html())
+    $(".popup-modal-title").text($(".popup-modal-title").text() + ' - Content');
+    $("#popUp").css("display", "flex")
 
-    });
+  });
 
   /**
    * close modal
@@ -2017,8 +2016,6 @@ $(document).ready(function () {
   });
 
 
-
-
   // init mermaid
   mermaid.initialize({ startOnLoad: false, 'securityLevel': 'Strict', 'theme': 'dark' });
 
@@ -2030,9 +2027,6 @@ $(document).ready(function () {
     getContent(target)
 
   });
-
-
-
 
 });
 

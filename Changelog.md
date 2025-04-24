@@ -9,6 +9,10 @@
 - implemented highlight support [#150](https://github.com/secure-77/Perlite/issues/150)
 - implemented TOC mobile support [#141](https://github.com/secure-77/Perlite/issues/141)
 - implemented Tags in side view [#122](https://github.com/secure-77/Perlite/issues/122)
+- updated katex to 0.16.22
+- updated highlight.js to 11.11.1
+- updated mermaid to 11.6.0
+
 
 - [ ] create settings.php
 - [ ] update wiki for pretty urls
