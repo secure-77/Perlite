@@ -3,6 +3,7 @@
 - hide X / Twitter when not set, issue [#152](https://github.com/secure-77/Perlite/issues/152) thanks to @EKNr1
 - implemented settings.php, issue [#119](https://github.com/secure-77/Perlite/issues/119) thanks to @EKNr1
 - implemented pretty urls, issue [#140](https://github.com/secure-77/Perlite/issues/140)
+    -> if you don't use the docker container you need to adjust your nginx config! please check...
 - removed not used Dockerfile
 - fixed issue [#148](https://github.com/secure-77/Perlite/issues/148)
 - fixed issue [#149](https://github.com/secure-77/Perlite/issues/149)

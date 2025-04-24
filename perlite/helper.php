@@ -457,17 +457,11 @@ function isValidFolder($file)
 // 	return false;
 // }
 
-function isCached($rootDir, $filename)
+function isCached($jsonMetadaFile, $metadaTempFileSum)
 {
-	global $tempPath;
-	global $vaultName;
-
-	$filePath = $rootDir . "/" . $filename;
-	$tempFileSum = $tempPath . '/metadata_' . $vaultName . '.md5';
-
-	if (is_file($tempFileSum)) {
-		$md5_envsum = file_get_contents($tempFileSum);
-		$md5_filesum = md5_file($filePath);
+	if (is_file($metadaTempFileSum)) {
+		$md5_envsum = file_get_contents($metadaTempFileSum);
+		$md5_filesum = md5_file($jsonMetadaFile);
 
 		if ($md5_envsum === $md5_filesum) {
 
@@ -486,6 +480,7 @@ function getfullGraph($rootDir)
 
 	$jsonMetadaFile = $rootDir . '/metadata.json';
 	$metadaTempFile = $tempPath . '/metadata_' . $vaultName . '.temp';
+	$metadaTempFileSum = $tempPath . '/metadata_' . $vaultName . '.md5';
 
 
 
@@ -494,7 +489,7 @@ function getfullGraph($rootDir)
 	}
 
 	// check if metadata file has changed
-	if (is_file($metadaTempFile) and isCached($rootDir, "metadata.json")) {
+	if (is_file($metadaTempFile) and isCached($jsonMetadaFile, $metadaTempFileSum)) {
 		return file_get_contents($metadaTempFile);
 	}
 
