@@ -463,7 +463,7 @@ function isCached($rootDir, $filename)
 	global $vaultName;
 
 	$filePath = $rootDir . "/" . $filename;
-	$tempFileSum = $tempPath . "/" . $filename . "_" . $vaultName . ".md5";
+	$tempFileSum = $tempPath . '/metadata_' . $vaultName . '.md5';
 
 	if (is_file($tempFileSum)) {
 		$md5_envsum = file_get_contents($tempFileSum);
@@ -486,7 +486,7 @@ function getfullGraph($rootDir)
 
 	$jsonMetadaFile = $rootDir . '/metadata.json';
 	$metadaTempFile = $tempPath . '/metadata_' . $vaultName . '.temp';
-	$metadaTempFileSum = $tempPath . '/metadata_' . $vaultName . '.md5';
+
 
 
 	if (!is_file($jsonMetadaFile)) {
