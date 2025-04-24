@@ -7,7 +7,9 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 RUN chmod +x /usr/local/bin/install-php-extensions && install-php-extensions yaml
 
 WORKDIR /var/www/perlite/
-COPY ./*.php ./
+COPY ./index.php ./
+COPY ./helper.php ./
+COPY ./content.php ./
 COPY ./*.svg ./
 COPY ./*.ico ./
 COPY ./.styles/ ./.styles/
