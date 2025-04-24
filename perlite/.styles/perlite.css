@@ -146,6 +146,10 @@ span.cm-highlight {
   color: var(--text-normal);
 }
 
+#tags_container {
+  margin-top: 30px;
+}
+
 /* --------------- */
 /* Mobile / Responive Settings */
 

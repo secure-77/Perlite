@@ -235,6 +235,22 @@ function getContent(str, home = false, popHover = false, anchor = "") {
 
           }
 
+          // add Tag section
+          $('#tags').html("")
+          $('.tag').each(function(index) {
+            const count = index + 1;
+            const originalHTML = $(this).prop('outerHTML');
+            const countTag = '<div class="tree-item-flair-outer"><span class="tree-item-flair" id="nodeCount">' + count + '</span></div>';
+            $('#tags').append(originalHTML);
+          });
+
+          // hide them when no tags are found
+          if ($('#tags').html() == "") {
+
+            $('#tags_container').css('display', 'none')
+
+          }
+      
 
           // on Tag click -> start search
           $('.tag').click(function (e) {
@@ -1615,15 +1631,6 @@ $(document).ready(function () {
   });
 
 
-  // // show toc
-  // if (localStorage.getItem("showTOC") === 'true') {
-
-  //   $('#outline').css('display', 'unset')
-
-  // }
-
-
-
   //  Graph Settings and Event Handler
   // --------------------------------
   // open Graph
@@ -1971,7 +1978,7 @@ $(document).ready(function () {
     }
   });
 
-  // local Graph & Toc (outline) Switch
+  // local Graph & Tag & Toc (outline) Switch
   $('.clickable-icon.view-action[aria-label="Open outline"]').click(function (e) {
 
 
@@ -1998,6 +2005,17 @@ $(document).ready(function () {
     }
   });
 
+  $('.clickable-icon.view-action[aria-label="Open Tags"]').click(function (e) {
+
+    if ($('#tags_container').css('display') == 'block') {
+      localStorage.setItem("showLocalTags", "false")
+      $('#tags_container').css('display', 'none')
+    } else {
+      localStorage.setItem("showLocalTags", "true")
+      $('#tags_container').css('display', 'block')
+    }
+  });
+
 
 
 
@@ -2012,6 +2030,9 @@ $(document).ready(function () {
     getContent(target)
 
   });
+
+
+
 
 });
 
