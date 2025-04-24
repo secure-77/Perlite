@@ -14,13 +14,8 @@
 - updated mermaid to 11.6.0
 
 
-- [ ] create settings.php
-- [ ] update wiki for pretty urls
-
-
-
 ## 1.5.9
-- added YouTube link support #133 thanks to @rsubr
+- added YouTube link support [#133](https://github.com/secure-77/Perlite/issues/133) thanks to @rsubr
 - added image postion support thanks to @ar0x4
 - fixed direct page links [#90](https://github.com/secure-77/Perlite/issues/90)
 - added support for webp images [#126](https://github.com/secure-77/Perlite/issues/126)

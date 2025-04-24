@@ -1,4 +1,12 @@
 <?php
+
+/*!
+ * Perlite v1.6 (https://github.com/secure-77/Perlite)
+ * Author: sec77 (https://secure77.de)
+ * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
+ */
+
+ 
 $rootDir = "Demo";
 $vaultName = "Demo";
 $hideFolders = "docs,trash";
