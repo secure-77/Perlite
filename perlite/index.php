@@ -92,7 +92,7 @@ $jsonGraphData = getfullGraph($rootDir);
             <div class="workspace is-left-sidedock-open">
                 <div class="workspace-ribbon side-dock-ribbon mod-left">
 
-                    <a href="."><img src="<?php echo $uriPath ?>logo.svg" height="25" class="logo"
+                    <a href="<?php echo $uriPath ?>"><img src="<?php echo $uriPath ?>logo.svg" height="25" class="logo"
                             alt="Perlite Logo"></a>
                     <div class="sidebar-toggle-button mod-left sidebar" aria-label="" aria-label-position="right">
 
