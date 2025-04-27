@@ -6,6 +6,7 @@ services:
     environment:
       - NOTES_PATH=Demo
       - HIDE_FOLDERS=docs,private,trash
+      - HIDDEN_FILE_ACCESS=false
       - LINE_BREAKS=true
       - ABSOLUTE_PATHS=false
       - ALLOWED_FILE_LINK_TYPES=pdf,mp4

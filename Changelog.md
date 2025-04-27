@@ -1,18 +1,23 @@
 ## 1.6
-- get rid of mb_strlen, fixed issue [#151](https://github.com/secure-77/Perlite/issues/151)
-- hide X / Twitter when not set, issue [#152](https://github.com/secure-77/Perlite/issues/152) thanks to @EKNr1
-- implemented settings.php, issue [#119](https://github.com/secure-77/Perlite/issues/119) thanks to @EKNr1
+- get rid of mb_strlen, fixed issue [#151](https://github.com/secure-77/Perlite/issues/151) thanks to @Sephral
+- hide X / Twitter when not set, issue [#152](https://github.com/secure-77/Perlite/issues/152), thanks to @EKNr1
+- implemented settings.php, issue [#119](https://github.com/secure-77/Perlite/issues/119), thanks to @EKNr1
 - implemented pretty urls, issue [#140](https://github.com/secure-77/Perlite/issues/140)
-    -> if you don't use the docker container you need to adjust your nginx config! please check...
 - removed not used Dockerfile
 - fixed issue [#148](https://github.com/secure-77/Perlite/issues/148)
 - fixed issue [#149](https://github.com/secure-77/Perlite/issues/149)
 - implemented highlight support [#150](https://github.com/secure-77/Perlite/issues/150)
 - implemented TOC mobile support [#141](https://github.com/secure-77/Perlite/issues/141)
 - implemented Tags in side view [#122](https://github.com/secure-77/Perlite/issues/122)
+- added possibility to allow access to MD files in hidden folders via HIDDEN_FILE_ACCESS variable, thanks to @EKNr1 for the idea.
 - updated katex to 0.16.22
 - updated highlight.js to 11.11.1
 - updated mermaid to 11.6.0
+
+\
+**Important Update Note**\
+As Perlite is now using pretty URLs you need to change your Nginx / Webserver config to make perlite work again after this release! This affects also the docker version, you need to get the latest [perlite.conf](https://github.com/secure-77/Perlite/blob/main/web/config/perlite.conf)
+Please take a look at the [updated wiki](https://github.com/secure-77/Perlite/wiki/01---Setup-(no-Docker)#adjust-the-nginx-config) for more details.
 
 
 ## 1.5.9

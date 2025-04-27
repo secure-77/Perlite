@@ -8,9 +8,9 @@
 
  
 $rootDir = "Demo";
-$vaultName = "Demo";
 $hideFolders = "docs,trash";
-$relPathes = False;
+$hiddenFileAccess = false;
+$relPathes = false;
 $uriPath = "/";
 $siteTitle = "Perlite";
 $siteType = "article";

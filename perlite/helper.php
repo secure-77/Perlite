@@ -23,21 +23,21 @@ $avFiles = array();
 // replace with your Vault Folder
 if (empty($rootDir))
 	$rootDir = empty(getenv('NOTES_PATH')) ? 'Demo' : getenv('NOTES_PATH');
+$vaultName = $rootDir;
 
 //if (empty($uriPath)) $uriPath = empty(getenv('URI_PATH')) ? '/perlite/' : getenv('URI_PATH');
 if (empty($uriPath))
 	$uriPath = empty(getenv('URI_PATH')) ? '/' : getenv('URI_PATH');
 
-// replace with your Vault Name
-if (empty($vaultName))
-	$vaultName = $rootDir;
+
 
 // hide folders
 if (empty($hideFolders))
 	$hideFolders = getenv('HIDE_FOLDERS');
 
-// folders that are hidden but accessible
-// if (empty($avHidden)) $avHidden = getenv("HIDE_AVAILABLE");
+// allow access to md files in hidden folders
+if (!isset($hiddenFileAccess))
+	$hiddenFileAccess = empty(getenv('HIDDEN_FILE_ACCESS')) ? false : filter_var(getenv('HIDDEN_FILE_ACCESS'), FILTER_VALIDATE_BOOLEAN);
 
 // use absolut paths instead of relative paths
 if (!isset($relPathes))
@@ -167,14 +167,6 @@ if (strcmp($hideFolders, '')) {
 	$hideFolders = array();
 }
 
-// hidden but accessible
-// if (strcmp($avHidden, "")) {
-// 	$avHidden = explode(",", $avHidden);
-
-// } else {
-// 	$avHidden = array();
-// }
-
 // path management
 if (!strcmp($rootDir, "")) {
 
@@ -196,6 +188,7 @@ function cmp($a, $b)
 function menu($dir, $folder = '')
 {
 
+	global $hiddenFileAccess;
 	global $avFiles;
 	$html = '';
 	// get all files from current dir
@@ -208,6 +201,7 @@ function menu($dir, $folder = '')
 	foreach ($files as $file) {
 		if (is_dir($file)) {
 
+			// check if we want to hide the folder
 			if (isValidFolder($file)) {
 
 				// split Folder Infos
@@ -231,11 +225,10 @@ function menu($dir, $folder = '')
 						<div style="width: 591px; height: 0.1px; margin-bottom: 0px;"></div>';
 				$html .= menu($file, $folder . '/');
 				$html .= '</div></div>';
-			}
-			// } else if (isAvailableFolder($file)) {
-			// 	// add to $avFiles but don't list it
-			// 	menu($file);
-			// }
+			} else if($hiddenFileAccess) {
+				// dont list the folder but add the file to the array
+				menu($file);
+			} 
 		}
 	}
 
@@ -439,23 +432,6 @@ function isValidFolder($file)
 
 	return false;
 }
-
-// function isAvailableFolder($file) {
-// 	global $avHidden;
-
-// 	$folderName = mb_basename($file);
-
-// 	// check if folder is in $avHidden
-// 	if (!in_array($folderName, $avHidden, true)) {
-// 		return false;
-// 	}
-
-// 	if (strcmp(substr($folderName, 0, 1), '.') !== 0) {
-// 		return true;
-// 	}
-
-// 	return false;
-// }
 
 function isCached($jsonMetadaFile, $metadaTempFileSum)
 {
