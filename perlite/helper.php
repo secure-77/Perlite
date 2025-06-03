@@ -65,6 +65,11 @@ if (empty($siteGithub))
 if (!isset($siteTwitter))
 	$siteTwitter = getenv('SITE_TWITTER');
 
+// Use frontmatter 'title' or top level h1 instead of filename
+if (!isset($useZettelkastenFilenames)) {
+    $useZettelkastenFilenames = empty(getenv('ZETTELKASTEN_FILENAMES_ENABLED')) ? false : filter_var(getenv('ZETTELKASTEN_FILENAMES_ENABLED'), FILTER_VALIDATE_BOOLEAN);
+}
+
 // Temp PATH for graph linking temp files
 if (empty($tempPath))
 	$tempPath = empty(getenv('TEMP_PATH')) ? sys_get_temp_dir() : getenv('TEMP_PATH');
@@ -190,6 +195,7 @@ function menu($dir, $folder = '')
 
 	global $hiddenFileAccess;
 	global $avFiles;
+  global $useZettelkastenFilenames;
 	$html = '';
 	// get all files from current dir
 	$files = glob($dir . '/*');
@@ -232,34 +238,39 @@ function menu($dir, $folder = '')
 		}
 	}
 
-	// iterate the files 
-	foreach ($files as $file) {
-		if (isMDFile($file)) {
+  // Iterate the files
+  foreach ($files as $file) {
+    if (isMDFile($file)) {
+      $pathInfo = getFileInfos($file);
+      $relativePathForURL = $pathInfo[0];
+      $baseFilenameWithoutExtension = $pathInfo[1];
 
-			$path = getFileInfos($file)[0];
-			$mdFile = getFileInfos($file)[1];
+      $displayTitle = "";
 
-			$path = '/' . $path;
-			// push the the path to the array
-			array_push($avFiles, $path);
+      if ($useZettelkastenFilenames) {
+        $displayTitle = getDisplayTitle($file);
+      } else {
+        $displayTitle = $baseFilenameWithoutExtension;
+      }
 
-			// URL Encode the Path for the JS call
-			$pathClean = rawurlencode($path);
-			$pathID = str_replace(' ', '_', $path);
-			$pathID = preg_replace('/[^A-Za-z0-9\-]/', '_', $path);
+      $urlClickPath = '/' . $relativePathForURL;
+      array_push($avFiles, $urlClickPath);
+      $pathCleanForJS = rawurlencode($urlClickPath);
+      
+      // Create a unique ID for the HTML element
+      $elementId = 'fileid-' . preg_replace('/[^A-Za-z0-9\-_]/', '_', $urlClickPath);
+      $elementId = str_replace('/', '_', $elementId); // Replace slashes for cleaner ID
 
-
-			$html .= '
-			<div class="tree-item nav-file">
-				<div class="nav-file-title perlite-link" onclick=getContent("' . $pathClean . '"); id="' . $pathID . '"">
-					<div class="nav-file-title-content">' . $mdFile . '</div>
-				</div>
-			</div>
-			';
-		}
-	}
-
-	return $html;
+      $html .= '
+      <div class="tree-item nav-file">
+          <div class="nav-file-title perlite-link" onclick=getContent("' . $pathCleanForJS . '"); id="' . htmlspecialchars($elementId) . '"">
+              <div class="nav-file-title-content">' . htmlspecialchars($displayTitle) . '</div>
+          </div>
+      </div>
+      ';
+    }
+  }
+  return $html;
 }
 
 function doSearch($dir, $searchfor)
@@ -446,6 +457,37 @@ function isCached($jsonMetadaFile, $metadaTempFileSum)
 	}
 
 	return false;
+}
+
+function getDisplayTitle($filePath) {
+    $content = @file_get_contents($filePath);
+    if ($content === false) {
+        // Fallback to filename if file can't be read
+        return getFileInfos($filePath)[1];
+    }
+
+    // 1. Try to get title from frontmatter
+    if (preg_match('/^---\s*\n(.*?)\n---\s*\n/s', $content, $frontmatterMatches)) {
+        $frontmatterRaw = $frontmatterMatches[1];
+        if (preg_match('/^title:\s*(.*?)\s*$/im', $frontmatterRaw, $titleMatches)) {
+            $title = trim($titleMatches[1]);
+            $title = trim($title, "'\"");
+            if (!empty($title)) {
+                return $title;
+            }
+        }
+    }
+
+    // 2. Try to get the first H1 heading
+    if (preg_match('/^#\s+(.*?)\s*$/m', $content, $h1Matches)) {
+        $h1Title = trim($h1Matches[1]);
+        if (!empty($h1Title)) {
+            return $h1Title;
+        }
+    }
+
+    // 3. Fallback to filename (obtained via getFileInfos)
+    return getFileInfos($filePath)[1];
 }
 
 function getfullGraph($rootDir)
