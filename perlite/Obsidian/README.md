@@ -37,13 +37,39 @@ If you want to discuss Perlite you can join the [Perlite Discord Server](https:/
 - Dark and Light Mode
 
 
-## Install
-Please make sure you read the [required settings](https://github.com/secure-77/Perlite/wiki/03---Perlite-Settings#required-settings) first!
+## Install Perlite with Authentication
 
-You can download the latest release from github or git clone the project and use docker.
+This fork adds simple authentication on top of Perlite and is intended for Docker deployment only. Non-Docker setups are not tested.
 
-- For non Docker please check [Setup](https://github.com/secure-77/Perlite/wiki/01---Setup-(no-Docker))
-- For Docker, please check [Docker Setup](https://github.com/secure-77/Perlite/wiki/02---Setup-Docker)
+### Steps:
+
+1. Clone this repository:
+
+   ```bash
+   git clone https://github.com/dewillepl/Perlite-auth.git
+   ```
+
+2. Build the Docker image:
+
+   ```bash
+   docker build -t perlite-auth-app .
+   ```
+
+3. Configure via `docker-compose.yml`:
+
+   ```yaml
+   environment:
+     - PERLITE_USERNAME=admin
+     - PERLITE_PASSWORD=admin
+   ```
+
+**IMPORTANT !!! For the rest of the configuration, please refer to the original [Docker Setup](https://github.com/secure-77/Perlite/wiki/02---Setup-Docker) documentation.**
+
+4. Start the container:
+
+   ```bash
+   docker compose up -d
+   ```
 
 
 ## Wiki
