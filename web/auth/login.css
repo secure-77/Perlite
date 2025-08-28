@@ -1,0 +1,70 @@
+:root {
+  --background-primary: #1e1e1e;
+  --background-secondary: #2a2a2a;
+  --background-tertiary: #2f2f2f;
+  --text-normal: #c7c7c7;
+  --text-accent: #a4b1ff;
+  --interactive-accent: #5865f2;
+  --border-color: #3a3a3a;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.4);
+  --font-main: 'Inter', 'Segoe UI', sans-serif;
+}
+
+body {
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-family: var(--font-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.login-container {
+  background: var(--background-secondary);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  width: 320px;
+}
+
+.login-container h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  background: var(--background-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-normal);
+}
+
+.login-container input:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.5);
+}
+
+.login-container button {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--interactive-accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.login-container button:hover {
+  background: #4752c4;
+}

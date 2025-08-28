@@ -1,45 +1,39 @@
+version: "3.9"
+
 services:
   perlite:
-    image: sec77/perlite:latest
-    container_name: perlite
+    image: perlite-auth-app
+    container_name: perlite-auth-app
     restart: unless-stopped
+    ports:
+      - "8080:80"
     environment:
-      - NOTES_PATH=Demo
+      # username&pass
+      - PERLITE_USERNAME=admin
+      - PERLITE_PASSWORD=admin
+
+      # Perlite env
+      - NOTES_PATH=Obsidian
       - HIDE_FOLDERS=docs,private,trash
       - HIDDEN_FILE_ACCESS=false
       - LINE_BREAKS=true
-      - ABSOLUTE_PATHS=false
+      - ABSOLUTE_PATHS=true
       - ALLOWED_FILE_LINK_TYPES=pdf,mp4
       - DISABLE_POP_HOVER=false
       - SHOW_TOC=true
-      - SHOW_LOCAL_GRAPH=true
+      - SHOW_LOCAL_GRAPH=false
       - HOME_FILE=README
       - FONT_SIZE=15
       - HTML_SAFE_MODE=true
       - TEMP_PATH=/tmp
-      - SITE_TITLE=Demo
+      - SITE_TITLE=Perlite
       - SITE_TYPE=article
       - SITE_URL=
       - SITE_IMAGE=
       - SITE_DESC=
-      - SITE_NAME=Perlite
-      - SITE_TWITTER=https://x.com/
+      - SITE_NAME=Perlite Auth
       - SITE_LOGO=perlite.svg
-      - SITE_HOMEPAGE=https://perlite.secure77.de/
-      - SITE_GITHUB=https://github.com/
+      - SITE_HOMEPAGE=http://domain.example
     volumes:
-      - ./perlite/Demo:/var/www/perlite/Demo:ro
-
-  web:
-    image: nginx:stable
-    container_name: perlite_web
-    restart: unless-stopped
-    ports:
-      - 80:80
-    volumes:
+      - ./perlite/Obsidian:/var/www/perlite/Obsidian:ro
       - ./web/config/perlite.conf:/etc/nginx/conf.d/default.conf:ro
-    volumes_from: 
-      - perlite       
-    depends_on:
-      - perlite
-
