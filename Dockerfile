@@ -27,7 +27,7 @@ RUN chown -R www-data:www-data /var/www/perlite
 
 # configs 
 COPY web/config/perlite.conf /etc/nginx/sites-available/default
-COPY supervisord.conf /etc/supervisord.conf
+COPY web/config/supervisord.conf /etc/supervisord.conf
 
 RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
