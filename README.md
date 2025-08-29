@@ -1,8 +1,12 @@
 # Perlite with Authorization
-This fork adds simple authentication on top of Perlite
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/secure-77/perlite) ![GitHub](https://img.shields.io/github/license/secure-77/perlite) ![GitHub last commit](https://img.shields.io/github/last-commit/secure-77/Perlite)
 
+**This fork adds simple authentication on top of Perlite.**<br>
+This is the original README document of the Perlite project.<br>
+The installation instructions for the fork can be found in the Installation section.
+
+---
 
 A web based markdown viewer optimized for [Obsidian](https://obsidian.md/) Notes
 
