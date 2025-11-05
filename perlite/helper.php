@@ -82,6 +82,10 @@ if (!isset($lineBreaks))
 if (empty($allowedFileLinkTypes))
 	$allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf', 'mp4'] : explode(",", getenv('ALLOWED_FILE_LINK_TYPES'));
 
+// highlight.js languages
+if (empty($highlightJSLangs))
+	$highlightJSLangs = empty(getenv('HIGHLIGHTJS_LANGS')) ? ['powershell'] : explode(",", getenv('HIGHLIGHTJS_LANGS'));
+
 // disable PopHovers
 if (empty($disablePopHovers))
 	$disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? "false" : getenv('DISABLE_POP_HOVER');
@@ -710,6 +714,7 @@ function loadSettings($rootDir)
 	global $siteName;
 	global $siteTwitter;
 	global $uriPath;
+	global $highlightJSLangs;
 
 
 	// get themes
@@ -774,6 +779,12 @@ function loadSettings($rootDir)
 	$defaultSettings .= '<link id="showLocalGraph" data-option="' . $showLocalGraph . '"</link>';
 	$defaultSettings .= '<link id="index" data-option="' . $index . '"</link>';
 
+	// highlight.js languages
+	//$highlightLangs = explode(',', $highlightJSLangs);
+
+	foreach ($highlightJSLangs as $lang) {
+		$defaultSettings .= '<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/'. trim($lang) .'.min.js"></script>';
+	}
 
 	return $themes . $defaultSettings;
 }

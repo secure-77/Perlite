@@ -9,6 +9,7 @@ services:
       - LINE_BREAKS=true
       - ABSOLUTE_PATHS=false
       - ALLOWED_FILE_LINK_TYPES=pdf,mp4
+      - HIGHLIGHTJS_LANGS=powershell
       - DISABLE_POP_HOVER=true
       - SHOW_TOC=true
       - SHOW_LOCAL_GRAPH=true

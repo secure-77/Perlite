@@ -32,6 +32,8 @@ $jsonGraphData = getfullGraph($rootDir);
 
     
     <link rel="stylesheet" href="<?php echo $uriPath ?>.styles/app.css" type="text/css">
+    <script src="<?php echo $uriPath ?>.js/highlight.min.js"></script>
+    
     <?php echo loadSettings($rootDir); ?>
     
     <link id="highlight-js" rel="stylesheet" href="<?php echo $uriPath ?>.styles/atom-one-dark.min.css" type="text/css">
@@ -41,7 +43,7 @@ $jsonGraphData = getfullGraph($rootDir);
     <link rel="icon" type="image/x-icon" href="<?php echo $uriPath ?>favicon.ico">
 
     <script src="<?php echo $uriPath ?>.js/jquery.min.js"></script>
-    <script src="<?php echo $uriPath ?>.js/highlight.min.js"></script>
+    
     <script src="<?php echo $uriPath ?>.js/vis-network.min.js"></script>
     <script src="<?php echo $uriPath ?>.js/katex.min.js"></script>
     <script src="<?php echo $uriPath ?>.js/auto-render.min.js"></script>
