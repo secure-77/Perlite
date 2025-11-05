@@ -1052,10 +1052,11 @@ function openNavMenu(target, openAll = false) {
 
   // open nav menu to target
   var navId = decodeURIComponent(target);
-  linkname = navId.match(/([^\/]*)\/*$/)[1]
-
+  
   // search and open tree reverse
   navId = navId.replace(/[^a-zA-Z0-9\-]/g, '_');
+
+  navId = 'fileid-' + navId;
   var next = $('#' + navId).parent().closest('.collapse');
 
   do {
@@ -1067,13 +1068,9 @@ function openNavMenu(target, openAll = false) {
   }
   while (next.length != 0);
 
+  // mark active
+  $('#' + navId).addClass('perlite-link-active is-active');
 
-  // set focus to link
-  var searchText = linkname;
-
-  $("div").filter(function () {
-    return $(this).text() === searchText;
-  }).parent().addClass('perlite-link-active is-active');
 
 };
 
