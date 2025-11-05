@@ -22,6 +22,7 @@ $siteName = "Perlite Demo";
 $siteHomepage = "";  // empty for $siteURL
 $siteGithub = "https://github.com/secure-77";  // empty for no Github
 $siteTwitter = "@secure_sec77";
+$useZettelkastenFilenames = false;
 
 $tempPath = "";  // blanc so it gets it automatically
 
