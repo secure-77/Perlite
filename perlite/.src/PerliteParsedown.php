@@ -1020,7 +1020,7 @@ class PerliteParsedown extends Parsedown
                 unset($parts[0]);
 
                 foreach ($parts as $part) {
-                    $shortage = 4 - strlen(utf8_decode($input)) % 4;
+		    $shortage = 4 - (mb_strlen($input ?? '', 'UTF-8') % 4);
 
                     $line .= str_repeat(' ', $shortage);
                     $line .= $part;
