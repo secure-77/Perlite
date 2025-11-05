@@ -1,3 +1,8 @@
+## 1.7
+- Support Zettelkasten Filenames, use with caution! - PR [#159](https://github.com/secure-77/Perlite/pull/159) thanks to @smtucker
+- replaced deprecated utf8_decode() - PR [#164](https://github.com/secure-77/Perlite/pull/164) thanks to @dewillepl 
+- fixed theme issue [#167](https://github.com/secure-77/Perlite/issues/167)
+
 ## 1.6
 - get rid of mb_strlen, fixed issue [#151](https://github.com/secure-77/Perlite/issues/151) thanks to @Sephral
 - hide X / Twitter when not set, issue [#152](https://github.com/secure-77/Perlite/issues/152), thanks to @EKNr1

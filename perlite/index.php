@@ -30,8 +30,10 @@ $jsonGraphData = getfullGraph($rootDir);
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
-    <?php echo loadSettings($rootDir); ?>
+    
     <link rel="stylesheet" href="<?php echo $uriPath ?>.styles/app.css" type="text/css">
+    <?php echo loadSettings($rootDir); ?>
+    
     <link id="highlight-js" rel="stylesheet" href="<?php echo $uriPath ?>.styles/atom-one-dark.min.css" type="text/css">
     <link rel="stylesheet" href="<?php echo $uriPath ?>.styles/perlite.css" type="text/css">
     <link rel="stylesheet" href="<?php echo $uriPath ?>.styles/vis-network.min.css" type="text/css">
