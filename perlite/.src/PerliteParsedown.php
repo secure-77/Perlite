@@ -1020,7 +1020,18 @@ class PerliteParsedown extends Parsedown
                 unset($parts[0]);
 
                 foreach ($parts as $part) {
-		    $shortage = 4 - (mb_strlen($input ?? '', 'UTF-8') % 4);
+
+                    
+                    $shortage = 0;
+                    if (function_exists('mb_strlen')) {
+                        $shortage = 4 - (mb_strlen($input ?? '', 'UTF-8') % 4);
+                    } elseif (function_exists('iconv')) {
+                        $converted = @iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE', $input);
+                        $shortage = 4 - (strlen($converted) % 4);
+                    } else {
+                        // Fallback: count bytes (not characters)
+                        $shortage = 4 -  (strlen($input) % 4);
+                    }
 
                     $line .= str_repeat(' ', $shortage);
                     $line .= $part;
