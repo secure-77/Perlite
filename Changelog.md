@@ -4,7 +4,8 @@
 - fixed theme issue [#167](https://github.com/secure-77/Perlite/issues/167)
 - implemented issue (additional highlight.js support) [#173](https://github.com/secure-77/Perlite/issues/173)
 - sustainable mb_strlen / strlen / utf8_decode fix
-- removed border from local graph
+- removed border from local graph and custom page section
+
 
 ## 1.6
 - get rid of mb_strlen, fixed issue [#151](https://github.com/secure-77/Perlite/issues/151) thanks to @Sephral

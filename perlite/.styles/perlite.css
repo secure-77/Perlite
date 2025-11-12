@@ -7,7 +7,7 @@
 
 .custom-page {
   text-align: center;
-  border-bottom: var(--divider-width) solid var(--divider-color);
+  /* border-bottom: var(--divider-width) solid var(--divider-color); */
 }
 
 .custom-page-logo {
