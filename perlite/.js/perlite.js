@@ -9,17 +9,19 @@
 
 //// load default settings
 
-// define perlite location on webserver
-//var uriPath = '/perlite/'
-var uriPath = '/'
-
 
 // define home file
 var homeFile = "README";
 
 if ($('#index').data('option')) {
-
   homeFile = $('#index').data('option');
+}
+
+// define uri path
+var uriPath = '/'
+
+if ($('#uri_path').data('option')) {
+  uriPath = $('#uri_path').data('option');
 }
 
 // disable pophovers

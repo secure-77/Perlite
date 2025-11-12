@@ -747,18 +747,34 @@ function loadSettings($rootDir)
 
 			if ($defaultTheme === $folderName) {
 
-				$themes .= '<link data-themename="' . $folderName . '" class="theme" id="' . $folderClean . '" href="' . $themePath . '" type="text/css" rel="stylesheet">';
+				$themes .= '<link data-themename="' . $folderName . '" class="theme" id="' . $folderClean . '" href="' . $themePath . '" type="text/css" rel="stylesheet">
+	';
 			} else {
 
-				$themes .= '<link data-themename="' . $folderName . '" class="theme" id="' . $folderClean . '" href="' . $themePath . '" type="text/css" rel="stylesheet" disabled="disabled">';
+				$themes .= '<link data-themename="' . $folderName . '" class="theme" id="' . $folderClean . '" href="' . $themePath . '" type="text/css" rel="stylesheet" disabled="disabled">
+	';
 			}
 		}
 	}
 
+	// default settings
+	$defaultSettings = '<link id="disablePopHovers" data-option="' . $disablePopHovers . '">
+	';
+	$defaultSettings .= '<link id="showTOC" data-option="' . $showTOC . '">
+	';
+	$defaultSettings .= '<link id="showLocalGraph" data-option="' . $showLocalGraph . '">
+	';
+	$defaultSettings .= '<link id="index" data-option="' . $index . '">
+	';
+	$defaultSettings .= '<link id="uri_path" data-option="' . $uriPath . '">
+	';
+
 
 	// Meta Tags
-	$defaultSettings =
-		'<!--  Essential META Tags -->
+	$defaultSettings .=
+	'
+		
+	<!--  Essential META Tags -->
     <meta property="og:title" content="' . $siteTitle . '">
     <meta property="og:type" content="' . $siteType . '" />
     <meta property="og:image" content="' . $siteImage . '">
@@ -769,21 +785,16 @@ function loadSettings($rootDir)
     <meta property="og:description" content="' . $siteDescription . '">
     <meta property="og:site_name" content="' . $siteName . '">
     <meta name="twitter:image:alt" content="Page Callout">
-
-    <!--  Non-Essential, But Required for Analytics -->
     <meta name="twitter:site" content="' . $siteTwitter . '">';
 
-	// default settings
-	$defaultSettings .= '<link id="disablePopHovers" data-option="' . $disablePopHovers . '"</link>';
-	$defaultSettings .= '<link id="showTOC" data-option="' . $showTOC . '"</link>';
-	$defaultSettings .= '<link id="showLocalGraph" data-option="' . $showLocalGraph . '"</link>';
-	$defaultSettings .= '<link id="index" data-option="' . $index . '"</link>';
+
 
 	// highlight.js languages
 	//$highlightLangs = explode(',', $highlightJSLangs);
 
 	foreach ($highlightJSLangs as $lang) {
-		$defaultSettings .= '<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/'. trim($lang) .'.min.js"></script>';
+		$defaultSettings .= '
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/'. trim($lang) .'.min.js"></script>';
 	}
 
 	return $themes . $defaultSettings;
