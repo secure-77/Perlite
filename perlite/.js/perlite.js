@@ -565,6 +565,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false, show_tags = tr
   // no graph found exit
   if ($("#allGraphNodes").length == 0 || $("#allGraphNodes").text == '[]') {
     console.log("Graph: no data found")
+    document.getElementById("random_note").style.display = "none";
     return;
   }
 

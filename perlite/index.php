@@ -125,7 +125,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                 <path d="M12 12v3"></path>
                             </svg></div>
                     </div>
-                    <div class="side-dock-actions">
+                    <div id="random_note" class="side-dock-actions">
                         <div class="clickable-icon side-dock-ribbon-action" aria-label="Open random note"
                             data-tooltip-position="right" data-tooltip-delay="300">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

@@ -5,6 +5,8 @@
 - implemented issue (additional highlight.js support) [#173](https://github.com/secure-77/Perlite/issues/173)
 - sustainable mb_strlen / strlen / utf8_decode fix
 - removed border from local graph and custom page section
+- added headline copy link button [#156](https://github.com/secure-77/Perlite/issues/156)
+- show random button only when graph-data is availible [#168](https://github.com/secure-77/Perlite/issues/168)
 
 
 ## 1.6
