@@ -448,6 +448,43 @@ function getContent(str, home = false, popHover = false, anchor = "") {
         }
 
 
+      // Add copyable anchors to all headings (h1–h6)
+      document.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((heading) => {
+        // Ensure each heading has an ID (generate one if missing)
+        if (!heading.id) {
+          heading.id = heading.textContent
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]/g, "");
+        }
+
+        // Create the copy icon
+        const copyLink = document.createElement("span");
+        copyLink.className = "copy-icon";
+        copyLink.textContent = "#";
+        copyLink.title = "Copy link to clipboard";
+
+        // Append the icon to the heading
+        heading.appendChild(copyLink);
+
+        // Add click event to copy link
+        copyLink.addEventListener("click", (event) => {
+          event.preventDefault();
+          const url = `${window.location.origin}${window.location.pathname}#${heading.id}`;
+          navigator.clipboard.writeText(url);
+
+          // Visual feedback
+          copyLink.classList.add("copied");
+          copyLink.textContent = "✅";
+          setTimeout(() => {
+            copyLink.textContent = "#";
+            copyLink.classList.remove("copied");
+          }, 1000);
+        });
+      });
+
+
         // run mobile settings
         isMobile();
 

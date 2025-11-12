@@ -150,6 +150,48 @@ span.cm-highlight {
   margin-top: 30px;
 }
 
+
+/* Position and appearance of copy icon */
+.copy-icon {
+  cursor: pointer;
+  color: var(--text-tag);
+  font-size: 0.9em;
+  margin-left: 0.25em;
+  visibility: hidden;
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+/* Show icon only on hover */
+h1:hover .copy-icon,
+h2:hover .copy-icon,
+h3:hover .copy-icon,
+h4:hover .copy-icon,
+h5:hover .copy-icon,
+h6:hover .copy-icon {
+  visibility: visible;
+}
+
+/* Hover effect */
+.copy-icon:hover {
+  color: var(--text-accent);
+}
+
+/* Temporary success state */
+.copy-icon.copied {
+  color: green;
+  visibility: visible;
+}
+
+
+
+
+
+
+
+
+
+
 /* --------------- */
 /* Mobile / Responive Settings */
 
