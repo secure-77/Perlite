@@ -534,7 +534,7 @@ class PerliteParsedown extends Parsedown
 
 
     # extend to obsidian tags
-    protected $inlineMarkerList = '!"*$_#&[:<>`~\\=';
+    protected $inlineMarkerList = '!"*$_#&[:<>`~\\=%';
     protected $InlineTypes = array(
         '"' => array('SpecialCharacter'),
         '!' => array('Image'),
@@ -551,6 +551,7 @@ class PerliteParsedown extends Parsedown
         '~' => array('Strikethrough'),
         '\\' => array('EscapeSequence'),
         '=' => array('Highlight'),
+        '%' => array('Hidden'),
     );
 
 
@@ -576,6 +577,28 @@ class PerliteParsedown extends Parsedown
 
             return $Inline;
         }
+    }
+
+
+    # handle hidden code
+    protected function inlineHidden($Excerpt)
+    {
+        $marker = $Excerpt['text'][1];
+
+        if (preg_match('/^%%(.+?)%%/s', $Excerpt['text'], $matches))
+        {
+            $content = "";
+            $Inline = array(
+                'extent' => strlen($matches[0]),
+                'element' => array(
+                    'name' => 'span',
+                    'text' => $content,
+                ),
+            );
+
+            return $Inline;
+        }   
+    
     }
 
 

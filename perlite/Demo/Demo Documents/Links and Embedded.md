@@ -6,7 +6,6 @@ Just a link: https://github.com/secure-77/Perlite
 [Link with custom Name](https://github.com/secure-77/Perlite)
 
 
-[Internal Markdown Link](Markdown Samples)
 
 # Files
 
