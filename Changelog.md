@@ -7,6 +7,9 @@
 - removed border from local graph and custom page section
 - added headline copy link button [#156](https://github.com/secure-77/Perlite/issues/156)
 - show random button only when graph-data is availible [#168](https://github.com/secure-77/Perlite/issues/168)
+- fixed some pop hover issues (use with 100%) and show content
+- implemented support for internal Markdown Links [#170](https://github.com/secure-77/Perlite/issues/170)
+
 
 
 ## 1.6

@@ -1,7 +1,7 @@
 <?php
 
 /*!
- * Perlite v1.6 (https://github.com/secure-77/Perlite)
+ * Perlite v1.6.1 (https://github.com/secure-77/Perlite)
  * Author: sec77 (https://secure77.de)
  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
  */
@@ -77,6 +77,11 @@ if (empty($tempPath))
 // line breaks
 if (!isset($lineBreaks))
 	$lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
+
+// line breaks
+if (!isset($internalMarkdownLinks))
+	$internalMarkdownLinks = empty(getenv('INTERNAL_MARKDOWN_LINKS')) ? false : filter_var(getenv('INTERNAL_MARKDOWN_LINKS'), FILTER_VALIDATE_BOOLEAN);
+
 
 // file types
 if (empty($allowedFileLinkTypes))

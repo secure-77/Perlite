@@ -377,7 +377,13 @@ function getContent(str, home = false, popHover = false, anchor = "") {
                 var target = urlParams.get('link');
                 target = encodeURIComponent(target);
               } else {
-                target = unslugURL(window.location.pathname)
+                target = unslugURL(this.pathname)
+                target = encodeURIComponent(target);                      
+              }
+
+
+              if (this.href.split('#').length > 1) {
+                return;
               }
 
               // get content of link
@@ -396,15 +402,19 @@ function getContent(str, home = false, popHover = false, anchor = "") {
           }
           mdContent = $("#mdContent")[0]
 
-          // handle pop up and hover
+        // handle pop up and hover
         } else {
 
+          
+          if (result.trim() == "") {
+            return;
+          }
           // set content
           $("#mdHoverContent").html(result);
           $("#popUpContent").html(result);
 
           // set title
-          var title = $("div.mdTitleHide")[1].innerText;
+          var title = $("div.mdTitleHide").eq(1).text() || "";
           title = title.substring(1)
           titleElements = title.split('/')
           title = titleElements.splice(-1)
@@ -452,6 +462,10 @@ function getContent(str, home = false, popHover = false, anchor = "") {
 
       // Add copyable anchors to all headings (h1–h6)
       document.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((heading) => {
+        
+        // Skip if heading already has a copy icon
+        if (heading.querySelector(".copy-icon")) return;
+        
         // Ensure each heading has an ID (generate one if missing)
         if (!heading.id) {
           heading.id = heading.textContent

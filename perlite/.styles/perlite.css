@@ -141,6 +141,10 @@ h1, h2, h3, h4 {
   
 }
 
+.popover.hover-popover > * {
+  width: 100%;
+} 
+
 span.cm-highlight {
   background-color: var(--text-highlight-bg);
   color: var(--text-normal);
