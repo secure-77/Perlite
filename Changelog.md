@@ -8,8 +8,10 @@
 - added headline copy link button [#156](https://github.com/secure-77/Perlite/issues/156)
 - show random button only when graph-data is availible [#168](https://github.com/secure-77/Perlite/issues/168)
 - fixed some pop hover issues (use with 100%) and show content
-- implemented support for internal Markdown Links [#170](https://github.com/secure-77/Perlite/issues/170)
 - implemented hidden text feature [#160](https://github.com/secure-77/Perlite/issues/160)
+- eleminated regex-based post-processing by vibe code implemented this into PerliteParsedown fixed issue [#177](https://github.com/secure-77/Perlite/issues/177)
+
+need to move this to PerliteParsedown: implemented support for internal Markdown Links [#170](https://github.com/secure-77/Perlite/issues/170)
 
 
 

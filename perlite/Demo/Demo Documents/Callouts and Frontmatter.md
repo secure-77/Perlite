@@ -11,6 +11,8 @@ aliases:
 
 Im a YAML front matter document
 
+[[#Collapsible(Callouts]]
+
 
 # Blockquots
 
@@ -61,7 +63,7 @@ Im a YAML front matter document
 > Lorem ipsum dolor sit amet
 
 
-## Collapsible Callouts
+## Collapsible(Callouts
 
 > [!note]+ Information the user should notice even if skimming. 
 > Test

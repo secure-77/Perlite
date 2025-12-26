@@ -28,3 +28,5 @@ perlite/Link Tests/folder1/folder 2/docs/image_subFolder.png
 perlite/Link Tests/folder1/folder 2/docs/subfolder_document.md
 perlite/sec.jpg
 perlite/Demo/Demo Documents/test.md
+perlite/Demo/Demo Documents/test2/test.md
+perlite/Demo/Demo Documents/test2/Markdown Samples.md
