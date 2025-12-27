@@ -32,7 +32,7 @@ $useZettelkastenFilenames = false;
 $highlightJSLangs = ["powershell", "x86asm"];
 $allowedFileLinkTypes = ['pdf', 'mp4'];
 $tempPath = "";  // path for graph html, leave empty for automatic
-$internalMarkdownLinks = false;
+
 
 // --- Metadata Settings ---
 $siteType = "article";

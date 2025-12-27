@@ -78,11 +78,6 @@ if (empty($tempPath))
 if (!isset($lineBreaks))
 	$lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
 
-// line breaks
-if (!isset($internalMarkdownLinks))
-	$internalMarkdownLinks = empty(getenv('INTERNAL_MARKDOWN_LINKS')) ? false : filter_var(getenv('INTERNAL_MARKDOWN_LINKS'), FILTER_VALIDATE_BOOLEAN);
-
-
 // file types
 if (empty($allowedFileLinkTypes))
 	$allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf', 'mp4'] : explode(",", getenv('ALLOWED_FILE_LINK_TYPES'));

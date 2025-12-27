@@ -16,17 +16,37 @@ class PerliteParsedown extends Parsedown
 
 
     protected $path;
+    protected $uriPath;
+    protected $niceLinks;
     protected $allowedFileLinkTypes;
     protected $allowedImageTypes;
 
-    // public function __construct()
-    // {
+    protected $inlineMarkerList = '!"*$_#&[:<>`~\\=%';
 
-    // }
+    protected $InlineTypes = array(
+        '"' => array('SpecialCharacter'),
+        '!' => array('Image', 'InternalEmbed'),
+        '&' => array('SpecialCharacter'),
+        '*' => array('Emphasis'),
+        ':' => array('Url'),
+        '<' => array('UrlTag', 'EmailTag', 'Markup', 'SpecialCharacter'),
+        '>' => array('SpecialCharacter'),
+        '[' => array('Link', 'InternalMarkdownLink', 'InternalLink'),
+        '#' => array('Tag'),
+        '$' => array('Katex'),
+        '_' => array('Emphasis'),
+        '`' => array('Code'),
+        '~' => array('Strikethrough'),
+        '\\' => array('EscapeSequence'),
+        '=' => array('Highlight'),
+        '%' => array('Hidden'),
+    );
+
 
     public function __construct(
         $path = '',
         $uriPath = '/',
+        $niceLinks = false,
         array $allowedFileLinkTypes = array('mp4', 'm4a', 'pdf'),
         array $allowedImageTypes = array(
             'png',
@@ -40,15 +60,13 @@ class PerliteParsedown extends Parsedown
             'webp'
         )
     ) {
-        //parent::__construct();
 
         $this->path = $path;
         $this->uriPath = $uriPath;
+        $this->niceLinks = $niceLinks;
         $this->allowedFileLinkTypes = $allowedFileLinkTypes;
         $this->allowedImageTypes = $allowedImageTypes;
 
-        $this->InlineTypes['!'][] = 'InternalEmbed';
-        $this->InlineTypes['['][] = 'InternalLink';
         $this->BlockTypes['!'] = array('YouTube');
 
     }
@@ -565,26 +583,6 @@ class PerliteParsedown extends Parsedown
         return $Block;
     }
 
-    # extend to obsidian tags
-    protected $inlineMarkerList = '!"*$_#&[:<>`~\\=%';
-    protected $InlineTypes = array(
-        '"' => array('SpecialCharacter'),
-        '!' => array('Image'),
-        '&' => array('SpecialCharacter'),
-        '*' => array('Emphasis'),
-        ':' => array('Url'),
-        '<' => array('UrlTag', 'EmailTag', 'Markup', 'SpecialCharacter'),
-        '>' => array('SpecialCharacter'),
-        '[' => array('Link'),
-        '#' => array('Tag'),
-        '$' => array('Katex'),
-        '_' => array('Emphasis'),
-        '`' => array('Code'),
-        '~' => array('Strikethrough'),
-        '\\' => array('EscapeSequence'),
-        '=' => array('Highlight'),
-        '%' => array('Hidden'),
-    );
 
     # handle highlight code
     protected function inlineHighlight($Excerpt)
@@ -1240,15 +1238,22 @@ class PerliteParsedown extends Parsedown
             $segments = array_slice($segments, 0, count($segments) - $depth);
             $path = implode('/', $segments);
             $linkFile = preg_replace('#^(\.\./)+#', '', $linkFile);
+
+            // use only the file name for nice links
+            if ($this->niceLinks == true) {
+                $segments = explode('/', $linkText);
+                $segments = array_slice($segments, count($segments) - 1, 1);
+                $linkText = $segments[0];
+            }
         }
 
-        
+
         if ($openNewTab == false) {
             $segments = explode('/', $path);
             $segments = array_slice($segments, 1, count($segments));
-            $path = implode('/', $segments);    
+            $path = implode('/', $segments);
         }
-        
+
 
         $urlPath = ltrim($path . '/' . $linkFile, '/');
 
@@ -1293,14 +1298,57 @@ class PerliteParsedown extends Parsedown
         );
     }
 
+    protected function inlineInternalMarkdownLink($Excerpt)
+    {
+        // Match [label](path) — but NOT external URLs
+        if (!preg_match('/^\[([^\]]+)\]\(([^)]+)\)/', $Excerpt['text'], $m)) {
+            return;
+        }
+
+        $label = $m[1];
+        $path = $m[2];
+
+        // Reject external links explicitly
+        if (preg_match('#^[a-z][a-z0-9+.-]*://#i', $path)) {
+            return;
+        }
+
+        // Reject protocol-relative URLs
+        if (str_starts_with($path, '//')) {
+            return;
+        }
+
+        // Convert into Obsidian-style payload
+        // [[path|label]]
+        $synthetic = '[[' . $path . '|' . $label . ']]';
+
+        // Delegate to inlineInternalLink()
+        $result = $this->inlineInternalLink([
+            'text' => $synthetic,
+        ]);
+
+        if ($result === null) {
+            return;
+        }
+
+        // Adjust extent to original Markdown syntax length
+        $result['extent'] = strlen($m[0]);
+
+        return $result;
+    }
+
     protected function inlineInternalEmbed($Excerpt)
     {
         if (!preg_match('/^!\[\[(.+?)\]\]/', $Excerpt['text'], $m)) {
             return;
         }
 
+
+
         $raw = $m[1];
         $parts = explode('|', $raw);
+
+
 
         $file = $parts[0];
         $mod1 = $parts[1] ?? null;
@@ -1308,6 +1356,10 @@ class PerliteParsedown extends Parsedown
 
         $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
         $src = rtrim($this->uriPath . $this->path, '/') . '/' . $file;
+
+        if (str_contains($file, '#')) {
+            $ext = strtolower(pathinfo(explode('#', $file)[0], PATHINFO_EXTENSION));
+        }
 
         /* ---------- PDF ---------- */
         if ($ext === 'pdf') {
@@ -1343,58 +1395,115 @@ class PerliteParsedown extends Parsedown
             );
         }
 
-        /* ---------- Images ---------- */
+        /* ---------- Image ---------- */
         if (in_array($ext, $this->allowedImageTypes)) {
-            return $this->buildInternalImage($file, $parts, strlen($m[0]));
+
+            // syntax: image.png#caption=...&size=...
+            if (str_contains($file, '#')) {
+                return $this->buildInternalImageFromFragment(
+                    $file,
+                    strlen($m[0])
+                );
+            }
+
+            // syntax: image.png|Caption|300x200|center
+            return $this->buildInternalImageFromLegacy(
+                $raw,
+                strlen($m[0])
+            );
         }
+
+
     }
 
-    protected function buildInternalImage($file, array $parts, $extent)
+
+    protected function buildInternalImage(string $file, array $attrs, int $extent)
     {
         $src = rtrim($this->uriPath . $this->path, '/') . '/' . $file;
 
-        $alt = '';
         $class = 'images';
+        $alt = $attrs['caption'] ?? 'image';
         $width = null;
         $height = null;
 
-        foreach ($parts as $part) {
-            if (preg_match('/^(\d*)x(\d*)$/', $part, $m)) {
-                $width = $m[1] ?: null;
-                $height = $m[2] ?: null;
-            } elseif ($part === 'center' || $part === 'right') {
-                $class .= ' ' . $part;
-            } elseif ($part !== $file) {
-                $alt = $part;
-            }
+        if (!empty($attrs['align'])) {
+            $class .= ' ' . $attrs['align'];
         }
 
+        if (!empty($attrs['size']) && preg_match('/^(\d*)x(\d*)$/', $attrs['size'], $m)) {
+            $width = $m[1] ?: null;
+            $height = $m[2] ?: null;
+        }
 
         return [
             'extent' => $extent,
             'element' => [
                 'name' => 'p',
-                'elements' => [   // <- top-level nested elements go here
+                'elements' => [
                     [
                         'name' => 'a',
-                        'attributes' => ['href' => '#', 'class' => 'pop'],
-                        'elements' => [   // nested elements
+                        'attributes' => [
+                            'href' => '#',
+                            'class' => 'pop',
+                        ],
+                        'elements' => [
                             [
                                 'name' => 'img',
                                 'attributes' => array_filter([
                                     'src' => $src,
                                     'class' => $class,
-                                    'alt' => $alt ?: 'image',
+                                    'alt' => $alt,
                                     'width' => $width,
                                     'height' => $height,
                                 ]),
-                            ]
+                            ],
                         ],
-                    ]
+                    ],
                 ],
             ],
         ];
+    }
 
+
+    protected function buildInternalImageFromFragment(string $file, int $extent)
+    {
+        [$file, $fragment] = explode('#', $file, 2);
+
+        parse_str($fragment, $attrs);
+
+        return $this->buildInternalImage(
+            $file,
+            [
+                'caption' => $attrs['caption'] ?? null,
+                'size' => $attrs['size'] ?? null,
+                'align' => $attrs['align'] ?? null,
+            ],
+            $extent
+        );
+    }
+
+    protected function buildInternalImageFromLegacy(string $raw, int $extent)
+    {
+        $parts = explode('|', $raw);
+        $file = array_shift($parts);
+
+        $attrs = [
+            'caption' => null,
+            'size' => null,
+            'align' => null,
+        ];
+
+        foreach ($parts as $part) {
+            if (preg_match('/^\d*x\d*$/', $part)) {
+                $attrs['size'] = $part;
+            } elseif (in_array($part, ['center', 'right'], true)) {
+                $attrs['align'] = $part;
+            } elseif ($part !== '') {
+                $attrs['caption'] = $part;
+            }
+        }
+
+        return $this->buildInternalImage($file, $attrs, $extent);
     }
 
 

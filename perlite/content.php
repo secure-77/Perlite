@@ -64,7 +64,6 @@ function parseContent($requestFile)
 	global $allowedFileLinkTypes;
 	global $htmlSafeMode;
 	global $relPathes;
-	global $internalMarkdownLinks;
 
 
 	// call menu again to refresh the array
@@ -87,20 +86,10 @@ function parseContent($requestFile)
 
 
 
-	$Parsedown = new PerliteParsedown($path, $uriPath, $allowedFileLinkTypes);
+	$Parsedown = new PerliteParsedown($path, $uriPath,true, $allowedFileLinkTypes);
 	$Parsedown->setSafeMode($htmlSafeMode);
 	$Parsedown->setBreaksEnabled($lineBreaks);
 	$cleanFile = '';
-
-
-	// convert internal markdown links to obsidian style links
-	if ($internalMarkdownLinks) {
-
-		$replaces = '[[\\2|\\1]]';
-		$pattern = array('/\[(.*?)\]\((?![^)]*?:)([^)]+)\)/');
-		$content = preg_replace($pattern, $replaces, $content);
-
-	}
 
 
 	$wordCount = str_word_count($content);

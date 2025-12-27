@@ -9,9 +9,9 @@
 - show random button only when graph-data is availible [#168](https://github.com/secure-77/Perlite/issues/168)
 - fixed some pop hover issues (use with 100%) and show content
 - implemented hidden text feature [#160](https://github.com/secure-77/Perlite/issues/160)
-- eleminated regex-based post-processing by vibe code implemented this into PerliteParsedown fixed issue [#177](https://github.com/secure-77/Perlite/issues/177)
-
-need to move this to PerliteParsedown: implemented support for internal Markdown Links [#170](https://github.com/secure-77/Perlite/issues/170)
+- eleminated regex-based post-processing by implementing it into PerliteParsedown, this fixed issue [#177](https://github.com/secure-77/Perlite/issues/177)
+- implemented support for internal Markdown Links [#170](https://github.com/secure-77/Perlite/issues/170)
+- implemented support for parameter based obsidian image attribute syntax to fix issue [#142](https://github.com/secure-77/Perlite/issues/142)
 
 
 
