@@ -12,6 +12,7 @@ services:
       - ALLOWED_FILE_LINK_TYPES=pdf,mp4
       - HIGHLIGHTJS_LANGS=powershell
       - DISABLE_POP_HOVER=false
+      - NICE_LINKS=true
       - SHOW_TOC=true
       - SHOW_LOCAL_GRAPH=true
       - HOME_FILE=README

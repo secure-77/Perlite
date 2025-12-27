@@ -12,7 +12,8 @@
 - eleminated regex-based post-processing by implementing it into PerliteParsedown, this fixed issue [#177](https://github.com/secure-77/Perlite/issues/177)
 - implemented support for internal Markdown Links [#170](https://github.com/secure-77/Perlite/issues/170)
 - implemented support for parameter based obsidian image attribute syntax to fix issue [#142](https://github.com/secure-77/Perlite/issues/142)
-
+- implemented support for "nice" internal links, this way always the filename only will be displayed without the path
+- fixed issue [#172](https://github.com/secure-77/Perlite/issues/172)
 
 
 ## 1.6

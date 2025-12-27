@@ -40,8 +40,8 @@ if (!isset($hiddenFileAccess))
 	$hiddenFileAccess = empty(getenv('HIDDEN_FILE_ACCESS')) ? false : filter_var(getenv('HIDDEN_FILE_ACCESS'), FILTER_VALIDATE_BOOLEAN);
 
 // use absolut paths instead of relative paths
-if (!isset($relPathes))
-	$relPathes = empty(getenv('ABSOLUTE_PATHS')) ? false : filter_var(getenv('ABSOLUTE_PATHS'), FILTER_VALIDATE_BOOLEAN);
+if (!isset($absolutePath))
+	$absolutePath = empty(getenv('ABSOLUTE_PATHS')) ? false : filter_var(getenv('ABSOLUTE_PATHS'), FILTER_VALIDATE_BOOLEAN);
 
 // Meta Tags infos
 if (empty($siteTitle))
@@ -77,6 +77,11 @@ if (empty($tempPath))
 // line breaks
 if (!isset($lineBreaks))
 	$lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
+
+// nice links
+if (!isset($niceLinks))
+	$niceLinks = empty(getenv('NICE_LINKS')) ? true : filter_var(getenv('NICE_LINKS'), FILTER_VALIDATE_BOOLEAN);
+
 
 // file types
 if (empty($allowedFileLinkTypes))

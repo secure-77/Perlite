@@ -860,6 +860,9 @@ class PerliteParsedown extends Parsedown
         }
 
         if (!isset($Block['interrupted'])) {
+            if (preg_match('/^[`~]{3,}/', $Line['text'])) {
+                return null;
+            }
             $text = preg_replace('/^[ ]{0,4}/', '', $Line['body']);
 
             $Block['li']['text'][] = $text;
@@ -1239,12 +1242,13 @@ class PerliteParsedown extends Parsedown
             $path = implode('/', $segments);
             $linkFile = preg_replace('#^(\.\./)+#', '', $linkFile);
 
-            // use only the file name for nice links
-            if ($this->niceLinks == true) {
-                $segments = explode('/', $linkText);
-                $segments = array_slice($segments, count($segments) - 1, 1);
-                $linkText = $segments[0];
-            }
+        }
+
+        // use only the file name for nice links
+        if ($this->niceLinks == true) {
+            $segments = explode('/', $linkText);
+            $segments = array_slice($segments, count($segments) - 1, 1);
+            $linkText = $segments[0];
         }
 
 
@@ -1343,12 +1347,8 @@ class PerliteParsedown extends Parsedown
             return;
         }
 
-
-
         $raw = $m[1];
         $parts = explode('|', $raw);
-
-
 
         $file = $parts[0];
         $mod1 = $parts[1] ?? null;
@@ -1416,7 +1416,6 @@ class PerliteParsedown extends Parsedown
 
     }
 
-
     protected function buildInternalImage(string $file, array $attrs, int $extent)
     {
         $src = rtrim($this->uriPath . $this->path, '/') . '/' . $file;
@@ -1464,7 +1463,6 @@ class PerliteParsedown extends Parsedown
         ];
     }
 
-
     protected function buildInternalImageFromFragment(string $file, int $extent)
     {
         [$file, $fragment] = explode('#', $file, 2);
@@ -1505,7 +1503,6 @@ class PerliteParsedown extends Parsedown
 
         return $this->buildInternalImage($file, $attrs, $extent);
     }
-
 
     protected function popupIconSvg()
     {

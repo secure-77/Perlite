@@ -21,17 +21,18 @@ $showTOC = "true";
 $showLocalGraph = "true";
 $font_size = "15";
 $hideFolders = "docs,trash";
+$niceLinks = true;
 
 
 // --- Advanced Settings ---
 $hiddenFileAccess = false;
-$relPathes = false;
+$absolutePath = false;
 $uriPath = "/";
 $htmlSafeMode = true;
 $useZettelkastenFilenames = false;
 $highlightJSLangs = ["powershell", "x86asm"];
 $allowedFileLinkTypes = ['pdf', 'mp4'];
-$tempPath = "";  // path for graph html, leave empty for automatic
+$tempPath = "";  // path to store the pre-rendered graph relations, leave empty for /tmp
 
 
 // --- Metadata Settings ---

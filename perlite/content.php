@@ -63,7 +63,8 @@ function parseContent($requestFile)
 	global $lineBreaks;
 	global $allowedFileLinkTypes;
 	global $htmlSafeMode;
-	global $relPathes;
+	global $absolutePath;
+	global $niceLinks;
 
 
 	// call menu again to refresh the array
@@ -78,7 +79,7 @@ function parseContent($requestFile)
 
 
 	// Relative or absolute pathes
-	if ($relPathes) {
+	if ($absolutePath) {
 		$path = $startDir;
 	} else {
 		$path = $startDir . $path;
@@ -86,7 +87,7 @@ function parseContent($requestFile)
 
 
 
-	$Parsedown = new PerliteParsedown($path, $uriPath,true, $allowedFileLinkTypes);
+	$Parsedown = new PerliteParsedown($path, $uriPath,$niceLinks, $allowedFileLinkTypes);
 	$Parsedown->setSafeMode($htmlSafeMode);
 	$Parsedown->setBreaksEnabled($lineBreaks);
 	$cleanFile = '';
