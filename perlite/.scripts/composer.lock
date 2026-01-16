@@ -44,10 +44,10 @@
         },
         {
             "name": "npm-asset/katex",
-            "version": "0.16.22",
+            "version": "0.16.27",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/katex/-/katex-0.16.22.tgz"
+                "url": "https://registry.npmjs.org/katex/-/katex-0.16.27.tgz"
             },
             "require": {
                 "npm-asset/commander": ">=8.3.0,<9.0.0"
@@ -59,10 +59,10 @@
         },
         {
             "name": "npm-asset/vis-network",
-            "version": "9.1.9",
+            "version": "9.1.13",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/vis-network/-/vis-network-9.1.9.tgz"
+                "url": "https://registry.npmjs.org/vis-network/-/vis-network-9.1.13.tgz"
             },
             "type": "npm-asset",
             "license": [
