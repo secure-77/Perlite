@@ -272,7 +272,7 @@ function menu($dir, $folder = '')
 
       $html .= '
       <div class="tree-item nav-file">
-          <div class="nav-file-title perlite-link" onclick=getContent("' . $pathCleanForJS . '"); id="' . htmlspecialchars($elementId) . '"">
+          <div class="nav-file-title perlite-link" onclick="getContent(\'' . $pathCleanForJS . '\');" id="' . htmlspecialchars($elementId) . '">
               <div class="nav-file-title-content">' . htmlspecialchars($displayTitle) . '</div>
           </div>
       </div>
