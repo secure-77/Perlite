@@ -1,7 +1,7 @@
 services:
   perlite:
-    image: sec77/perlite:dev
-    container_name: perlite-build
+    image: sec77/perlite:test
+    container_name: perlite-test
     environment:
       - NOTES_PATH=Demo
       - HIDE_FOLDERS=docs,private,trash
@@ -35,7 +35,7 @@ services:
 
   web:
     image: nginx:stable
-    container_name: perlite_web-build      
+    container_name: perlite_web-test      
     ports:
       - 80:80 
     volumes:

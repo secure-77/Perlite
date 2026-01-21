@@ -116,10 +116,10 @@ class PerliteParsedown extends Parsedown
     }
 
     protected function yamlFrontmatter(string $yaml): string
-{
-    $parsed = $this->parseSimpleYaml($yaml);
+    {
+        $parsed = $this->parseSimpleYaml($yaml);
 
-    $yamlText = '
+        $yamlText = '
     <div class="mod-header">
         <div class="metadata-properties-heading">
             <div class="collapse-indicator collapse-icon">
@@ -134,9 +134,9 @@ class PerliteParsedown extends Parsedown
                 <div class="metadata-properties">
     ';
 
-    // Aliases
-    if (isset($parsed['aliases']) && is_array($parsed['aliases'])) {
-        $yamlText .= '
+        // Aliases
+        if (isset($parsed['aliases']) && is_array($parsed['aliases'])) {
+            $yamlText .= '
         <div class="metadata-property" tabindex="0" data-property-key="aliases" data-property-type="multitext">
             <div class="metadata-property-key">
                 <span class="metadata-property-icon" aria-disabled="false">
@@ -151,18 +151,18 @@ class PerliteParsedown extends Parsedown
                 <div class="multi-select-container">
         ';
 
-        foreach ($parsed['aliases'] as $alias) {
-            $yamlText .= '<div class="multi-select-pill multi-select-pill-content">'
-                . htmlspecialchars($alias, ENT_QUOTES, 'UTF-8')
-                . '</div>';
+            foreach ($parsed['aliases'] as $alias) {
+                $yamlText .= '<div class="multi-select-pill multi-select-pill-content">'
+                    . htmlspecialchars($alias, ENT_QUOTES, 'UTF-8')
+                    . '</div>';
+            }
+
+            $yamlText .= '</div></div></div>';
         }
 
-        $yamlText .= '</div></div></div>';
-    }
-
-    // Tags
-    if (isset($parsed['tags']) && is_array($parsed['tags'])) {
-        $yamlText .= '
+        // Tags
+        if (isset($parsed['tags']) && is_array($parsed['tags'])) {
+            $yamlText .= '
         <div class="metadata-property" tabindex="0" data-property-key="tags" data-property-type="multitext">
             <div class="metadata-property-key">
                 <span class="metadata-property-icon" aria-disabled="false">
@@ -178,80 +178,80 @@ class PerliteParsedown extends Parsedown
                 <div class="multi-select-container">
         ';
 
-        foreach ($parsed['tags'] as $tag) {
-            $Block = [
-                'element' => [
-                    'name' => 'div',
-                    'text' => '#' . $tag,
-                    'attributes' => [
-                        'class' => 'multi-select-pill multi-select-pill-content'
+            foreach ($parsed['tags'] as $tag) {
+                $Block = [
+                    'element' => [
+                        'name' => 'div',
+                        'text' => '#' . $tag,
+                        'attributes' => [
+                            'class' => 'multi-select-pill multi-select-pill-content'
+                        ],
+                        'handler' => 'line',
                     ],
-                    'handler' => 'line',
-                ],
-            ];
+                ];
 
-            $yamlText .= $this->elements($Block);
-        }
-
-        $yamlText .= '</div></div></div>';
-    }
-
-    $yamlText .= '</div></div></div></div></div>';
-
-    return $yamlText;
-}
-
-protected function parseSimpleYaml(string $yaml): array
-{
-    $lines = preg_split('/\R/', $yaml);
-    $data = [];
-    $currentKey = null;
-
-    foreach ($lines as $line) {
-        $line = rtrim($line);
-
-        // Skip empty lines and comments
-        if ($line === '' || str_starts_with(trim($line), '#')) {
-            continue;
-        }
-
-        // Key: value
-        if (preg_match('/^([A-Za-z0-9_-]+):\s*(.*)$/', $line, $matches)) {
-            $currentKey = $matches[1];
-            $value = $matches[2];
-
-            if ($value === '') {
-                $data[$currentKey] = [];
-            } else {
-                $data[$currentKey] = $this->castYamlValue($value);
-                $currentKey = null;
+                $yamlText .= $this->elements($Block);
             }
 
-            continue;
+            $yamlText .= '</div></div></div>';
         }
 
-        // List item
-        if ($currentKey !== null && preg_match('/^\s*-\s*(.+)$/', $line, $matches)) {
-            $data[$currentKey][] = $this->castYamlValue($matches[1]);
-        }
+        $yamlText .= '</div></div></div></div></div>';
+
+        return $yamlText;
     }
 
-    return $data;
-}
+    protected function parseSimpleYaml(string $yaml): array
+    {
+        $lines = preg_split('/\R/', $yaml);
+        $data = [];
+        $currentKey = null;
 
-protected function castYamlValue(string $value): mixed
-{
-    $value = trim($value, " \t\n\r\0\x0B\"'");
+        foreach ($lines as $line) {
+            $line = rtrim($line);
 
-    return match (strtolower($value)) {
-        'true'  => true,
-        'false' => false,
-        'null'  => null,
-        default => is_numeric($value)
+            // Skip empty lines and comments
+            if ($line === '' || str_starts_with(trim($line), '#')) {
+                continue;
+            }
+
+            // Key: value
+            if (preg_match('/^([A-Za-z0-9_-]+):\s*(.*)$/', $line, $matches)) {
+                $currentKey = $matches[1];
+                $value = $matches[2];
+
+                if ($value === '') {
+                    $data[$currentKey] = [];
+                } else {
+                    $data[$currentKey] = $this->castYamlValue($value);
+                    $currentKey = null;
+                }
+
+                continue;
+            }
+
+            // List item
+            if ($currentKey !== null && preg_match('/^\s*-\s*(.+)$/', $line, $matches)) {
+                $data[$currentKey][] = $this->castYamlValue($matches[1]);
+            }
+        }
+
+        return $data;
+    }
+
+    protected function castYamlValue(string $value): mixed
+    {
+        $value = trim($value, " \t\n\r\0\x0B\"'");
+
+        return match (strtolower($value)) {
+            'true' => true,
+            'false' => false,
+            'null' => null,
+            default => is_numeric($value)
             ? ($value + 0)
             : $value,
-    };
-}
+        };
+    }
 
 
     #
