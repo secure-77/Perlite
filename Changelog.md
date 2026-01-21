@@ -4,7 +4,6 @@
 - fixed theme issue [#167](https://github.com/secure-77/Perlite/issues/167)
 - implemented issue (additional highlight.js support) [#173](https://github.com/secure-77/Perlite/issues/173)
 - sustainable mb_strlen / strlen / utf8_decode fix
-- removed border from local graph and custom page section
 - added headline copy link button [#156](https://github.com/secure-77/Perlite/issues/156)
 - show random button only when graph-data is availible [#168](https://github.com/secure-77/Perlite/issues/168)
 - fixed some pop hover issues (use with 100%) and show content
@@ -17,8 +16,8 @@
 - updated katex to 0.16.27
 - updated vis-network to 9.1.13
 - update mermaid to 11.12.2 and re-integrate the dependency directly
-- update to the latest app.css + style adjustments
-- fixed tags display issue
+- update to the latest app.css + style adjustments, fixed tags display issue
+- removed depedency for php yaml extension
 
 
 ## 1.6

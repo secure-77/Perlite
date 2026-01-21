@@ -115,93 +115,144 @@ class PerliteParsedown extends Parsedown
         return $markup;
     }
 
-    protected function yamlFrontmatter($yaml)
-    {
+    protected function yamlFrontmatter(string $yaml): string
+{
+    $parsed = $this->parseSimpleYaml($yaml);
 
-        if (!extension_loaded("yaml")) {
-            return "YAML front matter found but PHP YAML Parse extension is missing!<br>";
-        } else {
-
-            // var_dump($yaml);
-            $parsed = yaml_parse($yaml);
-            $yamlText = '
-            <div class="mod-header">
-            <div class="metadata-properties-heading">
+    $yamlText = '
+    <div class="mod-header">
+        <div class="metadata-properties-heading">
             <div class="collapse-indicator collapse-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8">
-                </path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle">
+                    <path d="M3 8L12 17L21 8"></path>
+                </svg>
             </div>
             <div class="metadata-properties-title">Properties</div>
-            </div>
-            <div class="metadata-container" tabindex="-1" data-property-count="1">
-                <div class="metadata-content">
+        </div>
+        <div class="metadata-container mod-error" tabindex="-1" data-property-count="1">
+            <div class="metadata-content">
                 <div class="metadata-properties">
-            ';
+    ';
 
-            # Parse Aliase if they are there
-            if (array_key_exists("aliases", $parsed)) {
-                $yamlText .= '
-                <div class="metadata-property" tabindex="0" data-property-key="tags" data-property-type="multitext">
-                <div class="metadata-property-key">
-                        <span class="metadata-property-icon" aria-disabled="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-forward">
-                            <polyline points="15 17 20 12 15 7"/>
-                            <path d="M4 18v-2a4 4 0 0 1 4-4h12"/>
-                        </svg>
-                    </span>
-                    <span class="metadata-text">aliases</span>
-                </div>
-                <div class="metadata-property-value">
-                <div class="multi-select-container">';
-                foreach ($parsed["aliases"] as $alias) {
-                    $yamlText .= '<div class="multi-select-pill multi-select-pill-content">' . $alias . '</div>';
-                }
+    // Aliases
+    if (isset($parsed['aliases']) && is_array($parsed['aliases'])) {
+        $yamlText .= '
+        <div class="metadata-property" tabindex="0" data-property-key="aliases" data-property-type="multitext">
+            <div class="metadata-property-key">
+                <span class="metadata-property-icon" aria-disabled="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-forward">
+                        <polyline points="15 17 20 12 15 7"/>
+                        <path d="M4 18v-2a4 4 0 0 1 4-4h12"/>
+                    </svg>
+                </span>
+                <span class="metadata-text">aliases</span>
+            </div>
+            <div class="metadata-property-value">
+                <div class="multi-select-container">
+        ';
 
-                $yamlText .= '</div></div></div>';
+        foreach ($parsed['aliases'] as $alias) {
+            $yamlText .= '<div class="multi-select-pill multi-select-pill-content">'
+                . htmlspecialchars($alias, ENT_QUOTES, 'UTF-8')
+                . '</div>';
+        }
+
+        $yamlText .= '</div></div></div>';
+    }
+
+    // Tags
+    if (isset($parsed['tags']) && is_array($parsed['tags'])) {
+        $yamlText .= '
+        <div class="metadata-property" tabindex="0" data-property-key="tags" data-property-type="multitext">
+            <div class="metadata-property-key">
+                <span class="metadata-property-icon" aria-disabled="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-tags">
+                        <path d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42L9 5Z"/>
+                        <path d="M6 9.01V9"/>
+                        <path d="m15 5 6.3 6.3a2.4 2.4 0 0 1 0 3.4L17 19"/>
+                    </svg>
+                </span>
+                <span class="metadata-text">tags</span>
+            </div>
+            <div class="metadata-property-value">
+                <div class="multi-select-container">
+        ';
+
+        foreach ($parsed['tags'] as $tag) {
+            $Block = [
+                'element' => [
+                    'name' => 'div',
+                    'text' => '#' . $tag,
+                    'attributes' => [
+                        'class' => 'multi-select-pill multi-select-pill-content'
+                    ],
+                    'handler' => 'line',
+                ],
+            ];
+
+            $yamlText .= $this->elements($Block);
+        }
+
+        $yamlText .= '</div></div></div>';
+    }
+
+    $yamlText .= '</div></div></div></div></div>';
+
+    return $yamlText;
+}
+
+protected function parseSimpleYaml(string $yaml): array
+{
+    $lines = preg_split('/\R/', $yaml);
+    $data = [];
+    $currentKey = null;
+
+    foreach ($lines as $line) {
+        $line = rtrim($line);
+
+        // Skip empty lines and comments
+        if ($line === '' || str_starts_with(trim($line), '#')) {
+            continue;
+        }
+
+        // Key: value
+        if (preg_match('/^([A-Za-z0-9_-]+):\s*(.*)$/', $line, $matches)) {
+            $currentKey = $matches[1];
+            $value = $matches[2];
+
+            if ($value === '') {
+                $data[$currentKey] = [];
+            } else {
+                $data[$currentKey] = $this->castYamlValue($value);
+                $currentKey = null;
             }
 
-            # Parse Tags if they are there
+            continue;
+        }
 
-            if (isset($parsed["tags"])) {
-                $yamlText .= '
-                        <div class="metadata-property" tabindex="0" data-property-key="tags" data-property-type="multitext">
-                            <div class="metadata-property-key">
-                                <span class="metadata-property-icon" aria-disabled="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-tags">
-                                        <path d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42L9 5Z"/>
-                                        <path d="M6 9.01V9"/>
-                                        <path d="m15 5 6.3 6.3a2.4 2.4 0 0 1 0 3.4L17 19"/>
-                                    </svg>
-                                </span>
-                                <span class="metadata-text">tags</span>
-                            </div>
-                            <div class="metadata-property-value">
-                            <div class="multi-select-container">
-                                ';
-
-                foreach ($parsed["tags"] as $tag) {
-
-                    $Block = array(
-                        'element' => array(
-                            'name' => 'div',
-                            'text' => '#' . $tag,
-                            'attributes' => array(
-                                'class' => 'multi-select-pill multi-select-pill-content'
-                            ),
-                            'handler' => 'line',
-                        ),
-                    );
-
-                    $yamlText .= $this->elements($Block);
-                }
-                $yamlText .= '</div></div></div>';
-            }
-
-
-            $yamlText .= '</div></div></div></div></div>';
-            return $yamlText;
+        // List item
+        if ($currentKey !== null && preg_match('/^\s*-\s*(.+)$/', $line, $matches)) {
+            $data[$currentKey][] = $this->castYamlValue($matches[1]);
         }
     }
+
+    return $data;
+}
+
+protected function castYamlValue(string $value): mixed
+{
+    $value = trim($value, " \t\n\r\0\x0B\"'");
+
+    return match (strtolower($value)) {
+        'true'  => true,
+        'false' => false,
+        'null'  => null,
+        default => is_numeric($value)
+            ? ($value + 0)
+            : $value,
+    };
+}
+
 
     #
     # Callout (based on blockQuotes)
