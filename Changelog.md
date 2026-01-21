@@ -1,4 +1,4 @@
-## 1.6.1 - dev
+## 1.6.1
 - Support Zettelkasten Filenames, use with caution! - PR [#159](https://github.com/secure-77/Perlite/pull/159) thanks to @smtucker
 - replaced deprecated utf8_decode() - PR [#164](https://github.com/secure-77/Perlite/pull/164) thanks to @dewillepl 
 - fixed theme issue [#167](https://github.com/secure-77/Perlite/issues/167)

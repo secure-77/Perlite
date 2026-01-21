@@ -92,16 +92,16 @@ if (empty($highlightJSLangs))
 	$highlightJSLangs = empty(getenv('HIGHLIGHTJS_LANGS')) ? ['powershell'] : explode(",", getenv('HIGHLIGHTJS_LANGS'));
 
 // disable PopHovers
-if (empty($disablePopHovers))
-	$disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? "false" : getenv('DISABLE_POP_HOVER');
+if (!isset($disablePopHovers))
+	$disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? false : filter_var(getenv('DISABLE_POP_HOVER'), FILTER_VALIDATE_BOOLEAN);
 
 // show TOC
-if (empty($showTOC))
-	$showTOC = empty(getenv('SHOW_TOC')) ? "true" : getenv('SHOW_TOC');
+if (!isset($showTOC))
+	$showTOC = empty(getenv('SHOW_TOC')) ? true : filter_var(getenv('SHOW_TOC'), FILTER_VALIDATE_BOOLEAN);
 
 // show local Graph
-if (empty($showLocalGraph))
-	$showLocalGraph = empty(getenv('SHOW_LOCAL_GRAPH')) ? "true" : getenv('SHOW_TOC');
+if (!isset($showLocalGraph))
+	$showLocalGraph = empty(getenv('SHOW_LOCAL_GRAPH')) ? true : filter_var(getenv('SHOW_LOCAL_GRAPH'), FILTER_VALIDATE_BOOLEAN);
 
 // Set home page from env/settings
 if (empty($index))
@@ -763,16 +763,11 @@ function loadSettings($rootDir)
 	}
 
 	// default settings
-	$defaultSettings = '<link id="disablePopHovers" data-option="' . $disablePopHovers . '">
-	';
-	$defaultSettings .= '<link id="showTOC" data-option="' . $showTOC . '">
-	';
-	$defaultSettings .= '<link id="showLocalGraph" data-option="' . $showLocalGraph . '">
-	';
-	$defaultSettings .= '<link id="index" data-option="' . $index . '">
-	';
-	$defaultSettings .= '<link id="uri_path" data-option="' . $uriPath . '">
-	';
+	$defaultSettings = '<link id="disablePopHovers" data-option="' . ($disablePopHovers ? 'true' : 'false') . '">';
+	$defaultSettings .= '<link id="showTOC" data-option="' . ($showTOC ? 'true' : 'false') . '">';
+	$defaultSettings .= '<link id="showLocalGraph" data-option="' . ($showLocalGraph ? 'true' : 'false') . '">';
+	$defaultSettings .= '<link id="index" data-option="' . $index . '">';
+	$defaultSettings .= '<link id="uri_path" data-option="' . $uriPath . '">';
 
 
 	// Meta Tags

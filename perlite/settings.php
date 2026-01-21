@@ -16,9 +16,9 @@ $siteTitle = "Perlite";
 
 // --- Frontend Settings ---
 $lineBreaks = true;
-$disablePopHovers = "false";
-$showTOC = "true";
-$showLocalGraph = "true";
+$disablePopHovers = false;
+$showTOC = true;
+$showLocalGraph = true;
 $font_size = "15";
 $hideFolders = "docs,trash";
 $niceLinks = true;

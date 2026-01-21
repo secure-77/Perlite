@@ -50,8 +50,6 @@ $jsonGraphData = getfullGraph($rootDir);
     <script src="<?php echo $uriPath ?>.js/vis-network.min.js"></script>
     <script src="<?php echo $uriPath ?>.js/mermaid.min.js"></script>
 
-    <!--  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>  -->
-
 
 </head>
 
@@ -286,7 +284,8 @@ $jsonGraphData = getfullGraph($rootDir);
                                                         class="svg-icon lucide-chevrons-up-down">
                                                         <path d="m7 15 5 5 5-5"></path>
                                                         <path d="m7 9 5-5 5 5"></path>
-                                                    </svg></div>
+                                                    </svg>
+                                                </div>
                                             </div>
 
                                         </div>
