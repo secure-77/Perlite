@@ -9,17 +9,19 @@
 
 //// load default settings
 
-// define perlite location on webserver
-//var uriPath = '/perlite/'
-var uriPath = '/'
-
 
 // define home file
 var homeFile = "README";
 
 if ($('#index').data('option')) {
-
   homeFile = $('#index').data('option');
+}
+
+// define uri path
+var uriPath = '/'
+
+if ($('#uri_path').data('option')) {
+  uriPath = $('#uri_path').data('option');
 }
 
 // disable pophovers
@@ -235,16 +237,16 @@ function getContent(str, home = false, popHover = false, anchor = "") {
           }
 
           // add Tag section
-          $('#tags').html("")
+          $('#mytags').html("")
           $('.tag').each(function (index) {
             const count = index + 1;
             const originalHTML = $(this).prop('outerHTML');
             const countTag = '<div class="tree-item-flair-outer"><span class="tree-item-flair" id="nodeCount">' + count + '</span></div>';
-            $('#tags').append(originalHTML);
+            $('#mytags').append(originalHTML);
           });
 
           // hide them when no tags are found
-          if ($('#tags').html() == "") {
+          if ($('#mytags').html() == "") {
             $('#tags_container').css('display', 'none')
           } else {
             $('#tags_container').css('display', 'block')
@@ -375,7 +377,13 @@ function getContent(str, home = false, popHover = false, anchor = "") {
                 var target = urlParams.get('link');
                 target = encodeURIComponent(target);
               } else {
-                target = unslugURL(window.location.pathname)
+                target = unslugURL(this.pathname)
+                target = encodeURIComponent(target);                      
+              }
+
+
+              if (this.href.split('#').length > 1) {
+                return;
               }
 
               // get content of link
@@ -394,15 +402,19 @@ function getContent(str, home = false, popHover = false, anchor = "") {
           }
           mdContent = $("#mdContent")[0]
 
-          // handle pop up and hover
+        // handle pop up and hover
         } else {
 
+          
+          if (result.trim() == "") {
+            return;
+          }
           // set content
           $("#mdHoverContent").html(result);
           $("#popUpContent").html(result);
 
           // set title
-          var title = $("div.mdTitleHide")[1].innerText;
+          var title = $("div.mdTitleHide").eq(1).text() || "";
           title = title.substring(1)
           titleElements = title.split('/')
           title = titleElements.splice(-1)
@@ -446,6 +458,47 @@ function getContent(str, home = false, popHover = false, anchor = "") {
 
           });
         }
+
+
+      // Add copyable anchors to all headings (h1–h6)
+      document.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((heading) => {
+        
+        // Skip if heading already has a copy icon
+        if (heading.querySelector(".copy-icon")) return;
+        
+        // Ensure each heading has an ID (generate one if missing)
+        if (!heading.id) {
+          heading.id = heading.textContent
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]/g, "");
+        }
+
+        // Create the copy icon
+        const copyLink = document.createElement("span");
+        copyLink.className = "copy-icon";
+        copyLink.textContent = "#";
+        copyLink.title = "Copy link to clipboard";
+
+        // Append the icon to the heading
+        heading.appendChild(copyLink);
+
+        // Add click event to copy link
+        copyLink.addEventListener("click", (event) => {
+          event.preventDefault();
+          const url = `${window.location.origin}${window.location.pathname}#${heading.id}`;
+          navigator.clipboard.writeText(url);
+
+          // Visual feedback
+          copyLink.classList.add("copied");
+          copyLink.textContent = "✅";
+          setTimeout(() => {
+            copyLink.textContent = "#";
+            copyLink.classList.remove("copied");
+          }, 1000);
+        });
+      });
 
 
         // run mobile settings
@@ -526,6 +579,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false, show_tags = tr
   // no graph found exit
   if ($("#allGraphNodes").length == 0 || $("#allGraphNodes").text == '[]') {
     console.log("Graph: no data found")
+    document.getElementById("random_note").style.display = "none";
     return;
   }
 
@@ -1052,10 +1106,11 @@ function openNavMenu(target, openAll = false) {
 
   // open nav menu to target
   var navId = decodeURIComponent(target);
-  linkname = navId.match(/([^\/]*)\/*$/)[1]
-
+  
   // search and open tree reverse
   navId = navId.replace(/[^a-zA-Z0-9\-]/g, '_');
+
+  navId = 'fileid-' + navId;
   var next = $('#' + navId).parent().closest('.collapse');
 
   do {
@@ -1067,13 +1122,9 @@ function openNavMenu(target, openAll = false) {
   }
   while (next.length != 0);
 
+  // mark active
+  $('#' + navId).addClass('perlite-link-active is-active');
 
-  // set focus to link
-  var searchText = linkname;
-
-  $("div").filter(function () {
-    return $(this).text() === searchText;
-  }).parent().addClass('perlite-link-active is-active');
 
 };
 

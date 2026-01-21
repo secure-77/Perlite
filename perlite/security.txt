@@ -1,0 +1,8 @@
+# Our security address
+Contact: perlite@ sec77.de
+
+# Our security policy
+Policy: https://github.com/secure-77/Perlite/security/policy
+
+# Our preferred languages
+Preferred-Languages: en, de

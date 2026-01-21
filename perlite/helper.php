@@ -1,7 +1,7 @@
 <?php
 
 /*!
- * Perlite v1.6 (https://github.com/secure-77/Perlite)
+ * Perlite v1.6.1 (https://github.com/secure-77/Perlite)
  * Author: sec77 (https://secure77.de)
  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
  */
@@ -40,8 +40,8 @@ if (!isset($hiddenFileAccess))
 	$hiddenFileAccess = empty(getenv('HIDDEN_FILE_ACCESS')) ? false : filter_var(getenv('HIDDEN_FILE_ACCESS'), FILTER_VALIDATE_BOOLEAN);
 
 // use absolut paths instead of relative paths
-if (!isset($relPathes))
-	$relPathes = empty(getenv('ABSOLUTE_PATHS')) ? false : filter_var(getenv('ABSOLUTE_PATHS'), FILTER_VALIDATE_BOOLEAN);
+if (!isset($absolutePath))
+	$absolutePath = empty(getenv('ABSOLUTE_PATHS')) ? false : filter_var(getenv('ABSOLUTE_PATHS'), FILTER_VALIDATE_BOOLEAN);
 
 // Meta Tags infos
 if (empty($siteTitle))
@@ -65,6 +65,11 @@ if (empty($siteGithub))
 if (!isset($siteTwitter))
 	$siteTwitter = getenv('SITE_TWITTER');
 
+// Use frontmatter 'title' or top level h1 instead of filename
+if (!isset($useZettelkastenFilenames)) {
+    $useZettelkastenFilenames = empty(getenv('ZETTELKASTEN_FILENAMES_ENABLED')) ? false : filter_var(getenv('ZETTELKASTEN_FILENAMES_ENABLED'), FILTER_VALIDATE_BOOLEAN);
+}
+
 // Temp PATH for graph linking temp files
 if (empty($tempPath))
 	$tempPath = empty(getenv('TEMP_PATH')) ? sys_get_temp_dir() : getenv('TEMP_PATH');
@@ -73,21 +78,30 @@ if (empty($tempPath))
 if (!isset($lineBreaks))
 	$lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
 
+// nice links
+if (!isset($niceLinks))
+	$niceLinks = empty(getenv('NICE_LINKS')) ? true : filter_var(getenv('NICE_LINKS'), FILTER_VALIDATE_BOOLEAN);
+
+
 // file types
 if (empty($allowedFileLinkTypes))
 	$allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf', 'mp4'] : explode(",", getenv('ALLOWED_FILE_LINK_TYPES'));
 
+// highlight.js languages
+if (empty($highlightJSLangs))
+	$highlightJSLangs = empty(getenv('HIGHLIGHTJS_LANGS')) ? ['powershell'] : explode(",", getenv('HIGHLIGHTJS_LANGS'));
+
 // disable PopHovers
-if (empty($disablePopHovers))
-	$disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? "false" : getenv('DISABLE_POP_HOVER');
+if (!isset($disablePopHovers))
+	$disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? false : filter_var(getenv('DISABLE_POP_HOVER'), FILTER_VALIDATE_BOOLEAN);
 
 // show TOC
-if (empty($showTOC))
-	$showTOC = empty(getenv('SHOW_TOC')) ? "true" : getenv('SHOW_TOC');
+if (!isset($showTOC))
+	$showTOC = empty(getenv('SHOW_TOC')) ? true : filter_var(getenv('SHOW_TOC'), FILTER_VALIDATE_BOOLEAN);
 
 // show local Graph
-if (empty($showLocalGraph))
-	$showLocalGraph = empty(getenv('SHOW_LOCAL_GRAPH')) ? "true" : getenv('SHOW_TOC');
+if (!isset($showLocalGraph))
+	$showLocalGraph = empty(getenv('SHOW_LOCAL_GRAPH')) ? true : filter_var(getenv('SHOW_LOCAL_GRAPH'), FILTER_VALIDATE_BOOLEAN);
 
 // Set home page from env/settings
 if (empty($index))
@@ -190,6 +204,7 @@ function menu($dir, $folder = '')
 
 	global $hiddenFileAccess;
 	global $avFiles;
+  global $useZettelkastenFilenames;
 	$html = '';
 	// get all files from current dir
 	$files = glob($dir . '/*');
@@ -232,34 +247,39 @@ function menu($dir, $folder = '')
 		}
 	}
 
-	// iterate the files 
-	foreach ($files as $file) {
-		if (isMDFile($file)) {
+  // Iterate the files
+  foreach ($files as $file) {
+    if (isMDFile($file)) {
+      $pathInfo = getFileInfos($file);
+      $relativePathForURL = $pathInfo[0];
+      $baseFilenameWithoutExtension = $pathInfo[1];
 
-			$path = getFileInfos($file)[0];
-			$mdFile = getFileInfos($file)[1];
+      $displayTitle = "";
 
-			$path = '/' . $path;
-			// push the the path to the array
-			array_push($avFiles, $path);
+      if ($useZettelkastenFilenames) {
+        $displayTitle = getDisplayTitle($file);
+      } else {
+        $displayTitle = $baseFilenameWithoutExtension;
+      }
 
-			// URL Encode the Path for the JS call
-			$pathClean = rawurlencode($path);
-			$pathID = str_replace(' ', '_', $path);
-			$pathID = preg_replace('/[^A-Za-z0-9\-]/', '_', $path);
+      $urlClickPath = '/' . $relativePathForURL;
+      array_push($avFiles, $urlClickPath);
+      $pathCleanForJS = rawurlencode($urlClickPath);
+      
+      // Create a unique ID for the HTML element
+      $elementId = 'fileid-' . preg_replace('/[^A-Za-z0-9\-_]/', '_', $urlClickPath);
+      $elementId = str_replace('/', '_', $elementId); // Replace slashes for cleaner ID
 
-
-			$html .= '
-			<div class="tree-item nav-file">
-				<div class="nav-file-title perlite-link" onclick=getContent("' . $pathClean . '"); id="' . $pathID . '"">
-					<div class="nav-file-title-content">' . $mdFile . '</div>
-				</div>
-			</div>
-			';
-		}
-	}
-
-	return $html;
+      $html .= '
+      <div class="tree-item nav-file">
+          <div class="nav-file-title perlite-link" onclick="getContent(\'' . $pathCleanForJS . '\');" id="' . htmlspecialchars($elementId) . '">
+              <div class="nav-file-title-content">' . htmlspecialchars($displayTitle) . '</div>
+          </div>
+      </div>
+      ';
+    }
+  }
+  return $html;
 }
 
 function doSearch($dir, $searchfor)
@@ -446,6 +466,37 @@ function isCached($jsonMetadaFile, $metadaTempFileSum)
 	}
 
 	return false;
+}
+
+function getDisplayTitle($filePath) {
+    $content = @file_get_contents($filePath);
+    if ($content === false) {
+        // Fallback to filename if file can't be read
+        return getFileInfos($filePath)[1];
+    }
+
+    // 1. Try to get title from frontmatter
+    if (preg_match('/^---\s*\n(.*?)\n---\s*\n/s', $content, $frontmatterMatches)) {
+        $frontmatterRaw = $frontmatterMatches[1];
+        if (preg_match('/^title:\s*(.*?)\s*$/im', $frontmatterRaw, $titleMatches)) {
+            $title = trim($titleMatches[1]);
+            $title = trim($title, "'\"");
+            if (!empty($title)) {
+                return $title;
+            }
+        }
+    }
+
+    // 2. Try to get the first H1 heading
+    if (preg_match('/^#\s+(.*?)\s*$/m', $content, $h1Matches)) {
+        $h1Title = trim($h1Matches[1]);
+        if (!empty($h1Title)) {
+            return $h1Title;
+        }
+    }
+
+    // 3. Fallback to filename (obtained via getFileInfos)
+    return getFileInfos($filePath)[1];
 }
 
 function getfullGraph($rootDir)
@@ -668,6 +719,7 @@ function loadSettings($rootDir)
 	global $siteName;
 	global $siteTwitter;
 	global $uriPath;
+	global $highlightJSLangs;
 
 
 	// get themes
@@ -700,18 +752,29 @@ function loadSettings($rootDir)
 
 			if ($defaultTheme === $folderName) {
 
-				$themes .= '<link data-themename="' . $folderName . '" class="theme" id="' . $folderClean . '" href="' . $themePath . '" type="text/css" rel="stylesheet">';
+				$themes .= '<link data-themename="' . $folderName . '" class="theme" id="' . $folderClean . '" href="' . $themePath . '" type="text/css" rel="stylesheet">
+	';
 			} else {
 
-				$themes .= '<link data-themename="' . $folderName . '" class="theme" id="' . $folderClean . '" href="' . $themePath . '" type="text/css" rel="stylesheet" disabled="disabled">';
+				$themes .= '<link data-themename="' . $folderName . '" class="theme" id="' . $folderClean . '" href="' . $themePath . '" type="text/css" rel="stylesheet" disabled="disabled">
+	';
 			}
 		}
 	}
 
+	// default settings
+	$defaultSettings = '<link id="disablePopHovers" data-option="' . ($disablePopHovers ? 'true' : 'false') . '">';
+	$defaultSettings .= '<link id="showTOC" data-option="' . ($showTOC ? 'true' : 'false') . '">';
+	$defaultSettings .= '<link id="showLocalGraph" data-option="' . ($showLocalGraph ? 'true' : 'false') . '">';
+	$defaultSettings .= '<link id="index" data-option="' . $index . '">';
+	$defaultSettings .= '<link id="uri_path" data-option="' . $uriPath . '">';
+
 
 	// Meta Tags
-	$defaultSettings =
-		'<!--  Essential META Tags -->
+	$defaultSettings .=
+	'
+		
+	<!--  Essential META Tags -->
     <meta property="og:title" content="' . $siteTitle . '">
     <meta property="og:type" content="' . $siteType . '" />
     <meta property="og:image" content="' . $siteImage . '">
@@ -722,16 +785,17 @@ function loadSettings($rootDir)
     <meta property="og:description" content="' . $siteDescription . '">
     <meta property="og:site_name" content="' . $siteName . '">
     <meta name="twitter:image:alt" content="Page Callout">
-
-    <!--  Non-Essential, But Required for Analytics -->
     <meta name="twitter:site" content="' . $siteTwitter . '">';
 
-	// default settings
-	$defaultSettings .= '<link id="disablePopHovers" data-option="' . $disablePopHovers . '"</link>';
-	$defaultSettings .= '<link id="showTOC" data-option="' . $showTOC . '"</link>';
-	$defaultSettings .= '<link id="showLocalGraph" data-option="' . $showLocalGraph . '"</link>';
-	$defaultSettings .= '<link id="index" data-option="' . $index . '"</link>';
 
+
+	// highlight.js languages
+	//$highlightLangs = explode(',', $highlightJSLangs);
+
+	foreach ($highlightJSLangs as $lang) {
+		$defaultSettings .= '
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/'. trim($lang) .'.min.js"></script>';
+	}
 
 	return $themes . $defaultSettings;
 }

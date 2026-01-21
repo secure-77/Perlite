@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # update JS dependencies
+# call it from perlite/.scripts/ folder
 
 # force update on asset-packagist
 curl https://asset-packagist.org/package/npm-asset/katex -D - >/dev/null

@@ -1,3 +1,25 @@
+## 1.6.1
+- Support Zettelkasten Filenames, use with caution! - PR [#159](https://github.com/secure-77/Perlite/pull/159) thanks to @smtucker
+- replaced deprecated utf8_decode() - PR [#164](https://github.com/secure-77/Perlite/pull/164) thanks to @dewillepl 
+- fixed theme issue [#167](https://github.com/secure-77/Perlite/issues/167)
+- implemented issue (additional highlight.js support) [#173](https://github.com/secure-77/Perlite/issues/173)
+- sustainable mb_strlen / strlen / utf8_decode fix
+- added headline copy link button [#156](https://github.com/secure-77/Perlite/issues/156)
+- show random button only when graph-data is availible [#168](https://github.com/secure-77/Perlite/issues/168)
+- fixed some pop hover issues (use with 100%) and show content
+- implemented hidden text feature [#160](https://github.com/secure-77/Perlite/issues/160)
+- eleminated regex-based post-processing by implementing it into PerliteParsedown, this fixed issue [#177](https://github.com/secure-77/Perlite/issues/177)
+- implemented support for internal Markdown Links [#170](https://github.com/secure-77/Perlite/issues/170)
+- implemented support for parameter based obsidian image attribute syntax to fix issue [#142](https://github.com/secure-77/Perlite/issues/142)
+- implemented support for "nice" internal links, this way always the filename only will be displayed without the path
+- fixed issue [#172](https://github.com/secure-77/Perlite/issues/172)
+- updated katex to 0.16.27
+- updated vis-network to 9.1.13
+- update mermaid to 11.12.2 and re-integrate the dependency directly
+- update to the latest app.css + style adjustments, fixed tags display issue
+- removed depedency for php yaml extension
+
+
 ## 1.6
 - get rid of mb_strlen, fixed issue [#151](https://github.com/secure-77/Perlite/issues/151) thanks to @Sephral
 - hide X / Twitter when not set, issue [#152](https://github.com/secure-77/Perlite/issues/152), thanks to @EKNr1
