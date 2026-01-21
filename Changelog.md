@@ -18,6 +18,7 @@
 - updated vis-network to 9.1.13
 - update mermaid to 11.12.2 and re-integrate the dependency directly
 - update to the latest app.css + style adjustments
+- fixed tags display issue
 
 
 ## 1.6

@@ -809,7 +809,7 @@ $jsonGraphData = getfullGraph($rootDir);
                                                     <h3>Tags</h3>
                                                 </div>
                                                 <div class="tree-item-self" aria-label-position="left">
-                                                    <div id="tags" class="tree-item-inner"></div>
+                                                    <div id="mytags" class="tree-item-inner"></div>
                                                 </div>
                                             </div>
 

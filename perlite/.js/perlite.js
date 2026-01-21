@@ -237,16 +237,16 @@ function getContent(str, home = false, popHover = false, anchor = "") {
           }
 
           // add Tag section
-          $('#tags').html("")
+          $('#mytags').html("")
           $('.tag').each(function (index) {
             const count = index + 1;
             const originalHTML = $(this).prop('outerHTML');
             const countTag = '<div class="tree-item-flair-outer"><span class="tree-item-flair" id="nodeCount">' + count + '</span></div>';
-            $('#tags').append(originalHTML);
+            $('#mytags').append(originalHTML);
           });
 
           // hide them when no tags are found
-          if ($('#tags').html() == "") {
+          if ($('#mytags').html() == "") {
             $('#tags_container').css('display', 'none')
           } else {
             $('#tags_container').css('display', 'block')
