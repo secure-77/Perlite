@@ -90,7 +90,7 @@ function parseContent($requestFile)
 	$Parsedown = new PerliteParsedown($path, $uriPath,$niceLinks, $allowedFileLinkTypes);
 	$Parsedown->setSafeMode($htmlSafeMode);
 	$Parsedown->setBreaksEnabled($lineBreaks);
-	$cleanFile = '';
+	
 
 
 	$wordCount = str_word_count($content);
@@ -105,6 +105,7 @@ function parseContent($requestFile)
 		<div class="wordCount">' . $wordCount . '</div>
 		<div class="charCount">' . $charCount . '</div>
 	</div>' . $content;
+	$cleanFile = '';
 
 	echo $content;
 	return;
