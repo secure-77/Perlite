@@ -55,9 +55,11 @@ $jsonGraphData = getfullGraph($rootDir);
 
 </head>
 
-<body
+<!-- <body
     class="theme-dark mod-windows is-frameless is-hidden-frameless obsidian-app show-inline-title show-view-header is-maximized"
-    style="--zoom-factor:1; --font-text-size: <?php echo $font_size; ?>px;">
+    style="--zoom-factor:1; --font-text-size: <?php echo $font_size; ?>px;"> -->
+    <body class="theme-dark mod-windows is-frameless is-hidden-frameless obsidian-app styled-scrollbars show-ribbon show-view-header is-maximized is-focused show-inline-title"
+    style="--zoom-factor:1; --font-text-size: <?php echo $font_size; ?>px;"></body>
     <title>
         <?php echo $title ?>
     </title>
@@ -874,9 +876,14 @@ $jsonGraphData = getfullGraph($rootDir);
     <div id="about" class="modal-container mod-dim" style="display: none">
         <div class="modal-bg" style="opacity: 0.85;"></div>
         <div class="modal">
-            <div class="modal-close-button"></div>
+            <div class="modal-close-button mod-raised clickable-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+                </svg>
+            </div>
+             <div class="modal-header">
             <div class="modal-title"> <a href="."><img src="<?php echo $uriPath ?>logo.svg" height="35"
                         alt="Perlite Logo" style="padding-top: 10px"></a> Perlite</div>
+                        </div>
             <div class="aboutContent modal-content"></div>
         </div>
     </div>
@@ -884,9 +891,14 @@ $jsonGraphData = getfullGraph($rootDir);
     <div id="settings" class="modal-container mod-dim" style="display: none">
         <div class="modal-bg" style="opacity: 0.85;"></div>
         <div id="settings" class="modal mod-settings">
-            <div class="modal-close-button"></div>
+            <div class="modal-close-button mod-raised clickable-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+                </svg>
+            </div>
+             <div class="modal-header">
             <div class="modal-title">Perlite Settings</div>
             <div class="setting-item-description">Some settings need a page reload to take affect!</div>
+            </div>
             <div class="modal-content vertical-tabs-container">
                 <div class="vertical-tab-content-container">
                     <div class="vertical-tab-content">
@@ -1043,9 +1055,13 @@ $jsonGraphData = getfullGraph($rootDir);
     <div id="popUp" class="modal-container mod-dim" style="display: none">
         <div class="modal-bg" style="opacity: 0.85;"></div>
         <div class="modal">
-            <div class="modal-close-button"></div>
-            <div class="popup-modal-title inline-title"></div>
-            <div class="goToLink"></div>
+            <div class="modal-close-button mod-raised clickable-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+                </svg>
+            </div>
+             <div class="modal-header">
+            <div class="popup-modal-title"></div>
+            <div class="goToLink"></div></div>
             <div id='popUpContent' class="modal-content"></div>
         </div>
     </div>
@@ -1053,9 +1069,14 @@ $jsonGraphData = getfullGraph($rootDir);
     <div id="img-modal" class="modal-container mod-dim" style="display: none">
         <div class="modal-bg" style="opacity: 0.85;"></div>
         <div class="modal">
-            <div class="modal-close-button"></div>
-            <div class="modal-title img-modal-title inline-title"></div>
+             <div class="modal-close-button mod-raised clickable-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+                </svg>
+            </div>
+             <div class="modal-header">
+            <div class="modal-title img-modal-title"></div>
             <div class="goToLink"></div>
+        </div>
             <div id='img-content' class="modal-content"></div>
         </div>
     </div>
