@@ -1295,18 +1295,18 @@ class PerliteParsedown extends Parsedown
 
         }
 
-        // use only the file name for nice links
-        if ($this->niceLinks == true) {
-            $segments = explode('/', $linkText);
-            $segments = array_slice($segments, count($segments) - 1, 1);
-            $linkText = $segments[0];
-        }
+        // Bug fix: vault-root-relative links (e.g. [[references/arxiv-2507.21678]])
+        // should resolve from vault root, not from the current file's subdirectory.
+        // Only apply current-file-relative resolution for bare filenames (no '/').
+        $linkHasPath = str_contains($linkFile, '/');
 
-
-        if ($openNewTab == false) {
+        if ($openNewTab == false && !$linkHasPath) {
             $segments = explode('/', $path);
             $segments = array_slice($segments, 1, count($segments));
             $path = implode('/', $segments);
+        } elseif ($linkHasPath) {
+            // Vault-root-relative: use empty path so link resolves from vault root
+            $path = '';
         }
 
 
