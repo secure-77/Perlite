@@ -108,6 +108,7 @@ $htmlSafeMode = getBoolSetting('HTML_SAFE_MODE', true);
 $useZettelkastenFilenames = getBoolSetting('ZETTELKASTEN_FILENAMES_ENABLED', false);
 $highlightJSLangs = getListSetting('HIGHLIGHTJS_LANGS', ['powershell']);
 $allowedFileLinkTypes = getListSetting('ALLOWED_FILE_LINK_TYPES', ['pdf', 'mp4']);
+$treeVisibleExtensions = array_filter(array_map('strtolower', getListSetting('TREE_VISIBLE_EXTENSIONS', [])), 'strlen');
 $tempPath = getSetting('TEMP_PATH', sys_get_temp_dir());
 
 // --- Metadata Settings ---
@@ -213,6 +214,9 @@ function menu($dir, $folder = '')
 	global $hiddenFileAccess;
 	global $avFiles;
   global $useZettelkastenFilenames;
+	global $treeVisibleExtensions;
+	global $uriPath;
+	global $startDir;
 	$html = '';
 	// get all files from current dir
 	$files = glob($dir . '/*');
@@ -283,6 +287,21 @@ function menu($dir, $folder = '')
           <div class="nav-file-title perlite-link" onclick="getContent(\'' . $pathCleanForJS . '\');" id="' . htmlspecialchars($elementId) . '">
               <div class="nav-file-title-content">' . htmlspecialchars($displayTitle) . '</div>
           </div>
+      </div>
+      ';
+    } else if (isTreeVisibleFile($file)) {
+      // non md file, link it for download (served directly by the webserver)
+      $relativePath = getFileInfos($file)[0];
+      $fileName = mb_basename($file);
+      $urlPath = ($startDir !== '' ? $startDir . '/' : '') . $relativePath;
+      $fileURL = $uriPath . implode('/', array_map('rawurlencode', explode('/', $urlPath)));
+
+      $html .= '
+      <div class="tree-item nav-file">
+          <a class="nav-file-title perlite-download-link" href="' . htmlspecialchars($fileURL) . '" download="' . htmlspecialchars($fileName) . '">
+              <div class="nav-file-title-content">' . htmlspecialchars(pathinfo($fileName, PATHINFO_FILENAME)) . '</div>
+              <div class="nav-file-tag">' . htmlspecialchars(strtolower(pathinfo($fileName, PATHINFO_EXTENSION))) . '</div>
+          </a>
       </div>
       ';
     }
@@ -398,6 +417,18 @@ function isMDFile($file)
 	}
 
 	return false;
+}
+
+// check if a non md file should be listed in the navigation (TREE_VISIBLE_EXTENSIONS)
+function isTreeVisibleFile($file)
+{
+	global $treeVisibleExtensions;
+
+	if (empty($treeVisibleExtensions) || !is_file($file))
+		return false;
+
+	$ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+	return $ext !== '' && $ext !== 'md' && in_array($ext, $treeVisibleExtensions, true);
 }
 
 function getFileInfos($file)

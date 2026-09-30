@@ -227,3 +227,10 @@ h6:hover .copy-icon {
   }
 
 }
+
+/* downloadable files in the navigation (TREE_VISIBLE_EXTENSIONS) */
+a.perlite-download-link,
+a.perlite-download-link:hover {
+  color: inherit;
+  text-decoration: none;
+}
