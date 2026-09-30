@@ -32,7 +32,7 @@ class PerliteParsedown extends Parsedown
         ':' => array('Url'),
         '<' => array('UrlTag', 'EmailTag', 'Markup', 'SpecialCharacter'),
         '>' => array('SpecialCharacter'),
-        '[' => array('FootnoteMarker','InternalMarkdownLink','Link', 'InternalLink'),
+        '[' => array('FootnoteMarker', 'InternalMarkdownLink', 'Link', 'InternalLink'),
         '#' => array('Tag'),
         '$' => array('Katex'),
         '_' => array('Emphasis'),
@@ -123,7 +123,7 @@ class PerliteParsedown extends Parsedown
         return $markup;
     }
 
-       #
+    #
     # YAML Front Matter / Obsidian Properties
     # See: https://help.obsidian.md/Editing+and+formatting/Properties
 
@@ -591,6 +591,7 @@ class PerliteParsedown extends Parsedown
                                     'class' => 'callout-content ' . $isCollapsed,
                                 ),
                                 'handler' => 'lines',
+                                'text' => array(),
                             ),
 
 
@@ -1313,11 +1314,49 @@ class PerliteParsedown extends Parsedown
             $markup .= '</' . $Element['name'] . '>';
         } elseif ($closing) {
             $markup .= '</' . $Element['name'] . '>';
-        } else {
+        } elseif ($this->isSelfClosingElement($Element['name'])) {
             $markup .= ' />';
+        } else {
+            # non-void elements must be closed explicitly (<div /> is an open <div> in HTML)
+            $markup .= '></' . $Element['name'] . '>';
         }
 
         return $markup;
+    }
+
+    protected function isSelfClosingElement(string $name): bool
+    {
+        $tagName = strtolower(strtok($name, " \t"));
+
+        // names like '<path d="..."/>' (used for the callout icons) stay as they are
+        if (!preg_match('/^[a-z][a-z0-9-]*$/', $tagName)) {
+            return true;
+        }
+
+        return in_array($tagName, array(
+            // HTML void elements
+            'area',
+            'base',
+            'br',
+            'col',
+            'embed',
+            'hr',
+            'img',
+            'input',
+            'link',
+            'meta',
+            'source',
+            'track',
+            'wbr',
+            // SVG shapes (self-closing is valid in SVG)
+            'path',
+            'line',
+            'circle',
+            'rect',
+            'polyline',
+            'polygon',
+            'ellipse',
+        ), true);
     }
 
     # adjusted to handle interuppted quote blocks
@@ -1578,7 +1617,7 @@ class PerliteParsedown extends Parsedown
         );
     }
 
-        protected function inlineInternalMarkdownLink($Excerpt)
+    protected function inlineInternalMarkdownLink($Excerpt)
     {
         // Match [label](path) — but NOT external URLs
         if (!preg_match('/^\[([^\]]+)\]\(([^)]+)\)/', $Excerpt['text'], $m)) {
@@ -1877,7 +1916,7 @@ class PerliteParsedown extends Parsedown
         return $this->buildInternalImage($file, $attrs, $extent);
     }
 
-        #
+    #
     # Footnotes
     # See: https://help.obsidian.md/Editing+and+formatting/Basic+formatting+syntax#Footnotes
 
@@ -1983,7 +2022,7 @@ class PerliteParsedown extends Parsedown
         );
     }
 
-        # inline footnote: ^[text]
+    # inline footnote: ^[text]
     protected function inlineInlineFootnote($Excerpt)
     {
         if (!isset($Excerpt['text'][1]) || $Excerpt['text'][1] !== '[') {

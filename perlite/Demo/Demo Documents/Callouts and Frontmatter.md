@@ -24,6 +24,8 @@ Im a YAML front matter document
 
 ##  Callouts
 
+> [!note] Leeres Callout
+
 > [!note]
 > Lorem ipsum dolor sit amet
 >> [!abstract]
