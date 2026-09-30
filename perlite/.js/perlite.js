@@ -150,7 +150,8 @@ function getContent(str, home = false, popHover = false, anchor = "") {
             //hrefTitle = '<a href=?link=' + encodeURIComponent(title) + '>' + title + '</a>'
             title = title.substring(1)
             titleElements = title.split('/')
-            title = titleElements.splice(-1)
+            var fileTitle = titleElements.splice(-1)[0]
+            title = fileTitle.replace(/\.canvas$/i, '')
             parentTitle = titleElements.join(' / ')
             if (parentTitle) {
               parentTitle = parentTitle + ' / ';
@@ -161,9 +162,9 @@ function getContent(str, home = false, popHover = false, anchor = "") {
 
             $("title").text(title + ' - ' + $("p.vault").text() + ' - ' + $("p.perliteTitle").text());
 
-            // set edit button url
+            // set edit button url (keep the .canvas extension, obsidian expects .md otherwise)
             $('.clickable-icon.view-action[aria-label="Click to edit"]')
-              .attr("href", "obsidian://open?vault=" + encodeURIComponent($("p.vault").text()) + "&file=" + encodeURIComponent(title))
+              .attr("href", "obsidian://open?vault=" + encodeURIComponent($("p.vault").text()) + "&file=" + encodeURIComponent(fileTitle))
           }
 
           // Outlines
@@ -426,7 +427,7 @@ function getContent(str, home = false, popHover = false, anchor = "") {
           var title = $("div.mdTitleHide").eq(1).text() || "";
           title = title.substring(1)
           titleElements = title.split('/')
-          title = titleElements.splice(-1)
+          title = titleElements.splice(-1)[0].replace(/\.canvas$/i, '')
           $(".inline-title.pophover-title").text(title);
           $(".popup-modal-title").text(title);
 
