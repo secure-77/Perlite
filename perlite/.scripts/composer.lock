@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "804283b252f55afc81b79735bfa0c2c1",
+    "content-hash": "79d99e7631973c9f66952b567e1d46ce",
     "packages": [
         {
             "name": "npm-asset/commander",
-            "version": "8.3.0",
+            "version": "15.0.0-patch0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/commander/-/commander-8.3.0.tgz"
+                "url": "https://registry.npmjs.org/commander/-/commander-15.0.0-0.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -20,10 +20,10 @@
         },
         {
             "name": "npm-asset/highlightjs--cdn-assets",
-            "version": "11.11.1",
+            "version": "11.12.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@highlightjs/cdn-assets/-/cdn-assets-11.11.1.tgz"
+                "url": "https://registry.npmjs.org/@highlightjs/cdn-assets/-/cdn-assets-11.12.0.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -44,13 +44,13 @@
         },
         {
             "name": "npm-asset/katex",
-            "version": "0.16.27",
+            "version": "0.18.9",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/katex/-/katex-0.16.27.tgz"
+                "url": "https://registry.npmjs.org/katex/-/katex-0.18.9.tgz"
             },
             "require": {
-                "npm-asset/commander": ">=8.3.0,<9.0.0"
+                "npm-asset/commander": ">=15.0.0,<16.0.0"
             },
             "type": "npm-asset",
             "license": [

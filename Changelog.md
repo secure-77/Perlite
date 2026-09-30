@@ -6,7 +6,10 @@
 - Fixed internal default Markdown Links
 - Extended YAML Frontmatter support
 - Fixed callouts with no content [[#182](https://github.com/secure-77/Perlite/issues/182)]
-
+- updated katex to 0.18.9
+- updated highlight.js to 11.12.0
+- updated mermaid to 11.15.0
+- updated vis-network to 10.1.2
 
 ## 1.6.1
 - Support Zettelkasten Filenames, use with caution! - PR [#159](https://github.com/secure-77/Perlite/pull/159) thanks to @smtucker

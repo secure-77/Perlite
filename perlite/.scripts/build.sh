@@ -51,7 +51,7 @@ cp vendor/npm-asset/vis-network/dist/dist/vis-network.min.css ../.styles/
 cd ..
 # composer clear-cache
 # rm -rf vendor
-composer update -v
+composer update -v --ignore-platform-req=ext-mbstring
 
 
 #cp perlite/vendor/erusev/parsedown/Parsedown.php perlite/
