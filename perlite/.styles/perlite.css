@@ -234,3 +234,113 @@ a.perlite-download-link:hover {
   color: inherit;
   text-decoration: none;
 }
+
+/* canvas (read-only), the canvas markup follows obsidian, see app.css */
+.perlite-canvas {
+  position: relative;
+  height: calc(100vh - 200px);
+  min-height: 400px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+#mdHoverContent .perlite-canvas,
+#popUpContent .perlite-canvas {
+  height: 400px;
+  min-height: 0;
+}
+
+.perlite-canvas .canvas-wrapper {
+  cursor: grab;
+}
+
+.perlite-canvas .canvas-wrapper.is-dragging,
+.perlite-canvas .canvas-wrapper.is-dragging * {
+  cursor: grabbing;
+}
+
+.perlite-canvas .canvas-node-content .markdown-preview-view {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.perlite-canvas .canvas-node-label a,
+.perlite-canvas .canvas-node-placeholder a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.perlite-canvas .canvas-node-label a:hover,
+.perlite-canvas .canvas-node-placeholder a:hover {
+  color: var(--text-accent);
+}
+
+.perlite-canvas .perlite-canvas-missing {
+  font-size: var(--font-ui-medium);
+  font-weight: normal;
+  color: var(--text-muted);
+}
+
+.perlite-canvas .canvas-edges polygon.perlite-canvas-path-end {
+  pointer-events: none;
+  stroke: rgb(var(--canvas-color));
+  fill: rgb(var(--canvas-color));
+  stroke-linejoin: round;
+  stroke-width: 1px;
+}
+
+.perlite-canvas .perlite-canvas-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--size-4-4);
+  padding: var(--size-4-4);
+}
+
+.perlite-canvas .perlite-canvas-link a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--size-4-2);
+  max-width: 100%;
+  text-align: center;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.perlite-canvas .perlite-canvas-link template {
+  display: none;
+}
+
+.perlite-canvas .perlite-canvas-embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background-color: var(--background-primary);
+}
+
+.perlite-canvas .video-embed video {
+  max-height: 100%;
+}
+
+.perlite-canvas .audio-embed audio {
+  width: calc(100% - 2 * var(--size-4-4));
+}
+
+.perlite-canvas .perlite-canvas-link-host {
+  font-size: 1.6em;
+  font-weight: var(--font-semibold);
+  color: var(--text-normal);
+}
+
+.perlite-canvas .perlite-canvas-link-url {
+  color: var(--text-accent);
+}
+
+.perlite-canvas-error {
+  padding: var(--size-4-4);
+  color: var(--text-muted);
+}

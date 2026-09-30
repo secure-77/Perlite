@@ -1,0 +1,18 @@
+{
+	"nodes":[
+		{"id":"d26abc9bbf9c6c10","type":"group","x":-960,"y":-540,"width":400,"height":400,"label":"Eine neue Gruppe"},
+		{"id":"2f0de0de8177cf5b","type":"file","file":"Demo Documents/Latex and Mermaid.md","x":-860,"y":-20,"width":400,"height":400},
+		{"id":"143b167f3ac7e4c1","type":"text","text":"Test Karte","x":-380,"y":-240,"width":250,"height":80},
+		{"id":"4c2dd54b7d87cdf9","type":"text","text":"New Card","x":-940,"y":-500,"width":250,"height":83,"color":"4"},
+		{"id":"5b475dea3c70ca74","type":"file","file":"Demo Documents/mov_bbb.mp4","x":-243,"y":-760,"width":400,"height":220},
+		{"id":"888bca34443ceb9c","x":340,"y":-687,"width":400,"height":294,"type":"file","file":"Demo Documents/background.png"},
+		{"id":"e22eb72b2f95ae27","type":"link","url":"https://secure77.de","x":20,"y":-280,"width":583,"height":413}
+	],
+	"edges":[
+		{"id":"c28f777e7dbc2738","fromNode":"143b167f3ac7e4c1","fromSide":"bottom","toNode":"2f0de0de8177cf5b","toSide":"top","color":"3"},
+		{"id":"6718de3b108ae67a","fromNode":"143b167f3ac7e4c1","fromSide":"right","toNode":"e22eb72b2f95ae27","toSide":"left"},
+		{"id":"19798d476fcce2da","fromNode":"143b167f3ac7e4c1","fromSide":"left","toNode":"d26abc9bbf9c6c10","toSide":"right"},
+		{"id":"bc117205bbe74f2f","fromNode":"143b167f3ac7e4c1","fromSide":"top","toNode":"5b475dea3c70ca74","toSide":"left"},
+		{"id":"a7d885dc3f88500c","fromNode":"143b167f3ac7e4c1","fromSide":"top","toNode":"888bca34443ceb9c","toSide":"left"}
+	]
+}

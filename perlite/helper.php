@@ -109,6 +109,9 @@ $useZettelkastenFilenames = getBoolSetting('ZETTELKASTEN_FILENAMES_ENABLED', fal
 $highlightJSLangs = getListSetting('HIGHLIGHTJS_LANGS', ['powershell']);
 $allowedFileLinkTypes = getListSetting('ALLOWED_FILE_LINK_TYPES', ['pdf', 'mp4']);
 $treeVisibleExtensions = array_filter(array_map('strtolower', getListSetting('TREE_VISIBLE_EXTENSIONS', [])), 'strlen');
+$canvasIframeEmbeds = strtolower(getSetting('CANVAS_IFRAME_EMBEDS', 'click'));
+if (!in_array($canvasIframeEmbeds, ['off', 'click', 'auto'], true))
+	$canvasIframeEmbeds = 'click';
 $tempPath = getSetting('TEMP_PATH', sys_get_temp_dir());
 
 // --- Metadata Settings ---
@@ -289,6 +292,23 @@ function menu($dir, $folder = '')
           </div>
       </div>
       ';
+    } else if (isCanvasFile($file)) {
+      // canvas file, stored with extension to not collide with a note of the same name
+      $urlClickPath = '/' . getFileInfos($file)[0];
+      array_push($avFiles, $urlClickPath);
+      $pathCleanForJS = rawurlencode($urlClickPath);
+
+      $elementId = 'fileid-' . preg_replace('/[^A-Za-z0-9\-_]/', '_', $urlClickPath);
+      $elementId = str_replace('/', '_', $elementId);
+
+      $html .= '
+      <div class="tree-item nav-file">
+          <div class="nav-file-title perlite-link" onclick="getContent(\'' . $pathCleanForJS . '\');" id="' . htmlspecialchars($elementId) . '">
+              <div class="nav-file-title-content">' . htmlspecialchars(pathinfo($file, PATHINFO_FILENAME)) . '</div>
+              <div class="nav-file-tag">canvas</div>
+          </div>
+      </div>
+      ';
     } else if (isTreeVisibleFile($file)) {
       // non md file, link it for download (served directly by the webserver)
       $relativePath = getFileInfos($file)[0];
@@ -417,6 +437,12 @@ function isMDFile($file)
 	}
 
 	return false;
+}
+
+// check if file is an obsidian canvas file
+function isCanvasFile($file)
+{
+	return strtolower(pathinfo($file, PATHINFO_EXTENSION)) === 'canvas';
 }
 
 // check if a non md file should be listed in the navigation (TREE_VISIBLE_EXTENSIONS)

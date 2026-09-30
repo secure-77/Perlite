@@ -6,6 +6,7 @@
  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
  */
 
+use Perlite\PerliteCanvas;
 use Perlite\PerliteParsedown;
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -56,15 +57,14 @@ function parseContent($requestFile)
 {
 
 	global $path;
-	global $uriPath;
 	global $cleanFile;
+	global $isCanvas;
 	global $rootDir;
 	global $startDir;
-	global $lineBreaks;
-	global $allowedFileLinkTypes;
-	global $htmlSafeMode;
-	global $absolutePath;
-	global $niceLinks;
+	global $uriPath;
+	global $avFiles;
+	global $hideFolders;
+	global $canvasIframeEmbeds;
 
 
 	// call menu again to refresh the array
@@ -78,24 +78,19 @@ function parseContent($requestFile)
 	}
 
 
-	// Relative or absolute pathes
-	if ($absolutePath) {
-		$path = $startDir;
+	if ($isCanvas) {
+
+		// render the canvas, notes are embedded relative to their own folder
+		$canvas = new PerliteCanvas('getParser', $rootDir, $startDir, $uriPath, $avFiles, $hideFolders, $canvasIframeEmbeds);
+		$content = $canvas->render($content, $path);
+		$wordCount = $canvas->getWordCount();
+		$charCount = $canvas->getCharCount();
 	} else {
-		$path = $startDir . $path;
+
+		$wordCount = str_word_count($content);
+		$charCount = strlen($content);
+		$content = getParser($path)->text($content);
 	}
-
-
-
-	$Parsedown = new PerliteParsedown($path, $uriPath,$niceLinks, $allowedFileLinkTypes);
-	$Parsedown->setSafeMode($htmlSafeMode);
-	$Parsedown->setBreaksEnabled($lineBreaks);
-	
-
-
-	$wordCount = str_word_count($content);
-	$charCount = strlen($content);
-	$content = $Parsedown->text($content);
 
 
 	// add some meta data
@@ -113,21 +108,53 @@ function parseContent($requestFile)
 }
 
 
+// get a markdown parser for a note in the given folder
+function getParser($folder)
+{
+	global $startDir;
+	global $uriPath;
+	global $lineBreaks;
+	global $allowedFileLinkTypes;
+	global $htmlSafeMode;
+	global $absolutePath;
+	global $niceLinks;
+
+	// Relative or absolute pathes
+	if ($absolutePath) {
+		$parserPath = $startDir;
+	} else {
+		$parserPath = $startDir . $folder;
+	}
+
+	$Parsedown = new PerliteParsedown($parserPath, $uriPath, $niceLinks, $allowedFileLinkTypes);
+	$Parsedown->setSafeMode($htmlSafeMode);
+	$Parsedown->setBreaksEnabled($lineBreaks);
+
+	return $Parsedown;
+}
+
+
 // read content from file
 function getContent($requestFile)
 {
 	global $avFiles;
 	global $path;
 	global $cleanFile;
+	global $isCanvas;
 	global $rootDir;
 	$content = '';
+	$isCanvas = false;
 
 	// check if file is in array
 	if (in_array($requestFile, $avFiles, true)) {
 		$cleanFile = $requestFile;
 		$n = strrpos($requestFile, "/");
 		$path = substr($requestFile, 0, $n);
-		$content .= file_get_contents($rootDir . $requestFile . '.md', true);
+
+		// canvas files are stored with extension, notes without
+		$isCanvas = isCanvasFile($requestFile) && is_file($rootDir . $requestFile);
+		$fileName = $isCanvas ? $requestFile : $requestFile . '.md';
+		$content .= file_get_contents($rootDir . $fileName, true);
 	}
 
 	return $content;

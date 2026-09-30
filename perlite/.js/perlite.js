@@ -200,6 +200,15 @@ function getContent(str, home = false, popHover = false, anchor = "") {
             toc += (new Array(level + 1)).join("</div></div>");
           }
 
+          // a canvas has no outline, headings belong to the embedded notes
+          var isCanvas = $("#mdContent .perlite-canvas").length > 0;
+          if (isCanvas) {
+            toc = "";
+          }
+
+          // and no local graph, so collapse the right side-dock
+          toggleCanvasSidedock(isCanvas);
+
           document.getElementById("toc").innerHTML = toc;
 
 
@@ -540,6 +549,9 @@ function getContent(str, home = false, popHover = false, anchor = "") {
         //render mermaid
         mermaid.init(undefined, document.querySelectorAll(".language-mermaid"));
 
+        // canvas pan & zoom
+        initCanvas();
+
         //scroll to anchor
 
         if (anchor != "") {
@@ -551,6 +563,282 @@ function getContent(str, home = false, popHover = false, anchor = "") {
     });
   }
 };
+
+/**
+ * init read-only canvas views (pan & zoom)
+ * wheel / drag pans, ctrl + wheel / pinch zooms like in obsidian
+ */
+function initCanvas() {
+
+  document.querySelectorAll(".perlite-canvas:not(.is-initialized)").forEach(function (canvasEl) {
+
+    canvasEl.classList.add("is-initialized");
+
+    const wrapper = canvasEl.querySelector(".canvas-wrapper");
+    const canvas = canvasEl.querySelector(".canvas");
+    const dots = canvasEl.querySelector(".perlite-canvas-dots");
+    const bbox = canvasEl.dataset.bbox.split(",").map(Number);
+
+    const minScale = 0.1;
+    const maxScale = 2;
+    const view = { x: 0, y: 0, scale: 1 };
+    let userMoved = false;
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function apply() {
+      canvas.style.transform = "translate(" + view.x + "px, " + view.y + "px) scale(" + view.scale + ")";
+
+      // keep edges and labels readable when zoomed out
+      wrapper.style.setProperty("--zoom-multiplier", Math.max(1, 1 / view.scale));
+      wrapper.classList.toggle("mod-zoomed-out", view.scale < 0.3);
+
+      if (dots) {
+        const size = 20 * view.scale;
+        dots.setAttribute("width", size);
+        dots.setAttribute("height", size);
+        dots.setAttribute("x", view.x);
+        dots.setAttribute("y", view.y);
+        dots.style.display = view.scale < 0.3 ? "none" : "";
+      }
+    }
+
+    function fit() {
+      const width = wrapper.clientWidth;
+      const height = wrapper.clientHeight;
+      if (!width || !height) {
+        return;
+      }
+
+      const padding = 40;
+      const boxWidth = Math.max(bbox[2] - bbox[0], 1);
+      const boxHeight = Math.max(bbox[3] - bbox[1], 1);
+
+      view.scale = clamp(Math.min((width - 2 * padding) / boxWidth, (height - 2 * padding) / boxHeight), minScale, 1);
+      view.x = (width - boxWidth * view.scale) / 2 - bbox[0] * view.scale;
+      view.y = (height - boxHeight * view.scale) / 2 - bbox[1] * view.scale;
+      userMoved = false;
+      apply();
+    }
+
+    // zoom around a point, relative to the wrapper
+    function zoomAt(factor, cx, cy) {
+      const scale = clamp(view.scale * factor, minScale, maxScale);
+      view.x = cx - (cx - view.x) * (scale / view.scale);
+      view.y = cy - (cy - view.y) * (scale / view.scale);
+      view.scale = scale;
+      userMoved = true;
+      apply();
+    }
+
+    function pan(dx, dy) {
+      view.x += dx;
+      view.y += dy;
+      userMoved = true;
+      apply();
+    }
+
+    function relativePoint(clientX, clientY) {
+      const rect = wrapper.getBoundingClientRect();
+      return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+
+    // scrollable note content inside a card, which can still scroll in this direction
+    function scrollableTarget(target, deltaY) {
+      const scroller = target.closest(".canvas-node-content .markdown-preview-view");
+      if (!scroller || scroller.scrollHeight <= scroller.clientHeight) {
+        return null;
+      }
+      if (deltaY < 0 && scroller.scrollTop <= 0) {
+        return null;
+      }
+      if (deltaY > 0 && scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 1) {
+        return null;
+      }
+      return scroller;
+    }
+
+    // wheel: pan, ctrl + wheel (and trackpad pinch): zoom
+    wrapper.addEventListener("wheel", function (e) {
+
+      const lineHeight = e.deltaMode === 1 ? 16 : 1;
+      const deltaX = e.deltaX * lineHeight;
+      const deltaY = e.deltaY * lineHeight;
+
+      if (!e.ctrlKey && !e.metaKey && scrollableTarget(e.target, deltaY)) {
+        return;
+      }
+
+      e.preventDefault();
+
+      if (e.ctrlKey || e.metaKey) {
+        const point = relativePoint(e.clientX, e.clientY);
+        zoomAt(Math.exp(-deltaY * 0.01), point.x, point.y);
+      } else if (e.shiftKey && deltaX === 0) {
+        pan(-deltaY, 0);
+      } else {
+        pan(-deltaX, -deltaY);
+      }
+    }, { passive: false });
+
+    // drag to pan, two fingers to pinch zoom
+    const pointers = new Map();
+    let dragging = false;
+    let suppressClick = false;
+    let pinchDistance = 0;
+
+    function pinchInfo() {
+      const points = Array.from(pointers.values());
+      return {
+        distance: Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y),
+        center: relativePoint((points[0].x + points[1].x) / 2, (points[0].y + points[1].y) / 2)
+      };
+    }
+
+    wrapper.addEventListener("pointerdown", function (e) {
+
+      if (e.button !== 0 || e.target.closest(".canvas-controls")) {
+        return;
+      }
+
+      // no panning on media controls
+      if (e.target.closest("video, audio")) {
+        return;
+      }
+
+      // no panning when grabbing the scrollbar of a card
+      const scroller = e.target.closest(".canvas-node-content .markdown-preview-view");
+      if (scroller && e.target === scroller && e.offsetX > scroller.clientWidth) {
+        return;
+      }
+
+      suppressClick = false;
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY, startX: e.clientX, startY: e.clientY });
+
+      if (pointers.size === 2) {
+        pinchDistance = pinchInfo().distance;
+      }
+    });
+
+    wrapper.addEventListener("pointermove", function (e) {
+
+      const pointer = pointers.get(e.pointerId);
+      if (!pointer) {
+        return;
+      }
+
+      const dx = e.clientX - pointer.x;
+      const dy = e.clientY - pointer.y;
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
+
+      // start dragging after a small threshold, so links stay clickable
+      if (!dragging) {
+        if (Math.hypot(e.clientX - pointer.startX, e.clientY - pointer.startY) < 4) {
+          return;
+        }
+        dragging = true;
+        wrapper.classList.add("is-dragging");
+        wrapper.setPointerCapture(e.pointerId);
+      }
+
+      if (pointers.size === 2) {
+        const pinch = pinchInfo();
+        if (pinchDistance > 0) {
+          zoomAt(pinch.distance / pinchDistance, pinch.center.x, pinch.center.y);
+        }
+        pinchDistance = pinch.distance;
+      } else if (pointers.size === 1) {
+        pan(dx, dy);
+      }
+    });
+
+    function endPointer(e) {
+      if (!pointers.delete(e.pointerId)) {
+        return;
+      }
+      if (pointers.size === 0) {
+        suppressClick = dragging;
+        dragging = false;
+        wrapper.classList.remove("is-dragging");
+      }
+      pinchDistance = pointers.size === 2 ? pinchInfo().distance : 0;
+    }
+
+    wrapper.addEventListener("pointerup", endPointer);
+    wrapper.addEventListener("pointercancel", endPointer);
+
+    // a drag should not open the link it started on
+    wrapper.addEventListener("click", function (e) {
+      if (suppressClick) {
+        e.preventDefault();
+        e.stopPropagation();
+        suppressClick = false;
+      }
+    }, true);
+
+    // focus embed cards on click, the focused iframe receives the mouse (obsidian hides the blocker)
+    function focusNode(node) {
+      wrapper.querySelectorAll(".canvas-node.is-focused").forEach(function (focused) {
+        if (focused !== node) {
+          focused.classList.remove("is-focused");
+        }
+      });
+      if (node) {
+        node.classList.add("is-focused");
+      }
+    }
+
+    wrapper.addEventListener("click", function (e) {
+      if (!wrapper.contains(e.target)) {
+        return;
+      }
+      const node = e.target.closest(".canvas-node");
+      focusNode(node && node.querySelector(".perlite-canvas-embed") ? node : null);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && wrapper.isConnected) {
+        focusNode(null);
+      }
+    });
+
+    // load a website on click (CANVAS_IFRAME_EMBEDS=click)
+    canvasEl.querySelectorAll(".perlite-canvas-load").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const content = button.closest(".canvas-node-content");
+        const node = content.closest(".canvas-node");
+        content.innerHTML = content.querySelector("template").innerHTML;
+        content.className = "canvas-node-content perlite-canvas-embed";
+        focusNode(node);
+      });
+    });
+
+    // controls
+    canvasEl.querySelector(".perlite-canvas-zoom-in").addEventListener("click", function () {
+      zoomAt(1.25, wrapper.clientWidth / 2, wrapper.clientHeight / 2);
+    });
+    canvasEl.querySelector(".perlite-canvas-zoom-out").addEventListener("click", function () {
+      zoomAt(0.8, wrapper.clientWidth / 2, wrapper.clientHeight / 2);
+    });
+    canvasEl.querySelector(".perlite-canvas-fit").addEventListener("click", fit);
+
+    // fit again on resize (or when a hidden popover gets visible), until the user moved the view
+    if (window.ResizeObserver) {
+      new ResizeObserver(function () {
+        if (userMoved) {
+          apply();
+        } else {
+          fit();
+        }
+      }).observe(wrapper);
+    }
+
+    fit();
+  });
+}
 
 /**
  * Gets the state of the graph setting inputs as a list.
@@ -963,6 +1251,45 @@ function isMobile() {
     }
   }
 
+};
+
+/**
+ * open or collapse the right side-dock
+ * @param {Boolean} open
+ */
+function setRightSidedock(open) {
+
+  if (open) {
+    $('.workspace').addClass('is-right-sidedock-open');
+    $('.mod-right-split').removeClass('is-sidedock-collapse');
+    $('.mod-right').removeClass('is-collapsed');
+  } else {
+    $('.workspace').removeClass('is-right-sidedock-open');
+    $('.mod-right-split').addClass('is-sidedock-collapse');
+    $('.mod-right').addClass('is-collapsed');
+  }
+};
+
+/**
+ * collapse the right side-dock for canvas files and restore it for notes,
+ * but only if it was collapsed by a canvas and not by the user
+ * @param {Boolean} isCanvas
+ */
+var sidedockCollapsedByCanvas = false;
+
+function toggleCanvasSidedock(isCanvas) {
+
+  var isOpen = !$('.mod-right-split').hasClass('is-sidedock-collapse');
+
+  if (isCanvas && isOpen) {
+    setRightSidedock(false);
+    sidedockCollapsedByCanvas = true;
+  } else if (!isCanvas && sidedockCollapsedByCanvas) {
+    if (!isOpen) {
+      setRightSidedock(true);
+    }
+    sidedockCollapsedByCanvas = false;
+  }
 };
 
 function hideLeftMobile() {

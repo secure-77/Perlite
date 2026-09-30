@@ -12,6 +12,8 @@
 - updated vis-network to 10.1.2
 - all settings are now configured in a single `.env` file (see `.env.example`), used by docker compose and read directly by helper.php without docker, `settings.php` has been removed
 - new setting `TREE_VISIBLE_EXTENSIONS` to show other files (e.g. `pdf,docx`) next to the notes in the navigation, clicking them downloads the file [[#181](https://github.com/secure-77/Perlite/issues/181)]
+- read-only support for Obsidian Canvas (`.canvas`) files: text, note (embedded), image, link and group cards, edges with labels and colors, pan & zoom (drag / wheel, ctrl + wheel or pinch to zoom), the right side-dock is collapsed while a canvas is open
+- canvas embeds: video and audio files are played inline, YouTube / Vimeo links are embedded, new setting `CANVAS_IFRAME_EMBEDS` (`off`, `click`, `auto`, default `click`) to embed websites of link cards as sandboxed iframe
 
 ## 1.6.1
 - Support Zettelkasten Filenames, use with caution! - PR [#159](https://github.com/secure-77/Perlite/pull/159) thanks to @smtucker

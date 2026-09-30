@@ -1775,6 +1775,15 @@ class PerliteParsedown extends Parsedown
             $ext = strtolower(pathinfo(explode('#', $file)[0], PATHINFO_EXTENSION));
         }
 
+        /* ---------- Canvas (not embedded, rendered as internal link) ---------- */
+        if ($ext === 'canvas') {
+            $Inline = $this->inlineInternalLink(array('text' => substr($m[0], 1)));
+            if ($Inline !== null) {
+                $Inline['extent'] = strlen($m[0]);
+            }
+            return $Inline;
+        }
+
         /* ---------- PDF ---------- */
         if ($ext === 'pdf') {
             return array(
