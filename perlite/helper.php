@@ -8,112 +8,120 @@
 
 use Perlite\PerliteParsedown;
 
-// load settings from settings.php if it exists instead of using environment variables
-if (file_exists("settings.php")) {
-	include "settings.php";
+//
+// settings
+//
+// All settings are read from environment variables (e.g. docker compose env_file).
+// Without docker, place a .env file next to the perlite folder (preferred, outside of the web root)
+// or inside the perlite folder. Real environment variables take precedence over the .env file.
+//
+
+// parse a .env file (KEY=VALUE per line, # comments, optional quotes, optional "export " prefix)
+function parseEnvFile($file)
+{
+	$vars = [];
+	$lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+	if ($lines === false)
+		return $vars;
+
+	foreach ($lines as $line) {
+		$line = trim($line);
+		if ($line === '' || $line[0] === '#' || strpos($line, '=') === false)
+			continue;
+
+		[$key, $value] = explode('=', $line, 2);
+		$key = trim(preg_replace('/^export\s+/', '', trim($key)));
+		$value = trim($value);
+
+		if (strlen($value) >= 2 && ($value[0] === '"' || $value[0] === "'") && substr($value, -1) === $value[0]) {
+			// quoted value, keep as is
+			$value = substr($value, 1, -1);
+		} else {
+			// unquoted value, strip inline comments (" # comment")
+			$value = trim(preg_replace('/\s+#.*$/', '', $value));
+		}
+
+		$vars[$key] = $value;
+	}
+	return $vars;
 }
+
+$envFileVars = [];
+foreach ([dirname(__DIR__) . '/.env', __DIR__ . '/.env'] as $envFile) {
+	if (is_file($envFile) && is_readable($envFile)) {
+		$envFileVars = parseEnvFile($envFile);
+		break;
+	}
+}
+
+// get a setting, empty values fall back to the default
+function getSetting($key, $default = '')
+{
+	global $envFileVars;
+
+	$value = getenv($key);
+	if ($value === false || $value === '')
+		$value = $envFileVars[$key] ?? '';
+
+	return $value === '' ? $default : $value;
+}
+
+function getBoolSetting($key, $default)
+{
+	$value = getSetting($key);
+	return $value === '' ? $default : filter_var($value, FILTER_VALIDATE_BOOLEAN);
+}
+
+function getListSetting($key, $default)
+{
+	$value = getSetting($key);
+	return $value === '' ? $default : array_map('trim', explode(',', $value));
+}
+
 
 //
 // default settings and variables
 //
 
-
 $avFiles = array();
 
-// replace with your Vault Folder
-if (empty($rootDir))
-	$rootDir = empty(getenv('NOTES_PATH')) ? 'Demo' : getenv('NOTES_PATH');
+// --- General Settings ---
+$rootDir = getSetting('NOTES_PATH', 'Demo');
 $vaultName = $rootDir;
+$index = getSetting('HOME_FILE', 'README');
+$siteTitle = getSetting('SITE_TITLE', 'Perlite');
 
-//if (empty($uriPath)) $uriPath = empty(getenv('URI_PATH')) ? '/perlite/' : getenv('URI_PATH');
-if (empty($uriPath))
-	$uriPath = empty(getenv('URI_PATH')) ? '/' : getenv('URI_PATH');
+// --- Frontend Settings ---
+$lineBreaks = getBoolSetting('LINE_BREAKS', true);
+$disablePopHovers = getBoolSetting('DISABLE_POP_HOVER', false);
+$showTOC = getBoolSetting('SHOW_TOC', true);
+$showLocalGraph = getBoolSetting('SHOW_LOCAL_GRAPH', true);
+$font_size = getSetting('FONT_SIZE', '15');
+$hideFolders = getSetting('HIDE_FOLDERS');
+$niceLinks = getBoolSetting('NICE_LINKS', true);
 
+// --- Advanced Settings ---
+$hiddenFileAccess = getBoolSetting('HIDDEN_FILE_ACCESS', false);
+$absolutePath = getBoolSetting('ABSOLUTE_PATHS', false);
+$uriPath = getSetting('URI_PATH', '/');
+$htmlSafeMode = getBoolSetting('HTML_SAFE_MODE', true);
+$useZettelkastenFilenames = getBoolSetting('ZETTELKASTEN_FILENAMES_ENABLED', false);
+$highlightJSLangs = getListSetting('HIGHLIGHTJS_LANGS', ['powershell']);
+$allowedFileLinkTypes = getListSetting('ALLOWED_FILE_LINK_TYPES', ['pdf', 'mp4']);
+$tempPath = getSetting('TEMP_PATH', sys_get_temp_dir());
 
+// --- Metadata Settings ---
+$siteType = getSetting('SITE_TYPE', 'article');
+$siteImage = getSetting('SITE_IMAGE', 'https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png');
+$siteURL = getSetting('SITE_URL', 'https://perlite.secure77.de');
+$siteDescription = getSetting('SITE_DESC', 'A web based markdown viewer optimized for Obsidian Notes');
+$siteName = getSetting('SITE_NAME', 'Perlite Demo');
 
-// hide folders
-if (empty($hideFolders))
-	$hideFolders = getenv('HIDE_FOLDERS');
-
-// allow access to md files in hidden folders
-if (!isset($hiddenFileAccess))
-	$hiddenFileAccess = empty(getenv('HIDDEN_FILE_ACCESS')) ? false : filter_var(getenv('HIDDEN_FILE_ACCESS'), FILTER_VALIDATE_BOOLEAN);
-
-// use absolut paths instead of relative paths
-if (!isset($absolutePath))
-	$absolutePath = empty(getenv('ABSOLUTE_PATHS')) ? false : filter_var(getenv('ABSOLUTE_PATHS'), FILTER_VALIDATE_BOOLEAN);
-
-// Meta Tags infos
-if (empty($siteTitle))
-	$siteTitle = empty(getenv('SITE_TITLE')) ? 'Perlite' : getenv('SITE_TITLE');
-if (empty($siteType))
-	$siteType = empty(getenv('SITE_TYPE')) ? 'article' : getenv('SITE_TYPE');
-if (empty($siteImage))
-	$siteImage = empty(getenv('SITE_IMAGE')) ? 'https://raw.githubusercontent.com/secure-77/Perlite/main/screenshots/screenshot.png' : getenv('SITE_IMAGE');
-if (!isset($siteURL))
-	$siteURL = empty(getenv('SITE_URL')) ? 'https://perlite.secure77.de' : getenv('SITE_URL');
-if (empty($siteLogo))
-	$siteLogo = getenv("SITE_LOGO");
-if (empty($siteDescription))
-	$siteDescription = empty(getenv('SITE_DESC')) ? 'A web based markdown viewer optimized for Obsidian Notes' : getenv('SITE_DESC');
-if (empty($siteName))
-	$siteName = empty(getenv('SITE_NAME')) ? 'Perlite Demo' : getenv('SITE_NAME');
-if (empty($siteHomepage))
-	$siteHomepage = empty(getenv("SITE_HOMEPAGE")) ? $siteURL : getenv("SITE_HOMEPAGE");
-if (empty($siteGithub))
-	$siteGithub = getenv("SITE_GITHUB");
-if (!isset($siteTwitter))
-	$siteTwitter = getenv('SITE_TWITTER');
-
-// Use frontmatter 'title' or top level h1 instead of filename
-if (!isset($useZettelkastenFilenames)) {
-    $useZettelkastenFilenames = empty(getenv('ZETTELKASTEN_FILENAMES_ENABLED')) ? false : filter_var(getenv('ZETTELKASTEN_FILENAMES_ENABLED'), FILTER_VALIDATE_BOOLEAN);
-}
-
-// Temp PATH for graph linking temp files
-if (empty($tempPath))
-	$tempPath = empty(getenv('TEMP_PATH')) ? sys_get_temp_dir() : getenv('TEMP_PATH');
-
-// line breaks
-if (!isset($lineBreaks))
-	$lineBreaks = empty(getenv('LINE_BREAKS')) ? true : filter_var(getenv('LINE_BREAKS'), FILTER_VALIDATE_BOOLEAN);
-
-// nice links
-if (!isset($niceLinks))
-	$niceLinks = empty(getenv('NICE_LINKS')) ? true : filter_var(getenv('NICE_LINKS'), FILTER_VALIDATE_BOOLEAN);
-
-
-// file types
-if (empty($allowedFileLinkTypes))
-	$allowedFileLinkTypes = empty(getenv('ALLOWED_FILE_LINK_TYPES')) ? ['pdf', 'mp4'] : explode(",", getenv('ALLOWED_FILE_LINK_TYPES'));
-
-// highlight.js languages
-if (empty($highlightJSLangs))
-	$highlightJSLangs = empty(getenv('HIGHLIGHTJS_LANGS')) ? ['powershell'] : explode(",", getenv('HIGHLIGHTJS_LANGS'));
-
-// disable PopHovers
-if (!isset($disablePopHovers))
-	$disablePopHovers = empty(getenv('DISABLE_POP_HOVER')) ? false : filter_var(getenv('DISABLE_POP_HOVER'), FILTER_VALIDATE_BOOLEAN);
-
-// show TOC
-if (!isset($showTOC))
-	$showTOC = empty(getenv('SHOW_TOC')) ? true : filter_var(getenv('SHOW_TOC'), FILTER_VALIDATE_BOOLEAN);
-
-// show local Graph
-if (!isset($showLocalGraph))
-	$showLocalGraph = empty(getenv('SHOW_LOCAL_GRAPH')) ? true : filter_var(getenv('SHOW_LOCAL_GRAPH'), FILTER_VALIDATE_BOOLEAN);
-
-// Set home page from env/settings
-if (empty($index))
-	$index = empty(getenv('HOME_FILE')) ? "README" : getenv('HOME_FILE');
-
-// set default font size
-if (empty($font_size))
-	$font_size = empty(getenv('FONT_SIZE')) ? "15" : getenv('FONT_SIZE');
-
-// Set safe mode from env/settings
-if (!isset($htmlSafeMode))
-	$htmlSafeMode = empty(getenv('HTML_SAFE_MODE')) ? true : filter_var(getenv('HTML_SAFE_MODE'), FILTER_VALIDATE_BOOLEAN);
+// --- Profile Settings ---
+$siteLogo = getSetting('SITE_LOGO');
+$siteHomepage = getSetting('SITE_HOMEPAGE', $siteURL);
+$siteGithub = getSetting('SITE_GITHUB');
+$siteTwitter = getSetting('SITE_TWITTER');
 
 // Custom Site Section
 if (!isset($customSection))

@@ -10,6 +10,7 @@
 - updated highlight.js to 11.12.0
 - updated mermaid to 11.15.0
 - updated vis-network to 10.1.2
+- all settings are now configured in a single `.env` file (see `.env.example`), used by docker compose and read directly by helper.php without docker, `settings.php` has been removed
 
 ## 1.6.1
 - Support Zettelkasten Filenames, use with caution! - PR [#159](https://github.com/secure-77/Perlite/pull/159) thanks to @smtucker
