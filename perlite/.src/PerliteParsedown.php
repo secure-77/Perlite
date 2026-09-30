@@ -1392,6 +1392,102 @@ class PerliteParsedown extends Parsedown
         return $result;
     }
 
+        # handle standard markdown images: ![alt](path "title")
+    # also supports Obsidian sizing: ![alt|300x200](path) / ![alt|300](path)
+    protected function inlineImage($Excerpt)
+    {
+        if (!isset($Excerpt['text'][1]) || $Excerpt['text'][1] !== '[') {
+            return;
+        }
+
+        // ![[...]] is handled by inlineInternalEmbed()
+        if (isset($Excerpt['text'][2]) && $Excerpt['text'][2] === '[') {
+            return;
+        }
+
+        if (!preg_match(
+            '/^!\[((?:[^\[\]]|\\\\.)*)\]\(\s*(<[^>]+>|(?:[^\s()]+|\([^\s()]*\))+)(?:\s+("[^"]*"|\'[^\']*\'))?\s*\)/',
+            $Excerpt['text'],
+            $m
+        )) {
+            // fallback: reference style images ![alt][ref]
+            $Inline = parent::inlineImage($Excerpt);
+            if ($Inline !== null) {
+                unset(
+                    $Inline['element']['attributes']['class'],
+                    $Inline['element']['attributes']['target'],
+                    $Inline['element']['attributes']['rel']
+                );
+            }
+            return $Inline;
+        }
+
+        $alt = $m[1];
+        $url = trim($m[2], '<>');
+        $title = isset($m[3]) ? substr($m[3], 1, -1) : null;
+        $extent = strlen($m[0]);
+
+        // Obsidian size syntax in alt text: ![alt|300x200](...) or ![alt|300](...)
+        $size = null;
+        if (preg_match('/^(.*?)\|(\d*x\d*|\d+)$/', $alt, $sm)) {
+            $alt = $sm[1];
+            $size = ctype_digit($sm[2]) ? $sm[2] . 'x' : $sm[2];
+        }
+
+        /* ---------- external image (http, https, data:, //...) ---------- */
+        if (preg_match('#^([a-z][a-z0-9+.-]*:|//)#i', $url)) {
+            $attributes = array(
+                'src' => $url,
+                'alt' => $alt,
+                'title' => $title,
+            );
+
+            if ($size !== null && preg_match('/^(\d*)x(\d*)$/', $size, $dm)) {
+                $attributes['width'] = $dm[1] ?: null;
+                $attributes['height'] = $dm[2] ?: null;
+            }
+
+            return array(
+                'extent' => $extent,
+                'element' => array(
+                    'name' => 'img',
+                    'attributes' => $attributes,
+                ),
+            );
+        }
+
+        /* ---------- local image (relative to current note) ---------- */
+        // Obsidian encodes spaces etc. in markdown links (%20)
+        $file = rawurldecode($url);
+
+        // strip query string / leading "./"
+        $file = preg_replace('/\?.*$/', '', $file);
+        $file = preg_replace('#^(\./)+#', '', $file);
+
+        $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+        if (!in_array($ext, $this->allowedImageTypes)) {
+            return;
+        }
+
+        // "../" segments are resolved by the browser, since
+        // buildInternalImage() produces an absolute src (uriPath + path + file)
+        $Inline = $this->buildInternalImage(
+            $file,
+            array(
+                'caption' => $alt !== '' ? $alt : null,
+                'size' => $size,
+                'align' => null,
+            ),
+            $extent
+        );
+
+        if ($title !== null) {
+            $Inline['element']['elements'][0]['elements'][0]['attributes']['title'] = $title;
+        }
+
+        return $Inline;
+    }
+
     protected function inlineInternalEmbed($Excerpt)
     {
         if (!preg_match('/^!\[\[(.+?)\]\]/', $Excerpt['text'], $m)) {

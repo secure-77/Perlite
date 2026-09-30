@@ -1,3 +1,8 @@
+## 1.6.2
+- Support default (Gitlab / Github) Markdown Images
+
+
+
 ## 1.6.1
 - Support Zettelkasten Filenames, use with caution! - PR [#159](https://github.com/secure-77/Perlite/pull/159) thanks to @smtucker
 - replaced deprecated utf8_decode() - PR [#164](https://github.com/secure-77/Perlite/pull/164) thanks to @dewillepl 
