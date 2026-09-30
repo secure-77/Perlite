@@ -1266,8 +1266,9 @@ class PerliteParsedown extends Parsedown
         $raw = $matches[1];
 
         // Split Obsidian-style: file|label|popup
+        // Strip backslash used to escape | in Markdown tables (e.g. [[file.md\|Label]])
         $parts = explode('|', $raw);
-        $linkFile = $parts[0];
+        $linkFile = rtrim($parts[0], '\\');
 
         $ext = pathinfo($linkFile, PATHINFO_EXTENSION);
         $openNewTab = false;
