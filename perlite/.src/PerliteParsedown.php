@@ -123,11 +123,24 @@ class PerliteParsedown extends Parsedown
         return $markup;
     }
 
+       #
+    # YAML Front Matter / Obsidian Properties
+    # See: https://help.obsidian.md/Editing+and+formatting/Properties
+
     protected function yamlFrontmatter(string $yaml): string
     {
         $parsed = $this->parseSimpleYaml($yaml);
 
-        $yamlText = '
+        if (empty($parsed)) {
+            return '';
+        }
+
+        $propertiesHtml = '';
+        foreach ($parsed as $key => $value) {
+            $propertiesHtml .= $this->renderProperty((string) $key, $value);
+        }
+
+        return '
     <div class="mod-header">
         <div class="metadata-properties-heading">
             <div class="collapse-indicator collapse-icon">
@@ -137,76 +150,200 @@ class PerliteParsedown extends Parsedown
             </div>
             <div class="metadata-properties-title">Properties</div>
         </div>
-        <div class="metadata-container mod-error" tabindex="-1" data-property-count="1">
+        <div class="metadata-container mod-error" tabindex="-1" data-property-count="' . count($parsed) . '">
             <div class="metadata-content">
-                <div class="metadata-properties">
-    ';
-
-        // Aliases
-        if (isset($parsed['aliases']) && is_array($parsed['aliases'])) {
-            $yamlText .= '
-        <div class="metadata-property" tabindex="0" data-property-key="aliases" data-property-type="multitext">
-            <div class="metadata-property-key">
-                <span class="metadata-property-icon" aria-disabled="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-forward">
-                        <polyline points="15 17 20 12 15 7"/>
-                        <path d="M4 18v-2a4 4 0 0 1 4-4h12"/>
-                    </svg>
-                </span>
-                <span class="metadata-text">aliases</span>
+                <div class="metadata-properties">'
+            . $propertiesHtml . '
+                </div>
             </div>
-            <div class="metadata-property-value">
-                <div class="multi-select-container">
-        ';
+        </div>
+    </div>';
+    }
 
-            foreach ($parsed['aliases'] as $alias) {
-                $yamlText .= '<div class="multi-select-pill multi-select-pill-content">'
-                    . htmlspecialchars($alias, ENT_QUOTES, 'UTF-8')
-                    . '</div>';
-            }
+    protected function renderProperty(string $key, $value): string
+    {
+        $type = $this->getPropertyType($key, $value);
+        [$iconClass, $iconPaths] = $this->getPropertyIcon($type);
 
-            $yamlText .= '</div></div></div>';
-        }
-
-        // Tags
-        if (isset($parsed['tags']) && is_array($parsed['tags'])) {
-            $yamlText .= '
-        <div class="metadata-property" tabindex="0" data-property-key="tags" data-property-type="multitext">
-            <div class="metadata-property-key">
-                <span class="metadata-property-icon" aria-disabled="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-tags">
-                        <path d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42L9 5Z"/>
-                        <path d="M6 9.01V9"/>
-                        <path d="m15 5 6.3 6.3a2.4 2.4 0 0 1 0 3.4L17 19"/>
-                    </svg>
-                </span>
-                <span class="metadata-text">tags</span>
-            </div>
-            <div class="metadata-property-value">
-                <div class="multi-select-container">
-        ';
-
-            foreach ($parsed['tags'] as $tag) {
-                $Block = [
-                    'element' => [
+        switch ($type) {
+            case 'tags':
+                $valueHtml = '<div class="multi-select-container">';
+                foreach ($this->normalizeYamlList($value, true) as $tag) {
+                    $valueHtml .= $this->element(array(
                         'name' => 'div',
                         'text' => '#' . $tag,
-                        'attributes' => [
-                            'class' => 'multi-select-pill multi-select-pill-content'
-                        ],
                         'handler' => 'line',
-                    ],
-                ];
+                        'attributes' => array('class' => 'multi-select-pill multi-select-pill-content'),
+                    ));
+                }
+                $valueHtml .= '</div>';
+                break;
 
-                $yamlText .= $this->elements($Block);
-            }
+            case 'aliases':
+            case 'multitext':
+                $valueHtml = '<div class="multi-select-container">';
+                foreach ($this->normalizeYamlList($value) as $item) {
+                    $valueHtml .= $this->element(array(
+                        'name' => 'div',
+                        'text' => $item,
+                        'handler' => 'line',
+                        'attributes' => array('class' => 'multi-select-pill multi-select-pill-content'),
+                    ));
+                }
+                $valueHtml .= '</div>';
+                break;
 
-            $yamlText .= '</div></div></div>';
+            case 'checkbox':
+                $valueHtml = $this->element(array(
+                    'name' => 'input',
+                    'attributes' => array(
+                        'class' => 'metadata-input-checkbox',
+                        'type' => 'checkbox',
+                        'checked' => $value ? 'checked' : null,
+                        'disabled' => 'disabled',
+                    ),
+                ));
+                break;
+
+            case 'number':
+                $valueHtml = $this->element(array(
+                    'name' => 'input',
+                    'attributes' => array(
+                        'class' => 'metadata-input metadata-input-number',
+                        'type' => 'number',
+                        'value' => (string) $value,
+                        'readonly' => 'readonly',
+                    ),
+                ));
+                break;
+
+            case 'date':
+                $valueHtml = $this->element(array(
+                    'name' => 'input',
+                    'attributes' => array(
+                        'class' => 'metadata-input metadata-input-text mod-date',
+                        'type' => 'date',
+                        'value' => $value,
+                        'readonly' => 'readonly',
+                    ),
+                ));
+                break;
+
+            case 'datetime':
+                preg_match('/^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2}(?::\d{2})?)/', $value, $dm);
+                $valueHtml = $this->element(array(
+                    'name' => 'input',
+                    'attributes' => array(
+                        'class' => 'metadata-input metadata-input-text mod-datetime',
+                        'type' => 'datetime-local',
+                        'value' => $dm[1] . 'T' . $dm[2],
+                        'readonly' => 'readonly',
+                    ),
+                ));
+                break;
+
+            default: // text
+                $valueHtml = $this->element(array(
+                    'name' => 'div',
+                    'text' => is_scalar($value) ? (string) $value : '',
+                    'handler' => 'line',
+                    'attributes' => array('class' => 'metadata-input-longtext mod-truncate'),
+                ));
         }
 
-        $yamlText .= '</div></div></div></div></div>';
+        $keyEscaped = htmlspecialchars($key, ENT_QUOTES, 'UTF-8');
 
-        return $yamlText;
+        return '
+        <div class="metadata-property" tabindex="0" data-property-key="' . $keyEscaped . '" data-property-type="' . $type . '">
+            <div class="metadata-property-key">
+                <span class="metadata-property-icon" aria-disabled="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon ' . $iconClass . '">'
+            . $iconPaths . '</svg>
+                </span>
+                <span class="metadata-text">' . $keyEscaped . '</span>
+            </div>
+            <div class="metadata-property-value">' . $valueHtml . '</div>
+        </div>';
+    }
+
+    protected function getPropertyType(string $key, $value): string
+    {
+        $key = strtolower($key);
+
+        if ($key === 'tags' || $key === 'tag') {
+            return 'tags';
+        }
+        if ($key === 'aliases' || $key === 'alias') {
+            return 'aliases';
+        }
+        if ($key === 'cssclasses' || $key === 'cssclass') {
+            return 'multitext';
+        }
+        if (is_array($value)) {
+            return empty($value) ? 'text' : 'multitext';
+        }
+        if (is_bool($value)) {
+            return 'checkbox';
+        }
+        if (is_int($value) || is_float($value)) {
+            return 'number';
+        }
+        if (is_string($value)) {
+            if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
+                return 'date';
+            }
+            if (preg_match('/^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}/', $value)) {
+                return 'datetime';
+            }
+        }
+
+        return 'text';
+    }
+
+    protected function getPropertyIcon(string $type): array
+    {
+        return match ($type) {
+            'aliases' => ['lucide-forward', '<polyline points="15 17 20 12 15 7"/><path d="M4 18v-2a4 4 0 0 1 4-4h12"/>'],
+            'tags' => ['lucide-tags', '<path d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42L9 5Z"/><path d="M6 9.01V9"/><path d="m15 5 6.3 6.3a2.4 2.4 0 0 1 0 3.4L17 19"/>'],
+            'multitext' => ['lucide-list', '<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>'],
+            'number' => ['lucide-binary', '<rect x="14" y="14" width="4" height="6" rx="2"/><rect x="6" y="4" width="4" height="6" rx="2"/><path d="M6 20h4"/><path d="M14 10h4"/><path d="M6 14h2v6"/><path d="M14 4h2v6"/>'],
+            'checkbox' => ['lucide-check-square', '<polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>'],
+            'date' => ['lucide-calendar', '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>'],
+            'datetime' => ['lucide-clock', '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'],
+            default => ['lucide-text', '<path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18H3"/>'],
+        };
+    }
+
+    # always returns a flat list of strings
+    protected function normalizeYamlList($value, bool $isTags = false): array
+    {
+        if ($value === null || $value === '') {
+            return [];
+        }
+
+        if (!is_array($value)) {
+            // tags: "a, b" or "a b" / others: single value
+            $value = $isTags ? preg_split('/[,\s]+/', (string) $value) : [$value];
+        }
+
+        $items = [];
+        foreach ($value as $item) {
+            if ($item === null || is_array($item)) {
+                continue;
+            }
+
+            $item = is_bool($item) ? ($item ? 'true' : 'false') : trim((string) $item);
+
+            if ($isTags) {
+                $item = ltrim($item, '#');
+            }
+
+            if ($item !== '') {
+                $items[] = $item;
+            }
+        }
+
+        return $items;
     }
 
     protected function parseSimpleYaml(string $yaml): array
@@ -217,47 +354,98 @@ class PerliteParsedown extends Parsedown
 
         foreach ($lines as $line) {
             $line = rtrim($line);
+            $trimmed = trim($line);
 
-            // Skip empty lines and comments
-            if ($line === '' || str_starts_with(trim($line), '#')) {
+            // skip empty lines, delimiters and comments
+            if ($trimmed === '' || $trimmed === '---' || str_starts_with($trimmed, '#')) {
                 continue;
             }
 
-            // Key: value
-            if (preg_match('/^([A-Za-z0-9_-]+):\s*(.*)$/', $line, $matches)) {
-                $currentKey = $matches[1];
-                $value = $matches[2];
+            // list item of the current key: "  - value"
+            if ($currentKey !== null && preg_match('/^\s*-(?:\s+(.*))?$/', $line, $matches)) {
+                $item = $this->stripYamlComment($matches[1] ?? '');
+                if ($item !== '') {
+                    $data[$currentKey][] = $this->castYamlValue($item);
+                }
+                continue;
+            }
+
+            // top level key: "key: value" (key may contain spaces, value may contain ":")
+            if (preg_match('/^([^\s#\-][^:]*?):(?:\s+(.*))?$/', $line, $matches)) {
+                $key = trim($matches[1], " \"'");
+                $value = $this->stripYamlComment($matches[2] ?? '');
 
                 if ($value === '') {
-                    $data[$currentKey] = [];
+                    // list follows (or empty value)
+                    $data[$key] = [];
+                    $currentKey = $key;
                 } else {
-                    $data[$currentKey] = $this->castYamlValue($value);
+                    $data[$key] = $this->parseYamlValue($value);
                     $currentKey = null;
                 }
 
                 continue;
             }
 
-            // List item
-            if ($currentKey !== null && preg_match('/^\s*-\s*(.+)$/', $line, $matches)) {
-                $data[$currentKey][] = $this->castYamlValue($matches[1]);
-            }
+            // everything else (nested objects, block scalars) is ignored
         }
 
         return $data;
     }
 
+    protected function parseYamlValue(string $value): mixed
+    {
+        $value = trim($value);
+
+        // flow sequence: [a, b, "c, d"] — but not an unquoted wikilink [[...]]
+        if (str_starts_with($value, '[') && !str_starts_with($value, '[[') && str_ends_with($value, ']')) {
+            $inner = trim(substr($value, 1, -1));
+
+            if ($inner === '') {
+                return [];
+            }
+
+            $items = str_getcsv($inner, ',', '"', '');
+
+            return array_values(array_filter(
+                array_map(fn($item) => $this->castYamlValue(trim($item)), $items),
+                fn($item) => $item !== '' && $item !== null
+            ));
+        }
+
+        return $this->castYamlValue($value);
+    }
+
+    protected function stripYamlComment(string $value): string
+    {
+        $value = trim($value);
+
+        // no comments inside quoted strings
+        if ($value === '' || $value[0] === '"' || $value[0] === "'") {
+            return $value;
+        }
+
+        return trim(preg_replace('/\s+#.*$/', '', $value));
+    }
+
     protected function castYamlValue(string $value): mixed
     {
-        $value = trim($value, " \t\n\r\0\x0B\"'");
+        $value = trim($value);
+
+        // quoted strings stay strings (no type casting)
+        if (strlen($value) >= 2 && ($value[0] === '"' || $value[0] === "'") && substr($value, -1) === $value[0]) {
+            $inner = substr($value, 1, -1);
+
+            return $value[0] === "'"
+                ? str_replace("''", "'", $inner)
+                : str_replace(array('\\"', '\\\\'), array('"', '\\'), $inner);
+        }
 
         return match (strtolower($value)) {
             'true' => true,
             'false' => false,
-            'null' => null,
-            default => is_numeric($value)
-                ? ($value + 0)
-                : $value,
+            'null', '~' => null,
+            default => is_numeric($value) ? ($value + 0) : $value,
         };
     }
 

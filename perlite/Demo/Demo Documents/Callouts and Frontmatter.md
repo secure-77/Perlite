@@ -1,4 +1,7 @@
 ---
+title: "Beispielnotiz"
+date: 2024-06-15
+status: in progress
 tags:
   - tag1
   - tag-test

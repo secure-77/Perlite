@@ -4,6 +4,8 @@
 - Fixed Intended Fence Code Block rendering
 - implemented support for Footnotes [#9](https://github.com/secure-77/Perlite/issues/9)
 - Fixed internal default Markdown Links
+- Extended YAML Frontmatter support
+- 
 
 
 ## 1.6.1
