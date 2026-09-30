@@ -1,6 +1,9 @@
 ## 1.6.2
 - Support default (Gitlab / Github) Markdown Images
-
+- Fixed broken links in tables, merged PR [#184](https://github.com/secure-77/Perlite/pull/184) thanks to @Nick-LCY
+- Fixed Intended Fence Code Block rendering
+- implemented support for Footnotes [#9](https://github.com/secure-77/Perlite/issues/9)
+- Fixed internal default Markdown Links
 
 
 ## 1.6.1

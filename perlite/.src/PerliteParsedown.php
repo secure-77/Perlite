@@ -20,8 +20,9 @@ class PerliteParsedown extends Parsedown
     protected $niceLinks;
     protected $allowedFileLinkTypes;
     protected $allowedImageTypes;
-
-    protected $inlineMarkerList = '!"*$_#&[:<>`~\\=%';
+    protected $footnoteCount = 0;
+    protected $inlineFootnoteCount = 0;
+    protected $inlineMarkerList = '!"*$_#&[:<>`~\\=%^';
 
     protected $InlineTypes = array(
         '"' => array('SpecialCharacter'),
@@ -31,7 +32,7 @@ class PerliteParsedown extends Parsedown
         ':' => array('Url'),
         '<' => array('UrlTag', 'EmailTag', 'Markup', 'SpecialCharacter'),
         '>' => array('SpecialCharacter'),
-        '[' => array('Link', 'InternalMarkdownLink', 'InternalLink'),
+        '[' => array('FootnoteMarker','InternalMarkdownLink','Link', 'InternalLink'),
         '#' => array('Tag'),
         '$' => array('Katex'),
         '_' => array('Emphasis'),
@@ -40,6 +41,7 @@ class PerliteParsedown extends Parsedown
         '\\' => array('EscapeSequence'),
         '=' => array('Highlight'),
         '%' => array('Hidden'),
+        '^' => array('InlineFootnote'),
     );
 
 
@@ -68,13 +70,15 @@ class PerliteParsedown extends Parsedown
         $this->allowedImageTypes = $allowedImageTypes;
 
         $this->BlockTypes['!'] = array('YouTube');
-
+        $this->BlockTypes['['] = array('Footnote', 'Reference');
     }
 
     function text($text)
     {
         # make sure no definitions are set
         $this->DefinitionData = array();
+        $this->footnoteCount = 0;
+        $this->inlineFootnoteCount = 0;
 
         # standardize line breaks
         $text = str_replace(array("\r\n", "\r"), "\n", $text);
@@ -109,6 +113,10 @@ class PerliteParsedown extends Parsedown
 
         # add front matter
         $markup = $parsedYamlBlockText . $markup;
+
+        # add footnotes
+        $markup .= $this->buildFootnotes();
+
         # trim line breaks
         $markup = trim($markup, "\n");
 
@@ -248,8 +256,8 @@ class PerliteParsedown extends Parsedown
             'false' => false,
             'null' => null,
             default => is_numeric($value)
-            ? ($value + 0)
-            : $value,
+                ? ($value + 0)
+                : $value,
         };
     }
 
@@ -634,6 +642,43 @@ class PerliteParsedown extends Parsedown
         return $Block;
     }
 
+    # Don't treat indented fences (``` / ~~~) as indented code blocks,
+    # so blockFencedCode() gets a chance (e.g. code blocks inside lists)
+    protected function blockCode($Line, $Block = null)
+    {
+        if (preg_match('/^(`{3,}|~{3,})/', $Line['text'])) {
+            return;
+        }
+
+        return parent::blockCode($Line, $Block);
+    }
+
+    # remember the indentation of the opening fence
+    protected function blockFencedCode($Line)
+    {
+        $Block = parent::blockFencedCode($Line);
+
+        if ($Block !== null) {
+            $Block['fenceIndent'] = $Line['indent'];
+        }
+
+        return $Block;
+    }
+
+    # strip the fence indentation from the code lines
+    protected function blockFencedCodeContinue($Line, $Block)
+    {
+        if (!empty($Block['fenceIndent'])) {
+            $Line['body'] = preg_replace(
+                '/^[ ]{0,' . (int) $Block['fenceIndent'] . '}/',
+                '',
+                $Line['body']
+            );
+        }
+
+        return parent::blockFencedCodeContinue($Line, $Block);
+    }
+
 
     # handle highlight code
     protected function inlineHighlight($Excerpt)
@@ -674,7 +719,6 @@ class PerliteParsedown extends Parsedown
 
             return $Inline;
         }
-
     }
 
     # handle katex code
@@ -1110,17 +1154,10 @@ class PerliteParsedown extends Parsedown
                 unset($parts[0]);
 
                 foreach ($parts as $part) {
-
-
-                    $shortage = 0;
                     if (function_exists('mb_strlen')) {
-                        $shortage = 4 - (mb_strlen($input ?? '', 'UTF-8') % 4);
-                    } elseif (function_exists('iconv')) {
-                        $converted = @iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE', $input);
-                        $shortage = 4 - (strlen($converted) % 4);
+                        $shortage = 4 - (mb_strlen($line, 'UTF-8') % 4);
                     } else {
-                        // Fallback: count bytes (not characters)
-                        $shortage = 4 - (strlen($input) % 4);
+                        $shortage = 4 - (strlen($line) % 4);
                     }
 
                     $line .= str_repeat(' ', $shortage);
@@ -1293,7 +1330,6 @@ class PerliteParsedown extends Parsedown
             $segments = array_slice($segments, 0, count($segments) - $depth);
             $path = implode('/', $segments);
             $linkFile = preg_replace('#^(\.\./)+#', '', $linkFile);
-
         }
 
         // use only the file name for nice links
@@ -1321,7 +1357,7 @@ class PerliteParsedown extends Parsedown
                     'name' => 'a',
                     'text' => $linkText,
                     'attributes' => array(
-                        'href' => '#' . ltrim($raw, '#'),
+                        'href' => '#' . ltrim($linkFile, '#'),
                         'class' => 'internal-link' . $popupClass,
                     ),
                 ),
@@ -1354,7 +1390,7 @@ class PerliteParsedown extends Parsedown
         );
     }
 
-    protected function inlineInternalMarkdownLink($Excerpt)
+        protected function inlineInternalMarkdownLink($Excerpt)
     {
         // Match [label](path) — but NOT external URLs
         if (!preg_match('/^\[([^\]]+)\]\(([^)]+)\)/', $Excerpt['text'], $m)) {
@@ -1364,8 +1400,8 @@ class PerliteParsedown extends Parsedown
         $label = $m[1];
         $path = $m[2];
 
-        // Reject external links explicitly
-        if (preg_match('#^[a-z][a-z0-9+.-]*://#i', $path)) {
+        // Reject external links / any URI scheme (http:, mailto:, tel:, obsidian:, ...)
+        if (preg_match('#^[a-z][a-z0-9+.-]*:#i', $path)) {
             return;
         }
 
@@ -1373,6 +1409,9 @@ class PerliteParsedown extends Parsedown
         if (str_starts_with($path, '//')) {
             return;
         }
+
+        // Remove .md extension (also before an anchor: note.md#heading -> note#heading)
+        $path = preg_replace('/\.md(?=$|#)/i', '', $path);
 
         // Convert into Obsidian-style payload
         // [[path|label]]
@@ -1393,7 +1432,7 @@ class PerliteParsedown extends Parsedown
         return $result;
     }
 
-        # handle standard markdown images: ![alt](path "title")
+    # handle standard markdown images: ![alt](path "title")
     # also supports Obsidian sizing: ![alt|300x200](path) / ![alt|300](path)
     protected function inlineImage($Excerpt)
     {
@@ -1537,7 +1576,7 @@ class PerliteParsedown extends Parsedown
                         'type' => $ext === 'mp4' ? 'video/mp4' : 'audio/x-m4a',
                     ),
                     'text' =>
-                        '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="' .
+                    '<a class="internal-link" target="_blank" rel="noopener noreferrer" href="' .
                         $src . '">Download ' . basename($file) . '</a>',
                 ),
             );
@@ -1560,8 +1599,6 @@ class PerliteParsedown extends Parsedown
                 strlen($m[0])
             );
         }
-
-
     }
 
     protected function buildInternalImage(string $file, array $attrs, int $extent)
@@ -1652,6 +1689,223 @@ class PerliteParsedown extends Parsedown
         return $this->buildInternalImage($file, $attrs, $extent);
     }
 
+        #
+    # Footnotes
+    # See: https://help.obsidian.md/Editing+and+formatting/Basic+formatting+syntax#Footnotes
+
+    protected function footnoteId($label)
+    {
+        return preg_replace('/[^A-Za-z0-9_-]+/', '-', $label);
+    }
+
+    # definition: [^label]: text
+    protected function blockFootnote($Line)
+    {
+        if (preg_match('/^\[\^(.+?)\]:[ ]?(.*)$/', $Line['text'], $matches)) {
+            return array(
+                'label' => $matches[1],
+                'text' => $matches[2],
+                'hidden' => true,
+            );
+        }
+    }
+
+    protected function blockFootnoteContinue($Line, $Block)
+    {
+        // next footnote definition starts
+        if ($Line['text'][0] === '[' && preg_match('/^\[\^(.+?)\]:/', $Line['text'])) {
+            return;
+        }
+
+        // remove footnote indentation, keep nested indentation (e.g. code)
+        $text = preg_replace('/^[ ]{0,4}/', '', $Line['body']);
+
+        if (isset($Block['interrupted'])) {
+            // after an empty line only indented lines belong to the footnote
+            if ($Line['indent'] >= 4) {
+                $Block['text'] .= "\n\n" . $text;
+                unset($Block['interrupted']);
+
+                return $Block;
+            }
+
+            return;
+        }
+
+        // lazy continuation (line directly below)
+        $Block['text'] .= "\n" . $text;
+
+        return $Block;
+    }
+
+    protected function blockFootnoteComplete($Block)
+    {
+        $this->DefinitionData['Footnote'][$Block['label']] = array(
+            'text' => $Block['text'],
+            'count' => 0,
+            'number' => null,
+        );
+
+        return $Block;
+    }
+
+    # reference in text: [^label]
+    protected function inlineFootnoteMarker($Excerpt)
+    {
+        if (!preg_match('/^\[\^(.+?)\]/', $Excerpt['text'], $matches)) {
+            return;
+        }
+
+        $label = $matches[1];
+
+        if (!isset($this->DefinitionData['Footnote'][$label])) {
+            return;
+        }
+
+        $Footnote = $this->DefinitionData['Footnote'][$label];
+        $Footnote['count']++;
+
+        if ($Footnote['number'] === null) {
+            $Footnote['number'] = ++$this->footnoteCount;
+        }
+
+        $this->DefinitionData['Footnote'][$label] = $Footnote;
+
+        $id = $this->footnoteId($label);
+
+        return array(
+            'extent' => strlen($matches[0]),
+            'element' => array(
+                'name' => 'sup',
+                'attributes' => array(
+                    'id' => 'fnref-' . $Footnote['count'] . '-' . $id,
+                    'class' => 'footnote-ref',
+                ),
+                'elements' => array(
+                    array(
+                        'name' => 'a',
+                        'text' => '[' . $Footnote['number'] . ']',
+                        'attributes' => array(
+                            'href' => '#fn-' . $id,
+                            'class' => 'footnote-link',
+                        ),
+                    ),
+                ),
+            ),
+        );
+    }
+
+        # inline footnote: ^[text]
+    protected function inlineInlineFootnote($Excerpt)
+    {
+        if (!isset($Excerpt['text'][1]) || $Excerpt['text'][1] !== '[') {
+            return;
+        }
+
+        // supports nested brackets, e.g. ^[see [link](note.md)]
+        if (!preg_match('/^\^(\[((?:[^\[\]]++|(?1))*)\])/', $Excerpt['text'], $matches)) {
+            return;
+        }
+
+        $text = trim($matches[2]);
+
+        if ($text === '') {
+            return;
+        }
+
+        // register as regular footnote with generated label
+        $label = 'inline-fn-' . (++$this->inlineFootnoteCount);
+
+        $this->DefinitionData['Footnote'][$label] = array(
+            'text' => $text,
+            'count' => 0,
+            'number' => null,
+        );
+
+        // delegate to regular footnote marker
+        $Inline = $this->inlineFootnoteMarker(array(
+            'text' => '[^' . $label . ']',
+            'context' => '[^' . $label . ']',
+        ));
+
+        if ($Inline === null) {
+            return;
+        }
+
+        // adjust extent to original syntax length
+        $Inline['extent'] = strlen($matches[0]);
+
+        return $Inline;
+    }
+
+    # footnote list at the end of the document
+    protected function buildFootnotes()
+    {
+        if (empty($this->DefinitionData['Footnote'])) {
+            return '';
+        }
+
+        // only footnotes that are referenced in the text
+        $footnotes = array_filter(
+            $this->DefinitionData['Footnote'],
+            fn($footnote) => $footnote['number'] !== null
+        );
+
+        if (empty($footnotes)) {
+            return '';
+        }
+
+        uasort($footnotes, fn($a, $b) => $a['number'] <=> $b['number']);
+
+        $items = array();
+
+        foreach ($footnotes as $label => $footnote) {
+            $id = $this->footnoteId($label);
+
+            // use lines() instead of text(), text() would reset DefinitionData
+            $content = trim($this->lines(explode("\n", $footnote['text'])), "\n");
+
+            $backLinks = array();
+            for ($i = 1; $i <= $footnote['count']; $i++) {
+                $backLinks[] = '<a href="#fnref-' . $i . '-' . $id . '" class="footnote-backref footnote-link">&#8617;&#65038;</a>';
+            }
+            $backLinks = implode(' ', $backLinks);
+
+            // place back link(s) inside the last paragraph
+            if (substr($content, -4) === '</p>') {
+                $content = substr_replace($content, '&#160;' . $backLinks . '</p>', -4);
+            } else {
+                $content .= "\n<p>" . $backLinks . '</p>';
+            }
+
+            $items[] = array(
+                'name' => 'li',
+                'attributes' => array(
+                    'id' => 'fn-' . $id,
+                    'class' => 'footnote-item',
+                ),
+                'rawHtml' => "\n" . $content . "\n",
+                'allowRawHtmlInSafeMode' => true,
+            );
+        }
+
+        return "\n" . $this->element(array(
+            'name' => 'section',
+            'attributes' => array('class' => 'footnotes'),
+            'elements' => array(
+                array(
+                    'name' => 'hr',
+                    'attributes' => array('class' => 'footnotes-sep'),
+                ),
+                array(
+                    'name' => 'ol',
+                    'attributes' => array('class' => 'footnotes-list'),
+                    'elements' => $items,
+                ),
+            ),
+        ));
+    }
+
     protected function popupIconSvg()
     {
         return '<svg class="popup-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1661,5 +1915,4 @@ class PerliteParsedown extends Parsedown
         <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
     </svg>';
     }
-
 }
