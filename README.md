@@ -35,6 +35,7 @@ If you want to discuss Perlite you can join the [Perlite Discord Server](https:/
 - Search
 - Obsidian tags, links, images and preview Support
 - Dark and Light Mode
+- Obsidian Canvas support
 
 
 ## Install
