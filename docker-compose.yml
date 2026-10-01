@@ -7,7 +7,9 @@ services:
       - path: .env
         required: false
     volumes:
-      - ./perlite/Demo:/var/www/perlite/Demo:ro
+      - ${NOTES_PATH:-./perlite/Demo}:/var/www/perlite/Notes:ro
+    environment:
+      NOTES_PATH: Notes
 
   web:
     image: nginx:stable

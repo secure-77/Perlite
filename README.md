@@ -35,24 +35,26 @@ If you want to discuss Perlite you can join the [Perlite Discord Server](https:/
 - Search
 - Obsidian tags, links, images and preview Support
 - Dark and Light Mode
+- Obsidian Canvas support
 
 
 ## Install
-Please make sure you read the [required settings](https://github.com/secure-77/Perlite/wiki/03---Perlite-Settings#required-settings) first!
+Please make sure you read the [required Obsidian settings](perlite/Demo/Documentation/05-Obsidian-Settings.md) first!
 
 You can download the latest release from github or git clone the project and use docker.
 
-- For non Docker please check [Setup](https://github.com/secure-77/Perlite/wiki/01---Setup-(no-Docker))
-- For Docker, please check [Docker Setup](https://github.com/secure-77/Perlite/wiki/02---Setup-Docker)
+- For Docker, please check [Docker Setup](perlite/Demo/Documentation/01-Docker-Setup.md)
+- For non Docker please check [Setup without Docker](perlite/Demo/Documentation/02-Setup-without-Docker.md)
 
 
-## Wiki
-Please check the [wiki](https://github.com/secure-77/Perlite/wiki), here you will find further information, for example:
+## Documentation
+Please check the [documentation](perlite/Demo/Documentation/00-Index.md), here you will find further information, for example:
 
-- [Themes](https://github.com/secure-77/Perlite/wiki/Themes)
-- [Graph Setup and Settings](https://github.com/secure-77/Perlite/wiki/Graph)
-- [Perlite Settings](https://github.com/secure-77/Perlite/wiki/03---Perlite-Settings)
-- [Troubleshooting](https://github.com/secure-77/Perlite/wiki/Troubleshooting)
+- [.env Settings](perlite/Demo/Documentation/03-Env-Settings.md)
+- [Browser Settings](perlite/Demo/Documentation/04-Browser-Settings.md)
+- [Graph Setup](perlite/Demo/Documentation/06-Graph.md)
+- [Themes](perlite/Demo/Documentation/07-Themes.md)
+- [Troubleshooting & FAQ](perlite/Demo/Documentation/08-Troubleshooting-FAQ.md)
 
 
 ## Security

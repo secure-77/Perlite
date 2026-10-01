@@ -47,9 +47,11 @@ function parseEnvFile($file)
 }
 
 $envFileVars = [];
+$envFileDir = '';
 foreach ([dirname(__DIR__) . '/.env', __DIR__ . '/.env'] as $envFile) {
 	if (is_file($envFile) && is_readable($envFile)) {
 		$envFileVars = parseEnvFile($envFile);
+		$envFileDir = dirname($envFile);
 		break;
 	}
 }
@@ -86,8 +88,18 @@ function getListSetting($key, $default)
 $avFiles = array();
 
 // --- General Settings ---
-$rootDir = getSetting('NOTES_PATH', 'Demo');
-$vaultName = $rootDir;
+$rootDir = rtrim(getSetting('NOTES_PATH', 'Demo'), '/\\');
+
+// NOTES_PATH can also be the docker compose host path (e.g. ./perlite/Demo), relative to the .env file,
+// use it as folder relative to the perlite folder if it is located inside
+if ($rootDir !== '' && !is_dir(__DIR__ . '/' . $rootDir) && $envFileDir !== '') {
+	$notesPath = realpath($envFileDir . '/' . $rootDir);
+	$perlitePath = realpath(__DIR__);
+	if ($notesPath !== false && strpos($notesPath, $perlitePath . DIRECTORY_SEPARATOR) === 0)
+		$rootDir = str_replace('\\', '/', substr($notesPath, strlen($perlitePath) + 1));
+}
+
+$vaultName = getSetting('VAULT_NAME', mb_basename($rootDir));
 $index = getSetting('HOME_FILE', 'README');
 $siteTitle = getSetting('SITE_TITLE', 'Perlite');
 
@@ -197,7 +209,7 @@ if (strcmp($hideFolders, '')) {
 if (!strcmp($rootDir, "")) {
 
 	$rootDir = getcwd();
-	$vaultName = mb_basename($rootDir);
+	$vaultName = getSetting('VAULT_NAME', mb_basename($rootDir));
 	$startDir = "";
 } else {
 	$startDir = $rootDir;
@@ -568,11 +580,11 @@ function getfullGraph($rootDir)
 {
 
 	global $tempPath;
-	global $vaultName;
 
+	$vaultFolder = mb_basename($rootDir);
 	$jsonMetadaFile = $rootDir . '/metadata.json';
-	$metadaTempFile = $tempPath . '/metadata_' . $vaultName . '.temp';
-	$metadaTempFileSum = $tempPath . '/metadata_' . $vaultName . '.md5';
+	$metadaTempFile = $tempPath . '/metadata_' . $vaultFolder . '.temp';
+	$metadaTempFileSum = $tempPath . '/metadata_' . $vaultFolder . '.md5';
 
 
 
