@@ -344,3 +344,148 @@ a.perlite-download-link:hover {
   padding: var(--size-4-4);
   color: var(--text-muted);
 }
+
+
+/* --------------- */
+/* Print */
+/* app.css (obsidian) hides the whole app while printing, because obsidian prints a cloned .print element.
+   Perlite prints the current note directly, the color mode is set by the user setting "Print colors" (perlite.js) */
+
+@media print {
+
+  @page {
+    margin: 15mm;
+  }
+
+  body > .app-container {
+    display: block !important;
+  }
+
+  /* hide the ui, only the note is printed */
+  .titlebar,
+  .status-bar,
+  .workspace-ribbon,
+  .workspace-split.mod-left-split,
+  .workspace-split.mod-right-split,
+  .view-header,
+  .workspace-tab-header-container,
+  #graph_content,
+  .graph-controls,
+  .modal-container,
+  .popover,
+  .copy-code-button,
+  .copy-icon,
+  .sidebar-toggle-button,
+  .markdown-preview-pusher,
+  .workspace-leaf-resize-handle {
+    display: none !important;
+  }
+
+  /* let the note flow over multiple pages */
+  html,
+  body,
+  .app-container,
+  .horizontal-main-container,
+  .workspace,
+  .workspace-split.mod-vertical.mod-root,
+  .workspace-tabs,
+  .workspace-tab-container,
+  .workspace-leaf,
+  .workspace-leaf-content,
+  .view-content,
+  .markdown-reading-view,
+  .markdown-preview-view,
+  .markdown-preview-sizer {
+    display: block !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+    contain: none !important;
+  }
+
+  .markdown-preview-sizer {
+    padding-bottom: 0 !important;
+  }
+
+  .markdown-preview-view {
+    padding: 0 !important;
+  }
+
+  #mdContent {
+    padding-right: 0 !important;
+  }
+
+  /* keep backgrounds and code highlight colors */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html,
+  body {
+    background-color: var(--background-primary) !important;
+  }
+
+  pre,
+  pre code {
+    white-space: pre-wrap !important;
+    word-break: break-word;
+    overflow: visible !important;
+  }
+
+  /* page breaks */
+  pre,
+  img,
+  svg,
+  table,
+  blockquote,
+  .callout,
+  .katex-display,
+  .perlite-canvas {
+    break-inside: avoid;
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .inline-title {
+    break-after: avoid;
+  }
+
+  .is-collapsed-callout {
+    display: block !important;
+  }
+
+  .perlite-canvas {
+    height: 180mm;
+    min-height: 0;
+  }
+
+  /* black & white */
+  body.theme-light.perlite-print-bw {
+    --background-primary: #fff;
+    --text-normal: #000;
+    --text-muted: #333;
+    --text-faint: #555;
+    --text-accent: #000;
+    --inline-title-color: #000;
+    --h1-color: #000;
+    --h2-color: #000;
+    --h3-color: #000;
+    --h4-color: #000;
+    --h5-color: #000;
+    --h6-color: #000;
+    --bold-color: #000;
+    --italic-color: #000;
+    --link-color: #000;
+    --link-external-color: #000;
+    --link-unresolved-color: #000;
+    --tag-color: #000;
+  }
+
+  body.perlite-print-bw a {
+    text-decoration: underline !important;
+  }
+}

@@ -1,3 +1,9 @@
+## 1.6.3
+- Set Mermaid default htmlLabels to false
+- Fixed browser printing (printed only a blank page), only the current note is printed now, code highlighting is kept
+- new user setting `Print colors` (Perlite settings, stored in the browser): print the light variant of the active theme (default), as on screen or black & white
+
+
 ## 1.6.2
 - Support default (Gitlab / Github) Markdown Images
 - Fixed broken links in tables, merged PR [#184](https://github.com/secure-77/Perlite/pull/184) thanks to @Nick-LCY
@@ -5,13 +11,13 @@
 - implemented support for Footnotes [#9](https://github.com/secure-77/Perlite/issues/9)
 - Fixed internal default Markdown Links
 - Extended YAML Frontmatter support
-- Fixed callouts with no content [[#182](https://github.com/secure-77/Perlite/issues/182)]
+- Fixed callouts with no content [#182](https://github.com/secure-77/Perlite/issues/182)
 - updated katex to 0.18.9
 - updated highlight.js to 11.12.0
 - updated mermaid to 11.15.0
 - updated vis-network to 10.1.2
 - all settings are now configured in a single `.env` file (see `.env.example`), used by docker compose and read directly by helper.php without docker, `settings.php` has been removed
-- new setting `TREE_VISIBLE_EXTENSIONS` to show other files (e.g. `pdf,docx`) next to the notes in the navigation, clicking them downloads the file [[#181](https://github.com/secure-77/Perlite/issues/181)]
+- new setting `TREE_VISIBLE_EXTENSIONS` to show other files (e.g. `pdf,docx`) next to the notes in the navigation, clicking them downloads the file [#181](https://github.com/secure-77/Perlite/issues/181)
 - read-only support for Obsidian Canvas (`.canvas`) files: text, note (embedded), image, link and group cards, edges with labels and colors, pan & zoom (drag / wheel, ctrl + wheel or pinch to zoom), the right side-dock is collapsed while a canvas is open
 - canvas embeds: video and audio files are played inline, YouTube / Vimeo links are embedded, new setting `CANVAS_IFRAME_EMBEDS` (`off`, `click`, `auto`, default `click`) to embed websites of link cards as sandboxed iframe
 

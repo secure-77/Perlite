@@ -1505,6 +1505,9 @@ $(document).ready(function () {
     $('.darkModeOption').removeClass('is-enabled')
   }
 
+  // print colors
+  $('#printModeDropdown').val(localStorage.getItem('printMode') || 'light')
+
   // popUp Setting
   if (localStorage.getItem('popUpEnabled') === 'true') {
     $('.popUpSetting').addClass('is-enabled')
@@ -1861,6 +1864,33 @@ $(document).ready(function () {
 
     localStorage.setItem('Theme', target.val());
 
+  });
+
+  // change print colors
+  $("#printModeDropdown").change(function (e) {
+    localStorage.setItem('printMode', $(e.target).val());
+  });
+
+  // apply print colors, the light variant of the active theme is used for "light" and "bw"
+  var printSwappedTheme = false;
+
+  window.addEventListener('beforeprint', function () {
+    var printMode = localStorage.getItem('printMode') || 'light';
+    $('body').addClass('perlite-print-' + printMode);
+
+    if (printMode !== 'screen' && $('body').hasClass('theme-dark')) {
+      $('body').removeClass('theme-dark').addClass('theme-light');
+      printSwappedTheme = true;
+    }
+  });
+
+  window.addEventListener('afterprint', function () {
+    $('body').removeClass('perlite-print-light perlite-print-screen perlite-print-bw');
+
+    if (printSwappedTheme) {
+      $('body').removeClass('theme-light').addClass('theme-dark');
+      printSwappedTheme = false;
+    }
   });
 
   //set active theme

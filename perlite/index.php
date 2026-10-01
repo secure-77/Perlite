@@ -900,6 +900,20 @@ $jsonGraphData = getfullGraph($rootDir);
                         </div>
                     </div>
 
+                    <div class="setting-item">
+                        <div class="setting-item-info">
+                            <div class="setting-item-name">Print colors</div>
+                            <div class="setting-item-description">Color scheme used when printing a note.</div>
+                        </div>
+                        <div class="setting-item-control">
+                            <select id="printModeDropdown" class="dropdown">
+                                <option value="light">Light theme variant</option>
+                                <option value="screen">As on screen</option>
+                                <option value="bw">Black &amp; white</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="setting-item setting-item-heading">
                         <div class="setting-item-info">
                             <div class="setting-item-name">Sizes</div>
