@@ -72,7 +72,7 @@ function unslugURL(targetPath) {
 function slugURL(targetPath) {
 
   encodedURI = decodeURIComponent(targetPath)
-  encodedURI = encodedURI.replaceAll('~', '%80')
+  encodedURI = encodedURI.replaceAll('~', '%2580')
   encodedURI = encodedURI.replaceAll('-', '~')
   encodedURI = encodedURI.replaceAll(' ', '-')
 
@@ -1207,7 +1207,7 @@ function renderGraph(modal, path = "", filter_emptyNodes = false, show_tags = tr
         search(node.title);
 
       } else {
-        var glink = uriPath + node.title;
+        var glink = uriPath + slugURL(encodeURIComponent('/' + node.title));
         window.open(glink, "_self");
       }
     });
