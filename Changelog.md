@@ -2,6 +2,9 @@
 - Set Mermaid default htmlLabels to false
 - Fixed browser printing (printed only a blank page), only the current note is printed now, code highlighting is kept
 - new user setting `Print colors` (Perlite settings, stored in the browser): print the light variant of the active theme (default), as on screen or black & white
+- **Docker:** the vault path is now only set via `NOTES_PATH` in the `.env` (host path, e.g. `./perlite/Demo` or `/srv/obsidian/MyVault`), the compose files mount it themselves, no need to change the volumes anymore. Existing `.env` files with `NOTES_PATH=Demo` have to be changed to `NOTES_PATH=./perlite/Demo` (or your vault path)
+- without Docker, `NOTES_PATH` can also be given relative to the `.env` file (e.g. `./perlite/Demo`), so the same `.env` works for both setups
+- new setting `VAULT_NAME` for the vault name shown in the UI (default: folder name of the vault)
 
 
 ## 1.6.2

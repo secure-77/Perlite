@@ -7,7 +7,9 @@ services:
         required: false
     volumes:
       - ./perlite:/var/www/perlite
-      - ./perlite/Demo:/var/www/perlite/Demo:ro
+      - ${NOTES_PATH:-./perlite/Demo}:/var/www/perlite/Notes:ro
+    environment:
+      NOTES_PATH: Notes
 
   web:
     image: nginx:stable
@@ -17,7 +19,7 @@ services:
     volumes:
       - ./web/config/perlite.conf:/etc/nginx/conf.d/default.conf:ro
       - ./perlite:/var/www/perlite
-      - ./perlite/Demo:/var/www/perlite/Demo:ro   
+      - ${NOTES_PATH:-./perlite/Demo}:/var/www/perlite/Notes:ro
     depends_on:
       - perlite
 
