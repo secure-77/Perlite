@@ -17,9 +17,10 @@ Read more about Perlite and staging tips on my blog post: [Perlite on Secure77](
 If you want to discuss Perlite you can join the thread in the [Obsidian Forum](https://forum.obsidian.md/t/perlite-publish-your-notes-to-your-own-web-server/21712) or join the [Perlite Discord Server](https://discord.gg/pkJ347ssWT)
 
 
-## Documentation on Github
+## Documentation
 
-[Perlite on Github](https://github.com/secure-77/Perlite/)
+- [Perlite Documentation](Documentation/00-Index.md)
+- [Perlite on Github](https://github.com/secure-77/Perlite/)
 
 ## Features
 
@@ -33,6 +34,7 @@ If you want to discuss Perlite you can join the thread in the [Obsidian Forum](h
 - Search
 - Support Obisdian tags, links, images and preview
 - Dark and Light Mode
+- Obsidian Canvas support
 
 ## Changelog
 [Changelog](https://github.com/secure-77/Perlite/blob/main/Changelog.md)

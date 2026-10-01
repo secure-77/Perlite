@@ -11,7 +11,7 @@
         "level": 1
       },
       {
-        "heading": "Documentation on Github",
+        "heading": "Documentation",
         "level": 2
       },
       {
@@ -29,6 +29,986 @@
       {
         "heading": "Safe Mode Test",
         "level": 2
+      }
+    ],
+    "links": [
+      {
+        "link": "00-Index.md",
+        "displayText": "Perlite Documentation",
+        "relativePath": "Documentation/00-Index.md"
+      }
+    ]
+  },
+  {
+    "fileName": "08-Troubleshooting-FAQ",
+    "relativePath": "Documentation/08-Troubleshooting-FAQ.md",
+    "headings": [
+      {
+        "heading": "Troubleshooting & FAQ",
+        "level": 1
+      },
+      {
+        "heading": "Troubleshooting",
+        "level": 2
+      },
+      {
+        "heading": "Links or images don't work",
+        "level": 3
+      },
+      {
+        "heading": "The graph is missing",
+        "level": 3
+      },
+      {
+        "heading": "Timeout on large vaults",
+        "level": 3
+      },
+      {
+        "heading": "Themes are not loaded",
+        "level": 3
+      },
+      {
+        "heading": "Settings in .env have no effect",
+        "level": 3
+      },
+      {
+        "heading": "Docker: still the old version after update",
+        "level": 3
+      },
+      {
+        "heading": "Docker: page not reachable",
+        "level": 3
+      },
+      {
+        "heading": "Docker: the demo vault is shown instead of my notes",
+        "level": 3
+      },
+      {
+        "heading": "FAQ",
+        "level": 2
+      },
+      {
+        "heading": "How do I enable HTTPS?",
+        "level": 3
+      },
+      {
+        "heading": "Can I protect Perlite with a password?",
+        "level": 3
+      },
+      {
+        "heading": "Can I hide folders?",
+        "level": 3
+      },
+      {
+        "heading": "Can I use HTML in my notes?",
+        "level": 3
+      },
+      {
+        "heading": "Are Obsidian plugins supported?",
+        "level": 3
+      },
+      {
+        "heading": "Can I set the size and alt text of images?",
+        "level": 3
+      },
+      {
+        "heading": "Why is there no perlite_web image on Docker Hub?",
+        "level": 3
+      },
+      {
+        "heading": "Still stuck?",
+        "level": 2
+      }
+    ],
+    "links": [
+      {
+        "link": "05-Obsidian-Settings.md",
+        "displayText": "link format in Obsidian",
+        "relativePath": "Documentation/05-Obsidian-Settings.md"
+      },
+      {
+        "link": "06-Graph.md",
+        "displayText": "Graph",
+        "relativePath": "Documentation/06-Graph.md"
+      },
+      {
+        "link": "07-Themes.md",
+        "displayText": "Themes",
+        "relativePath": "Documentation/07-Themes.md"
+      },
+      {
+        "link": "01-Docker-Setup.md",
+        "displayText": "Docker Setup",
+        "relativePath": "Documentation/01-Docker-Setup.md"
+      },
+      {
+        "link": "05-Obsidian-Settings.md",
+        "displayText": "Obsidian Settings",
+        "relativePath": "Documentation/05-Obsidian-Settings.md"
+      },
+      {
+        "link": "00-Index.md",
+        "displayText": "Index",
+        "relativePath": "Documentation/00-Index.md"
+      }
+    ],
+    "backlinks": [
+      {
+        "fileName": "00-Index",
+        "link": "08-Troubleshooting-FAQ.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": "Troubleshooting & FAQ"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "08-Troubleshooting-FAQ.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": "FAQ"
+      },
+      {
+        "fileName": "01-Docker-Setup",
+        "link": "08-Troubleshooting-FAQ.md",
+        "relativePath": "Documentation/01-Docker-Setup.md",
+        "displayText": "FAQ"
+      }
+    ]
+  },
+  {
+    "fileName": "07-Themes",
+    "relativePath": "Documentation/07-Themes.md",
+    "headings": [
+      {
+        "heading": "Themes",
+        "level": 1
+      },
+      {
+        "heading": "Setup",
+        "level": 2
+      },
+      {
+        "heading": "Web server access",
+        "level": 2
+      },
+      {
+        "heading": "Switching themes",
+        "level": 2
+      }
+    ],
+    "links": [
+      {
+        "link": "04-Browser-Settings.md",
+        "displayText": "Browser Settings",
+        "relativePath": "Documentation/04-Browser-Settings.md"
+      },
+      {
+        "link": "00-Index.md",
+        "displayText": "Index",
+        "relativePath": "Documentation/00-Index.md"
+      }
+    ],
+    "backlinks": [
+      {
+        "fileName": "08-Troubleshooting-FAQ",
+        "link": "07-Themes.md",
+        "relativePath": "Documentation/08-Troubleshooting-FAQ.md",
+        "displayText": "Themes"
+      },
+      {
+        "fileName": "05-Obsidian-Settings",
+        "link": "07-Themes.md",
+        "relativePath": "Documentation/05-Obsidian-Settings.md",
+        "displayText": "themes"
+      },
+      {
+        "fileName": "04-Browser-Settings",
+        "link": "07-Themes.md",
+        "relativePath": "Documentation/04-Browser-Settings.md",
+        "displayText": "themes"
+      },
+      {
+        "fileName": "02-Setup-without-Docker",
+        "link": "07-Themes.md",
+        "relativePath": "Documentation/02-Setup-without-Docker.md",
+        "displayText": "Themes"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "07-Themes.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": "Themes"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "07-Themes.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": "themes"
+      },
+      {
+        "fileName": "01-Docker-Setup",
+        "link": "07-Themes.md",
+        "relativePath": "Documentation/01-Docker-Setup.md",
+        "displayText": "Themes"
+      }
+    ]
+  },
+  {
+    "fileName": "06-Graph",
+    "relativePath": "Documentation/06-Graph.md",
+    "headings": [
+      {
+        "heading": "Graph",
+        "level": 1
+      },
+      {
+        "heading": "Setup",
+        "level": 2
+      },
+      {
+        "heading": "1. Install the Metadata Extractor plugin",
+        "level": 3
+      },
+      {
+        "heading": "2. Configure the plugin",
+        "level": 3
+      },
+      {
+        "heading": "3. Publish it with your vault",
+        "level": 3
+      },
+      {
+        "heading": "Caching",
+        "level": 2
+      },
+      {
+        "heading": "Performance",
+        "level": 2
+      },
+      {
+        "heading": "Settings",
+        "level": 2
+      },
+      {
+        "heading": "Security",
+        "level": 2
+      }
+    ],
+    "links": [
+      {
+        "link": "04-Browser-Settings.md",
+        "displayText": "Browser Settings",
+        "relativePath": "Documentation/04-Browser-Settings.md"
+      },
+      {
+        "link": "00-Index.md",
+        "displayText": "Index",
+        "relativePath": "Documentation/00-Index.md"
+      }
+    ],
+    "backlinks": [
+      {
+        "fileName": "08-Troubleshooting-FAQ",
+        "link": "06-Graph.md",
+        "relativePath": "Documentation/08-Troubleshooting-FAQ.md",
+        "displayText": "Graph"
+      },
+      {
+        "fileName": "05-Obsidian-Settings",
+        "link": "06-Graph.md",
+        "relativePath": "Documentation/05-Obsidian-Settings.md",
+        "displayText": "Graph"
+      },
+      {
+        "fileName": "04-Browser-Settings",
+        "link": "06-Graph.md",
+        "relativePath": "Documentation/04-Browser-Settings.md",
+        "displayText": "Graph"
+      },
+      {
+        "fileName": "03-Env-Settings",
+        "link": "06-Graph.md",
+        "relativePath": "Documentation/03-Env-Settings.md",
+        "displayText": "Graph"
+      },
+      {
+        "fileName": "02-Setup-without-Docker",
+        "link": "06-Graph.md",
+        "relativePath": "Documentation/02-Setup-without-Docker.md",
+        "displayText": "Graph setup"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "06-Graph.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": "Graph"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "06-Graph.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": "set up the graph"
+      },
+      {
+        "fileName": "01-Docker-Setup",
+        "link": "06-Graph.md",
+        "relativePath": "Documentation/01-Docker-Setup.md",
+        "displayText": "Graph setup"
+      }
+    ]
+  },
+  {
+    "fileName": "05-Obsidian-Settings",
+    "relativePath": "Documentation/05-Obsidian-Settings.md",
+    "headings": [
+      {
+        "heading": "Obsidian Settings",
+        "level": 1
+      },
+      {
+        "heading": "Required: Link format",
+        "level": 2
+      },
+      {
+        "heading": "Attachments",
+        "level": 2
+      },
+      {
+        "heading": "Supported link syntax",
+        "level": 2
+      },
+      {
+        "heading": "The .obsidian folder",
+        "level": 2
+      },
+      {
+        "heading": "Special files in the vault root",
+        "level": 2
+      },
+      {
+        "heading": "Frontmatter and titles",
+        "level": 2
+      },
+      {
+        "heading": "Not supported",
+        "level": 2
+      }
+    ],
+    "links": [
+      {
+        "link": "Wikilinks"
+      },
+      {
+        "link": "03-Env-Settings.md",
+        "displayText": ".env",
+        "relativePath": "Documentation/03-Env-Settings.md"
+      },
+      {
+        "link": "07-Themes.md",
+        "displayText": "themes",
+        "relativePath": "Documentation/07-Themes.md"
+      },
+      {
+        "link": "06-Graph.md",
+        "displayText": "Graph",
+        "relativePath": "Documentation/06-Graph.md"
+      },
+      {
+        "link": "00-Index.md",
+        "displayText": "Index",
+        "relativePath": "Documentation/00-Index.md"
+      }
+    ],
+    "backlinks": [
+      {
+        "fileName": "08-Troubleshooting-FAQ",
+        "link": "05-Obsidian-Settings.md",
+        "relativePath": "Documentation/08-Troubleshooting-FAQ.md",
+        "displayText": "link format in Obsidian"
+      },
+      {
+        "fileName": "08-Troubleshooting-FAQ",
+        "link": "05-Obsidian-Settings.md",
+        "relativePath": "Documentation/08-Troubleshooting-FAQ.md",
+        "displayText": "Obsidian Settings"
+      },
+      {
+        "fileName": "03-Env-Settings",
+        "link": "05-Obsidian-Settings.md",
+        "relativePath": "Documentation/03-Env-Settings.md",
+        "displayText": "Obsidian Settings"
+      },
+      {
+        "fileName": "02-Setup-without-Docker",
+        "link": "05-Obsidian-Settings.md",
+        "relativePath": "Documentation/02-Setup-without-Docker.md",
+        "displayText": "Required Obsidian settings"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "05-Obsidian-Settings.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": "Obsidian Settings"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "05-Obsidian-Settings.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": "required Obsidian settings"
+      },
+      {
+        "fileName": "01-Docker-Setup",
+        "link": "05-Obsidian-Settings.md",
+        "relativePath": "Documentation/01-Docker-Setup.md",
+        "displayText": "Required Obsidian settings"
+      }
+    ]
+  },
+  {
+    "fileName": "04-Browser-Settings",
+    "relativePath": "Documentation/04-Browser-Settings.md",
+    "headings": [
+      {
+        "heading": "Browser Settings",
+        "level": 1
+      },
+      {
+        "heading": "Appearance",
+        "level": 2
+      },
+      {
+        "heading": "Sizes",
+        "level": 2
+      },
+      {
+        "heading": "Mobile",
+        "level": 2
+      },
+      {
+        "heading": "Advanced",
+        "level": 2
+      },
+      {
+        "heading": "Right Panel",
+        "level": 2
+      },
+      {
+        "heading": "Graph Settings",
+        "level": 2
+      }
+    ],
+    "links": [
+      {
+        "link": "03-Env-Settings.md",
+        "displayText": ".env Settings",
+        "relativePath": "Documentation/03-Env-Settings.md"
+      },
+      {
+        "link": "07-Themes.md",
+        "displayText": "themes",
+        "relativePath": "Documentation/07-Themes.md"
+      },
+      {
+        "link": "06-Graph.md",
+        "displayText": "Graph",
+        "relativePath": "Documentation/06-Graph.md"
+      },
+      {
+        "link": "00-Index.md",
+        "displayText": "Index",
+        "relativePath": "Documentation/00-Index.md"
+      }
+    ],
+    "backlinks": [
+      {
+        "fileName": "07-Themes",
+        "link": "04-Browser-Settings.md",
+        "relativePath": "Documentation/07-Themes.md",
+        "displayText": "Browser Settings"
+      },
+      {
+        "fileName": "06-Graph",
+        "link": "04-Browser-Settings.md",
+        "relativePath": "Documentation/06-Graph.md",
+        "displayText": "Browser Settings"
+      },
+      {
+        "fileName": "03-Env-Settings",
+        "link": "04-Browser-Settings.md",
+        "relativePath": "Documentation/03-Env-Settings.md",
+        "displayText": "Browser Settings"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "04-Browser-Settings.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": "Browser Settings"
+      }
+    ]
+  },
+  {
+    "fileName": "03-Env-Settings",
+    "relativePath": "Documentation/03-Env-Settings.md",
+    "headings": [
+      {
+        "heading": ".env Settings",
+        "level": 1
+      },
+      {
+        "heading": "Syntax",
+        "level": 2
+      },
+      {
+        "heading": "General Settings",
+        "level": 2
+      },
+      {
+        "heading": "Frontend Settings",
+        "level": 2
+      },
+      {
+        "heading": "Advanced Settings",
+        "level": 2
+      },
+      {
+        "heading": "Metadata Settings",
+        "level": 2
+      },
+      {
+        "heading": "Profile Settings",
+        "level": 2
+      },
+      {
+        "heading": "Example",
+        "level": 2
+      }
+    ],
+    "links": [
+      {
+        "link": "01-Docker-Setup.md",
+        "displayText": "Docker Setup",
+        "relativePath": "Documentation/01-Docker-Setup.md"
+      },
+      {
+        "link": "02-Setup-without-Docker.md",
+        "displayText": "Setup without Docker",
+        "relativePath": "Documentation/02-Setup-without-Docker.md"
+      },
+      {
+        "link": "04-Browser-Settings.md",
+        "displayText": "Browser Settings",
+        "relativePath": "Documentation/04-Browser-Settings.md"
+      },
+      {
+        "link": "05-Obsidian-Settings.md",
+        "displayText": "Obsidian Settings",
+        "relativePath": "Documentation/05-Obsidian-Settings.md"
+      },
+      {
+        "link": "06-Graph.md",
+        "displayText": "Graph",
+        "relativePath": "Documentation/06-Graph.md"
+      },
+      {
+        "link": "00-Index.md",
+        "displayText": "Index",
+        "relativePath": "Documentation/00-Index.md"
+      }
+    ],
+    "backlinks": [
+      {
+        "fileName": "05-Obsidian-Settings",
+        "link": "03-Env-Settings.md",
+        "relativePath": "Documentation/05-Obsidian-Settings.md",
+        "displayText": ".env"
+      },
+      {
+        "fileName": "04-Browser-Settings",
+        "link": "03-Env-Settings.md",
+        "relativePath": "Documentation/04-Browser-Settings.md",
+        "displayText": ".env Settings"
+      },
+      {
+        "fileName": "02-Setup-without-Docker",
+        "link": "03-Env-Settings.md",
+        "relativePath": "Documentation/02-Setup-without-Docker.md",
+        "displayText": ".env Settings"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "03-Env-Settings.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": ".env Settings"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "03-Env-Settings.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": ".env Settings"
+      },
+      {
+        "fileName": "01-Docker-Setup",
+        "link": "03-Env-Settings.md",
+        "relativePath": "Documentation/01-Docker-Setup.md",
+        "displayText": ".env Settings"
+      }
+    ]
+  },
+  {
+    "fileName": "02-Setup-without-Docker",
+    "relativePath": "Documentation/02-Setup-without-Docker.md",
+    "headings": [
+      {
+        "heading": "Setup without Docker",
+        "level": 1
+      },
+      {
+        "heading": "Requirements",
+        "level": 2
+      },
+      {
+        "heading": "1. Copy Perlite to your web root",
+        "level": 2
+      },
+      {
+        "heading": "2. Create the .env file",
+        "level": 2
+      },
+      {
+        "heading": "3. Set the vault path",
+        "level": 2
+      },
+      {
+        "heading": "4. Configure the web server",
+        "level": 2
+      },
+      {
+        "heading": "nginx",
+        "level": 3
+      },
+      {
+        "heading": "Hosting in a sub folder",
+        "level": 4
+      },
+      {
+        "heading": "Apache",
+        "level": 3
+      },
+      {
+        "heading": "5. Temp folder",
+        "level": 2
+      },
+      {
+        "heading": "Next Steps",
+        "level": 2
+      }
+    ],
+    "links": [
+      {
+        "link": "03-Env-Settings.md",
+        "displayText": ".env Settings",
+        "relativePath": "Documentation/03-Env-Settings.md"
+      },
+      {
+        "link": "05-Obsidian-Settings.md",
+        "displayText": "Required Obsidian settings",
+        "relativePath": "Documentation/05-Obsidian-Settings.md"
+      },
+      {
+        "link": "06-Graph.md",
+        "displayText": "Graph setup",
+        "relativePath": "Documentation/06-Graph.md"
+      },
+      {
+        "link": "07-Themes.md",
+        "displayText": "Themes",
+        "relativePath": "Documentation/07-Themes.md"
+      },
+      {
+        "link": "00-Index.md",
+        "displayText": "Index",
+        "relativePath": "Documentation/00-Index.md"
+      }
+    ],
+    "backlinks": [
+      {
+        "fileName": "03-Env-Settings",
+        "link": "02-Setup-without-Docker.md",
+        "relativePath": "Documentation/03-Env-Settings.md",
+        "displayText": "Setup without Docker"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "02-Setup-without-Docker.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": "Setup without Docker"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "02-Setup-without-Docker.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": "without Docker"
+      }
+    ]
+  },
+  {
+    "fileName": "00-Index",
+    "relativePath": "Documentation/00-Index.md",
+    "headings": [
+      {
+        "heading": "Perlite Documentation",
+        "level": 1
+      },
+      {
+        "heading": "Features",
+        "level": 2
+      },
+      {
+        "heading": "How it works",
+        "level": 2
+      },
+      {
+        "heading": "Table of Contents",
+        "level": 2
+      },
+      {
+        "heading": "Quick Start",
+        "level": 2
+      },
+      {
+        "heading": "Security Notes",
+        "level": 2
+      }
+    ],
+    "links": [
+      {
+        "link": "01-Docker-Setup.md",
+        "displayText": "Docker Setup",
+        "relativePath": "Documentation/01-Docker-Setup.md"
+      },
+      {
+        "link": "02-Setup-without-Docker.md",
+        "displayText": "Setup without Docker",
+        "relativePath": "Documentation/02-Setup-without-Docker.md"
+      },
+      {
+        "link": "03-Env-Settings.md",
+        "displayText": ".env Settings",
+        "relativePath": "Documentation/03-Env-Settings.md"
+      },
+      {
+        "link": "04-Browser-Settings.md",
+        "displayText": "Browser Settings",
+        "relativePath": "Documentation/04-Browser-Settings.md"
+      },
+      {
+        "link": "05-Obsidian-Settings.md",
+        "displayText": "Obsidian Settings",
+        "relativePath": "Documentation/05-Obsidian-Settings.md"
+      },
+      {
+        "link": "06-Graph.md",
+        "displayText": "Graph",
+        "relativePath": "Documentation/06-Graph.md"
+      },
+      {
+        "link": "07-Themes.md",
+        "displayText": "Themes",
+        "relativePath": "Documentation/07-Themes.md"
+      },
+      {
+        "link": "08-Troubleshooting-FAQ.md",
+        "displayText": "Troubleshooting & FAQ",
+        "relativePath": "Documentation/08-Troubleshooting-FAQ.md"
+      },
+      {
+        "link": "05-Obsidian-Settings.md",
+        "displayText": "required Obsidian settings",
+        "relativePath": "Documentation/05-Obsidian-Settings.md"
+      },
+      {
+        "link": "01-Docker-Setup.md",
+        "displayText": "Docker",
+        "relativePath": "Documentation/01-Docker-Setup.md"
+      },
+      {
+        "link": "02-Setup-without-Docker.md",
+        "displayText": "without Docker",
+        "relativePath": "Documentation/02-Setup-without-Docker.md"
+      },
+      {
+        "link": "03-Env-Settings.md",
+        "displayText": ".env Settings",
+        "relativePath": "Documentation/03-Env-Settings.md"
+      },
+      {
+        "link": "06-Graph.md",
+        "displayText": "set up the graph",
+        "relativePath": "Documentation/06-Graph.md"
+      },
+      {
+        "link": "07-Themes.md",
+        "displayText": "themes",
+        "relativePath": "Documentation/07-Themes.md"
+      },
+      {
+        "link": "08-Troubleshooting-FAQ.md",
+        "displayText": "FAQ",
+        "relativePath": "Documentation/08-Troubleshooting-FAQ.md"
+      }
+    ],
+    "backlinks": [
+      {
+        "fileName": "README",
+        "link": "00-Index.md",
+        "relativePath": "README.md",
+        "displayText": "Perlite Documentation"
+      },
+      {
+        "fileName": "08-Troubleshooting-FAQ",
+        "link": "00-Index.md",
+        "relativePath": "Documentation/08-Troubleshooting-FAQ.md",
+        "displayText": "Index"
+      },
+      {
+        "fileName": "07-Themes",
+        "link": "00-Index.md",
+        "relativePath": "Documentation/07-Themes.md",
+        "displayText": "Index"
+      },
+      {
+        "fileName": "06-Graph",
+        "link": "00-Index.md",
+        "relativePath": "Documentation/06-Graph.md",
+        "displayText": "Index"
+      },
+      {
+        "fileName": "05-Obsidian-Settings",
+        "link": "00-Index.md",
+        "relativePath": "Documentation/05-Obsidian-Settings.md",
+        "displayText": "Index"
+      },
+      {
+        "fileName": "04-Browser-Settings",
+        "link": "00-Index.md",
+        "relativePath": "Documentation/04-Browser-Settings.md",
+        "displayText": "Index"
+      },
+      {
+        "fileName": "03-Env-Settings",
+        "link": "00-Index.md",
+        "relativePath": "Documentation/03-Env-Settings.md",
+        "displayText": "Index"
+      },
+      {
+        "fileName": "02-Setup-without-Docker",
+        "link": "00-Index.md",
+        "relativePath": "Documentation/02-Setup-without-Docker.md",
+        "displayText": "Index"
+      },
+      {
+        "fileName": "01-Docker-Setup",
+        "link": "00-Index.md",
+        "relativePath": "Documentation/01-Docker-Setup.md",
+        "displayText": "Index"
+      }
+    ]
+  },
+  {
+    "fileName": "01-Docker-Setup",
+    "relativePath": "Documentation/01-Docker-Setup.md",
+    "headings": [
+      {
+        "heading": "Docker Setup",
+        "level": 1
+      },
+      {
+        "heading": "Requirements",
+        "level": 2
+      },
+      {
+        "heading": "1. Create the .env file",
+        "level": 2
+      },
+      {
+        "heading": "2. Set the vault path",
+        "level": 2
+      },
+      {
+        "heading": "3. Start Perlite",
+        "level": 2
+      },
+      {
+        "heading": "Updating",
+        "level": 2
+      },
+      {
+        "heading": "Dev image",
+        "level": 2
+      },
+      {
+        "heading": "HTTPS",
+        "level": 2
+      },
+      {
+        "heading": "Next Steps",
+        "level": 2
+      }
+    ],
+    "links": [
+      {
+        "link": "03-Env-Settings.md",
+        "displayText": ".env Settings",
+        "relativePath": "Documentation/03-Env-Settings.md"
+      },
+      {
+        "link": "08-Troubleshooting-FAQ.md",
+        "displayText": "FAQ",
+        "relativePath": "Documentation/08-Troubleshooting-FAQ.md"
+      },
+      {
+        "link": "05-Obsidian-Settings.md",
+        "displayText": "Required Obsidian settings",
+        "relativePath": "Documentation/05-Obsidian-Settings.md"
+      },
+      {
+        "link": "06-Graph.md",
+        "displayText": "Graph setup",
+        "relativePath": "Documentation/06-Graph.md"
+      },
+      {
+        "link": "07-Themes.md",
+        "displayText": "Themes",
+        "relativePath": "Documentation/07-Themes.md"
+      },
+      {
+        "link": "00-Index.md",
+        "displayText": "Index",
+        "relativePath": "Documentation/00-Index.md"
+      }
+    ],
+    "backlinks": [
+      {
+        "fileName": "08-Troubleshooting-FAQ",
+        "link": "01-Docker-Setup.md",
+        "relativePath": "Documentation/08-Troubleshooting-FAQ.md",
+        "displayText": "Docker Setup"
+      },
+      {
+        "fileName": "03-Env-Settings",
+        "link": "01-Docker-Setup.md",
+        "relativePath": "Documentation/03-Env-Settings.md",
+        "displayText": "Docker Setup"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "01-Docker-Setup.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": "Docker Setup"
+      },
+      {
+        "fileName": "00-Index",
+        "link": "01-Docker-Setup.md",
+        "relativePath": "Documentation/00-Index.md",
+        "displayText": "Docker"
       }
     ]
   },
@@ -67,6 +1047,10 @@
       {
         "heading": "Horizontal Rules (--)",
         "level": 2
+      },
+      {
+        "heading": "Tasks",
+        "level": 1
       },
       {
         "heading": "Tags",
@@ -132,6 +1116,10 @@
         "level": 2
       },
       {
+        "heading": "Audio",
+        "level": 2
+      },
+      {
         "heading": "PDF",
         "level": 2
       }
@@ -145,6 +1133,36 @@
         "link": "Markdown Samples",
         "displayText": "Custom Link Name",
         "relativePath": "Demo Documents/Markdown Samples.md"
+      },
+      {
+        "link": "Triya"
+      },
+      {
+        "link": "Synthea"
+      },
+      {
+        "link": "Phanes"
+      },
+      {
+        "link": "Antediluvians"
+      },
+      {
+        "link": "Sif"
+      },
+      {
+        "link": "Antediluvians"
+      },
+      {
+        "link": "Stargazers"
+      },
+      {
+        "link": "Triya"
+      },
+      {
+        "link": "Temple of Bes"
+      },
+      {
+        "link": "Triya"
       },
       {
         "link": "#PDF",
@@ -196,7 +1214,11 @@
       "tag-test",
       "readme"
     ],
-    "frontmatter": {},
+    "frontmatter": {
+      "title": "Beispielnotiz",
+      "date": "2024-06-15",
+      "status": "in progress"
+    },
     "aliases": [
       "Callouts",
       "Frontsmatter",
@@ -212,8 +1234,16 @@
         "level": 2
       },
       {
-        "heading": "Collapsible Callouts",
+        "heading": "Collapsible(Callouts",
         "level": 2
+      }
+    ],
+    "links": [
+      {
+        "link": "#Collapsible(Callouts",
+        "relativePath": "Demo Documents/Callouts and Frontmatter.md",
+        "cleanLink": "Callouts and Frontmatter",
+        "displayText": "Collapsible(Callouts"
       }
     ]
   }
