@@ -548,7 +548,9 @@ function getContent(str, home = false, popHover = false, anchor = "") {
         }
 
         //render mermaid
-        mermaid.init(undefined, document.querySelectorAll(".language-mermaid"));
+        mermaid.run({  
+          querySelector: ".language-mermaid"
+      });
 
         // canvas pan & zoom
         initCanvas();
@@ -2396,7 +2398,12 @@ $(document).ready(function () {
 
 
   // init mermaid
-  mermaid.initialize({ startOnLoad: false, 'securityLevel': 'Strict', 'theme': 'dark' });
+  mermaid.initialize({ 
+    startOnLoad: false, 
+    securityLevel: 'Strict',
+    htmlLabels: false, 
+    theme: 'dark' 
+  });
 
 
   // handle browser history 
