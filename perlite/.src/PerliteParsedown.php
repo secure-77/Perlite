@@ -1,7 +1,7 @@
 <?php
 
 /*!
- * Perlite v1.6.2 (https://github.com/secure-77/Perlite)
+ * Perlite v1.6.3 (https://github.com/secure-77/Perlite)
  * Author: sec77 (https://secure77.de)
  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
  */
@@ -121,6 +121,17 @@ class PerliteParsedown extends Parsedown
         $markup = trim($markup, "\n");
 
         return $markup;
+    }
+
+    # pretty url slug of a vault path, reversed by unslugURL() in perlite.js
+    # "~" -> "%2580" (decodes to "%80"), "-" -> "~", " " -> "-"
+    public static function slugPath(string $path): string
+    {
+        $path = str_replace('~', '%2580', $path);
+        $path = str_replace('-', '~', $path);
+        $path = str_replace(' ', '-', $path);
+
+        return $path;
     }
 
     #
@@ -1595,9 +1606,7 @@ class PerliteParsedown extends Parsedown
         if ($openNewTab == false) {
             $urlPath = str_replace('&amp;', '&', $urlPath);
             $urlPath = str_replace('%23', '#', $urlPath);
-            $urlPath = str_replace('~', '%80', $urlPath);
-            $urlPath = str_replace('-', '~', $urlPath);
-            $urlPath = str_replace(' ', '-', $urlPath);
+            $urlPath = self::slugPath($urlPath);
         }
 
         return array(

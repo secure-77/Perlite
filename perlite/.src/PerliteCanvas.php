@@ -1,7 +1,7 @@
 <?php
 
 /*!
- * Perlite v1.6.2 (https://github.com/secure-77/Perlite)
+ * Perlite v1.6.3 (https://github.com/secure-77/Perlite)
  * Author: sec77 (https://secure77.de)
  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
  */
@@ -522,12 +522,7 @@ class PerliteCanvas
     // perlite url of a note (same slug format as PerliteParsedown internal links)
     protected function noteUrl($path)
     {
-        $slug = ltrim($path, '/');
-        $slug = str_replace('~', '%80', $slug);
-        $slug = str_replace('-', '~', $slug);
-        $slug = str_replace(' ', '-', $slug);
-
-        return $this->uriPath . $slug;
+        return $this->uriPath . PerliteParsedown::slugPath(ltrim($path, '/'));
     }
 
     // direct url of a vault file, served by the webserver
