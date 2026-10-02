@@ -1,3 +1,9 @@
+## 1.6.4
+- fence code block / list fix
+- fixed wrong image tag in compose test file
+- new: a `custom.css` in the vault root is loaded after all system styles and themes to override them
+
+
 ## 1.6.3
 - Set Mermaid default htmlLabels to false
 - Fixed browser printing (printed only a blank page), only the current note is printed now, code highlighting is kept

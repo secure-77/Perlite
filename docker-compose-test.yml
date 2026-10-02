@@ -1,6 +1,6 @@
 services:
   perlite:
-    image: sec77/perlite:test
+    image: sec77/perlite:dev
     container_name: perlite-test
     env_file:
       - path: .env

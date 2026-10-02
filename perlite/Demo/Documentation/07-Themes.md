@@ -41,5 +41,26 @@ Visitors can switch between all installed themes and between dark and light mode
 
 Some themes are built for features Perlite doesn't have (e.g. theme specific plugins / style settings), so not every theme looks exactly like in Obsidian.
 
+
+## Custom CSS
+
+To adjust the look without touching the Perlite files, put a `custom.css` into the root of your vault:
+
+```
+MyNotes/
+├── custom.css
+└── README.md
+```
+
+Perlite loads it after all built-in styles (`app.css`, `perlite.css`, ...) and themes, so your rules override them. Example:
+
+```css
+.custom-page-logo {
+  border-radius: 0%;
+}
+```
+
+If a rule doesn't apply, the original selector is probably more specific, use a more specific selector or `!important`. Changes are picked up immediately (the file is loaded with its modification time as cache buster). Without the file nothing is loaded.
+
 ---
 Back to [Index](00-Index.md)

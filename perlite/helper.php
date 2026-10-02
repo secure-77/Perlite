@@ -1,7 +1,7 @@
 <?php
 
 /*!
- * Perlite v1.6.3 (https://github.com/secure-77/Perlite)
+ * Perlite v1.6.4 (https://github.com/secure-77/Perlite)
  * Author: sec77 (https://secure77.de)
  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
  */
@@ -778,6 +778,19 @@ function checkArray($requestNode)
 	}
 
 	return false;
+}
+
+
+// load custom.css from the vault root, it is included after all system styles and themes to override them
+function loadCustomCSS($rootDir)
+{
+	global $uriPath;
+
+	$file = $rootDir . '/custom.css';
+	if (!is_file($file))
+		return '';
+
+	return '<link id="custom-css" rel="stylesheet" href="' . $uriPath . $rootDir . '/custom.css?v=' . filemtime($file) . '" type="text/css">';
 }
 
 

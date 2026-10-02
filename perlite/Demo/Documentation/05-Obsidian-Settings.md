@@ -60,6 +60,7 @@ Everything else in this folder (plugins, workspace, hotkeys) is ignored. Folders
 | `README.md` | Start page (configurable with `HOME_FILE`) |
 | `metadata.json` | Graph data, see [Graph](06-Graph.md) |
 | `.about.md` | Content of the help / about dialog (optional) |
+| `custom.css` | Custom styles, override the system styles and themes, see [Themes](07-Themes.md) (optional) |
 
 
 ## Frontmatter and titles

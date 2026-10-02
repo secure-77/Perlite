@@ -1,7 +1,7 @@
 <?php
 
 /*!
- * Perlite v1.6.3 (https://github.com/secure-77/Perlite)
+ * Perlite v1.6.4 (https://github.com/secure-77/Perlite)
  * Author: sec77 (https://secure77.de)
  * Licensed under MIT (https://github.com/secure-77/Perlite/blob/main/LICENSE)
  */
@@ -1155,7 +1155,7 @@ class PerliteParsedown extends Parsedown
         }
 
         if (!isset($Block['interrupted'])) {
-            if (preg_match('/^[`~]{3,}/', $Line['text'])) {
+            if ($Line['indent'] <= $Block['indent'] && preg_match('/^[`~]{3,}/', $Line['text'])) {
                 return null;
             }
             $text = preg_replace('/^[ ]{0,4}/', '', $Line['body']);

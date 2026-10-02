@@ -4,7 +4,7 @@
 <?php
 
 /*!
- * Version v1.6.3
+ * Version v1.6.4
  */
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -40,6 +40,8 @@ $jsonGraphData = getfullGraph($rootDir);
     <link rel="stylesheet" href="<?php echo $uriPath ?>.styles/perlite.css" type="text/css">
     <link rel="stylesheet" href="<?php echo $uriPath ?>.styles/vis-network.min.css" type="text/css">
     <link rel="stylesheet" href="<?php echo $uriPath ?>.styles/katex.min.css" type="text/css">
+    <?php echo loadCustomCSS($rootDir); ?>
+
     <link rel="icon" type="image/x-icon" href="<?php echo $uriPath ?>favicon.ico">
 
     <script src="<?php echo $uriPath ?>.js/jquery.min.js"></script>
