@@ -1634,7 +1634,15 @@ class PerliteParsedown extends Parsedown
         }
 
         $label = $m[1];
-        $path = $m[2];
+        $path = trim($m[2]);
+
+        // CommonMark angle-bracket destination: [label](<path with spaces.md>)
+        if (str_starts_with($path, '<') && str_ends_with($path, '>')) {
+            $path = substr($path, 1, -1);
+        }
+
+        // Obsidian alternative encoding for spaces: [label](path%20with%20spaces.md)
+        $path = str_replace('%20', ' ', $path);
 
         // Reject external links / any URI scheme (http:, mailto:, tel:, obsidian:, ...)
         if (preg_match('#^[a-z][a-z0-9+.-]*:#i', $path)) {

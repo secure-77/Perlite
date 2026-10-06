@@ -2,7 +2,7 @@
 - fence code block / list fix
 - fixed wrong image tag in compose test file
 - new: a `custom.css` in the vault root is loaded after all system styles and themes to override them
-
+- fixed internal Markdown links with spaces. Perlite now removes surrounding <…> from the link target before resolving it.
 
 ## 1.6.3
 - Set Mermaid default htmlLabels to false
