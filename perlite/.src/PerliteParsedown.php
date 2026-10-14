@@ -983,58 +983,6 @@ class PerliteParsedown extends Parsedown
     {
         list($name, $pattern) = $Line['text'][0] <= '-' ? array('ul', '[*+-]') : array('ol', '[0-9]+[.]');
 
-
-
-        if (preg_match('/(- \[(x| )\])(.*)/', $Line['text'], $matches)) {
-
-            $text = isset($matches[3]) ? $matches[3] : '';
-            $isActive = $matches[2];
-            $checked = '';
-            if ($isActive === 'x') {
-                $checked = 'checked';
-            }
-
-
-
-            $Block = array(
-                'element' => array(
-                    'name' => 'div',
-                    'elements' => array(
-                        array(
-                            'name' => 'div',
-                            'attributes' => array(
-                                'class' => 'HyperMD-list-line HyperMD-list-line-1 HyperMD-task-line cm-line',
-                                'data-task' => $isActive,
-                            ),
-                        ),
-                        array(
-                            'name' => 'label',
-                            'attributes' => array('class' => 'task-list-label'),
-                            'elements' => array(
-                                array(
-                                    'name' => 'input',
-                                    'attributes' => array(
-                                        'class' => 'task-list-item-checkbox',
-                                        'type' => 'checkbox',
-                                        'data-task' => $isActive,
-                                        $checked => '',
-                                    ),
-                                ),
-                                array(
-                                    'name' => 'label',
-                                    'attributes' => array('class' => 'cm-widgetBuffer'),
-                                    'text' => $text,
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            );
-
-
-            return $Block;
-        }
-
         if (preg_match('/^(' . $pattern . '[ ]+)(.*)/', $Line['text'], $matches)) {
             $Block = array(
                 'indent' => $Line['indent'],
@@ -1061,66 +1009,69 @@ class PerliteParsedown extends Parsedown
                 ),
             );
 
+            $this->markTaskItem($Block);
+
             $Block['element']['text'][] = &$Block['li'];
 
             return $Block;
         }
     }
 
-    protected function blockListContinue($Line, array $Block)
+    # obsidian task items ("- [ ] todo", "- [x] done"), rendered like the reading view
+    protected function taskMarker($text)
     {
-
-
-        if (preg_match('/(- \[(x| )\])(.*)/', $Line['text'], $matches)) {
-
-            $text = isset($matches[3]) ? $matches[3] : '';
-            $isActive = $matches[2];
-
-            $checked = '';
-            if ($isActive === 'x') {
-                $checked = 'checked';
-            }
-
-
-
-
-
-            $conBlock = array(
-                'name' => 'div',
-                'attributes' => array(
-                    'class' => 'HyperMD-list-line HyperMD-list-line-1 HyperMD-task-line cm-line',
-                    'data-task' => $isActive,
-                ),
-                'elements' => array(
-                    array(
-                        'name' => 'label',
-                        'attributes' => array('class' => 'task-list-label'),
-                        'elements' => array(
-                            array(
-                                'name' => 'input',
-                                'attributes' => array(
-                                    'class' => 'task-list-item-checkbox',
-                                    'type' => 'checkbox',
-                                    'data-task' => $isActive,
-                                    $checked => '',
-                                ),
-                            ),
-                            array(
-                                'name' => 'label',
-                                'attributes' => array('class' => 'cm-widgetBuffer'),
-                                'text' => $text,
-                            ),
-                        ),
-                    ),
-                )
-            );
-
-
-            $Block['element']['elements'][] = &$conBlock;
-
-            return $Block;
+        if (preg_match('/^\[([^\]])\](?:[ ]+|$)/u', $text, $matches)) {
+            return $matches;
         }
 
+        return null;
+    }
+
+    protected function markTaskItem(array &$Block)
+    {
+        $marker = $this->taskMarker($Block['li']['text'][0]);
+
+        if ($marker === null) {
+            return;
+        }
+
+        $isChecked = $marker[1] !== ' ';
+
+        $Block['li']['attributes'] = array(
+            'class' => $isChecked ? 'task-list-item is-checked' : 'task-list-item',
+            'data-task' => $isChecked ? $marker[1] : '',
+        );
+
+        $Block['element']['attributes']['class'] = 'contains-task-list';
+    }
+
+    protected function li($lines)
+    {
+        $marker = isset($lines[0]) ? $this->taskMarker($lines[0]) : null;
+
+        if ($marker === null) {
+            return parent::li($lines);
+        }
+
+        $isChecked = $marker[1] !== ' ';
+
+        $lines[0] = (string) substr($lines[0], strlen($marker[0]));
+
+        $checkbox = $this->element(array(
+            'name' => 'input',
+            'attributes' => array(
+                'type' => 'checkbox',
+                'class' => 'task-list-item-checkbox',
+                'data-task' => $isChecked ? $marker[1] : '',
+                'checked' => $isChecked ? '' : null,
+            ),
+        ));
+
+        return $checkbox . parent::li($lines);
+    }
+
+    protected function blockListContinue($Line, array $Block)
+    {
         $Block['indent'] = isset($Block['indent']) ? $Block['indent'] : '0';
 
         if ($Block['indent'] === $Line['indent'] and preg_match('/^' . $Block['pattern'] . '(?:[ ]+(.*)|$)/', $Line['text'], $matches)) {
@@ -1144,6 +1095,8 @@ class PerliteParsedown extends Parsedown
                     $text,
                 ),
             );
+
+            $this->markTaskItem($Block);
 
             $Block['element']['text'][] = &$Block['li'];
 

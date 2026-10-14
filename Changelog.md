@@ -3,6 +3,7 @@
 - fixed wrong image tag in compose test file
 - new: a `custom.css` in the vault root is loaded after all system styles and themes to override them
 - fixed internal Markdown links with spaces. Perlite now removes surrounding <…> from the link target before resolving it.
+- fixed nested task lists (`- [ ]` / `- [x]`), indented tasks were rendered flat on one level. Task items are now rendered like the Obsidian reading view (nested lists, checked state), mixed lists of tasks and normal items and numbered task lists work as well
 
 ## 1.6.3
 - Set Mermaid default htmlLabels to false
