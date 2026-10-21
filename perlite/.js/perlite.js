@@ -498,15 +498,12 @@ function getContent(str, home = false, popHover = false, anchor = "") {
         copyLink.addEventListener("click", (event) => {
           event.preventDefault();
           const url = `${window.location.origin}${window.location.pathname}#${heading.id}`;
-          navigator.clipboard.writeText(url);
-
-          // Visual feedback
-          copyLink.classList.add("copied");
-          copyLink.textContent = "✅";
-          setTimeout(() => {
-            copyLink.textContent = "#";
-            copyLink.classList.remove("copied");
-          }, 1000);
+          navigator.clipboard.writeText(url).then(function () {
+            showTooltip(copyLink, "URL copied to clipboard!");
+          }, function (err) {
+            showTooltip(copyLink, "Could not copy URL");
+            console.error('Async: Could not copy URL: ', err);
+          });
         });
       });
 
@@ -1462,6 +1459,28 @@ function hideTooltip() {
   $('.tooltip').css("display", "none")
 };
 
+// show the tooltip with the given text below the given element
+var tooltipTimer;
+function showTooltip(el, text) {
+  const tooltip = $('.tooltip');
+  const rect = el.getBoundingClientRect();
+
+  // replace the text but keep the arrow element
+  tooltip.contents().filter(function () { return this.nodeType === 3; }).remove();
+  tooltip.prepend(document.createTextNode(text));
+  tooltip.css({ display: 'unset', height: '25px', top: rect.bottom + 8 });
+
+  // center below the element, keep inside the viewport, point the arrow at the element
+  const width = tooltip.outerWidth();
+  const center = rect.left + rect.width / 2;
+  const left = Math.max(8, Math.min(center - width / 2, window.innerWidth - width - 8));
+  tooltip.css('left', left);
+  tooltip.find('.tooltip-arrow').css({ left: center - left, right: 'initial' });
+
+  clearTimeout(tooltipTimer);
+  tooltipTimer = setTimeout(hideTooltip, 1500);
+};
+
 
 
 // on document ready stuff
@@ -1765,21 +1784,15 @@ $(document).ready(function () {
   // copy URL function
   $('.clickable-icon.view-action[aria-label="Copy URL"]').click(function (e) {
     e.preventDefault();
-    target = $(e.target)
+    var button = e.currentTarget;
     var text = window.location.href;
-    $('.tooltip').css("top", target.offset().top + 39);
-    $('.tooltip').css("left", target.offset().left);
-    $('.tooltip').css("height", "25px");
-    $('.tooltip').css("display", "unset");
 
     navigator.clipboard.writeText(text).then(function () {
-      $('.tooltip').text("URL copied to clipboard!");
+      showTooltip(button, "URL copied to clipboard!");
     }, function (err) {
-      $('.tooltip').text("Could not copy URL");
+      showTooltip(button, "Could not copy URL");
       console.error('Async: Could not copy URL: ', err);
     });
-
-    setTimeout(hideTooltip, 1500);
   });
 
 

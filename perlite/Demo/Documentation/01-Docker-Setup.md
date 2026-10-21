@@ -53,6 +53,12 @@ Optionally set the vault name shown in the UI (and used for the "Open in Obsidia
 VAULT_NAME=MyVault
 ```
 
+To show your own logo in the profile section, put it into your vault and reference it via the `Notes` folder (`svg`, `png`, `jpg` or `jpeg`). An empty `SITE_LOGO` hides the profile section, see [Custom logo from the vault](03-Env-Settings.md#custom-logo-from-the-vault):
+
+```ini
+SITE_LOGO=Notes/logo.png
+```
+
 All other settings are described in [.env Settings](03-Env-Settings.md).
 
 

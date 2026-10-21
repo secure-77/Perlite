@@ -1,9 +1,14 @@
 ## 1.6.4
+- **Security / Docker:** rebuilt the Perlite Docker image on the patched PHP base image (`php:fpm-alpine`, PHP 8.5.12) to fix two critical PHP remote code execution vulnerabilities, [CVE-2026-109618](https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w) (RCE via OOM corruption) and [CVE-2026-109619](https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp) (RCE via stale global state), CVSS 4.0: 9.2, see the [PHP announcement](https://www.php.net/archive/2026.php#2026-10-21-5). Please pull the new image (`docker compose pull && docker compose up -d`). If you run Perlite without Docker, update PHP to 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35
 - fence code block / list fix
 - fixed wrong image tag in compose test file
 - new: a `custom.css` in the vault root is loaded after all system styles and themes to override them
 - fixed internal Markdown links with spaces. Perlite now removes surrounding <…> from the link target before resolving it.
 - fixed nested task lists (`- [ ]` / `- [x]`), indented tasks were rendered flat on one level. Task items are now rendered like the Obsidian reading view (nested lists, checked state), mixed lists of tasks and normal items and numbered task lists work as well
+- fixed task items in loose lists (e.g. tasks after a blank line following a normal list), the text was rendered on a new line below the checkbox
+- copying a heading link (click on `#` next to a heading) now shows the same "URL copied to clipboard!" tooltip as the "Copy URL" button instead of the green check mark
+- profile section: without any `.env` file (e.g. Docker without `.env`) the default `logo.svg` is shown, with a `.env` and an empty `SITE_LOGO` the profile section is hidden
+- `SITE_LOGO` now supports `svg`, `png`, `jpg` and `jpeg`, the logo can also be loaded from the vault (e.g. `SITE_LOGO=Notes/logo.png` with Docker), see [.env Settings](perlite/Demo/Documentation/03-Env-Settings.md#custom-logo-from-the-vault)
 
 ## 1.6.3
 - Set Mermaid default htmlLabels to false

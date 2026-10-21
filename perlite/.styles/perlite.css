@@ -181,12 +181,6 @@ h6:hover .copy-icon {
   color: var(--text-accent);
 }
 
-/* Temporary success state */
-.copy-icon.copied {
-  color: green;
-  visibility: visible;
-}
-
 
 
 

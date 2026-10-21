@@ -88,10 +88,29 @@ The profile section is shown at the bottom of the left panel.
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `SITE_LOGO` | *(none)* | Logo file inside the perlite folder, e.g. `perlite.svg`. **Empty = no profile section.** |
+| `SITE_LOGO` | `logo.svg` (only without any `.env`) | Logo file, path relative to the perlite folder, e.g. `logo.svg` or `Notes/logo.png`. Supported: `svg`, `png`, `jpg`, `jpeg`. **Empty or missing in the `.env` = no profile section.** |
 | `SITE_HOMEPAGE` | value of `SITE_URL` | Homepage link. |
 | `SITE_GITHUB` | *(none)* | GitHub link, empty for none. |
 | `SITE_TWITTER` | *(none)* | X / Twitter handle incl. `@`, e.g. `@secure_sec77`, empty for none. |
+
+> [!note] `SITE_LOGO` is the only setting where an empty value does not fall back to the default
+> - **No `.env` file** (and no `SITE_LOGO` environment variable): the default Perlite logo `logo.svg` is shown.
+> - **`.env` file present and `SITE_LOGO` empty or missing:** the profile section is hidden.
+
+### Custom logo from the vault
+
+The easiest way to use your own logo is to put it into your vault, so you don't have to change the perlite folder or the Docker image. **This is the preferred way for Docker setups.**
+
+The path is relative to the perlite folder, so it has to start with the folder of your vault:
+
+- **Docker:** the vault is always mounted as `Notes`, a `logo.png` in the vault root becomes `SITE_LOGO=Notes/logo.png` (`Notes/assets/logo.svg` for a subfolder).
+- **No Docker:** use the vault folder inside the perlite folder, e.g. `SITE_LOGO=MyNotes/logo.png`.
+
+```ini
+SITE_LOGO=Notes/logo.png
+```
+
+The logo is served directly by the web server, so it is public even if it is in a hidden folder.
 
 
 ## Example

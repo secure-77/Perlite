@@ -1067,7 +1067,16 @@ class PerliteParsedown extends Parsedown
             ),
         ));
 
-        return $checkbox . parent::li($lines);
+        $markup = parent::li($lines);
+
+        # loose lists wrap the item in <p>, keep the checkbox inline with the text
+        $trimmed = ltrim($markup);
+
+        if (strncmp($trimmed, '<p>', 3) === 0) {
+            return '<p>' . $checkbox . substr($trimmed, 3);
+        }
+
+        return $checkbox . $markup;
     }
 
     protected function blockListContinue($Line, array $Block)
