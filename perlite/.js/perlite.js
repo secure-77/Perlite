@@ -1748,13 +1748,26 @@ $(document).ready(function () {
   // click expand-file-explorer-all
   $('.clickable-icon.nav-action-button[aria-label="Expand all"]').click(function (e) {
     e.preventDefault();
-    target = $(e.target)
+    const target = $(this);
+    const panel = this.closest('.nav-files-container');
+    const firstRevealedRow = panel.querySelector(
+      '.nav-folder-children.collapse > .tree-item > .nav-folder-title, ' +
+      '.nav-folder-children.collapse > .tree-item > .nav-file-title'
+    );
 
     $('.nav-folder-children.collapse').removeClass('collapse')
     $('.nav-folder').removeClass('is-collapsed');
     $('.collapse-icon').removeClass('is-collapsed');
     $('.clickable-icon.nav-action-button[aria-label="Collapse all"]').css('display', 'unset');
     target.css('display', 'none');
+
+    if (firstRevealedRow) {
+      const panelBottom = panel.getBoundingClientRect().top + panel.clientHeight;
+      const overflow = firstRevealedRow.getBoundingClientRect().bottom - panelBottom;
+      if (overflow > 0) {
+        panel.scrollTop += Math.ceil(overflow);
+      }
+    }
 
   });
 
